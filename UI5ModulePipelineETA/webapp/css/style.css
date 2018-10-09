@@ -1,0 +1,97 @@
+/* Enter your custom styles here */
+/*======================= Start custom fonts and custom color on header style ==========================*/
+
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+.clCustomFont {
+    font-family: 'Raleway', sans-serif;
+}
+
+.sapContrastPlus.clCustomHeaderBg,
+.clCustomHeaderBg.sapMIBar {
+    background-color: #fff!important;
+    color: #2f3c48;
+    text-shadow: none;
+}
+
+.sapContrastPlus.clCustomHeaderBg .sapMBtnInner {
+    color: #2f3c48;
+    text-shadow: none;
+}
+
+.sapContrastPlus.clCustomHeaderBg .sapMText {
+    color: #2f3c48;
+}
+
+.sapContrastPlus.sapMIBar-CTX.clCustomHeaderBg .sapMBtn:hover>.sapMBtnHoverable:not(.sapMBtnActive) {
+    background-color: transparent;
+    color: #346187;
+}
+
+
+/*======================= End custom fonts and custom color on header style ==========================*/
+
+
+/* Customized CSS by Aarti Dhamat */
+.stylePageSection {
+	background: #fff !important;
+}
+
+/*Form Css*/
+.stylePosition {
+    background: #F1F1F1;
+	position: relative;
+}
+
+.styleBtnPositioned {
+	position: absolute;
+	right: 1rem;
+	bottom:1rem;
+	width: auto !important;
+}
+.styleForms {
+    background: transparent;
+    width: 90%;
+}
+
+.styleForms .sapUiFormContainerTitle>.sapUiFormTitle {
+    height: 0rem;
+    line-height: 0rem;
+}
+
+.styleHLayout .sapUiHLayoutChildWrapper:nth-child(1),
+.styleHLayout .sapUiHLayoutChildWrapper:nth-child(2),
+.styleHLayout .sapUiHLayoutChildWrapper:nth-child(3) {
+    width: 40%;
+}
+
+.styleHLayout .sapMHBox .sapMFlexItem:nth-child(2) {
+    width: 100%;
+}
+
+.styleRightAlign {
+    float: right;
+    clear: right;
+}
+
+.styleFontSize {
+    font-size: 18px;
+}
+
+.styleFontSizeSmall {}
+
+.styleShortWidth {
+    width: 40% !important;
+}
+
+.formDetails .sapUiFormTitleH5 {
+    font-size: 1rem;
+    text-align: center;
+    border: 1px solid #000 !important;
+    background: #bbb;
+    font-weight: bold !important;
+}
+
+.styleMultiHeaderTable {
+    width: 98% !important;
+    margin: 0 auto;
+}

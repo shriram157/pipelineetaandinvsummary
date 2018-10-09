@@ -1,0 +1,120 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form" controllerName="toyota.ca.xsaapp.PipelineETAInventSummary.controller.vehicleDetails"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page showNavButton="false">
+				<customHeader>
+					<Bar class="sapUiSmallPaddingBeginEnd clCustomHeaderBg">
+						<contentLeft>
+							<Image id="idLexusLogo" src="images/Lexus.png" width="100px"/>
+							<Text text="|" class="sapUiTinyMarginBeginEnd"/>
+							<Text class="clCustomFont" text="{i18n>PageTitle}"/>
+						</contentLeft>
+						<contentRight>
+							<Select change="selectedScreen" selectedKey="Vehicle Details">
+								<items>
+									<core:Item key="Master" text="Master"/>
+									<core:Item key="Details" text="Details"/>
+									<core:Item key="Vehicle Details" text="Vehicle Details"/>
+									<core:Item key="Order Change" text="Order Change"/>
+									<core:Item key="Ship To Dealer" text="Ship To Dealer"/>
+									<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>
+									<core:Item key="Assign Vehicles" text="Assign Vehicles"/>
+									<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>
+									<core:Item key="Change History" text="Change History"/>
+								</items>
+							</Select>
+							<Button text="{i18n>Logout}"/>
+						</contentRight>
+					</Bar>
+				</customHeader>
+				<content>
+					<VBox class="sapUiSmallMargin">
+						<f:SimpleForm class="formDetails" id="ID_VLForm" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false"
+							emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+							<f:content>
+								<core:Title text="{i18n>VehicleInformation}"/>
+								<Label text="{i18n>ModelYear}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/DateOfSale}"/>
+								<Label text="{i18n>Series}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Label text="{i18n>Model}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Label text="{i18n>Suffix}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Name}"/>
+								<Label text="{i18n>APX}"/>
+								<Input value="{DummyJSONModel>/selectedVehicleData/0/Quantity}"/>
+								<Label text="{i18n>Colour}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Quantity}"/>
+								<Label text="{i18n>OrderType}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Label text="{i18n>Status}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Status}"/>
+								<Label text="{i18n>VTN}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Label text="{i18n>VIN}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Label text="{i18n>ETA}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/DateOfSale}"/>
+								<Label text="{i18n>VehicleDeliveredDate}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/DateOfSale}"/>
+								
+								<core:Title text="{i18n>AdditionalInformation}"/>
+								<Label text="{i18n>OrderingDealer}"/>
+								<Link text="{DummyJSONModel>/selectedVehicleData/0/Name}"/>
+								<Label text="{i18n>ShipToDealer}"/>
+								<Link text="{DummyJSONModel>/selectedVehicleData/0/SupplierName}"/>
+								<Label text="{i18n>Plant}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Quantity}"/>
+								<Label text="{i18n>HoldVehicle}"/>
+								<Text text="Yes"/>
+								<Label text="{i18n>AccessoriesInstalled}" required="true"/>
+								<Input value="Yes"/>
+								<Label text="{i18n>DNCVehicle}" required="true"/>
+								<Input value="Yes"/>
+								<Label text="{i18n>Comments}"/>
+								<TextArea value="{DummyJSONModel>/selectedVehicleData/0/Description}" rows="4"/>
+							</f:content>
+						</f:SimpleForm>
+					</VBox>
+					<VBox class="sapUiSmallMargin">
+						<f:SimpleForm class="formDetails" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false"
+							emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+							<f:content>
+								<core:Title text="{i18n>CustomerInformation}"/>
+								<Label text="{i18n>CustomerName}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/SupplierName}"/>
+								<Label text="{i18n>Address}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Label text="{i18n>City}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Name}"/>
+								<Label text="{i18n>Province}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Name}"/>
+								<Label text="{i18n>PostalCode}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Price}"/>
+								<Label text="{i18n>PhoneNumber}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Price}"/>
+								<Label text="{i18n>Email}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Name}"/>
+								<Label text="{i18n>DriversLicense}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<core:Title text="{i18n>AccessoryInformation}"/>
+								<Label text="{i18n>AccessoryName}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Name}"/>
+								<Text text="{DummyJSONModel>/selectedVehicleData/0/Description}"/>
+							</f:content>
+						</f:SimpleForm>
+					</VBox>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Button text="{i18n>Save}" type="Default"/>
+						<Button text="{i18n>SoldOrder}" type="Default"/>
+						<Button text="{i18n>OrderChange}" type="Default" press="NavToOrderChange"/>
+						<Button text="{i18n>Back}" type="Default" press="NavigateBack"/>
+					</OverflowToolbar>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

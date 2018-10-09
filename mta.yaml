@@ -1,0 +1,27 @@
+ID: PipelineETA_InventorySummary
+_schema-version: '3.1'
+version: 0.0.1
+modules:
+  - name: NodeModulePipelineETA
+    type: nodejs
+    path: NodeModulePipelineETA
+    provides:
+      - name: NodeModulePipelineETA_api
+        properties:
+          url: '${default-url}'
+  - name: UI5ModulePipelineETA
+    type: html5
+    path: UI5ModulePipelineETA
+    parameters:
+      disk-quota: 128M
+      memory: 128M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: dest_PipelineETA_InventorySummary
+resources:
+  - name: dest_PipelineETA_InventorySummary
+    parameters:
+      service-plan: lite
+      service: destination
+    type: org.cloudfoundry.managed-service

@@ -1,0 +1,14 @@
+{
+  "welcomeFile": "/UI5ModulePipelineETA/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout"
+  },
+  "routes": [
+    {
+      "source": "^/UI5ModulePipelineETA/(.*)$",
+      "target": "$1",
+      "localDir": "webapp"
+    }
+  ]
+}

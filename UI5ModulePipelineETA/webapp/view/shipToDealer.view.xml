@@ -1,0 +1,103 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form" controllerName="toyota.ca.xsaapp.PipelineETAInventSummary.controller.shipToDealer"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page showNavButton="false">
+				<customHeader>
+					<Bar class="sapUiSmallPaddingBeginEnd clCustomHeaderBg">
+						<contentLeft>
+							<Image id="idLexusLogo" src="images/Lexus.png" width="100px"/>
+							<Text text="|" class="sapUiTinyMarginBeginEnd"/>
+							<Text class="clCustomFont" text="{i18n>PageTitle}"/>
+						</contentLeft>
+						<contentRight>
+							<Select change="selectedScreen" selectedKey="Ship To Dealer">
+								<items>
+									<core:Item key="Master" text="Master"/>
+									<core:Item key="Details" text="Details"/>
+									<core:Item key="Vehicle Details" text="Vehicle Details"/>
+									<core:Item key="Order Change" text="Order Change"/>
+									<core:Item key="Ship To Dealer" text="Ship To Dealer"/>
+									<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>
+									<core:Item key="Assign Vehicles" text="Assign Vehicles"/>
+									<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>
+									<core:Item key="Change History" text="Change History"/>
+								</items>
+							</Select>
+							<Button text="{i18n>Logout}"/>
+						</contentRight>
+					</Bar>
+				</customHeader>
+				<content>
+					<Label text="{i18n>DropShip}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
+					<OverflowToolbar>
+						<HBox>
+							<Label text="{i18n>ShipToDealer}" design="Bold" class="styleFontSizeSmall sapUiSmallMargin" required = "required"/>
+							<Select forceSelection="true" items="{SelectJSONModel>/SeriesCollection}">
+								<core:Item key="{SelectJSONModel>Series}" text="{SelectJSONModel>SeriesName} {SelectJSONModel>Dimension}"/>
+							</Select>
+						</HBox>
+						<ToolbarSpacer/>
+						<Button text="{i18n>Submit}" type="Accept"/>
+					</OverflowToolbar>
+					<Table  items="{DummyJSONModel>/ProductCollection}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="4" growingScrollToLoad="false">
+						<headerToolbar>
+							<Toolbar>
+								<MessageStrip text="{i18n>Disclaimer}" type="Information" showIcon="true"></MessageStrip>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>OrderNumber}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>OrderType}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>Status}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>VTN}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>VIN}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>Model}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>Suffix}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>Colour}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>ETAFrom}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>ETATo}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Link text="{DummyJSONModel>ProductId}" press="onNavigateToVL"/>
+									<Text text="{DummyJSONModel>Category}"/>
+									<Text text="{DummyJSONModel>Status}"/>
+									<Link text="{DummyJSONModel>ProductId}"/>
+									<Link text="{DummyJSONModel>ProductId}"/>
+									<Text text="{DummyJSONModel>Name}"/>
+									<Text text="{DummyJSONModel>Name}"/>
+									<Text text="{DummyJSONModel>TaxTarifCode}"/>
+									<Text text="{DummyJSONModel>Status}"/>
+									<Text text="{DummyJSONModel>Name}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
