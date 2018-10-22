@@ -1,0 +1,54 @@
+ID: pipelineInventory
+_schema-version: '3.1'
+description: MTA Project for Pipeline Inventory
+version: 0.0.1
+modules:
+  - name: pipelineInventory_node
+    type: nodejs
+    path: pipelineInventory_node
+    parameters:
+      host: pipelineInventory_node
+      register-service-url: true
+      service-name: pipelineInventory_node
+      service-url: '${default-url}'
+      disk-quota: 256MB
+      memory: 128MB
+    provides:
+      - name: pipelineInventory_node_api
+        properties:
+          url: '${default-url}'
+    requires:
+      - name: S4HANA_CUPS
+
+  - name: pipelineInventory
+    type: html5
+    path: pipelineInventory
+    parameters:
+       disk-quota: 256M
+       memory: 256M
+    build-parameters:
+       builder: grunt
+    requires:
+     - name: dest_pipelineInventory
+     - name: pipelineInventory_node_api
+       group: destinations
+       properties:
+          name: core-node-backend
+          url: '~{url}'
+          forwardAuthToken: true 
+    provides:
+      - name: pipelineInventory
+resources:
+  - name: S4HANA_CUPS
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: S4HANA_CUPS
+    properties:
+      odata-call-service-name: '${service-name}'
+
+  - name: dest_pipelineInventory
+    parameters:
+       service-plan: lite
+       service: destination
+    type: org.cloudfoundry.managed-service
+

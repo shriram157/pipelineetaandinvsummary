@@ -1,0 +1,176 @@
+{
+	"_version": "1.8.0",
+	"sap.app": {
+		"id": "toyota.ca.xsaapp.PipelineETAInventSummary",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"sourceTemplate": {
+			"id": "ui5template.basicSAPUI5ApplicationProject",
+			"version": "1.40.12"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_belize"
+		]
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "toyota.ca.xsaapp.PipelineETAInventSummary.view.master",
+			"type": "XML"
+		},
+		"dependencies": {
+			"minUI5Version": "1.30.0",
+			"libs": {
+				"sap.ui.layout": {},
+				"sap.ui.core": {},
+				"sap.m": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "toyota.ca.xsaapp.PipelineETAInventSummary.i18n.i18n"
+				}
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"async": true,
+				"viewPath": "toyota.ca.xsaapp.PipelineETAInventSummary.view",
+				"controlAggregation": "pages",
+				"controlId": "idAppControl",
+				"clearControlAggregation": false
+			},
+			"routes": [
+				{
+					"name": "Routemaster",
+					"pattern": "Routemaster",
+					"target": [
+						"Targetmaster"
+					]
+				},
+				{
+					"name": "details",
+					"pattern": "details",
+					"target": "details"
+				},
+				{
+					"name": "vehicleDetails",
+					"pattern": "vehicleDetails/{OrderNumber}",
+					"target": "vehicleDetails"
+				},
+				{
+					"name": "orderChange",
+					"pattern": "orderChange/{OrderNumber}",
+					"target": "orderChange"
+				},
+				{
+					"name": "shipToDealer",
+					"pattern": "shipToDealer",
+					"target": "shipToDealer"
+				},
+				{
+					"name": "shipToDealerResponse",
+					"pattern": "shipToDealerResponse",
+					"target": "shipToDealerResponse"
+				},
+				{
+					"name": "assignVehicles",
+					"pattern": "assignVehicles",
+					"target": "assignVehicles"
+				},
+				{
+					"name": "assignVehiclesStatus",
+					"pattern": "assignVehiclesStatus",
+					"target": "assignVehiclesStatus"
+				},
+				{
+					"name": "changeHistory",
+					"pattern": "changeHistory",
+					"target": "changeHistory"
+				}
+				
+			],
+			"targets": {
+				"Targetmaster": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "master",
+					"routerClass": "sap.m.routing.Router",
+					"async": true,
+					"viewPath": "toyota.ca.xsaapp.PipelineETAInventSummary.view",
+					"controlAggregation": "pages",
+					"controlId": "idAppControl"
+				},
+				"details": {
+					"viewType": "XML",
+					"viewName": "details"
+				},
+				"vehicleDetails": {
+					"viewType": "XML",
+					"viewName": "vehicleDetails"
+				},
+				"orderChange": {
+					"viewType": "XML",
+					"viewName": "orderChange"
+				},
+				"shipToDealer": {
+					"viewType": "XML",
+					"viewName": "shipToDealer"
+				},
+				"shipToDealerResponse": {
+					"viewType": "XML",
+					"viewName": "shipToDealerResponse"
+				},
+				"assignVehicles": {
+					"viewType": "XML",
+					"viewName": "assignVehicles"
+				},
+				"assignVehiclesStatus": {
+					"viewType": "XML",
+					"viewName": "assignVehiclesStatus"
+				},
+				"changeHistory": {
+					"viewType": "XML",
+					"viewName": "changeHistory"
+				}
+			}
+		}
+	}
+}

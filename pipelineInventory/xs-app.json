@@ -1,0 +1,20 @@
+{
+  "welcomeFile": "/pipelineInventory/index.html",
+  "authenticationMethod": "none",
+  "logout": {
+    "logoutEndpoint": "/do/logout"
+  },
+  "routes": [
+    {
+      "source": "^/pipelineInventory/(.*)$",
+      "target": "$1",
+      "localDir": "webapp"
+    },
+       {
+      "source": "/node(.*)",
+      "destination": "core-node-backend",
+      "csrfProtection": false,
+      "authenticationType": "none"
+    }
+  ]
+}
