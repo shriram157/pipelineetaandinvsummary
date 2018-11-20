@@ -58,7 +58,7 @@
 								<!--<DatePicker id="ID_modelYearPicker" value="2018" valueFormat="yyyy" displayFormat="yyyy" change="handleYearChange"/>-->
 								<Label text="{i18n>Series}"/>
 								<Select forceSelection="true" items="{GlobalJSONModel>/seriesData}">
-									<core:Item key="{GlobalJSONModel>TCIModelDescriptionEN}" text="{GlobalJSONModel>TCIModelDescriptionEN}"/>
+									<core:Item key="{GlobalJSONModel>TCISeriesDescriptionEN}" text="{GlobalJSONModel>TCISeriesDescriptionEN}"/>
 								</Select>
 								<Label text="{i18n>Model}"/>
 								<Select forceSelection="true" items="{GlobalJSONModel>/modelData}">

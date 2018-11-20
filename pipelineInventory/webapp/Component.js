@@ -19,12 +19,6 @@ sap.ui.define([
 		init: function () {
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
-			// jQuery.sap.require("jquery.sap.resources");
-			// var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
-			// var oBundle = jQuery.sap.resources({
-			// 	url: "res/i18n.properties",
-			// 	locale: sLocale
-			// });
 
 			// enable routing
 			this.getRouter().initialize();

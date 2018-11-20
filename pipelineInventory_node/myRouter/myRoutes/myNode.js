@@ -49,7 +49,6 @@ module.exports = function () {
 	options = Object.assign(options, xsenv.getServices({
 		api: {
 			name: "S4HANA_CUPS"
-
 		}
 	}));
 
@@ -68,6 +67,40 @@ module.exports = function () {
 		res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 		next();
 	});
+
+	// app.all('/*', function (req, res, next) {
+	// 	console.log("request", req);
+	// 	let headOptions = {};
+	// 	var csrfToken;
+	// 	// prepare the magic reverse proxy header for odata service to work. 
+	// 	let originalHost = req.hostname;
+	// 	if (!!req.headers.host) {
+	// 		headOptions.host = req.headers.host;
+	// 	}
+
+	// 	//only support the basic auth
+	// 	headOptions.Authorization = auth64;
+
+	// 	let method = req.method;
+	// 	console.log("requested url",req.url);
+	// 	let xurl = url + req.url;
+	// 	console.log('Method', method);
+	// 	console.log('URL that I am running', xurl);
+	// 	let xRequest =
+	// 		request({
+	// 			method: method,
+	// 			url: xurl,
+	// 			headers: headOptions
+	// 		});
+	// 	req.pipe(xRequest);
+	// 	xRequest.on('response', (response) => {
+	// 		// delete response.headers['set-cookie'];
+	// 		csrfToken = response.headers['x-csrf-token'];
+	// 		xRequest.pipe(res);
+	// 	}).on('error', (error) => {
+	// 		next(error);
+	// 	});
+	// });
 
 	//api business partner call
 	app.get('/API_BUSINESS_PARTNER', function (req, res) {
@@ -104,14 +137,15 @@ module.exports = function () {
 		});
 	});
 
-	// aarthy service call
-	//https://fioridev1.dev.toyota.ca:44300/sap/opu/odata/sap/Z_VEHICLE_MASTER_SRV/zc_model
-	//https://fioridev1.dev.toyota.ca:44300/sap/opu/odata/sap/Z_VEHICLE_MASTER_SRV/zc_model
-	//https://nodemodule_pipeline.cfapps.us10.hana.ondemand.com/node/ZC_MODEL
-	// https://sapdev.apimanagement.ca1.hana.ondemand.com:443/Z_VEHICLE_MASTER_SRV
-	// https://sapdev.apimanagement.ca1.hana.ondemand.com:443/Z_VEHICLE_MASTER_SRV/zc_model
+	// // aarthy service call
+	// //https://fioridev1.dev.toyota.ca:44300/sap/opu/odata/sap/Z_VEHICLE_MASTER_SRV/zc_model
+	// //https://fioridev1.dev.toyota.ca:44300/sap/opu/odata/sap/Z_VEHICLE_MASTER_SRV/zc_model
+	// //https://nodemodule_pipeline.cfapps.us10.hana.ondemand.com/node/ZC_MODEL
+	// // https://sapdev.apimanagement.ca1.hana.ondemand.com:443/Z_VEHICLE_MASTER_SRV
+	// // https://sapdev.apimanagement.ca1.hana.ondemand.com:443/Z_VEHICLE_MASTER_SRV/zc_model
+	// /sap/opu/odata/sap/Z_VEHICLE_CATALOGUE_SRV/
 
-	app.get('/Z_VEHICLE_CATALOGUE_MODEL', function (req, res) {
+	app.get('/zc_model', function (req, res) {
 		//	var zcEntityset = req.param("zc_model");
 		var csrfToken;
 		console.log("req", req.param());
@@ -141,7 +175,7 @@ module.exports = function () {
 		});
 	});
 
-	app.get('/Z_VEHICLE_CATALOGUE_MM', function (req, res) {
+	app.get('/zc_mmfields', function (req, res) {
 		//	var zcEntityset = req.param("zc_model");
 		var csrfToken;
 		console.log(url);
@@ -169,7 +203,7 @@ module.exports = function () {
 			}
 		});
 	});
-	app.get('/Z_VEHICLE_CATALOGUE_TRIM', function (req, res) {
+	app.get('/zc_exterior_trim', function (req, res) {
 		//	var zcEntityset = req.param("zc_model");
 		var csrfToken;
 		console.log(url);
