@@ -145,7 +145,7 @@ module.exports = function () {
 	// // https://sapdev.apimanagement.ca1.hana.ondemand.com:443/Z_VEHICLE_MASTER_SRV/zc_model
 	// /sap/opu/odata/sap/Z_VEHICLE_CATALOGUE_SRV/
 
-	app.get('/zc_model', function (req, res) {
+	app.get('/Z_VEHICLE_CATALOGUE_MODEL', function (req, res) {
 		//	var zcEntityset = req.param("zc_model");
 		var csrfToken;
 		console.log("req", req.param());
@@ -160,7 +160,6 @@ module.exports = function () {
 				"APIKey": APIKey,
 				"x-csrf-token": "Fetch"
 			}
-
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				csrfToken = response.headers['x-csrf-token'];
@@ -168,14 +167,12 @@ module.exports = function () {
 				var json = JSON.parse(body);
 				res.json(json);
 			} else {
-
 				var result = JSON.stringify(body);
 				res.type('application/json').status(401).send(result);
 			}
 		});
 	});
-
-	app.get('/zc_mmfields', function (req, res) {
+	app.get('/Z_VEHICLE_CATALOGUE_MM', function (req, res) {
 		//	var zcEntityset = req.param("zc_model");
 		var csrfToken;
 		console.log(url);
@@ -189,7 +186,6 @@ module.exports = function () {
 				"APIKey": APIKey,
 				"x-csrf-token": "Fetch"
 			}
-
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				csrfToken = response.headers['x-csrf-token'];
@@ -197,13 +193,12 @@ module.exports = function () {
 				var json = JSON.parse(body);
 				res.json(json);
 			} else {
-
 				var result = JSON.stringify(body);
 				res.type('application/json').status(401).send(result);
 			}
 		});
 	});
-	app.get('/zc_exterior_trim', function (req, res) {
+	app.get('/Z_VEHICLE_CATALOGUE_TRIM', function (req, res) {
 		//	var zcEntityset = req.param("zc_model");
 		var csrfToken;
 		console.log(url);
@@ -217,7 +212,6 @@ module.exports = function () {
 				"APIKey": APIKey,
 				"x-csrf-token": "Fetch"
 			}
-
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				csrfToken = response.headers['x-csrf-token'];
@@ -225,12 +219,10 @@ module.exports = function () {
 				var json = JSON.parse(body);
 				res.json(json);
 			} else {
-
 				var result = JSON.stringify(body);
 				res.type('application/json').status(401).send(result);
 			}
 		});
 	});
-
 	return app;
 };
