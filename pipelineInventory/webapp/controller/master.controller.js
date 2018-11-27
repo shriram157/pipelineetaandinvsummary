@@ -10,7 +10,7 @@ sap.ui.define([
 		/*Initialization of the page data*/
 		onInit: function () {
 			_that = this;
-			
+
 			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
@@ -35,13 +35,13 @@ sap.ui.define([
 			_that.oGlobalJSONModel = new JSONModel();
 			_that.getView().setModel(_that.oGlobalJSONModel, "GlobalJSONModel");
 			sap.ui.getCore().setModel(_that.oGlobalJSONModel, "CoreJSONModel");
-			
+
 			_that.oGlobalJSONModel.getData().seriesData = [];
 			_that.oGlobalJSONModel.getData().modelData = [];
 			_that.oGlobalJSONModel.getData().suffixData = [];
 			_that.oGlobalJSONModel.getData().DealerList = [];
 			_that.oGlobalJSONModel.getData().ModelYearList = [];
-			
+
 			/*Getting Year dropdown data*/
 			_that.modelYearPicker = this.getView().byId("ID_modelYearPicker");
 			_that.currentYear = new Date().getFullYear();
@@ -62,8 +62,7 @@ sap.ui.define([
 			_that.oGlobalJSONModel.getData().ModelYearList = _ObjModelYear.ModelYearList;
 			_that.oGlobalJSONModel.updateBindings();
 			_that.modelYearPicker.setSelectedKey(_that.currentYear);
-			
-			
+
 			// _that.oDataService = "/node";
 			var sLocation = window.location.host;
 			var sLocation_conf = sLocation.search("webide");
@@ -74,11 +73,12 @@ sap.ui.define([
 				this.sPrefix = "";
 			}
 			this.nodeJsUrl = this.sPrefix + "/node";
-			
+
 			/*Fetching data from Dealer Service */
 			$.ajax({
 				dataType: "json",
-				url: this.nodeJsUrl + "/API_BUSINESS_PARTNER/A_BusinessPartner?&$filter=BusinessPartnerType eq 'Z001'&$orderby=BusinessPartnerName",
+				url: this.nodeJsUrl +
+					"/API_BUSINESS_PARTNER/A_BusinessPartner?&$filter=BusinessPartnerType eq 'Z001'&$orderby=BusinessPartnerName",
 				type: "GET",
 				success: function (oData) {
 					// debugger;
@@ -99,7 +99,7 @@ sap.ui.define([
 				},
 				error: function (oError) {}
 			});
-			
+
 			$.ajax({
 				dataType: "json",
 				url: this.nodeJsUrl + "/Z_VEHICLE_CATALOGUE_SRV/zc_model",
@@ -109,7 +109,7 @@ sap.ui.define([
 						results: []
 					};
 					$.each(oData.d.results, function (i, item) {
-						if(item.ModelDescriptionEN !==""){
+						if (item.ModelDescriptionEN !== "") {
 							modelObj.results.push({
 								"ModelDescriptionEN": item.ModelDescriptionEN
 							});
@@ -130,7 +130,7 @@ sap.ui.define([
 						results: []
 					};
 					$.each(oData.d.results, function (i, item) {
-						if(item.TCISeriesDescriptionEN !==""){
+						if (item.TCISeriesDescriptionEN !== "") {
 							seriesObj.results.push({
 								"TCISeriesDescriptionEN": item.TCISeriesDescriptionEN
 							});
@@ -145,14 +145,14 @@ sap.ui.define([
 
 			$.ajax({
 				dataType: "json",
-				url: this.nodeJsUrl +"/Z_VEHICLE_CATALOGUE_SRV/zc_exterior_trim",
+				url: this.nodeJsUrl + "/Z_VEHICLE_CATALOGUE_SRV/zc_exterior_trim",
 				type: "GET",
 				success: function (oData) {
 					var suffixObj = {
 						results: []
 					};
 					$.each(oData.d.results, function (i, item) {
-						if(item.MarktgIntDescEN !==""){
+						if (item.MarktgIntDescEN !== "") {
 							suffixObj.results.push({
 								"MarktgIntDescEN": item.MarktgIntDescEN,
 								"ExteriorColorCode": item.ExteriorColorCode,
@@ -166,7 +166,6 @@ sap.ui.define([
 				},
 				error: function (oError) {}
 			});
-			
 
 			_that.oSelectJSONModel = new JSONModel();
 			_that.getView().setModel(_that.oSelectJSONModel, "SelectJSONModel");
@@ -247,13 +246,13 @@ sap.ui.define([
 			_that.getView().byId("tableMultiHeader3").getColumns()[10].setHeaderSpan([7, 4, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[15].setHeaderSpan([2, 2, 1]);
 		},
-		
+
 		/*Fetch data on apply filter click for all three tables*/
 		applyFiltersBtn: function () {
 			_that.oSelectJSONModel.setData(_that.objList);
 			_that.oSelectJSONModel.updateBindings();
 		},
-		
+
 		/*For Switching the Pages*/
 		selectedScreen: function (oSelectedScreen) {
 			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
@@ -277,11 +276,31 @@ sap.ui.define([
 				_that.getRouter().navTo("changeHistory");
 			}
 		},
-		
+
 		/*Funtion to get the changed year*/
 		handleYearChange: function (oYearEvent) {
 			// oYearEvent.getSource().setMinDate(new Date("2017"));
 			// oYearEvent.getSource().setMaxDate(new Date("2019"));
+		},
+
+		/*Function for Routing/Navigating from menu option as per selection */
+		onMenuLinkPress: function (oLink) {
+			var _oLinkPressed = oLink;
+			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
+			if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("PageTitle")) {
+				_that.getRouter().navTo("Routemaster");
+			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
+				_that.getRouter().navTo("vehicleDetailsNodata");
+			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+				_that.getRouter().navTo("changeHistory");
+			}
+		},
+
+		/*Exit Function for refreshing/resetting view */
+		onExit: function () {
+			_that.destroy();
+			_that.oSelectJSONModel.refresh();
+			_that.oGlobalJSONModel.refresh();
 		}
 	});
 });

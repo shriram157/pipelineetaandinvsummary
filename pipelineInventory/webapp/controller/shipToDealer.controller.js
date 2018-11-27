@@ -3,7 +3,8 @@ sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
 	'sap/ui/model/json/JSONModel',
-], function (BaseController,JSONModel) {
+	'sap/ui/model/resource/ResourceModel',
+], function (BaseController,JSONModel, ResourceModel) {
 	"use strict";
 
 	return BaseController.extend("pipelineInventory.controller.shipToDealer", {
@@ -15,6 +16,27 @@ sap.ui.define([
 		 */
 		onInit: function () {
 			_that = this;
+			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				bundleUrl: "i18n/i18n.properties"
+			});
+			_that.getView().setModel(_that.oI18nModel, "i18n");
+
+			if (window.location.search == "?language=fr") {
+				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+					bundleUrl: "i18n/i18n.properties",
+					bundleLocale: ("fr")
+				});
+				_that.getView().setModel(_that.oI18nModel, "i18n");
+				_that.sCurrentLocale = 'FR';
+			} else {
+				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+					bundleUrl: "i18n/i18n.properties",
+					bundleLocale: ("en")
+				});
+				_that.getView().setModel(_that.oI18nModel, "i18n");
+				_that.sCurrentLocale = 'EN';
+			}
+			
 			_that.oDealerDataModel = new JSONModel();
 			_that.oDealerDataModel.getData().DealerList =  sap.ui.getCore().getModel("CoreJSONModel").getData().DealerList;    
 			_that.getView().setModel(_that.oDealerDataModel, "GlobalJSONModel");
@@ -48,6 +70,17 @@ sap.ui.define([
 				_that.getRouter().navTo("assignVehiclesStatus");
 			} else if (selectedScreenText == "Change History") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Change History");
+				_that.getRouter().navTo("changeHistory");
+			}
+		},
+		onMenuLinkPress: function (oLink) {
+			var _oLinkPressed = oLink;
+			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
+			if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("PageTitle")) {
+				_that.getRouter().navTo("Routemaster");
+			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
+				_that.getRouter().navTo("vehicleDetailsNodata");
+			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
 				_that.getRouter().navTo("changeHistory");
 			}
 		}

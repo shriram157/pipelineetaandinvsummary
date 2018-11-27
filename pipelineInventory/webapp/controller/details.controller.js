@@ -2,8 +2,9 @@ var _that;
 sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
-	'sap/ui/model/resource/ResourceModel'
-], function (BaseController,ResourceModel) {
+	'sap/ui/model/resource/ResourceModel',
+	'sap/ui/model/json/JSONModel',
+], function (BaseController,ResourceModel,JSONModel) {
 	"use strict";
 
 	return BaseController.extend("pipelineInventory.controller.details", {
@@ -15,15 +16,57 @@ sap.ui.define([
 		 */
 		onInit: function () {
 			_that = this;
-			var i18nModel = new ResourceModel({
-				bundleName: "pipelineInventory.i18n.i18n"
+			
+			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				bundleUrl: "i18n/i18n.properties"
 			});
-			this.getView().setModel(i18nModel, "i18nModel");
+			_that.getView().setModel(_that.oI18nModel, "i18n");
+
+			if (window.location.search == "?language=fr") {
+				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+					bundleUrl: "i18n/i18n.properties",
+					bundleLocale: ("fr")
+				});
+				_that.getView().setModel(_that.oI18nModel, "i18n");
+				_that.sCurrentLocale = 'FR';
+			} else {
+				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+					bundleUrl: "i18n/i18n.properties",
+					bundleLocale: ("en")
+				});
+				_that.getView().setModel(_that.oI18nModel, "i18n");
+				_that.sCurrentLocale = 'EN';
+			}
+			
+				
+			/*Dummy Model for testing table functionality*/
+			_that.oDummyJSONModel = new JSONModel();
+			sap.ui.getCore().setModel(_that.oDummyJSONModel, "DummyJSONModel");
+
+			var dummyDataURL = "https://sapui5.netweaver.ondemand.com/sdk/test-resources/sap/ui/demokit/explored/products.json";
+
+			$.ajax({
+				url: dummyDataURL,
+				type: "GET",
+				dataType: "json",
+				success: function (oData) {
+					//debugger;
+					_that.oDummyJSONModel.setData(oData);
+					_that.oDummyJSONModel.updateBindings();
+				},
+				error: function (oError) {
+					//Error message here
+				}
+			});
+
+		
+	
 		},
 		
 		/*Show Filtered data as per user input*/
 		onApplyFilterBtn: function() {
-			this.getView().setModel((sap.ui.getCore().getModel("DummyJSONModel")), "DummyJSONModel");
+			this.getView().setModel(_that.oDummyJSONModel, "DummyJSONModel");
+			// this.getView().setModel((sap.ui.getCore().getModel("DummyJSONModel")), "DummyJSONModel");
 		},
 		
 		/*Navigate to Vehicle Details page*/
@@ -63,7 +106,7 @@ sap.ui.define([
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Change History");
 				_that.getRouter().navTo("changeHistory");
 			}
-		}
+		},
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
@@ -87,10 +130,23 @@ sap.ui.define([
 		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
 		 * @memberOf pipelineInventory.view.details
 		 */
-		//	onExit: function() {
-		//
-		//	}
+		/*Function for Routing/Navigating from menu option as per selection */
+		onMenuLinkPress: function (oLink) {
+			var _oLinkPressed = oLink;
+			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
+			if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("PageTitle")) {
+				_that.getRouter().navTo("Routemaster");
+			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
+				_that.getRouter().navTo("vehicleDetailsNodata");
+			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+				_that.getRouter().navTo("changeHistory");
+			}
+		},
 
+		/*Exit Function for refreshing/resetting view */
+		onExit: function () {
+			_that.destroy();
+			_that.oDummyJSONModel.refresh();
+		}
 	});
-
 });

@@ -81,9 +81,7 @@
 				{
 					"name": "Routemaster",
 					"pattern": "Routemaster",
-					"target": [
-						"Targetmaster"
-					]
+					"target": "Routemaster"
 				},
 				{
 					"name": "details",
@@ -94,6 +92,11 @@
 					"name": "vehicleDetails",
 					"pattern": "vehicleDetails/{OrderNumber}",
 					"target": "vehicleDetails"
+				},
+				{
+					"name": "vehicleDetailsNodata",
+					"pattern": "vehicleDetailsNodata",
+					"target": "vehicleDetailsNodata"
 				},
 				{
 					"name": "orderChange",
@@ -127,7 +130,7 @@
 				}
 			],
 			"targets": {
-				"Targetmaster": {
+				"Routemaster": {
 					"viewType": "XML",
 					"transition": "slide",
 					"clearControlAggregation": false,
@@ -143,6 +146,10 @@
 					"viewName": "details"
 				},
 				"vehicleDetails": {
+					"viewType": "XML",
+					"viewName": "vehicleDetails"
+				},
+				"vehicleDetailsNodata": {
 					"viewType": "XML",
 					"viewName": "vehicleDetails"
 				},

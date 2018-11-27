@@ -29,7 +29,7 @@
 						</contentRight>
 					</Bar>
 				</customHeader>
-				<tnt:ToolHeader backgroundDesign="Translucent">
+				<tnt:ToolHeader>
 					<Select change="selectedScreen" selectedKey="Vehicle Details">
 						<items>
 							<core:Item key="Master" text="Master"/>
