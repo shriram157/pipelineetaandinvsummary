@@ -1,7 +1,7 @@
 {
 	"_version": "1.8.0",
 	"sap.app": {
-		"id": "toyota.ca.xsaapp.PipelineETAInventSummary",
+		"id": "pipelineInventory",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"applicationVersion": {
@@ -36,7 +36,7 @@
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "toyota.ca.xsaapp.PipelineETAInventSummary.view.master",
+			"viewName": "pipelineInventory.view.master",
 			"type": "XML"
 		},
 		"dependencies": {
@@ -55,7 +55,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "toyota.ca.xsaapp.PipelineETAInventSummary.i18n.i18n"
+					"bundleName": "pipelineInventory.i18n.i18n"
 				},
 				"preload": true
 			}
@@ -72,7 +72,7 @@
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
 				"async": true,
-				"viewPath": "toyota.ca.xsaapp.PipelineETAInventSummary.view",
+				"viewPath": "pipelineInventory.view",
 				"controlAggregation": "pages",
 				"controlId": "idAppControl",
 				"clearControlAggregation": false
@@ -134,7 +134,7 @@
 					"viewName": "master",
 					"routerClass": "sap.m.routing.Router",
 					"async": true,
-					"viewPath": "toyota.ca.xsaapp.PipelineETAInventSummary.view",
+					"viewPath": "pipelineInventory.view",
 					"controlAggregation": "pages",
 					"controlId": "idAppControl"
 				},

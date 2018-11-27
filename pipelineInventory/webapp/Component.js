@@ -1,11 +1,11 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"toyota/ca/xsaapp/PipelineETAInventSummary/model/models"
+	"pipelineInventory/model/models"
 ], function (UIComponent, Device, models) {
 	"use strict";
 
-	return UIComponent.extend("toyota.ca.xsaapp.PipelineETAInventSummary.Component", {
+	return UIComponent.extend("pipelineInventory.Component", {
 
 		metadata: {
 			manifest: "json"

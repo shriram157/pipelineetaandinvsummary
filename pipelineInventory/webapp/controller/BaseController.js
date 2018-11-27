@@ -5,7 +5,7 @@ sap.ui.define([
 ], function (Controller, History, Device) {
 	"use strict";
 
-	return Controller.extend("toyota.ca.xsaapp.PipelineETAInventSummary.controller.BaseController", {
+	return Controller.extend("pipelineInventory.controller.BaseController", {
 		/**
 		 * Convenience method for accessing the router in every controller of the application.
 		 * @public

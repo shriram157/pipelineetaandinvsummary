@@ -3,10 +3,10 @@ sap.ui.define([
 	'sap/ui/core/mvc/Controller',
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/resource/ResourceModel',
-	'toyota/ca/xsaapp/PipelineETAInventSummary/controller/BaseController'
+	'pipelineInventory/controller/BaseController'
 ], function (Controller, JSONModel, ResourceModel, BaseController) {
 	"use strict";
-	return BaseController.extend("toyota.ca.xsaapp.PipelineETAInventSummary.controller.master", {
+	return BaseController.extend("pipelineInventory.controller.master", {
 		/*Initialization of the page data*/
 		onInit: function () {
 			_that = this;
@@ -34,6 +34,8 @@ sap.ui.define([
 			/*Global Model initialization and mapping on view*/
 			_that.oGlobalJSONModel = new JSONModel();
 			_that.getView().setModel(_that.oGlobalJSONModel, "GlobalJSONModel");
+			sap.ui.getCore().setModel(_that.oGlobalJSONModel, "CoreJSONModel");
+			
 			_that.oGlobalJSONModel.getData().seriesData = [];
 			_that.oGlobalJSONModel.getData().modelData = [];
 			_that.oGlobalJSONModel.getData().suffixData = [];
@@ -76,7 +78,7 @@ sap.ui.define([
 			/*Fetching data from Dealer Service */
 			$.ajax({
 				dataType: "json",
-				url: this.nodeJsUrl + "/API_BUSINESS_PARTNER/",
+				url: this.nodeJsUrl + "/API_BUSINESS_PARTNER/A_BusinessPartner?&$filter=BusinessPartnerType eq 'Z001'&$orderby=BusinessPartnerName",
 				type: "GET",
 				success: function (oData) {
 					// debugger;
@@ -92,6 +94,7 @@ sap.ui.define([
 					});
 					_that.oGlobalJSONModel.getData().DealerList = dealerObj.DealerList;
 					_that.oGlobalJSONModel.updateBindings();
+					sap.ui.getCore().getModel("CoreJSONModel").updateBindings();
 					// _that.getView().byId("multiheader").setHeaderSpan([3, 2, 1]);
 				},
 				error: function (oError) {}
@@ -102,8 +105,18 @@ sap.ui.define([
 				url: this.nodeJsUrl + "/Z_VEHICLE_CATALOGUE_SRV/zc_model",
 				type: "GET",
 				success: function (oData) {
-					console.log("Ajax data", oData.d.results);
-					_that.oGlobalJSONModel.getData().modelData = oData.d.results;
+					var modelObj = {
+						results: []
+					};
+					$.each(oData.d.results, function (i, item) {
+						if(item.ModelDescriptionEN !==""){
+							modelObj.results.push({
+								"ModelDescriptionEN": item.ModelDescriptionEN
+							});
+						}
+					});
+					console.log("ModelDescriptionEN", modelObj.results);
+					_that.oGlobalJSONModel.getData().modelData = modelObj.results;
 					_that.oGlobalJSONModel.updateBindings();
 				},
 				error: function (oError) {}
@@ -113,8 +126,18 @@ sap.ui.define([
 				url: this.nodeJsUrl + "/Z_VEHICLE_CATALOGUE_SRV/zc_mmfields",
 				type: "GET",
 				success: function (oData) {
-					console.log("Ajax data", oData.d.results);
-					_that.oGlobalJSONModel.getData().seriesData = oData.d.results;
+					var seriesObj = {
+						results: []
+					};
+					$.each(oData.d.results, function (i, item) {
+						if(item.TCISeriesDescriptionEN !==""){
+							seriesObj.results.push({
+								"TCISeriesDescriptionEN": item.TCISeriesDescriptionEN
+							});
+						}
+					});
+					console.log("TCISeriesDescriptionEN", seriesObj.results);
+					_that.oGlobalJSONModel.getData().seriesData = seriesObj.results;
 					_that.oGlobalJSONModel.updateBindings();
 				},
 				error: function (oError) {}
@@ -125,8 +148,20 @@ sap.ui.define([
 				url: this.nodeJsUrl +"/Z_VEHICLE_CATALOGUE_SRV/zc_exterior_trim",
 				type: "GET",
 				success: function (oData) {
-					console.log("Ajax data", oData.d.results);
-					_that.oGlobalJSONModel.getData().suffixData = oData.d.results;
+					var suffixObj = {
+						results: []
+					};
+					$.each(oData.d.results, function (i, item) {
+						if(item.MarktgIntDescEN !==""){
+							suffixObj.results.push({
+								"MarktgIntDescEN": item.MarktgIntDescEN,
+								"ExteriorColorCode": item.ExteriorColorCode,
+								"MarketingDescriptionEXTColorEN": item.MarketingDescriptionEXTColorEN
+							});
+						}
+					});
+					console.log("suffix Data", suffixObj.results);
+					_that.oGlobalJSONModel.getData().suffixData = suffixObj.results;
 					_that.oGlobalJSONModel.updateBindings();
 				},
 				error: function (oError) {}
