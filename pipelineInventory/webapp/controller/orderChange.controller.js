@@ -38,20 +38,20 @@ sap.ui.define([
 				_that.getView().setModel(_that.oI18nModel, "i18n");
 				_that.sCurrentLocale = 'EN';
 			}
-			_that.oDummyJSONModel = sap.ui.getCore().getModel("DummyJSONModel");
-			_that.getView().setModel(_that.oDummyJSONModel, "DummyJSONModel");
+			_that.oVehicleDetailsJSON = sap.ui.getCore().getModel("VehicleDetailsJSON");
+			_that.getView().setModel(_that.oVehicleDetailsJSON, "VehicleDetailsJSON");
 			
 			this.getRouter().attachRouteMatched(function (oEvent) {
 				//console.log(oEvent.getParameter("arguments").data);
 				var _OrderNumber = oEvent.getParameter("arguments").OrderNumber;
-				if (_that.oDummyJSONModel !== undefined) {
-					for (var i = 0; i < _that.oDummyJSONModel.getData().ProductCollection.length; i++) {
-						if (_that.oDummyJSONModel.getData().ProductCollection[i].ProductId == _OrderNumber) {
-							_that.oDummyJSONModel.getData().selectedVehicleData = [];
-							_that.oDummyJSONModel.getData().selectedVehicleData.push(_that.oDummyJSONModel.getData().ProductCollection[i]);
-							_that.oDummyJSONModel.updateBindings();
-							// _that.getView().byId("ID_VLForm").bindElement("DummyJSONModel>/selectedVehicleData/0/");
-							//_that.getView().bindElement("DummyJSONModel>/selectedVehicleData");
+				if (_that.oVehicleDetailsJSON !== undefined) {
+					for (var i = 0; i < _that.oVehicleDetailsJSON.getData().results.length; i++) {
+						if (_that.oVehicleDetailsJSON.getData().results[i].ProfitCenter == _OrderNumber) {
+							_that.oVehicleDetailsJSON.getData().selectedVehicleData = [];
+							_that.oVehicleDetailsJSON.getData().selectedVehicleData.push(_that.oVehicleDetailsJSON.getData().results[i]);
+							_that.oVehicleDetailsJSON.updateBindings();
+							// _that.getView().byId("ID_VLForm").bindElement("VehicleDetailsJSON>/selectedVehicleData/0/");
+							//_that.getView().bindElement("VehicleDetailsJSON>/selectedVehicleData");
 						}
 					}
 				}

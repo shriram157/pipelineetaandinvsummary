@@ -21,7 +21,7 @@ module.exports = function () {
 	var options = {};
 	options = Object.assign(options, xsenv.getServices({
 		api: {
-			name: "S4HANA_CUPS"
+			name: "PIPELINE_INVENTORY_APIM_CUPS"
 		}
 	}));
 

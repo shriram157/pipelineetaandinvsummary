@@ -18,7 +18,7 @@ modules:
         properties:
           url: '${default-url}'
     requires:
-      - name: S4HANA_CUPS
+      - name: PIPELINE_INVENTORY_APIM_CUPS
 
   - name: pipelineInventory
     type: html5
@@ -39,10 +39,10 @@ modules:
     provides:
       - name: pipelineInventory
 resources:
-  - name: S4HANA_CUPS
+  - name: PIPELINE_INVENTORY_APIM_CUPS
     type: org.cloudfoundry.existing-service
     parameters:
-      service-name: S4HANA_CUPS
+      service-name: PIPELINE_INVENTORY_APIM_CUPS
     properties:
       odata-call-service-name: '${service-name}'
 

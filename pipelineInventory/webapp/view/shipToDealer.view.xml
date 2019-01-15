@@ -47,7 +47,7 @@
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onShareEmailPress"/>
 				</tnt:ToolHeader>
 				<content>
-					<Label text="{i18n>DropShip}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
+					<Label text="{i18n>Dropship}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
 					<OverflowToolbar>
 						<HBox>
 							<!--<Label text="{i18n>ShipToDealer}" design="Bold" class="styleFontSizeSmall sapUiSmallMargin" required="required"/>-->
@@ -57,9 +57,9 @@
 							<HBox>
 								<Label text="{i18n>ShipToDealer}" design="Bold" class="styleFontSizeSmall sapUiSmallMargin" required="required"/>
 								<ComboBox showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey=""
-									items="{ path: 'GlobalJSONModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
-									<core:ListItem key="{GlobalJSONModel>BusinessPartner}" text="{GlobalJSONModel>BusinessPartner}"
-										additionalText="{GlobalJSONModel>BusinessPartnerName}"/>
+									items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
+									<core:ListItem key="{BusinessDataModel>BusinessPartner}" text="{BusinessDataModel>BusinessPartner}"
+										additionalText="{BusinessDataModel>BusinessPartnerName}"/>
 								</ComboBox>
 							</HBox>
 						</HBox>

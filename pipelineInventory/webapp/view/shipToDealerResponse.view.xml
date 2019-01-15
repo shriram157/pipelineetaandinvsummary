@@ -48,7 +48,7 @@
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onShareEmailPress"/>
 				</tnt:ToolHeader>
 				<content>
-					<Label text="{i18n>DropShip}" design="Bold" class="styleFontSize sapUiSmallMargin sapUiSmallPadding"/>
+					<Label text="{i18n>Dropship}" design="Bold" class="styleFontSize sapUiSmallMargin sapUiSmallPadding"/>
 					<Table items="{DummyJSONModel>/ProductCollection}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="7" growingScrollToLoad="false">
 						<columns>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">

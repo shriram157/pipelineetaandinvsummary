@@ -12,71 +12,76 @@
 							<Text class="clCustomFont" text="{i18n>PageTitle}"/>
 						</contentLeft>
 						<contentRight>
-							<!--<Select change="selectedScreen" selectedKey="Details">-->
-							<!--	<items>-->
-							<!--		<core:Item key="Master" text="Master"/>-->
-							<!--		<core:Item key="Details" text="Details"/>-->
-							<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
-							<!--		<core:Item key="Order Change" text="Order Change"/>-->
-							<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
-							<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
-							<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
-							<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
-							<!--		<core:Item key="Change History" text="Change History"/>-->
-							<!--	</items>-->
-							<!--</Select>-->
 							<Button text="{i18n>Logout}"/>
 						</contentRight>
 					</Bar>
 				</customHeader>
 				<tnt:ToolHeader>
-					<Select change="selectedScreen" selectedKey="Details">
-						<items>
-							<core:Item key="Master" text="Master"/>
-							<core:Item key="Details" text="Details"/>
-							<core:Item key="Vehicle Details" text="Vehicle Details"/>
-							<core:Item key="Order Change" text="Order Change"/>
-							<core:Item key="Ship To Dealer" text="Ship To Dealer"/>
-							<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>
-							<core:Item key="Assign Vehicles" text="Assign Vehicles"/>
-							<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>
-							<core:Item key="Change History" text="Change History"/>
-						</items>
-					</Select>
+					<!--<Select change="selectedScreen" selectedKey="Details">-->
+					<!--	<items>-->
+					<!--		<core:Item key="Master" text="Master"/>-->
+					<!--		<core:Item key="Details" text="Details"/>-->
+					<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
+					<!--		<core:Item key="Order Change" text="Order Change"/>-->
+					<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
+					<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
+					<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
+					<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
+					<!--		<core:Item key="Change History" text="Change History"/>-->
+					<!--	</items>-->
+					<!--</Select>-->
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onShareEmailPress"/>
 				</tnt:ToolHeader>
 				<content>
-					<f:SimpleForm width="100%" editable="true" layout="ResponsiveGridLayout">
-						<l:HorizontalLayout class="styleHLayout">
+					<f:SimpleForm id="ID_filterDetailsForm" class="styleSearchForm" columnsL="2" columnsM="2" editable="false" emptySpanL="0" emptySpanM="0"
+						labelSpanL="2" labelSpanM="2" layout="ResponsiveGridLayout">
+						<!--<f:SimpleForm width="100%" editable="true" layout="ResponsiveGridLayout">-->
+						<f:content>
 							<HBox>
 								<Label text="{i18n>VTN}" class="sapUiSmallMargin"/>
-								<Input type="Text"/>
+								<Input type="Text" liveChange="onVTNChange">
+									<layoutData>
+										<l:GridData span="L2 M12 S12"/>
+									</layoutData>
+								</Input>
 							</HBox>
 							<HBox>
 								<Label text="{i18n>VIN}" class="sapUiSmallMargin"/>
-								<Input type="Text"/>
+								<Input type="Text" liveChange="onVINChange">
+									<layoutData>
+										<l:GridData span="L2 M12 S12"/>
+									</layoutData>
+								</Input>
 							</HBox>
 							<HBox>
 								<Label text="{i18n>OrderNumber}" class="sapUiSmallMargin"/>
-								<Input type="Text"/>
+								<Input type="Text" liveChange="onWildCardSearch">
+									<layoutData>
+										<l:GridData span="L2 M12 S12"/>
+									</layoutData>
+								</Input>
 							</HBox>
-							<Label text="" class="sapUiSmallMargin"/>
-							<Button text="{i18n>ApplyFilters}" type="Default" press="onApplyFilterBtn"/>
-						</l:HorizontalLayout>
+							<HBox>
+								<Label text="" class="sapUiSmallMargin"/>
+								<Button text="{i18n>ApplyFilters}" type="Default" press="onApplyFilterBtn">
+									<layoutData>
+										<l:GridData span="L2 M12 S12"/>
+									</layoutData>
+								</Button>
+							</HBox>
+						</f:content>
 					</f:SimpleForm>
 					<OverflowToolbar>
 						<Label text="{i18n>VehicleDetails}" design="Bold" class="styleFontSize"/>
 						<ToolbarSpacer/>
-						<Button text="{i18n>DropShipVehicles}" type="Default"/>
-						<Button text="{i18n>AssignVehicles}" type="Default"/>
-						<Button text="{i18n>ExportToExcel}" type="Default"/>
+						<Button text="{i18n>DropShipVehicles}" type="Default" press="navToDropShipVehicles"/>
+						<Button text="{i18n>AssignVehicles}" type="Default" press="navToAssignVehicles"/>
+						<Button text="{i18n>ExportToExcel}" type="Default" press="onDataExport"/>
 					</OverflowToolbar>
-					<Table items="{DummyJSONModel>/ProductCollection}" class="sapUiResponsiveMargin" mode="MultiSelect" growing="true" growingThreshold="2"
-						growingScrollToLoad="false">
-						<!--<headerToolbar>-->
-						<!--</headerToolbar>-->
+					<Table items="{VehicleDetailsJSON>/results}" class="sapUiResponsiveMargin" mode="MultiSelect" id="Tab_vehicleDetails" selectionChange="vehicleSelect" >
+						<!--growing="true" growingThreshold="2" growingScrollToLoad="false"-->
 						<columns>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 								<Text text="{i18n>OrderNumber}"/>
@@ -112,20 +117,22 @@
 						<items>
 							<ColumnListItem>
 								<cells>
-									<Link text="{DummyJSONModel>ProductId}" press="onNavigateToVL"/>
-									<Text text="{DummyJSONModel>Category}"/>
-									<Text text="{DummyJSONModel>Status}"/>
-									<Link text="{DummyJSONModel>ProductId}"/>
-									<Link text="{DummyJSONModel>ProductId}"/>
-									<Text text="{DummyJSONModel>Name}"/>
-									<Text text="{DummyJSONModel>Name}"/>
-									<Text text="{DummyJSONModel>TaxTarifCode}"/>
-									<Text text="{DummyJSONModel>DateOfSale}"/>
-									<Text text="{DummyJSONModel>DateOfSale}"/>
+									<Link text="{VehicleDetailsJSON>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZDLR_REF_NO}"/>
+									<Text text="{VehicleDetailsJSON>ZZORDERTYPE}"/>
+									<Text text="{VehicleDetailsJSON>ZMMSTA}"/>
+									<Link text="{VehicleDetailsJSON>ZZVTN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZVTN}"/>
+									<Link text="{VehicleDetailsJSON>VHVIN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>VHVIN}"/>
+									<Text text="{VehicleDetailsJSON>Model}"/>
+									<Text text="{VehicleDetailsJSON>Suffix}"/>
+									<Text text="{VehicleDetailsJSON>ExteriorColorCode}"/>
+									<Text text="{VehicleDetailsJSON>ETAFrom}"/>
+									<Text text="{VehicleDetailsJSON>ETA}"/>
 								</cells>
 							</ColumnListItem>
 						</items>
 					</Table>
+					<!--<Button type="Emphasized" id="btnPrevious" text="Previous" press="callPreviousRowCount"/>-->
+					<!--<Button type="Emphasized" id="btnNext" text="Next" press="callNextRowCount"/>-->
 				</content>
 			</Page>
 		</pages>

@@ -12,19 +12,6 @@
 							<Text class="clCustomFont" text="{i18n>PageTitle}"/>
 						</contentLeft>
 						<contentRight>
-							<!--<Select change="selectedScreen" selectedKey="Vehicle Details">-->
-							<!--	<items>-->
-							<!--		<core:Item key="Master" text="Master"/>-->
-							<!--		<core:Item key="Details" text="Details"/>-->
-							<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
-							<!--		<core:Item key="Order Change" text="Order Change"/>-->
-							<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
-							<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
-							<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
-							<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
-							<!--		<core:Item key="Change History" text="Change History"/>-->
-							<!--	</items>-->
-							<!--</Select>-->
 							<Button text="{i18n>Logout}"/>
 						</contentRight>
 					</Bar>
@@ -54,37 +41,37 @@
 							<f:content>
 								<core:Title text="{i18n>VehicleInformation}"/>
 								<Label text="{i18n>ModelYear}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/DateOfSale}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Modelyear}"/>
 								<Label text="{i18n>Series}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries}"/>
 								<Label text="{i18n>Model}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Model} {VehicleDetailsJSON>/selectedVehicleData/0/MODEL_DESC_EN}"/>
 								<Label text="{i18n>Suffix}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Name}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN}"/>
 								<Label text="{i18n>APX}"/>
-								<Input value="{DummyJSONModel>/selectedVehicleData/0/Quantity}"/>
+								<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>
 								<Label text="{i18n>Colour}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Quantity}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ExteriorColorCode} {VehicleDetailsJSON>/selectedVehicleData/0/EXTCOL_DESC_EN}"/>
 								<Label text="{i18n>OrderType}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZORDERTYPE}"/>
 								<Label text="{i18n>Status}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Status}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZMMSTA}"/>
 								<Label text="{i18n>VTN}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZVTN}"/>
 								<Label text="{i18n>VIN}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/VHVIN}"/>
 								<Label text="{i18n>ETA}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/DateOfSale}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ETA}"/>
 								<Label text="{i18n>VehicleDeliveredDate}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/DateOfSale}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom} - {VehicleDetailsJSON>/selectedVehicleData/0/ETATo}"/>
 								
 								<core:Title text="{i18n>AdditionalInformation}"/>
 								<Label text="{i18n>OrderingDealer}"/>
-								<Link text="{DummyJSONModel>/selectedVehicleData/0/Name}"/>
+								<Link text="{VehicleDetailsJSON>/selectedCustomerData/0/KUNNR}"/>
 								<Label text="{i18n>ShipToDealer}"/>
-								<Link text="{DummyJSONModel>/selectedVehicleData/0/SupplierName}"/>
+								<Link text="{VehicleDetailsJSON>/selectedCustomerData/0/ZZKUNWE}"/>
 								<Label text="{i18n>Plant}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Quantity}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/PLANTDESC}"/>
 								<Label text="{i18n>HoldVehicle}"/>
 								<Text text="Yes"/>
 								<Label text="{i18n>AccessoriesInstalled}" required="true"/>
@@ -92,7 +79,7 @@
 								<Label text="{i18n>DNCVehicle}" required="true"/>
 								<Input value="Yes"/>
 								<Label text="{i18n>Comments}"/>
-								<TextArea value="{DummyJSONModel>/selectedVehicleData/0/Description}" rows="4"/>
+								<TextArea value="{VehicleDetailsJSON>/selectedVehicleData/0/Comments}" rows="4"/>
 							</f:content>
 						</f:SimpleForm>
 					</VBox>
@@ -102,25 +89,25 @@
 							<f:content>
 								<core:Title text="{i18n>CustomerInformation}"/>
 								<Label text="{i18n>CustomerName}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/SupplierName}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/ENDCU}"/>
 								<Label text="{i18n>Address}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/STREET} {VehicleDetailsJSON>/selectedCustomerData/0/POST_CODE}"/>
 								<Label text="{i18n>City}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Name}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/CITY}"/>
 								<Label text="{i18n>Province}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Name}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/REGIO}"/>
 								<Label text="{i18n>PostalCode}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Price}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/POST_CODE}"/>
 								<Label text="{i18n>PhoneNumber}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Price}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/TEL_NO}"/>
 								<Label text="{i18n>Email}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Name}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/EMAIL}"/>
 								<Label text="{i18n>DriversLicense}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Category}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/ENDCU}"/>
 								<core:Title text="{i18n>AccessoryInformation}"/>
 								<Label text="{i18n>AccessoryName}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Name}"/>
-								<Text text="{DummyJSONModel>/selectedVehicleData/0/Description}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/MAKTX}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/MAKTX}"/>
 							</f:content>
 						</f:SimpleForm>
 					</VBox>

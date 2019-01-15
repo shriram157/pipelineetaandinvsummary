@@ -85,12 +85,12 @@
 				},
 				{
 					"name": "details",
-					"pattern": "details",
+					"pattern": "details/{tableFirst}",
 					"target": "details"
 				},
 				{
 					"name": "vehicleDetails",
-					"pattern": "vehicleDetails/{OrderNumber}",
+					"pattern": "vehicleDetails/:OrderNumber:",
 					"target": "vehicleDetails"
 				},
 				{
@@ -100,12 +100,12 @@
 				},
 				{
 					"name": "orderChange",
-					"pattern": "orderChange/{OrderNumber}",
+					"pattern": "orderChange/:OrderNumber:",
 					"target": "orderChange"
 				},
 				{
 					"name": "shipToDealer",
-					"pattern": "shipToDealer",
+					"pattern": "shipToDealer/{vehicleData}",
 					"target": "shipToDealer"
 				},
 				{
@@ -115,7 +115,7 @@
 				},
 				{
 					"name": "assignVehicles",
-					"pattern": "assignVehicles",
+					"pattern": "assignVehicles/{vehicleData}",
 					"target": "assignVehicles"
 				},
 				{

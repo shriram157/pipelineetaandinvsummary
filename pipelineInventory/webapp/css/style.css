@@ -58,23 +58,23 @@
     line-height: 0rem;
 }
 
-.styleHLayout .sapUiHLayoutChildWrapper:nth-child(1),
-.styleHLayout .sapUiHLayoutChildWrapper:nth-child(2),
-.styleHLayout .sapUiHLayoutChildWrapper:nth-child(3) {
-    width: 40%;
-}
+/*.styleHLayout .sapUiHLayoutChildWrapper:nth-child(1),*/
+/*.styleHLayout .sapUiHLayoutChildWrapper:nth-child(2),*/
+/*.styleHLayout .sapUiHLayoutChildWrapper:nth-child(3) {*/
+/*    width: 40%;*/
+/*}*/
 
-.styleHLayout .sapMHBox .sapMFlexItem:nth-child(2) {
-    width: 100%;
-}
+/*.styleHLayout .sapMHBox .sapMFlexItem:nth-child(2) {*/
+/*    width: 100%;*/
+/*}*/
 
 .styleRightAlign {
     float: right;
     clear: right;
 }
-
 .styleFontSize {
-    font-size: 18px;
+
+    font-size: 18px;	
 }
 
 .styleFontSizeSmall {}
@@ -94,4 +94,33 @@
 .styleMultiHeaderTable {
     width: 98% !important;
     margin: 0 auto;
+}
+
+/*For Grid Tables*/
+
+.ETAMaster .sapUiTableColHdrTr td:nth-child(2){
+	background:#91C8FF;
+}
+.ETAMaster .sapUiTableColHdrTr td:nth-child(8){
+	background:#ffff0085 ;	
+}
+.ETAMaster .sapUiTableColHdrTr td:nth-child(16){
+	background:mediumseagreen ;	
+}
+.ETAMaster .sapUiTableCtrl tr:nth-child(odd) {
+    background: #fff;
+}
+.ETAMaster .sapUiTableCtrl tr:nth-child(even) {
+    background: #8080807d;
+}
+
+
+#blankBG, #blankBG>div, .blankBG {
+	background: #fff !important;
+	border: none !important;
+}
+
+.TabFontStyle {
+	color:blue;
+	text-decoration: underline;
 }
