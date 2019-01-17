@@ -43,8 +43,10 @@ sap.ui.define([
 				this.sPrefix = "";
 			}
 			_that.nodeJsUrl = this.sPrefix + "/node";
+			
+			_that.oTable = this.getView().byId("Tab_vehicleDetails");
+			_that.oTable.removeSelections();
 
-			/*Dummy Model for testing table functionality*/
 			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oDetailsRoute, _that);
 
 		},
@@ -54,7 +56,9 @@ sap.ui.define([
 			_that.checkedData = [];
 			_that.errorFlag = false;
 			_that.oVehicleDetailsJSON = new JSONModel();
-			_that.oTable = _that.getView().byId("Tab_vehicleDetails");
+			
+			_that.oTable = this.getView().byId("Tab_vehicleDetails");
+			_that.oTable.removeSelections();
 
 			if (oDetailsRoute.getParameters().arguments.tableFirst != undefined) {
 				_that.routedData = JSON.parse(oDetailsRoute.getParameters().arguments.tableFirst);
@@ -261,7 +265,7 @@ sap.ui.define([
 			_that.oBinding = _that.oTable.getBinding("items");
 			var aFilters = [];
 			var sQuery = oWildCardVal.getSource().getValue();
-			sQuery = sQuery.replace("*", "%")
+			sQuery = sQuery.replace("*", "%");
 				// debugger;
 			if (sQuery && sQuery.length > 0) {
 				aFilters = new Filter([

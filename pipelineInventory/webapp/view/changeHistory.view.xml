@@ -45,7 +45,7 @@
 					</Select>
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
-					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onShareEmailPress"/>
+					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
 				<content>
 					<Label text="{i18n>ConfigurationChangeHitory}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
@@ -53,9 +53,9 @@
 						<HBox>
 							<Label text="{i18n>Dealer}" design="Bold" class="styleFontSizeSmall sapUiSmallMargin" required="required"/>
 							<ComboBox showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey=""
-								items="{ path: 'GlobalJSONModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
-								<core:ListItem key="{GlobalJSONModel>BusinessPartner}" text="{GlobalJSONModel>BusinessPartner}"
-									additionalText="{GlobalJSONModel>BusinessPartnerName}"/>
+								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
+								<core:ListItem key="{BusinessDataModel>BusinessPartner}" text="{BusinessDataModel>BusinessPartner}"
+									additionalText="{BusinessDataModel>BusinessPartnerName}"/>
 							</ComboBox>
 						</HBox>
 						<ToolbarSpacer/>

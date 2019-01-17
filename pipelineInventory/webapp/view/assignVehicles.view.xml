@@ -45,7 +45,7 @@
 					</Select>
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
-					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onShareEmailPress"/>
+					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
 				<content>
 					<Label text="{i18n>VehicleAssignment}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
@@ -61,8 +61,7 @@
 						<ToolbarSpacer/>
 						<Button text="{i18n>Submit}" type="Accept"/>
 					</OverflowToolbar>
-					<Table items="{DummyJSONModel>/ProductCollection}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="6"
-						growingScrollToLoad="false">
+					<Table items="{AssignVehiclesModel>/results}" width="auto" class="sapUiResponsiveMargin">
 						<headerToolbar>
 							<Toolbar>
 								<MessageStrip text="{i18n>Disclaimer}" type="Information" showIcon="true"></MessageStrip>
@@ -103,16 +102,16 @@
 						<items>
 							<ColumnListItem>
 								<cells>
-									<Link text="{DummyJSONModel>ProductId}" press="onNavigateToVL"/>
-									<Text text="{DummyJSONModel>Category}"/>
-									<Text text="{DummyJSONModel>Status}"/>
-									<Link text="{DummyJSONModel>ProductId}"/>
-									<Link text="{DummyJSONModel>ProductId}"/>
-									<Text text="{DummyJSONModel>Name}"/>
-									<Text text="{DummyJSONModel>Name}"/>
-									<Text text="{DummyJSONModel>TaxTarifCode}"/>
-									<Text text="{DummyJSONModel>Status}"/>
-									<Text text="{DummyJSONModel>Name}"/>
+									<Link text="{AssignVehiclesModel>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{AssignVehiclesModel>ZZDLR_REF_NO}"/>
+									<Text text="{AssignVehiclesModel>ZZORDERTYPE}"/>
+									<Text text="{AssignVehiclesModel>ZMMSTA}"/>
+									<Text text="{AssignVehiclesModel>ZZVTN}" tooltip="{AssignVehiclesModel>ZZVTN}"/>
+									<Text text="{AssignVehiclesModel>VHVIN}" tooltip="{AssignVehiclesModel>VHVIN}"/>
+									<Text text="{AssignVehiclesModel>Model}"/>
+									<Text text="{AssignVehiclesModel>Suffix}"/>
+									<Text text="{AssignVehiclesModel>ExteriorColorCode}"/>
+									<Text text="{AssignVehiclesModel>ETAFrom}"/>
+									<Text text="{AssignVehiclesModel>ETA}"/>
 								</cells>
 							</ColumnListItem>
 						</items>

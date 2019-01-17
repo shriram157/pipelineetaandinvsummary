@@ -29,22 +29,22 @@
 					</Bar>
 				</customHeader>
 				<tnt:ToolHeader>
-					<Select change="selectedScreen" selectedKey="Ship To Dealer">
-						<items>
-							<core:Item key="Master" text="Master"/>
-							<core:Item key="Details" text="Details"/>
-							<core:Item key="Vehicle Details" text="Vehicle Details"/>
-							<core:Item key="Order Change" text="Order Change"/>
-							<core:Item key="Ship To Dealer" text="Ship To Dealer"/>
-							<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>
-							<core:Item key="Assign Vehicles" text="Assign Vehicles"/>
-							<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>
-							<core:Item key="Change History" text="Change History"/>
-						</items>
-					</Select>
+					<!--<Select change="selectedScreen" selectedKey="Ship To Dealer">-->
+					<!--	<items>-->
+					<!--		<core:Item key="Master" text="Master"/>-->
+					<!--		<core:Item key="Details" text="Details"/>-->
+					<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
+					<!--		<core:Item key="Order Change" text="Order Change"/>-->
+					<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
+					<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
+					<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
+					<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
+					<!--		<core:Item key="Change History" text="Change History"/>-->
+					<!--	</items>-->
+					<!--</Select>-->
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
-					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onShareEmailPress"/>
+					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
 				<content>
 					<Label text="{i18n>Dropship}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
@@ -66,8 +66,7 @@
 						<ToolbarSpacer/>
 						<Button text="{i18n>Submit}" type="Accept"/>
 					</OverflowToolbar>
-					<Table items="{DummyJSONModel>/ProductCollection}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="4"
-						growingScrollToLoad="false">
+					<Table items="{DropShipDataModel>/results}" width="auto" class="sapUiResponsiveMargin">
 						<headerToolbar>
 							<Toolbar>
 								<MessageStrip text="{i18n>Disclaimer}" type="Information" showIcon="true"></MessageStrip>
@@ -108,16 +107,16 @@
 						<items>
 							<ColumnListItem>
 								<cells>
-									<Link text="{DummyJSONModel>ProductId}" press="onNavigateToVL"/>
-									<Text text="{DummyJSONModel>Category}"/>
-									<Text text="{DummyJSONModel>Status}"/>
-									<Link text="{DummyJSONModel>ProductId}"/>
-									<Link text="{DummyJSONModel>ProductId}"/>
-									<Text text="{DummyJSONModel>Name}"/>
-									<Text text="{DummyJSONModel>Name}"/>
-									<Text text="{DummyJSONModel>TaxTarifCode}"/>
-									<Text text="{DummyJSONModel>Status}"/>
-									<Text text="{DummyJSONModel>Name}"/>
+									<Link text="{DropShipDataModel>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{DropShipDataModel>ZZDLR_REF_NO}"/>
+									<Text text="{DropShipDataModel>ZZORDERTYPE}"/>
+									<Text text="{DropShipDataModel>ZMMSTA}"/>
+									<Text text="{DropShipDataModel>ZZVTN}" tooltip="{DropShipDataModel>ZZVTN}"/>
+									<Text text="{DropShipDataModel>VHVIN}" tooltip="{DropShipDataModel>VHVIN}"/>
+									<Text text="{DropShipDataModel>Model}"/>
+									<Text text="{DropShipDataModel>Suffix}"/>
+									<Text text="{DropShipDataModel>ExteriorColorCode}"/>
+									<Text text="{DropShipDataModel>ETAFrom}"/>
+									<Text text="{DropShipDataModel>ETA}"/>
 								</cells>
 							</ColumnListItem>
 						</items>

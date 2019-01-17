@@ -12,6 +12,36 @@ sap.ui.define([
 		onInit: function () {
 			_that = this;
 
+			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				bundleUrl: "i18n/i18n.properties"
+			});
+			_that.getView().setModel(_that.oI18nModel, "i18n");
+
+			if (window.location.search == "?language=fr") {
+				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+					bundleUrl: "i18n/i18n.properties",
+					bundleLocale: ("fr")
+				});
+				_that.getView().setModel(_that.oI18nModel, "i18n");
+				_that.sCurrentLocale = 'FR';
+			} else {
+				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+					bundleUrl: "i18n/i18n.properties",
+					bundleLocale: ("en")
+				});
+				_that.getView().setModel(_that.oI18nModel, "i18n");
+				_that.sCurrentLocale = 'EN';
+			}
+
+			var sLocation = window.location.host;
+			var sLocation_conf = sLocation.search("webide");
+
+			if (sLocation_conf == 0) {
+				this.sPrefix = "/pipelineInventory-dest";
+			} else {
+				this.sPrefix = "";
+			}
+			_that.nodeJsUrl = this.sPrefix + "/node";
 			// this.getView().setModel(sap.ui.getCore().getModel("SelectJSONModel"), "SelectJSONModel");
 			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oVehicleDetailsRoute, _that);
 		},
@@ -39,27 +69,27 @@ sap.ui.define([
 				_that.getView().setModel(_that.oI18nModel, "i18n");
 				_that.sCurrentLocale = 'EN';
 			}
-
-			//console.log(oEvent.getParameter("arguments").data);
-			_that.oVehicleDetailsJSON = _that.getView().getModel("VehicleDetailsJSON")
-			var _OrderNumber = oEvent.getParameter("arguments").OrderNumber;
-			if (_that.oVehicleDetailsJSON !== undefined) {
+			if (oEvent.getParameter("arguments").OrderNumber != undefined) {
+				//console.log(oEvent.getParameter("arguments").data);
+				_that.oVehicleDetailsJSON = _that.getView().getModel("VehicleDetailsJSON");
+				var _OrderNumber = oEvent.getParameter("arguments").OrderNumber;
 				for (var i = 0; i < _that.oVehicleDetailsJSON.getData().results.length; i++) {
 					if (_that.oVehicleDetailsJSON.getData().results[i].VHCLE == _OrderNumber) {
 						_that.oVehicleDetailsJSON.getData().selectedVehicleData = [];
 						_that.oVehicleDetailsJSON.getData().selectedVehicleData.push(_that.oVehicleDetailsJSON.getData().results[i]);
+						_that.oVehicleDetailsJSON.getData().selectedVehicleData[0].AccessoriesInstalled = "";
+						_that.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNCVehicle = "";
 						_that.oVehicleDetailsJSON.updateBindings();
 					}
 				}
-			}
-			_that.oVehicleDetailsJSON.getData().selectedCustomerData = [];
-			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('"+_OrderNumber+"')";
+				_that.oVehicleDetailsJSON.getData().selectedCustomerData = [];
+				var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('" + _OrderNumber + "')";
 				$.ajax({
 					dataType: "json",
 					url: url,
 					type: "GET",
 					success: function (oRowData) {
-						_that.oVehicleDetailsJSON.getData().selectedCustomerData= oRowData.d.results;
+						_that.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d.results;
 						_that.oVehicleDetailsJSON.updateBindings();
 					},
 					error: function (oError) {
@@ -67,6 +97,7 @@ sap.ui.define([
 						_that.errorFlag = true;
 					}
 				});
+			}
 
 			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('0000603687')
 		},
@@ -137,6 +168,31 @@ sap.ui.define([
 				_that.getRouter().navTo("changeHistory");
 			}
 		},
+
+		postVehicleUpdates: function (oPost) {
+			debugger;
+			var Obj = {};
+			_that.oVehicleDetailsJSON = _that.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
+			Obj.VHCLE = _that.oVehicleDetailsJSON.VHCLE;
+			Obj.NewAPX = _that.oVehicleDetailsJSON.APX;
+			Obj.AccessoriesInstalled = _that.oVehicleDetailsJSON.AccessoriesInstalled;
+			Obj.DNC = _that.oVehicleDetailsJSON.DNCVehicle;
+			Obj.Comments = _that.oVehicleDetailsJSON.Comments;
+			var oModel = new sap.ui.model.odata.v2.ODataModel(_that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
+			oModel.setUseBatch(false);
+			oModel.create("/VehicleDetailsSet" , Obj, {
+				success: $.proxy(function (oResponse) {
+					console.log(oResponse);
+				}, _that),
+				error: function (oError) {
+					sap.m.MessageBox.error(
+						"Error in data saving"
+					);
+				}
+			});
+
+		},
+
 		onExit: function () {
 			this.destroy();
 		}

@@ -32,16 +32,44 @@ sap.ui.define([
 				_that.sCurrentLocale = 'EN';
 			}
 
+			var sLocation = window.location.host;
+			var sLocation_conf = sLocation.search("webide");
+
+			if (sLocation_conf == 0) {
+				this.sPrefix = "/pipelineInventory-dest";
+			} else {
+				this.sPrefix = "";
+			}
+			_that.nodeJsUrl = this.sPrefix + "/node";
+
 			_that.oDealerDataModel = new JSONModel();
-			// _that.oDealerDataModel.getData().DealerList =  sap.ui.getCore().getModel("BusinessDataModel").getData().DealerList;    
 			_that.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
+
+			_that.oDropShipDataModel = new JSONModel();
+			_that.getView().setModel(_that.oDropShipDataModel, "DropShipDataModel");
+			sap.ui.getCore().getModel(_that.oDropShipDataModel, "DropShipDataModel");
+			_that.oDropShipDataModel.getData().results = [];
+
 			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oShipToDealerRoute, _that);
 		},
 
 		_oShipToDealerRoute: function (oEvent) {
-			debugger;
 			sap.ui.core.BusyIndicator.hide();
-			var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
+			if (oEvent.getParameters().arguments.vehicleData != undefined) {
+				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
+				for (var n = 0; n < VUIdata.length; n++) {
+					_that.oDropShipDataModel.getData().results.push(VUIdata[n]);
+					_that.oDropShipDataModel.updateBindings(true);
+					_that.getView().setModel(_that.oDropShipDataModel, "DropShipDataModel");
+				}
+			}
+		},
+
+		onNavigateToVL: function (oNavEvent) {
+			this.getRouter().navTo("vehicleDetails", {
+				OrderNumber: oNavEvent.getSource().getModel("DropShipDataModel").getProperty(oNavEvent.getSource().getBindingContext(
+					"DropShipDataModel").sPath).VHCLE
+			});
 		},
 
 		selectedScreen: function (oSelectedScreen) {

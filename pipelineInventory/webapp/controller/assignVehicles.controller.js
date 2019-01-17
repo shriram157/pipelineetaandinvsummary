@@ -30,20 +30,46 @@ sap.ui.define([
 				_that.getView().setModel(_that.oI18nModel, "i18n");
 				_that.sCurrentLocale = 'EN';
 			}
-			_that.oDummyJSONModel = sap.ui.getCore().getModel("DummyJSONModel");
-			_that.getView().setModel(_that.oDummyJSONModel, "DummyJSONModel");
+			
+			var sLocation = window.location.host;
+			var sLocation_conf = sLocation.search("webide");
+
+			if (sLocation_conf == 0) {
+				this.sPrefix = "/pipelineInventory-dest";
+			} else {
+				this.sPrefix = "";
+			}
+			_that.nodeJsUrl = this.sPrefix + "/node";
 
 			_that.oDealerDataModel = new JSONModel();
-			// _that.oDealerDataModel.getData().DealerList =  sap.ui.getCore().getModel("BusinessDataModel").getData().DealerList;    
 			_that.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
+			
+			_that.oAssignVehiclesModel = new JSONModel();
+			_that.getView().setModel(_that.oAssignVehiclesModel, "AssignVehiclesModel");
+			sap.ui.getCore().getModel(_that.oAssignVehiclesModel, "AssignVehiclesModel");
+			_that.oAssignVehiclesModel.getData().results=[];
+			
 			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oAssignVehicleRoute, _that);
 			sap.ui.core.BusyIndicator.hide();
 		},
 
 		_oAssignVehicleRoute: function (oEvent) {
-			debugger;
 			sap.ui.core.BusyIndicator.hide();
-			var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
+			if (oEvent.getParameters().arguments.vehicleData != undefined) {
+				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
+				for (var n = 0; n < VUIdata.length; n++) {
+					_that.oAssignVehiclesModel.getData().results.push(VUIdata[n]);
+					_that.oAssignVehiclesModel.updateBindings(true);
+					_that.getView().setModel(_that.oAssignVehiclesModel, "AssignVehiclesModel");
+				}
+			}
+		},
+		
+		onNavigateToVL: function (oNavEvent) {
+			this.getRouter().navTo("vehicleDetails", {
+				OrderNumber: oNavEvent.getSource().getModel("AssignVehiclesModel").getProperty(oNavEvent.getSource().getBindingContext(
+					"AssignVehiclesModel").sPath).VHCLE
+			});
 		},
 
 		selectedScreen: function (oSelectedScreen) {
@@ -89,7 +115,7 @@ sap.ui.define([
 			}
 		},
 		onExit: function () {
-	_that.destroy();
+			_that.destroy();
 		}
 
 	});

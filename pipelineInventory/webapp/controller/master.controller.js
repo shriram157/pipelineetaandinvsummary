@@ -37,6 +37,19 @@ sap.ui.define([
 				_that.getView().setModel(_that.oI18nModel, "i18n");
 				_that.sCurrentLocale = 'EN';
 			}
+			
+			var userData={};
+			userData = {
+				userContext:{
+					userAttributes:{
+						DealerCode:["2400001132"],
+						Language:["English"],
+						UserType:["Z003"]
+					}
+				}
+			};
+			
+			console.log("userData",userData);
 			/*Global Model initialization and mapping on view*/
 			_that.oGlobalJSONModel = new JSONModel();
 			_that.oBusinessDataModel = new JSONModel();

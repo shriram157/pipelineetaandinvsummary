@@ -5,19 +5,14 @@ sap.ui.define([
 	'sap/ui/core/routing/History',
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/resource/ResourceModel',
-], function (BaseController,History,JSONModel, ResourceModel) {
+], function (BaseController, History, JSONModel, ResourceModel) {
 	"use strict";
 
 	return BaseController.extend("pipelineInventory.controller.orderChange", {
-
-		/**
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf pipelineInventory.view.orderChange
-		 */
+		
 		onInit: function () {
 			_that = this;
-			
+
 			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
@@ -38,26 +33,29 @@ sap.ui.define([
 				_that.getView().setModel(_that.oI18nModel, "i18n");
 				_that.sCurrentLocale = 'EN';
 			}
-			_that.oVehicleDetailsJSON = sap.ui.getCore().getModel("VehicleDetailsJSON");
-			_that.getView().setModel(_that.oVehicleDetailsJSON, "VehicleDetailsJSON");
-			
-			this.getRouter().attachRouteMatched(function (oEvent) {
-				//console.log(oEvent.getParameter("arguments").data);
+			_that.getView().setModel(sap.ui.getCore().getModel("VehicleDetailsJSON"), "VehicleDetailsJSON");
+			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oOrderChangeRoute, _that);
+		},
+
+		_oOrderChangeRoute: function (oEvent) {
+			if (oEvent.getParameter("arguments").OrderNumber != undefined) {
+				_that.oVehicleDetailsJSON = _that.getView().getModel("VehicleDetailsJSON");
 				var _OrderNumber = oEvent.getParameter("arguments").OrderNumber;
-				if (_that.oVehicleDetailsJSON !== undefined) {
-					for (var i = 0; i < _that.oVehicleDetailsJSON.getData().results.length; i++) {
-						if (_that.oVehicleDetailsJSON.getData().results[i].ProfitCenter == _OrderNumber) {
-							_that.oVehicleDetailsJSON.getData().selectedVehicleData = [];
-							_that.oVehicleDetailsJSON.getData().selectedVehicleData.push(_that.oVehicleDetailsJSON.getData().results[i]);
-							_that.oVehicleDetailsJSON.updateBindings();
-							// _that.getView().byId("ID_VLForm").bindElement("VehicleDetailsJSON>/selectedVehicleData/0/");
-							//_that.getView().bindElement("VehicleDetailsJSON>/selectedVehicleData");
-						}
+				for (var i = 0; i < _that.oVehicleDetailsJSON.getData().results.length; i++) {
+					if (_that.oVehicleDetailsJSON.getData().results[i].OrderNumber == _OrderNumber) {
+						_that.oVehicleDetailsJSON.getData().selectedVehicleData = [];
+						_that.oVehicleDetailsJSON.getData().selectedVehicleData.push(_that.oVehicleDetailsJSON.getData().results[i]);
+						_that.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewModel="";
+						_that.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewSuffix="";
+						_that.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewAPX="";
+						_that.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewColour="";
+						_that.oVehicleDetailsJSON.getData().selectedVehicleData[0].Guidelines="";
+						_that.oVehicleDetailsJSON.updateBindings();
 					}
 				}
-			});
+			}
 		},
-		
+
 		NavigateBack: function () {
 			// this.getRouter().navTo("details", {});
 			var oHistory = History.getInstance();
