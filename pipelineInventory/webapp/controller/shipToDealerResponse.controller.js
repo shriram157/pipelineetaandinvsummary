@@ -9,13 +9,8 @@ sap.ui.define([
 
 	return BaseController.extend("pipelineInventory.controller.shipToDealerResponse", {
 
-		/**
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf pipelineInventory.view.shipToDealerResponse
-		 */
 		onInit: function () {
-			_that= this;
+			_that = this;
 			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
@@ -36,6 +31,19 @@ sap.ui.define([
 				_that.getView().setModel(_that.oI18nModel, "i18n");
 				_that.sCurrentLocale = 'EN';
 			}
+			_that.getView().setModel(sap.ui.getCore().getModel("DropShipDataModel"), "DropShipDataModel");
+			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oShipToDealerResponseRoute, _that);
+		},
+
+		_oShipToDealerResponseRoute: function (oEvt) {
+			_that.getView().setModel(sap.ui.getCore().getModel("DropShipDataModel"), "DropShipDataModel");
+		},
+		
+		onNavigateToVL: function (oNavEvent) {
+			this.getRouter().navTo("vehicleDetails", {
+				OrderNumber: oNavEvent.getSource().getModel("DropShipDataModel").getProperty(oNavEvent.getSource().getBindingContext(
+					"DropShipDataModel").sPath).VHCLE
+			});
 		},
 
 		selectedScreen: function (oSelectedScreen) {

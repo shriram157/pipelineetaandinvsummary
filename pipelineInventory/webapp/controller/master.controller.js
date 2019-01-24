@@ -1,4 +1,4 @@
-var _that, filteredData;
+var _that, filteredData, SelectedDealer, seriesdata = [];
 sap.ui.define([
 	'sap/ui/core/mvc/Controller',
 	'sap/ui/model/json/JSONModel',
@@ -14,7 +14,7 @@ sap.ui.define([
 			_that.errorFlag = false;
 			jQuery.sap.require("sap.ui.core.format.DateFormat");
 			_that.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
-				pattern: "yyyy-MM-dd'T'HH:MM:ss"
+				pattern: "yyyyMMdd"
 			});
 
 			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
@@ -37,28 +37,328 @@ sap.ui.define([
 				_that.getView().setModel(_that.oI18nModel, "i18n");
 				_that.sCurrentLocale = 'EN';
 			}
-			
-			var userData={};
-			userData = {
-				userContext:{
-					userAttributes:{
-						DealerCode:["2400001132"],
-						Language:["English"],
-						UserType:["Z003"]
+
+			// _that.oDataService = "/node";
+			var sLocation = window.location.host;
+			var sLocation_conf = sLocation.search("webide");
+
+			if (sLocation_conf == 0) {
+				this.sPrefix = "/pipelineInventory-dest";
+			} else {
+				this.sPrefix = "";
+			}
+			this.nodeJsUrl = this.sPrefix + "/node";
+
+			$.ajax({
+				dataType: "json",
+				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields",
+				type: "GET",
+				success: function (oData) {
+					var b = 0;
+					for (var i = 0; i < oData.d.results.length; i++) {
+						var ModelSeriesNo = oData.d.results[i].ModelSeriesNo;
+						for (var j = 0; j < seriesdata.length; j++) {
+							if (ModelSeriesNo != seriesdata[j].ModelSeriesNo) {
+								b++;
+							}
+						}
+						if (b == seriesdata.length) {
+							seriesdata.push({
+								"ModelSeriesNo": oData.d.results[i].ModelSeriesNo,
+								"TCISeriesDescriptionEN": oData.d.results[i].TCISeriesDescriptionEN
+							});
+						}
+						b = 0;
 					}
+					console.log("Series Data", seriesdata);
+				},
+				error: function (oError) {
+					sap.ui.core.BusyIndicator.hide();
+					_that.errorFlag = true;
 				}
-			};
-			
-			console.log("userData",userData);
+			});
+
 			/*Global Model initialization and mapping on view*/
 			_that.oGlobalJSONModel = new JSONModel();
 			_that.oBusinessDataModel = new JSONModel();
+			_that.oUserModel = new JSONModel();
 			_that.oModelYearModel = new JSONModel();
-			sap.ui.getCore().setModel(_that.oBusinessDataModel, "BusinessDataModel");
-			_that.getView().setModel(_that.oBusinessDataModel, "BusinessDataModel");
 			_that.getView().setModel(_that.oModelYearModel, "ModelYearModel");
 			_that.getView().setModel(_that.oGlobalJSONModel, "GlobalJSONModel");
 
+			var userData = {};
+			userData = {
+				userContext: {
+					userAttributes: {
+						DealerCode: ["2400001132"],
+						Language: ["English"],
+						UserType: ["Z003"]
+					}
+				}
+			};
+
+			var dealerCodes = {
+				DealerList: [{
+					"BusinessPartner": "2400053164",
+					"SearchTerm2": "53164"
+				}, {
+					"BusinessPartner": "2400053183",
+					"SearchTerm2": "53183"
+				}, {
+					"BusinessPartner": "2400042176",
+					"SearchTerm2": "42176"
+				}, {
+					"BusinessPartner": "2400034030",
+					"SearchTerm2": "34030"
+				}, {
+					"BusinessPartner": "2400053151",
+					"SearchTerm2": "53151"
+				}, {
+					"BusinessPartner": "2400053006",
+					"SearchTerm2": "53006"
+				}, {
+					"BusinessPartner": "2400042348",
+					"SearchTerm2": "42348"
+				}, {
+					"BusinessPartner": "2400101190",
+					"SearchTerm2": "01190"
+				}, {
+					"BusinessPartner": "2400095018",
+					"SearchTerm2": "95018"
+				}, {
+					"BusinessPartner": "2400053171",
+					"SearchTerm2": "53171"
+				}, {
+					"BusinessPartner": "2400053187",
+					"SearchTerm2": "53187"
+				}, {
+					"BusinessPartner": "2400001082",
+					"SearchTerm2": "01082"
+				}, {
+					"BusinessPartner": "2400042309",
+					"SearchTerm2": "42309"
+				}, {
+					"BusinessPartner": "2400053070",
+					"SearchTerm2": "53070"
+				}, {
+					"BusinessPartner": "2400042076",
+					"SearchTerm2": "42076"
+				}, {
+					"BusinessPartner": "2400001050",
+					"SearchTerm2": "01050"
+				}, {
+					"BusinessPartner": "2400101520",
+					"SearchTerm2": "01520"
+				}, {
+					"BusinessPartner": "2400042352",
+					"SearchTerm2": "42352"
+				}, {
+					"BusinessPartner": "2400053207",
+					"SearchTerm2": "53207"
+				}, {
+					"SearchTerm2": "53178",
+					"BusinessPartner": "2400053178"
+				}, {
+					"SearchTerm2": "01132",
+					"BusinessPartner": "2400001132"
+				}, {
+					"SearchTerm2": "42120",
+					"BusinessPartner": "2400042120"
+				}, {
+					"SearchTerm2": "14071",
+					"BusinessPartner": "2400014071"
+				}, {
+					"SearchTerm2": "00014",
+					"BusinessPartner": "2400100014"
+				}, {
+					"SearchTerm2": "01092",
+					"BusinessPartner": "2400001092"
+				}, {
+					"SearchTerm2": "53167",
+					"BusinessPartner": "2400053167"
+				}, {
+					"SearchTerm2": "53168",
+					"BusinessPartner": "2400053168"
+				}, {
+					"SearchTerm2": "53170",
+					"BusinessPartner": "2400053170"
+				}, {
+					"SearchTerm2": "00000",
+					"BusinessPartner": "2400500000"
+				}, {
+					"SearchTerm2": "01049",
+					"BusinessPartner": "2400001049"
+				}, {
+					"SearchTerm2": "14090",
+					"BusinessPartner": "2400014090"
+				}, {
+					"SearchTerm2": "53185",
+					"BusinessPartner": "2400053185"
+				}, {
+					"SearchTerm2": "01114",
+					"BusinessPartner": "2400001114"
+				}, {
+					"SearchTerm2": "53014",
+					"BusinessPartner": "2400053014"
+				}, {
+					"SearchTerm2": "42177",
+					"BusinessPartner": "2400042177"
+				}, {
+					"SearchTerm2": "42178",
+					"BusinessPartner": "2400042178"
+				}, {
+					"SearchTerm2": "14105",
+					"BusinessPartner": "2400014105"
+				}, {
+					"SearchTerm2": "53053",
+					"BusinessPartner": "2400053053"
+				}, {
+					"SearchTerm2": "53067",
+					"BusinessPartner": "2400053067"
+				}, {
+					"SearchTerm2": "14073",
+					"BusinessPartner": "2400014073"
+				}, {
+					"SearchTerm2": "42193",
+					"BusinessPartner": "2400042193"
+				}, {
+					"SearchTerm2": "01088",
+					"BusinessPartner": "2400001088"
+				}, {
+					"SearchTerm2": "42306",
+					"BusinessPartner": "2400042306"
+				}, {
+					"SearchTerm2": "00158",
+					"BusinessPartner": "2400200158"
+				}, {
+					"SearchTerm2": "00099",
+					"BusinessPartner": "2400500099"
+				}, {
+					"SearchTerm2": "01003",
+					"BusinessPartner": "2400001003"
+				}, {
+					"SearchTerm2": "85006",
+					"BusinessPartner": "2400085006"
+				}, {
+					"SearchTerm2": "42270",
+					"BusinessPartner": "2400542270"
+				}, {
+					"SearchTerm2": "01125",
+					"BusinessPartner": "2400001125"
+				}, {
+					"SearchTerm2": "42360",
+					"BusinessPartner": "2400042360"
+				}, {
+					"SearchTerm2": "42217",
+					"BusinessPartner": "2400542217"
+				}, {
+					"SearchTerm2": "01572",
+					"BusinessPartner": "2400101572"
+				}, {
+					"SearchTerm2": "95013",
+					"BusinessPartner": "2400095013"
+				}, {
+					"SearchTerm2": "42999",
+					"BusinessPartner": "2400042999"
+				}, {
+					"SearchTerm2": "42337",
+					"BusinessPartner": "2400042337"
+				}, {
+					"SearchTerm2": "42327",
+					"BusinessPartner": "2400042327"
+				}, {
+					"SearchTerm2": "53159",
+					"BusinessPartner": "2400053159"
+				}, {
+					"SearchTerm2": "42069",
+					"BusinessPartner": "2400042069"
+				}, {
+					"SearchTerm2": "01078",
+					"BusinessPartner": "2400001078"
+				}, {
+					"SearchTerm2": "01075",
+					"BusinessPartner": "2400001075"
+				}, {
+					"SearchTerm2": "01089",
+					"BusinessPartner": "2400001089"
+				}, {
+					"SearchTerm2": "53013",
+					"BusinessPartner": "2400053013"
+				}, {
+					"SearchTerm2": "00000",
+					"BusinessPartner": "2400300000"
+				}, {
+					"SearchTerm2": "00422",
+					"BusinessPartner": "2400100422"
+				}, {
+					"SearchTerm2": "85001",
+					"BusinessPartner": "2400085001"
+				}, {
+					"SearchTerm2": "65431",
+					"BusinessPartner": "2400065431"
+				}, {
+					"SearchTerm2": "53140",
+					"BusinessPartner": "2400053140"
+				}, {
+					"SearchTerm2": "75003",
+					"BusinessPartner": "2400075003"
+				}, {
+					"SearchTerm2": "53152",
+					"BusinessPartner": "2400053152"
+				}, {
+					"SearchTerm2": "14082",
+					"BusinessPartner": "2400014082"
+				}, {
+					"BusinessPartner": "2400099998",
+					"SearchTerm2": "99998"
+				}, {
+					"BusinessPartner": "2400088888",
+					"SearchTerm2": "88888"
+				}, {
+					"BusinessPartner": "2400042130",
+					"SearchTerm2": "42130"
+				}, {
+					"BusinessPartner": "2400053144",
+					"SearchTerm2": "53144"
+				}, {
+					"BusinessPartner": "2400053124",
+					"SearchTerm2": "53124"
+				}, {
+					"BusinessPartner": "2400042361",
+					"SearchTerm2": "42361"
+				}, {
+					"BusinessPartner": "2400042328",
+					"SearchTerm2": "42328"
+				}, {
+					"BusinessPartner": "2400042366",
+					"SearchTerm2": "42366"
+				}, {
+					"BusinessPartner": "2400001141",
+					"SearchTerm2": "01141"
+				}, {
+					"BusinessPartner": "2400042353",
+					"SearchTerm2": "42353"
+				}, {
+					"BusinessPartner": "2400014084",
+					"SearchTerm2": "14084"
+				}, {
+					"SearchTerm2": "42051",
+					"BusinessPartner": "2400042051"
+				}, {
+					"BusinessPartner": "2400001109",
+					"SearchTerm2": "01109"
+				}, {
+					"BusinessPartner": "2400001115",
+					"SearchTerm2": "01115"
+				}, {
+					"BusinessPartner": "2400001116",
+					"SearchTerm2": "01116"
+				}]
+			}
+			_that.oBusinessDataModel.getData().DealerList = dealerCodes.DealerList;
+			console.log("dealerCodes", dealerCodes);
+			_that.oUserModel.setData(userData);
+			_that.oUserModel.updateBindings(true);
 			/*Getting Year dropdown data*/
 			_that.modelYearPicker = this.getView().byId("ID_modelYearPicker");
 			_that.currentYear = new Date().getFullYear();
@@ -80,50 +380,52 @@ sap.ui.define([
 			_that.oModelYearModel.updateBindings();
 			_that.modelYearPicker.setSelectedKey(_that.currentYear);
 
-			// _that.oDataService = "/node";
-			var sLocation = window.location.host;
-			var sLocation_conf = sLocation.search("webide");
-
-			if (sLocation_conf == 0) {
-				this.sPrefix = "/pipelineInventory-dest";
-			} else {
-				this.sPrefix = "";
-			}
-			this.nodeJsUrl = this.sPrefix + "/node";
-
 			if (_that.errorFlag == true) {
 				sap.m.MessageBox.error(
 					_that.oI18nModel.getResourceBundle().getText("ErrorNoData")
 				);
 			}
 
-			/*Fetching data from Dealer Service */
-			$.ajax({
-				dataType: "json",
-				url: this.nodeJsUrl +
-					"/API_BUSINESS_PARTNER/A_BusinessPartner?&$filter=BusinessPartnerType eq 'Z001'&$orderby=BusinessPartnerName",
-				type: "GET",
-				success: function (oData) {
-					// debugger;
-					var dealerObj = {
-						DealerList: []
-					};
-					$.each(oData.d.results, function (i, item) {
-						var DataLength = item.BusinessPartner.length;
-						dealerObj.DealerList.push({
-							"BusinessPartner": item.BusinessPartner.substring(5, DataLength),
-							"BusinessPartnerName": item.OrganizationBPName1 //item.BusinessPartnerFullName
-						});
-					});
-					_that.oBusinessDataModel.setData(dealerObj);
-					_that.oBusinessDataModel.updateBindings(true);
-					sap.ui.getCore().getModel("BusinessDataModel").updateBindings();
-					// _that.getView().byId("multiheader").setHeaderSpan([3, 2, 1]);
-				},
-				error: function (oError) {
-					_that.errorFlag = true;
-				}
-			});
+			// var Dealer = _that.oUserModel.getData().userContext.userAttributes.DealerCode[0];
+			// for (var c = 0; c < dealerCodes.DealerList.length; c++) {
+			// 	sap.ui.core.BusyIndicator.show();
+			// 	var Dealer = dealerCodes.DealerList[c].DealerCode;
+			// 	// (function (c) {
+			// 	$.ajax({
+			// 		dataType: "json",
+			// 		async: true,
+			// 		url: _that.nodeJsUrl +
+			// 			"/API_BUSINESS_PARTNER/A_BusinessPartner?$filter=SearchTerm2 eq '" + Dealer +
+			// 			"' and BusinessPartnerGrouping eq 'Z003'&$orderby=BusinessPartnerName",
+			// 		type: "GET",
+			// 		success: function (oDealerData) {
+			// 			_that.DealerData = {};
+			// 			$.each(oDealerData.d.results, function (i, item) {
+			// 				_that.oBusinessDataModel.getData().DealerList.push({
+			// 					"BusinessPartner": item.BusinessPartner,
+			// 					"BusinessPartnerGrouping": item.BusinessPartnerGrouping,
+			// 					"BusinessPartnerName": item.BusinessPartnerName,
+			// 					"OrganizationBPName1": item.OrganizationBPName1,
+			// 					"SearchTerm2": item.SearchTerm2,
+			// 					"SearchTerm1": item.SearchTerm1
+			// 				});
+			// 			});
+			// 			_that.oBusinessDataModel.updateBindings(true);
+
+			// 			sap.ui.core.BusyIndicator.hide();
+			// 			console.log("_that.oBusinessDataModel", _that.oBusinessDataModel);
+			// 		},
+			// 		error: function (oError) {
+			// 			_that.errorFlag = true;
+			// 		}
+			// 	});
+			// 	// })(c);
+			// }
+
+			_that.oBusinessDataModel.updateBindings(true);
+			_that.oBusinessDataModel.refresh(true);
+			sap.ui.getCore().setModel(_that.oBusinessDataModel, "BusinessDataModel");
+			_that.getView().setModel(_that.oBusinessDataModel, "BusinessDataModel");
 
 			_that.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 			_that.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
@@ -136,7 +438,7 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
-						_that.fetchSeries(oModelData.d.results);
+						_that.fetchinitialSeries(oModelData.d.results);
 					} else {
 						sap.ui.core.BusyIndicator.hide();
 					}
@@ -175,11 +477,17 @@ sap.ui.define([
 			_that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([7, 3, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[10].setHeaderSpan([7, 4, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[15].setHeaderSpan([2, 2, 1]);
+			
+			for (var n = 1; n < _that.getView().byId("tableMultiHeader3").getRows()[2].getCells().length; n++) {
+				_that.getView().byId("tableMultiHeader3").getRows()[2].getCells()[n].removeStyleClass("TabFontStyle");
+			}
+			for (var n = 1; n < _that.getView().byId("tableMultiHeader3").getRows()[5].getCells().length; n++) {
+				_that.getView().byId("tableMultiHeader3").getRows()[5].getCells()[n].removeStyleClass("TabFontStyle");
+			}
 		},
 
-		onDealerChange: function () {
-			// _that.getView().setModel(_that.oGlobalJSONModel, "GlobalJSONModel");
-			// _that.oGlobalJSONModel.updateBindings(true);
+		onDealerChange: function (oDealer) {
+			SelectedDealer = oDealer.getParameters().selectedItem.getProperty("key");
 		},
 
 		/*Fetch data on apply filter click for all three tables*/
@@ -213,9 +521,10 @@ sap.ui.define([
 			} else _that.ETADate = "";
 
 			//Model eq '"+_that.ID_model+"' and Modelyear eq '"+_that.ID_modelYearPicker+"' and TCISeries eq '"+_that.ID_seriesDesc+"' and Suffix eq 'AL' and ExteriorColorCode eq '"+_that.ID_ExteriorColorCode+"' and APX eq '"+_that.ID_APXValue+"' and ETA eq '"+_that.ETADate+"' &$format=json
-			filteredData = "?$filter=Model eq '" + _that.ID_model +
+			filteredData = "?$filter=Dealer eq '" + SelectedDealer + "' and Model eq '" + _that.ID_model +
 				"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc +
-				"' and Suffix eq 'AL' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" + _that.ID_APXValue +
+				"' and Suffix eq '" + _that.ID_marktgIntDesc + "' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
+				_that.ID_APXValue +
 				"' and ETA eq '" + _that.ETADate + "' &$format=json";
 			_that.fetchCountsforTables(filteredData);
 		},
@@ -299,7 +608,9 @@ sap.ui.define([
 			} else if (selectedScreenText == "Assign Vehicles Status") {
 				_that.getRouter().navTo("assignVehiclesStatus");
 			} else if (selectedScreenText == "Change History") {
-				_that.getRouter().navTo("changeHistory");
+				_that.getRouter().navTo("changeHistory", {
+					SelectedDealer: SelectedDealer
+				});
 			}
 		},
 
@@ -330,7 +641,7 @@ sap.ui.define([
 		},
 
 		getAllSuffix: function () {
-			var tempNew=[];
+			var tempNew = [];
 			_that.series = _that.getView().byId("ID_seriesDesc").getSelectedKey();
 			_that.Modelyear = _that.modelYearPicker.getSelectedKey();
 			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZVMS_INT_Color?$filter=model_year eq '" + _that.Modelyear +
@@ -350,18 +661,17 @@ sap.ui.define([
 							_that.oGlobalJSONModel.getData().suffixData.push({
 								"Suffix": _that.temp[n].Suffix,
 								"SuffixDescriptionEN": _that.temp[n].SuffixDescriptionEN,
-								"MarktgIntDescEN": _that.temp1[m].int_desc_en,
-								"compareField":_that.temp[n].Suffix+_that.temp1[m].int_desc_en
+								"MarktgIntDescEN": _that.temp1[m].mrktg_int_desc_en
 							});
 							sap.ui.core.BusyIndicator.hide();
 							_that.oGlobalJSONModel.updateBindings(true);
 						}
 					}
-					var b=0;
+					// var b = 0;
 					_that.oGlobalJSONModel.getData().suffixData.unshift({
-						"Suffix": "",
+						"Suffix": "Please Select",
 						"SuffixDescriptionEN": "",
-						"MarktgIntDescEN": "Please Select"
+						"MarktgIntDescEN": ""
 					});
 					_that.oGlobalJSONModel.updateBindings(true);
 				},
@@ -397,52 +707,12 @@ sap.ui.define([
 					});
 
 					_that.oGlobalJSONModel.getData().colorData.unshift({
-						"ExteriorColorCode": "",
-						"MarketingDescriptionEXTColorEN": "Please Select",
+						"ExteriorColorCode": "Please Select",
+						"MarketingDescriptionEXTColorEN": "",
 						"ColorSelectionCode": ""
 					});
 					_that.oGlobalJSONModel.updateBindings(true);
 					sap.ui.core.BusyIndicator.hide();
-				},
-				error: function (oError) {
-					sap.ui.core.BusyIndicator.hide();
-					_that.errorFlag = true;
-				}
-			});
-		},
-
-		fetchMkrtDesc: function (Model, Modelyear, Suffix, SuffixDescriptionEN) {
-			$.ajax({
-				dataType: "json",
-				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_exterior_trim?$filter=ModelYear eq '" + Modelyear +
-					"' and Model eq '" + Model + "' and Suffix eq '" + Suffix + "'",
-				type: "GET",
-				success: function (oData) {
-					_that.oGlobalJSONModel.getData().colorData = [];
-					console.log("mrketingDesc Data", oData.d);
-					// $.each(oData.d.results, function (i, item) {
-					for (var n = 0; n < oData.d.results.length; n++) {
-						_that.oGlobalJSONModel.getData().colorData.push({
-							"Suffix": Suffix,
-							"SuffixDescriptionEN": SuffixDescriptionEN,
-							"MarktgIntDescEN": oData.d.results[n].MarktgIntDescEN,
-							"ExteriorColorCode": oData.d.results[n].ExteriorColorCode,
-							"MarketingDescriptionEXTColorEN": oData.d.results[n].MarketingDescriptionEXTColorEN,
-							"ColorSelectionCode": oData.d.results[n].ColorSelectionCode
-						});
-						// });
-					}
-					sap.ui.core.BusyIndicator.hide();
-					console.log(_that.oGlobalJSONModel.getData().colorData);
-					_that.oGlobalJSONModel.getData().colorData.unshift({
-						"Suffix": "",
-						"SuffixDescriptionEN": "Please Select",
-						"MarktgIntDescEN": "",
-						"ExteriorColorCode": "",
-						"MarketingDescriptionEXTColorEN": "Please Select",
-						"ColorSelectionCode": ""
-					});
-					_that.oGlobalJSONModel.updateBindings(true);
 				},
 				error: function (oError) {
 					sap.ui.core.BusyIndicator.hide();
@@ -485,8 +755,8 @@ sap.ui.define([
 					}
 					sap.ui.core.BusyIndicator.hide();
 					_that.oGlobalJSONModel.getData().modelData.unshift({
-						"Model": "",
-						"ENModelDesc": "Please Select"
+						"Model": "Please Select",
+						"ENModelDesc": ""
 					});
 					_that.oGlobalJSONModel.updateBindings(true);
 				},
@@ -560,7 +830,7 @@ sap.ui.define([
 			if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
 				_that.getView().byId("ID_APXValue").setValue();
 			}
-			
+
 			sap.ui.core.BusyIndicator.show();
 			var ModelYear = oModVal.getParameters("selectedItem").selectedItem.getKey();
 			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + ModelYear + "'";
@@ -569,6 +839,7 @@ sap.ui.define([
 				url: url,
 				type: "GET",
 				success: function (oModelData) {
+					sap.ui.core.BusyIndicator.hide();
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
 						_that.fetchSeries(oModelData.d.results);
@@ -583,7 +854,7 @@ sap.ui.define([
 			});
 		},
 
-		fetchSeries: function (arrResults) {
+		fetchinitialSeries: function (arrResults) {
 			var n;
 			for (n = 0; n < arrResults.length; n++) {
 				var TCiSeries = arrResults[n].TCISeries;
@@ -607,11 +878,12 @@ sap.ui.define([
 									"ModelSeriesNo": oData.d.results[i].ModelSeriesNo,
 									"TCISeriesDescriptionEN": oData.d.results[i].TCISeriesDescriptionEN
 								});
-								sap.ui.core.BusyIndicator.hide();
+
 								_that.oGlobalJSONModel.updateBindings(true);
 							}
 							b = 0;
 						}
+						sap.ui.core.BusyIndicator.hide();
 						_that.oGlobalJSONModel.updateBindings(true);
 					},
 					error: function (oError) {
@@ -620,10 +892,86 @@ sap.ui.define([
 					}
 				});
 			}
+
 			_that.oGlobalJSONModel.getData().seriesData.unshift({
-				"ModelSeriesNo": "",
-				"TCISeriesDescriptionEN": "Please Select"
+				"ModelSeriesNo": "Please Select",
+				"TCISeriesDescriptionEN": ""
 			});
+			console.log("_that.oGlobalJSONModel.getData().seriesData", _that.oGlobalJSONModel.getData().seriesData);
+			_that.oGlobalJSONModel.updateBindings(true);
+		},
+
+		fetchSeries: function (arrResults) {
+			// debugger;
+			var series = seriesdata;
+			for (var n = 0; n < arrResults.length; n++) {
+				var TCiSeries = arrResults[n].TCISeries;
+				var b = 0;
+				for (var s = 0; s < series.length; s++) {
+					if (series[s].ModelSeriesNo == TCiSeries) {
+						var ModelSeriesNo = series[s].ModelSeriesNo;
+						for (var j = 0; j < _that.oGlobalJSONModel.getData().seriesData.length; j++) {
+							if (ModelSeriesNo != _that.oGlobalJSONModel.getData().seriesData[j].ModelSeriesNo) {
+								b++;
+							}
+						}
+						if (b == _that.oGlobalJSONModel.getData().seriesData.length) {
+							_that.oGlobalJSONModel.getData().seriesData.push({
+								"ModelSeriesNo": series[s].ModelSeriesNo,
+								"TCISeriesDescriptionEN": series[s].TCISeriesDescriptionEN
+							});
+
+							_that.oGlobalJSONModel.updateBindings(true);
+						}
+					}
+					b = 0;
+				}
+			}
+
+			// var n;
+			// for (n = 0; n < arrResults.length; n++) {
+			// 	var TCiSeries = arrResults[n].TCISeries;
+			// 	$.ajax({
+			// 		dataType: "json",
+			// 		url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=ModelSeriesNo eq '" + TCiSeries +
+			// 			"'",
+			// 		type: "GET",
+			// 		success: function (oData) {
+			// 			console.log("Series Data", oData.d.results);
+			// 			var b = 0;
+			// 			for (var i = 0; i < oData.d.results.length; i++) {
+			// 				var ModelSeriesNo = oData.d.results[i].ModelSeriesNo;
+			// 				for (var j = 0; j < _that.oGlobalJSONModel.getData().seriesData.length; j++) {
+			// 					if (ModelSeriesNo != _that.oGlobalJSONModel.getData().seriesData[j].ModelSeriesNo) {
+			// 						b++;
+			// 					}
+			// 				}
+			// 				if (b == _that.oGlobalJSONModel.getData().seriesData.length) {
+			// 					_that.oGlobalJSONModel.getData().seriesData.push({
+			// 						"ModelSeriesNo": oData.d.results[i].ModelSeriesNo,
+			// 						"TCISeriesDescriptionEN": oData.d.results[i].TCISeriesDescriptionEN
+			// 					});
+
+			// 					_that.oGlobalJSONModel.updateBindings(true);
+			// 				}
+			// 				b = 0;
+			// 			}
+			// 			jQuery.sap.delayedCall(8000, _that, function () {
+			// 				sap.ui.core.BusyIndicator.hide();
+			// 			});
+			// 			_that.oGlobalJSONModel.updateBindings(true);
+			// 		},
+			// 		error: function (oError) {
+			// 			sap.ui.core.BusyIndicator.hide();
+			// 			_that.errorFlag = true;
+			// 		}
+			// 	});
+
+			_that.oGlobalJSONModel.getData().seriesData.unshift({
+				"ModelSeriesNo": "Please Select",
+				"TCISeriesDescriptionEN": ""
+			});
+			console.log("_that.oGlobalJSONModel.getData().seriesData", _that.oGlobalJSONModel.getData().seriesData);
 			_that.oGlobalJSONModel.updateBindings(true);
 		},
 
@@ -643,7 +991,9 @@ sap.ui.define([
 			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
 				_that.getRouter().navTo("vehicleDetailsNodata");
 			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_that.getRouter().navTo("changeHistory");
+				_that.getRouter().navTo("changeHistory", {
+					SelectedDealer: SelectedDealer
+				});
 			}
 		},
 

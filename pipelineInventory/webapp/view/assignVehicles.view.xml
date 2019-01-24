@@ -1,5 +1,5 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
-	xmlns:f="sap.ui.layout.form" controllerName="pipelineInventory.controller.assignVehicles" xmlns:tnt="sap.tnt" 
+	xmlns:f="sap.ui.layout.form" controllerName="pipelineInventory.controller.assignVehicles" xmlns:tnt="sap.tnt"
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
@@ -30,19 +30,19 @@
 					</Bar>
 				</customHeader>
 				<tnt:ToolHeader>
-					<Select change="selectedScreen" selectedKey="Assign Vehicles">
-						<items>
-							<core:Item key="Master" text="Master"/>
-							<core:Item key="Details" text="Details"/>
-							<core:Item key="Vehicle Details" text="Vehicle Details"/>
-							<core:Item key="Order Change" text="Order Change"/>
-							<core:Item key="Ship To Dealer" text="Ship To Dealer"/>
-							<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>
-							<core:Item key="Assign Vehicles" text="Assign Vehicles"/>
-							<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>
-							<core:Item key="Change History" text="Change History"/>
-						</items>
-					</Select>
+					<!--<Select change="selectedScreen" selectedKey="Assign Vehicles">-->
+					<!--	<items>-->
+					<!--		<core:Item key="Master" text="Master"/>-->
+					<!--		<core:Item key="Details" text="Details"/>-->
+					<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
+					<!--		<core:Item key="Order Change" text="Order Change"/>-->
+					<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
+					<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
+					<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
+					<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
+					<!--		<core:Item key="Change History" text="Change History"/>-->
+					<!--	</items>-->
+					<!--</Select>-->
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
@@ -52,14 +52,13 @@
 					<OverflowToolbar>
 						<HBox>
 							<Label text="{i18n>AssigningDealer}" design="Bold" class="styleFontSizeSmall sapUiSmallMargin" required="required"/>
-							<ComboBox showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey=""
+							<ComboBox showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
 								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
-								<core:ListItem key="{BusinessDataModel>BusinessPartner}" text="{BusinessDataModel>BusinessPartner}"
-									additionalText="{BusinessDataModel>BusinessPartnerName}"/>
+								<core:ListItem key="{BusinessDataModel>BusinessPartner}" text="{BusinessDataModel>SearchTerm2} {BusinessDataModel>OrganizationBPName1}"/>
 							</ComboBox>
 						</HBox>
 						<ToolbarSpacer/>
-						<Button text="{i18n>Submit}" type="Accept"/>
+						<Button text="{i18n>Submit}" type="Accept" enabled="{LocalModel>/enableResubmitBtn}" press="onSubmitChanges"/>
 					</OverflowToolbar>
 					<Table items="{AssignVehiclesModel>/results}" width="auto" class="sapUiResponsiveMargin">
 						<headerToolbar>

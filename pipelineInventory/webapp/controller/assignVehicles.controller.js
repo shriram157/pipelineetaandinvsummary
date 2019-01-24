@@ -1,4 +1,4 @@
-var _that;
+var _that, SelectedDealer;
 sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
@@ -30,7 +30,7 @@ sap.ui.define([
 				_that.getView().setModel(_that.oI18nModel, "i18n");
 				_that.sCurrentLocale = 'EN';
 			}
-			
+
 			var sLocation = window.location.host;
 			var sLocation_conf = sLocation.search("webide");
 
@@ -43,14 +43,20 @@ sap.ui.define([
 
 			_that.oDealerDataModel = new JSONModel();
 			_that.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
-			
+
 			_that.oAssignVehiclesModel = new JSONModel();
 			_that.getView().setModel(_that.oAssignVehiclesModel, "AssignVehiclesModel");
 			sap.ui.getCore().getModel(_that.oAssignVehiclesModel, "AssignVehiclesModel");
-			_that.oAssignVehiclesModel.getData().results=[];
-			
+			_that.oAssignVehiclesModel.getData().results = [];
+
+			_that._oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0,
+				enableResubmitBtn: false
+			});
+			_that.getView().setModel(_that._oViewModel, "LocalModel");
+
 			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oAssignVehicleRoute, _that);
-			sap.ui.core.BusyIndicator.hide();
 		},
 
 		_oAssignVehicleRoute: function (oEvent) {
@@ -64,12 +70,22 @@ sap.ui.define([
 				}
 			}
 		},
-		
+
 		onNavigateToVL: function (oNavEvent) {
 			this.getRouter().navTo("vehicleDetails", {
 				OrderNumber: oNavEvent.getSource().getModel("AssignVehiclesModel").getProperty(oNavEvent.getSource().getBindingContext(
 					"AssignVehiclesModel").sPath).VHCLE
 			});
+		},
+
+		onDealerChange: function (oDealer) {
+			SelectedDealer = oDealer.getParameters().selectedItem.getProperty("key");
+			_that._oViewModel.setProperty("/enableResubmitBtn", true);
+		},
+		
+		onSubmitChanges:function(){
+			console.log("SelectedDealer",SelectedDealer);
+			_that.getRouter().navTo("assignVehiclesStatus");
 		},
 
 		selectedScreen: function (oSelectedScreen) {

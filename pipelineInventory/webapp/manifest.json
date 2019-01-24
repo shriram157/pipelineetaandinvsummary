@@ -125,7 +125,7 @@
 				},
 				{
 					"name": "changeHistory",
-					"pattern": "changeHistory",
+					"pattern": "changeHistory/{SelectedDealer}",
 					"target": "changeHistory"
 				}
 			],

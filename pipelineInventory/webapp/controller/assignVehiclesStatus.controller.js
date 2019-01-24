@@ -36,8 +36,21 @@ sap.ui.define([
 				_that.getView().setModel(_that.oI18nModel, "i18n");
 				_that.sCurrentLocale = 'EN';
 			}
+			_that.getView().setModel(sap.ui.getCore().getModel( "AssignVehiclesModel"), "AssignVehiclesModel");
+			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oAssignVehicleResponseRoute, _that);
 		},
 
+		_oAssignVehicleResponseRoute: function (oEvt) {
+			_that.getView().setModel(sap.ui.getCore().getModel( "AssignVehiclesModel"), "AssignVehiclesModel");
+		},
+		
+		onNavigateToVL: function (oNavEvent) {
+			this.getRouter().navTo("vehicleDetails", {
+				OrderNumber: oNavEvent.getSource().getModel("AssignVehiclesModel").getProperty(oNavEvent.getSource().getBindingContext(
+					"AssignVehiclesModel").sPath).VHCLE
+			});
+		},
+		
 		selectedScreen: function (oSelectedScreen) {
 			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
 			if (selectedScreenText == "Master") {

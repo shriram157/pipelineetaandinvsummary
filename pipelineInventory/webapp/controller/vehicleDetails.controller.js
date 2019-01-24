@@ -180,7 +180,7 @@ sap.ui.define([
 			Obj.Comments = _that.oVehicleDetailsJSON.Comments;
 			var oModel = new sap.ui.model.odata.v2.ODataModel(_that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
 			oModel.setUseBatch(false);
-			oModel.create("/VehicleDetailsSet" , Obj, {
+			oModel.create("/VehicleDetailsSet", Obj, {
 				success: $.proxy(function (oResponse) {
 					console.log(oResponse);
 				}, _that),
@@ -190,7 +190,6 @@ sap.ui.define([
 					);
 				}
 			});
-
 		},
 
 		onExit: function () {

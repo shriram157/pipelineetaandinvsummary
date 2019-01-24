@@ -41,7 +41,7 @@
 						<f:content>
 							<HBox>
 								<Label text="{i18n>VTN}" class="sapUiSmallMargin"/>
-								<Input type="Text" liveChange="onVTNChange">
+								<Input type="Text" liveChange="onVTNChange" id="ID_VTNVal">
 									<layoutData>
 										<l:GridData span="L2 M12 S12"/>
 									</layoutData>
@@ -49,7 +49,7 @@
 							</HBox>
 							<HBox>
 								<Label text="{i18n>VIN}" class="sapUiSmallMargin"/>
-								<Input type="Text" liveChange="onVINChange">
+								<Input type="Text" liveChange="onVINChange" id="ID_VINVal">
 									<layoutData>
 										<l:GridData span="L2 M12 S12"/>
 									</layoutData>
@@ -57,7 +57,7 @@
 							</HBox>
 							<HBox>
 								<Label text="{i18n>OrderNumber}" class="sapUiSmallMargin"/>
-								<Input type="Text" liveChange="onWildCardSearch">
+								<Input type="Text" liveChange="onWildCardSearch" id="ID_OrderNoVal">
 									<layoutData>
 										<l:GridData span="L2 M12 S12"/>
 									</layoutData>
@@ -80,7 +80,8 @@
 						<Button text="{i18n>AssignVehicles}" type="Default" press="navToAssignVehicles"/>
 						<Button text="{i18n>ExportToExcel}" type="Default" press="onDataExport"/>
 					</OverflowToolbar>
-					<Table items="{VehicleDetailsJSON>/results}" class="sapUiResponsiveMargin" mode="MultiSelect" id="Tab_vehicleDetails" selectionChange="vehicleSelect" >
+					<Table items="{VehicleDetailsJSON>/results}" class="sapUiResponsiveMargin" mode="MultiSelect" id="Tab_vehicleDetails" selectionChange="vehicleSelect" growing="true" growingThreshold="6"
+						growingScrollToLoad="false">
 						<!--growing="true" growingThreshold="2" growingScrollToLoad="false"-->
 						<columns>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">

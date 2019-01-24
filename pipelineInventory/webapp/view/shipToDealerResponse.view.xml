@@ -49,7 +49,7 @@
 				</tnt:ToolHeader>
 				<content>
 					<Label text="{i18n>Dropship}" design="Bold" class="styleFontSize sapUiSmallMargin sapUiSmallPadding"/>
-					<Table items="{DummyJSONModel>/ProductCollection}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="7" growingScrollToLoad="false">
+					<Table items="{DropShipDataModel>/results}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="7" growingScrollToLoad="false">
 						<columns>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 								<Text text="{i18n>OrderNumber}"/>
@@ -84,29 +84,17 @@
 						</columns>
 						<items>
 							<ColumnListItem>
-								<!--<cells>-->
-								<!--	<Link text="Link Here"/>-->
-								<!--	<Text text=""/>-->
-								<!--	<Text text=""/>-->
-								<!--	<Text text=""/>-->
-								<!--	<Text text=""/>-->
-								<!--	<Text text=""/>-->
-								<!--	<Text text=""/>-->
-								<!--	<Text text=""/>-->
-								<!--	<Text text=""/>-->
-								<!--	<Text text=""/>-->
-								<!--</cells>-->
 								<cells>
-									<Link text="{DummyJSONModel>ProductId}" press="onNavigateToVL"/>
-									<Text text="{DummyJSONModel>Category}"/>
-									<Text text="{DummyJSONModel>Status}"/>
-									<Link text="{DummyJSONModel>ProductId}"/>
-									<Link text="{DummyJSONModel>ProductId}"/>
-									<Text text="{DummyJSONModel>Name}"/>
-									<Text text="{DummyJSONModel>Name}"/>
-									<Text text="{DummyJSONModel>TaxTarifCode}"/>
-									<Text text="{DummyJSONModel>Status}"/>
-									<Text text="{DummyJSONModel>Name}"/>
+									<Link text="{DropShipDataModel>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{DropShipDataModel>ZZDLR_REF_NO}"/>
+									<Text text="{DropShipDataModel>ZZORDERTYPE}"/>
+									<Text text="{DropShipDataModel>ZMMSTA}"/>
+									<Text text="{DropShipDataModel>ZZVTN}" tooltip="{DropShipDataModel>ZZVTN}"/>
+									<Text text="{DropShipDataModel>VHVIN}" tooltip="{DropShipDataModel>VHVIN}"/>
+									<Text text="{DropShipDataModel>Model}"/>
+									<Text text="{DropShipDataModel>Suffix}"/>
+									<Text text="{DropShipDataModel>ExteriorColorCode}"/>
+									<Text text="{DropShipDataModel>ETAFrom}"/>
+									<Text text="{DropShipDataModel>ETA}"/>
 								</cells>
 							</ColumnListItem>
 						</items>

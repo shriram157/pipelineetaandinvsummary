@@ -39,8 +39,7 @@
 						<Label text="{i18n>Dealer}" design="Bold" class="styleFontSizeSmall sapUiSmallMargin" required="required"/>
 						<ComboBox showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
 							items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
-							<core:ListItem key="{BusinessDataModel>BusinessPartner}" text="{BusinessDataModel>BusinessPartner}"
-								additionalText="{BusinessDataModel>BusinessPartnerName}"/>
+							<core:ListItem key="{BusinessDataModel>BusinessPartner}" text="{BusinessDataModel>SearchTerm2} {BusinessDataModel>OrganizationBPName1}"/>
 						</ComboBox>
 					</HBox>
 					<VBox class="sapUiSmallMargin stylePosition">
@@ -63,7 +62,7 @@
 								</Select>
 								<Label text="{i18n>Suffix}"/>
 								<Select id="ID_marktgIntDesc" forceSelection="true" items="{GlobalJSONModel>/suffixData}" change="onSuffixChange">
-									<core:Item key="{GlobalJSONModel>Suffix}" text="{GlobalJSONModel>Suffix} - {GlobalJSONModel>SuffixDescriptionEN} {GlobalJSONModel>MarktgIntDescEN}"/>
+									<core:Item key="{GlobalJSONModel>Suffix}" text="{GlobalJSONModel>Suffix} - {GlobalJSONModel>SuffixDescriptionEN} / {GlobalJSONModel>MarktgIntDescEN}"/>
 									<!--/ {GlobalJSONModel>MarktgIntDescEN}-->
 								</Select>
 								<core:Title text=""/>
@@ -449,7 +448,7 @@
 						class="styleMultiHeaderTable" cellClick="onTable3Press">
 						<t:extension>
 							<Toolbar>
-								<Title text="{i18n>DeliverySummary}" class="TabFontStyle"/>
+								<Title text="{i18n>DeliverySummary}"/>
 							</Toolbar>
 						</t:extension>
 						<t:columns>

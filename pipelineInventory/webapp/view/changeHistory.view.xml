@@ -1,5 +1,5 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
-	xmlns:f="sap.ui.layout.form" controllerName="pipelineInventory.controller.changeHistory" xmlns:tnt="sap.tnt" 
+	xmlns:f="sap.ui.layout.form" controllerName="pipelineInventory.controller.changeHistory" xmlns:tnt="sap.tnt"
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
@@ -30,32 +30,31 @@
 					</Bar>
 				</customHeader>
 				<tnt:ToolHeader>
-					<Select change="selectedScreen" selectedKey="Change History">
-						<items>
-							<core:Item key="Master" text="Master"/>
-							<core:Item key="Details" text="Details"/>
-							<core:Item key="Vehicle Details" text="Vehicle Details"/>
-							<core:Item key="Order Change" text="Order Change"/>
-							<core:Item key="Ship To Dealer" text="Ship To Dealer"/>
-							<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>
-							<core:Item key="Assign Vehicles" text="Assign Vehicles"/>
-							<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>
-							<core:Item key="Change History" text="Change History"/>
-						</items>
-					</Select>
+					<!--<Select change="selectedScreen" selectedKey="Change History">-->
+					<!--	<items>-->
+					<!--		<core:Item key="Master" text="Master"/>-->
+					<!--		<core:Item key="Details" text="Details"/>-->
+					<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
+					<!--		<core:Item key="Order Change" text="Order Change"/>-->
+					<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
+					<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
+					<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
+					<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
+					<!--		<core:Item key="Change History" text="Change History"/>-->
+					<!--	</items>-->
+					<!--</Select>-->
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
 				<content>
-					<Label text="{i18n>ConfigurationChangeHitory}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
+					<Label text="{i18n>ConfigurationChangeHistory}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
 					<OverflowToolbar>
 						<HBox>
 							<Label text="{i18n>Dealer}" design="Bold" class="styleFontSizeSmall sapUiSmallMargin" required="required"/>
-							<ComboBox showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey=""
+							<ComboBox showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
 								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
-								<core:ListItem key="{BusinessDataModel>BusinessPartner}" text="{BusinessDataModel>BusinessPartner}"
-									additionalText="{BusinessDataModel>BusinessPartnerName}"/>
+								<core:ListItem key="{BusinessDataModel>BusinessPartner}" text="{BusinessDataModel>SearchTerm2} {BusinessDataModel>OrganizationBPName1}"/>
 							</ComboBox>
 						</HBox>
 						<ToolbarSpacer/>
@@ -72,7 +71,7 @@
 					<!--		<Button text="{i18n>Submit}" type="Default"/>-->
 					<!--	</l:HorizontalLayout>-->
 					<!--</f:SimpleForm>-->
-					<Table items="{DummyJSONModel>/ProductCollection}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="4"
+					<Table items="{ChangeHistoryModel>/results}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="5"
 						growingScrollToLoad="false">
 						<headerToolbar>
 							<Toolbar>
@@ -84,46 +83,58 @@
 								<Text text="{i18n>OrderNumber}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-								<Text text="{i18n>OrderType}"/>
+								<Text text="{i18n>VTN}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+								<Text text="{i18n>Series}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>OldModel}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>Old Suffix}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>Old APX}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>Old Color}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>New Model}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>New Suffix}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>New APX}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>SubmissionDateTime}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="{i18n>Status}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>VTN}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>VIN}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>Model}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>Suffix}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>Colour}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>ETAFrom}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>ETATo}"/>
+								<Text text="{i18n>ReSubmit}"/>
 							</Column>
 						</columns>
 						<items>
 							<ColumnListItem>
 								<cells>
-									<Link text="{DummyJSONModel>ProductId}" press="onNavigateToVL"/>
-									<Text text="{DummyJSONModel>Category}"/>
-									<Text text="{DummyJSONModel>Status}"/>
-									<Link text="{DummyJSONModel>ProductId}"/>
-									<Link text="{DummyJSONModel>ProductId}"/>
-									<Text text="{DummyJSONModel>Name}"/>
-									<Text text="{DummyJSONModel>Name}"/>
-									<Text text="{DummyJSONModel>TaxTarifCode}"/>
-									<Text text="{DummyJSONModel>Status}"/>
-									<Text text="{DummyJSONModel>Name}"/>
+									<Link text="{ChangeHistoryModel>ZZDLR_REF_NO}" press="onNavigateToVL"/>
+									<Link text="{ChangeHistoryModel>VTN}" press="onNavigateToVL"/>
+									<Text text="{ChangeHistoryModel>TCISeries}"/>
+									<Text text="{ChangeHistoryModel>OldModel}"/>
+									<Text text="{ChangeHistoryModel>OldSuffix}"/>
+									<Text text="{ChangeHistoryModel>OldAPX}"/>
+									<Text text="{ChangeHistoryModel>OldColor}"/>
+									<Text text="{ChangeHistoryModel>NewModel}"/>
+									<Text text="{ChangeHistoryModel>NewSuffix}"/>
+									<Text text="{ChangeHistoryModel>NewAPX}"/>
+									<Text text="{ChangeHistoryModel>DateSubmitted}"/>
+									<Text text="{ChangeHistoryModel>Status}"/>
+									<Button text="{i18n>ReSubmit}" visible="{LocalModel>/enableResubmitBtn}" press="onNavigateToOC"/>
 								</cells>
 							</ColumnListItem>
 						</items>

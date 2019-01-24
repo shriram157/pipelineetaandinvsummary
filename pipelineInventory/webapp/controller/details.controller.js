@@ -43,7 +43,7 @@ sap.ui.define([
 				this.sPrefix = "";
 			}
 			_that.nodeJsUrl = this.sPrefix + "/node";
-			
+
 			_that.oTable = this.getView().byId("Tab_vehicleDetails");
 			_that.oTable.removeSelections();
 
@@ -56,7 +56,7 @@ sap.ui.define([
 			_that.checkedData = [];
 			_that.errorFlag = false;
 			_that.oVehicleDetailsJSON = new JSONModel();
-			
+
 			_that.oTable = this.getView().byId("Tab_vehicleDetails");
 			_that.oTable.removeSelections();
 
@@ -92,7 +92,54 @@ sap.ui.define([
 		},
 		/*Show Filtered data as per user input*/
 		onApplyFilterBtn: function () {
-			this.getView().setModel(_that.oVehicleDetailsJSON, "VehicleDetailsJSON");
+			// debugger;
+			var sQuery = {};
+			sQuery.VTN = _that.getView().byId("ID_VTNVal").getValue();
+			sQuery.VIN = _that.getView().byId("ID_VINVal").getValue();
+			var tempFilter = (_that.getView().byId("ID_OrderNoVal").getValue()).split("*");
+			if (tempFilter[0] == "*") {
+				sQuery.OrderNumberEW = tempFilter[1];
+			} else if (tempFilter[1] == "*") {
+				sQuery.OrderNumberSW = tempFilter[0];
+			} else {
+				sQuery.OrderNumber = _that.getView().byId("ID_OrderNoVal").getValue();
+			}
+
+			_that.oTable = _that.getView().byId("Tab_vehicleDetails");
+			_that.oBinding = _that.oTable.getBinding("items");
+			var aFilters = [];
+			// debugger;
+			if (sQuery) {
+				aFilters = new Filter([
+					new Filter("ZZVTN", sap.ui.model.FilterOperator.Contains, sQuery.VTN)
+				], false);
+				aFilters = new Filter([
+					new Filter("VHVIN", sap.ui.model.FilterOperator.Contains, sQuery.VIN)
+				], false);
+				aFilters = new Filter([
+					new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.Contains, sQuery.OrderNumber)
+				], false);
+				aFilters = new Filter([
+					new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EndsWith, sQuery.OrderNumberEW)
+				], false);
+				aFilters = new Filter([
+					new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.StartsWith, sQuery.OrderNumberSW)
+				], false);
+
+				_that.oBinding.filter(aFilters);
+			} else {
+				_that.oBinding.filter([]);
+			}
+			// var sQuery = sQuery.length;
+			// if (sQuery && sQuery.length > 0) {
+			// 	aFilters = new Filter([
+			// 		new Filter("ZZVTN", sap.ui.model.FilterOperator.Contains, sQuery)
+			// 	], false);
+			// 	_that.oBinding.filter(aFilters);
+			// } else {
+			// 	_that.oBinding.filter([]);
+			// }
+			// _that.getView().setModel(_that.oVehicleDetailsJSON, "VehicleDetailsJSON");
 			// this.getView().setModel((sap.ui.getCore().getModel("VehicleDetailsJSON")), "VehicleDetailsJSON");
 		},
 
@@ -264,18 +311,42 @@ sap.ui.define([
 			_that.oTable = _that.getView().byId("Tab_vehicleDetails");
 			_that.oBinding = _that.oTable.getBinding("items");
 			var aFilters = [];
-			var sQuery = oWildCardVal.getSource().getValue();
-			sQuery = sQuery.replace("*", "%");
-				// debugger;
-			if (sQuery && sQuery.length > 0) {
-				aFilters = new Filter([
-					new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EQ, sQuery)
-				], false);
+			var tempFilter = oWildCardVal.getSource().getValue();
+
+			var sQuery = tempFilter.split("*");
+			var Query;
+			if (sQuery) {
+				if (sQuery[0] == "") {
+					Query = sQuery[1];
+					aFilters = new Filter([
+						new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.StartsWith, Query)
+					], false);
+				} else if (sQuery[1] == "") {
+					Query = sQuery[0];
+					aFilters = new Filter([
+						new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EndsWith, Query)
+					], false);
+				} else {
+					Query = _that.getView().byId("ID_OrderNoVal").getValue();
+					aFilters = new Filter([
+						new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.Contains, Query)
+					], false);
+				}
 				_that.oBinding.filter(aFilters);
 			} else {
 				_that.oBinding.filter([]);
 			}
 
+			// sQuery = sQuery.replace("*", "%");
+			// debugger;
+			// if (sQuery && sQuery.length > 0) {
+			// 	aFilters = new Filter([
+			// 		new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EQ, sQuery)
+			// 	], false);
+			// 	_that.oBinding.filter(aFilters);
+			// } else {
+			// 	_that.oBinding.filter([]);
+			// }
 		},
 
 		onDataExport: function (oEvent) {

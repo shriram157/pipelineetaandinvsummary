@@ -115,10 +115,10 @@
 }
 
 
-#blankBG, #blankBG>div, .blankBG {
-	background: #fff !important;
-	border: none !important;
-}
+/*#blankBG, #blankBG>div, .blankBG {*/
+/*	background: #fff !important;*/
+/*	border: none !important;*/
+/*}*/
 
 .TabFontStyle {
 	color:blue;
