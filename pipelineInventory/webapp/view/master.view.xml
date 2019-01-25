@@ -16,19 +16,6 @@
 					</Bar>
 				</customHeader>
 				<tnt:ToolHeader>
-					<!--<Select change="selectedScreen" selectedKey="Master">-->
-					<!--	<items>-->
-					<!--		<core:Item key="Master" text="Master"/>-->
-					<!--		<core:Item key="Details" text="Details"/>-->
-					<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
-					<!--		<core:Item key="Order Change" text="Order Change"/>-->
-					<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
-					<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
-					<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
-					<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
-					<!--		<core:Item key="Change History" text="Change History"/>-->
-					<!--	</items>-->
-					<!--</Select>-->
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
@@ -54,7 +41,7 @@
 								</ComboBox>
 								<Label text="{i18n>Series}"/>
 								<Select id="ID_seriesDesc" forceSelection="true" change="onSeriesSelectionChange" items="{GlobalJSONModel>/seriesData}">
-									<core:Item key="{GlobalJSONModel>ModelSeriesNo}" text="{GlobalJSONModel>ModelSeriesNo} - {GlobalJSONModel>TCISeriesDescriptionEN}"/>
+									<core:Item key="{GlobalJSONModel>ModelSeriesNo}" text="{GlobalJSONModel>TCISeriesDescriptionEN}"/>
 								</Select>
 								<Label text="{i18n>Model}"/>
 								<Select id="ID_modelDesc" forceSelection="true" items="{GlobalJSONModel>/modelData}" change="onModelSelectionChange">
