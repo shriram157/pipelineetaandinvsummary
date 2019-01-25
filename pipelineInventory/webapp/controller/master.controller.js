@@ -805,7 +805,7 @@ sap.ui.define([
 
 			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?filter=zzmoyr eq '2018' and zzmodel eq 'YZ3DCT' and zzsuffix eq 'BB' and zzextcol eq '0070'
 
-			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?filter=zzmoyr eq '" + Modelyear + "' and zzmodel eq '" +
+			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + Modelyear + "' and zzmodel eq '" +
 				Model + "' and zzsuffix eq '" + Suffix + "' and zzextcol eq '" + ExteriorColorCode + "'";
 			$.ajax({
 				dataType: "json",
