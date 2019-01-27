@@ -65,7 +65,9 @@ sap.ui.define([
 				console.log("routedData", _that.routedData);
 
 				var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=MATRIX eq '" + _that.routedData.MatrixVal +
-					"' and Model eq '" + _that.routedData.Model + "' and Modelyear eq '" + _that.routedData.ModelYear + "'&$format=json";
+					"' and Model eq '" + _that.routedData.Model + "' and Modelyear eq '" + _that.routedData.ModelYear + "'and TCISeries eq '" + _that
+					.routedData.series + "'and Suffix eq '" + _that.routedData.suffix + "'and ExteriorColorCode eq '" + _that.routedData.ExteriorColorCode +
+					"'and APX eq '" + _that.routedData.APXValue + "'and ETA eq '" + _that.routedData.ETADate + "'and Dealer eq '" + _that.routedData.Dealer + "'&$format=json";
 				$.ajax({
 					dataType: "json",
 					url: url,
@@ -96,37 +98,53 @@ sap.ui.define([
 			var sQuery = {};
 			sQuery.VTN = _that.getView().byId("ID_VTNVal").getValue();
 			sQuery.VIN = _that.getView().byId("ID_VINVal").getValue();
-			var tempFilter = (_that.getView().byId("ID_OrderNoVal").getValue()).split("*");
-			if (tempFilter[0] == "*") {
-				sQuery.OrderNumberEW = tempFilter[1];
-			} else if (tempFilter[1] == "*") {
-				sQuery.OrderNumberSW = tempFilter[0];
-			} else {
-				sQuery.OrderNumber = _that.getView().byId("ID_OrderNoVal").getValue();
-			}
+			sQuery.tempFilter = (_that.getView().byId("ID_OrderNoVal").getValue()).split("*");
+			// if (tempFilter[0] == "*") {
+			// 	sQuery.OrderNumberEW = tempFilter[1];
+			// } else if (tempFilter[1] == "*") {
+			// 	sQuery.OrderNumberSW = tempFilter[0];
+			// } else {
+			// 	sQuery.OrderNumber = _that.getView().byId("ID_OrderNoVal").getValue();
+			// }
 
 			_that.oTable = _that.getView().byId("Tab_vehicleDetails");
 			_that.oBinding = _that.oTable.getBinding("items");
 			var aFilters = [];
+			var newQuery = sQuery.tempFilter;
+			
 			// debugger;
 			if (sQuery) {
-				aFilters = new Filter([
-					new Filter("ZZVTN", sap.ui.model.FilterOperator.Contains, sQuery.VTN)
-				], false);
-				aFilters = new Filter([
-					new Filter("VHVIN", sap.ui.model.FilterOperator.Contains, sQuery.VIN)
-				], false);
-				aFilters = new Filter([
-					new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.Contains, sQuery.OrderNumber)
-				], false);
-				aFilters = new Filter([
-					new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EndsWith, sQuery.OrderNumberEW)
-				], false);
-				aFilters = new Filter([
-					new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.StartsWith, sQuery.OrderNumberSW)
-				], false);
+				aFilters.push(new Filter("ZZVTN", sap.ui.model.FilterOperator.Contains, sQuery.VTN));
+				aFilters.push(new Filter("VHVIN", sap.ui.model.FilterOperator.Contains, sQuery.VIN));
+				var Query;
+				
+				if (newQuery[0] == "") {
+					Query = newQuery[1];
+					aFilters.push(new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.StartsWith, Query));
+				} else if (newQuery[1] == "") {
+					Query = newQuery[0];
+					aFilters.push(new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EndsWith, Query));
+				} else {
+					Query = _that.getView().byId("ID_OrderNoVal").getValue();
+					aFilters.push(new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.Contains, Query));
+				}
+				// aFilters = new Filter([
+				// 	new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.Contains, sQuery.OrderNumber)
+				// ], false);
+				// aFilters = new Filter([
+				// 	new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EndsWith, sQuery.OrderNumberEW)
+				// ], false);
+				// aFilters = new Filter([
+				// 	new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.StartsWith, sQuery.OrderNumberSW)
+				// ], false);
 
-				_that.oBinding.filter(aFilters);
+				var oFilter = new sap.ui.model.Filter({
+					aFilters: aFilters,
+					bAnd: true,
+					_bMultiFilter: true
+				});
+
+				_that.oBinding.filter(oFilter);
 			} else {
 				_that.oBinding.filter([]);
 			}
@@ -315,7 +333,7 @@ sap.ui.define([
 
 			var sQuery = tempFilter.split("*");
 			var Query;
-			if (sQuery) {
+			if (sQuery.length>0) {
 				if (sQuery[0] == "") {
 					Query = sQuery[1];
 					aFilters = new Filter([

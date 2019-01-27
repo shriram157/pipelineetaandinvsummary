@@ -746,7 +746,7 @@ sap.ui.define([
 			_that.getView().byId("ID_modelDesc").getSelectedKey("Please Select");
 			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey("Please Select");
 			_that.getView().byId("ID_APXValue").getSelectedKey("Please Select");
-			
+
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
 			var oSeriesVal = oSeriesVal.getParameters("selectedItem").selectedItem.getKey();
 			console.log("oSeriesVal", oSeriesVal);
@@ -854,7 +854,7 @@ sap.ui.define([
 			_that.getView().byId("ID_marktgIntDesc").getSelectedKey("Please Select");
 			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey("Please Select");
 			_that.getView().byId("ID_APXValue").getSelectedKey("Please Select");
-			
+
 			// if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {
 			// 	_that.getView().byId("ID_seriesDesc").setValue();
 			// }
@@ -1004,9 +1004,34 @@ sap.ui.define([
 			console.log(_that.RowIndex, _that.ColumnIndex);
 			// _that.getRowDataTable1(_that.RowIndex, _that.ColumnIndex);
 			var obj_first = {};
+			obj_first.Dealer =SelectedDealer;
 			obj_first.MatrixVal = "A" + _that.RowIndex + _that.ColumnIndex;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
-			obj_first.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
+
+			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {
+				obj_first.series = _that.getView().byId("ID_seriesDesc").getSelectedKey();
+			} else obj_first.series = "";
+
+			if (_that.getView().byId("ID_modelDesc").getSelectedKey() != "Please Select") {
+				obj_first.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
+			} else obj_first.Model = "";
+
+			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select") {
+				obj_first.suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
+			} else obj_first.suffix = "";
+
+			if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
+				obj_first.ExteriorColorCode = _that.getView().byId("ID_ExteriorColorCode").getSelectedKey();
+			} else obj_first.ExteriorColorCode = "";
+
+			if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
+				obj_first.APXValue = _that.getView().byId("ID_APXValue").getSelectedKey();
+			} else obj_first.APXValue = "";
+			
+			var ETADate = _that.getView().byId("id_ETADate").getValue();
+			if (ETADate != "Please Select") {
+				obj_first.ETADate = _that.oDateFormat.format(new Date(ETADate));
+			} else obj_first.ETADate = "";
 
 			_that.getRouter().navTo("details", {
 				tableFirst: JSON.stringify(obj_first)
@@ -1020,9 +1045,34 @@ sap.ui.define([
 			console.log(_that.RowIndex, _that.ColumnIndex);
 			// _that.getRowDataTable1(_that.RowIndex, _that.ColumnIndex);
 			var obj_first = {};
+			obj_first.Dealer =SelectedDealer;
 			obj_first.MatrixVal = "B" + _that.RowIndex + _that.ColumnIndex;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
-			obj_first.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
+
+			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {
+				obj_first.series = _that.getView().byId("ID_seriesDesc").getSelectedKey();
+			} else obj_first.series = "";
+
+			if (_that.getView().byId("ID_modelDesc").getSelectedKey() != "Please Select") {
+				obj_first.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
+			} else obj_first.Model = "";
+
+			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select") {
+				obj_first.suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
+			} else obj_first.suffix = "";
+
+			if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
+				obj_first.ExteriorColorCode = _that.getView().byId("ID_ExteriorColorCode").getSelectedKey();
+			} else obj_first.ExteriorColorCode = "";
+
+			if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
+				obj_first.APXValue = _that.getView().byId("ID_APXValue").getSelectedKey();
+			} else obj_first.APXValue = "";
+			
+			var ETADate = _that.getView().byId("id_ETADate").getValue();
+			if (ETADate != "Please Select") {
+				obj_first.ETADate = _that.oDateFormat.format(new Date(ETADate));
+			} else obj_first.ETADate = "";
 
 			_that.getRouter().navTo("details", {
 				tableFirst: JSON.stringify(obj_first)
@@ -1036,9 +1086,34 @@ sap.ui.define([
 			console.log(_that.RowIndex, _that.ColumnIndex);
 			// _that.getRowDataTable1(_that.RowIndex, _that.ColumnIndex);
 			var obj_first = {};
+			obj_first.Dealer =SelectedDealer;
 			obj_first.MatrixVal = "C" + _that.RowIndex + _that.ColumnIndex;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
-			obj_first.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
+
+			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {
+				obj_first.series = _that.getView().byId("ID_seriesDesc").getSelectedKey();
+			} else obj_first.series = "";
+
+			if (_that.getView().byId("ID_modelDesc").getSelectedKey() != "Please Select") {
+				obj_first.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
+			} else obj_first.Model = "";
+
+			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select") {
+				obj_first.suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
+			} else obj_first.suffix = "";
+
+			if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
+				obj_first.ExteriorColorCode = _that.getView().byId("ID_ExteriorColorCode").getSelectedKey();
+			} else obj_first.ExteriorColorCode = "";
+
+			if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
+				obj_first.APXValue = _that.getView().byId("ID_APXValue").getSelectedKey();
+			} else obj_first.APXValue = "";
+			
+			var ETADate = _that.getView().byId("id_ETADate").getValue();
+			if (ETADate != "Please Select") {
+				obj_first.ETADate = _that.oDateFormat.format(new Date(ETADate));
+			} else obj_first.ETADate = "";
 
 			_that.getRouter().navTo("details", {
 				tableFirst: JSON.stringify(obj_first)
