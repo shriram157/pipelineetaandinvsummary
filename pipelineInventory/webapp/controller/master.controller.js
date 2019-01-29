@@ -536,60 +536,63 @@ sap.ui.define([
 		fetchCountsforTables: function (filteredData) {
 			var ETACounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Pipeline_CountSet" + filteredData;
 			console.log("queryString", filteredData);
-
-			$.ajax({
-				dataType: "json",
-				url: ETACounturl,
-				type: "GET",
-				success: function (oCountData) {
-					sap.ui.core.BusyIndicator.hide();
-					console.log("ETA Count Data", oCountData.d.results);
-					_that.oGlobalJSONModel.getData().ETAResults = oCountData.d.results;
-					_that.oGlobalJSONModel.updateBindings();
-				},
-				error: function (oError) {
-					sap.ui.core.BusyIndicator.hide();
-					_that.errorFlag = true;
-				}
-			});
+			if (_that.oGlobalJSONModel != undefined) {
+				$.ajax({
+					dataType: "json",
+					url: ETACounturl,
+					type: "GET",
+					success: function (oCountData) {
+						sap.ui.core.BusyIndicator.hide();
+						console.log("ETA Count Data", oCountData.d.results);
+						_that.oGlobalJSONModel.getData().ETAResults = oCountData.d.results;
+						_that.oGlobalJSONModel.updateBindings();
+					},
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						_that.errorFlag = true;
+					}
+				});
+			}
 			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Inventory_CountSet?$filter=Model eq 'YZ3DCT' and Modelyear eq '2018'&$format=json
 			var InventCounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Inventory_CountSet" + filteredData;
-
-			$.ajax({
-				dataType: "json",
-				url: InventCounturl,
-				type: "GET",
-				success: function (oCountData) {
-					sap.ui.core.BusyIndicator.hide();
-					console.log("Invent Count Data", oCountData.d.results);
-					//oCountData.d.results
-					_that.oGlobalJSONModel.getData().InventSumResults = oCountData.d.results;
-					_that.oGlobalJSONModel.updateBindings();
-				},
-				error: function (oError) {
-					sap.ui.core.BusyIndicator.hide();
-					_that.errorFlag = true;
-				}
-			});
+			if (_that.oGlobalJSONModel != undefined) {
+				$.ajax({
+					dataType: "json",
+					url: InventCounturl,
+					type: "GET",
+					success: function (oCountData) {
+						sap.ui.core.BusyIndicator.hide();
+						console.log("Invent Count Data", oCountData.d.results);
+						//oCountData.d.results
+						_that.oGlobalJSONModel.getData().InventSumResults = oCountData.d.results;
+						_that.oGlobalJSONModel.updateBindings();
+					},
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						_that.errorFlag = true;
+					}
+				});
+			}
 
 			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Inventory_CountSet?$filter=Model eq 'YZ3DCT' and Modelyear eq '2018'&$format=json
 			var DelCounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Delivery_CountSet" + filteredData;
-
-			$.ajax({
-				dataType: "json",
-				url: DelCounturl,
-				type: "GET",
-				success: function (oCountData) {
-					sap.ui.core.BusyIndicator.hide();
-					console.log("Del Count Data", oCountData.d.results);
-					_that.oGlobalJSONModel.getData().DeliveryResults = oCountData.d.results;
-					_that.oGlobalJSONModel.updateBindings();
-				},
-				error: function (oError) {
-					sap.ui.core.BusyIndicator.hide();
-					_that.errorFlag = true;
-				}
-			});
+			if (_that.oGlobalJSONModel != undefined) {
+				$.ajax({
+					dataType: "json",
+					url: DelCounturl,
+					type: "GET",
+					success: function (oCountData) {
+						sap.ui.core.BusyIndicator.hide();
+						console.log("Del Count Data", oCountData.d.results);
+						_that.oGlobalJSONModel.getData().DeliveryResults = oCountData.d.results;
+						_that.oGlobalJSONModel.updateBindings();
+					},
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						_that.errorFlag = true;
+					}
+				});
+			}
 		},
 
 		/*For Switching the Pages*/
@@ -1004,7 +1007,7 @@ sap.ui.define([
 			console.log(_that.RowIndex, _that.ColumnIndex);
 			// _that.getRowDataTable1(_that.RowIndex, _that.ColumnIndex);
 			var obj_first = {};
-			obj_first.Dealer =SelectedDealer;
+			obj_first.Dealer = SelectedDealer;
 			obj_first.MatrixVal = "A" + _that.RowIndex + _that.ColumnIndex;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 
@@ -1027,7 +1030,7 @@ sap.ui.define([
 			if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
 				obj_first.APXValue = _that.getView().byId("ID_APXValue").getSelectedKey();
 			} else obj_first.APXValue = "";
-			
+
 			var ETADate = _that.getView().byId("id_ETADate").getValue();
 			if (ETADate != "Please Select") {
 				obj_first.ETADate = _that.oDateFormat.format(new Date(ETADate));
@@ -1045,7 +1048,7 @@ sap.ui.define([
 			console.log(_that.RowIndex, _that.ColumnIndex);
 			// _that.getRowDataTable1(_that.RowIndex, _that.ColumnIndex);
 			var obj_first = {};
-			obj_first.Dealer =SelectedDealer;
+			obj_first.Dealer = SelectedDealer;
 			obj_first.MatrixVal = "B" + _that.RowIndex + _that.ColumnIndex;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 
@@ -1068,7 +1071,7 @@ sap.ui.define([
 			if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
 				obj_first.APXValue = _that.getView().byId("ID_APXValue").getSelectedKey();
 			} else obj_first.APXValue = "";
-			
+
 			var ETADate = _that.getView().byId("id_ETADate").getValue();
 			if (ETADate != "Please Select") {
 				obj_first.ETADate = _that.oDateFormat.format(new Date(ETADate));
@@ -1086,7 +1089,7 @@ sap.ui.define([
 			console.log(_that.RowIndex, _that.ColumnIndex);
 			// _that.getRowDataTable1(_that.RowIndex, _that.ColumnIndex);
 			var obj_first = {};
-			obj_first.Dealer =SelectedDealer;
+			obj_first.Dealer = SelectedDealer;
 			obj_first.MatrixVal = "C" + _that.RowIndex + _that.ColumnIndex;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 
@@ -1109,7 +1112,7 @@ sap.ui.define([
 			if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
 				obj_first.APXValue = _that.getView().byId("ID_APXValue").getSelectedKey();
 			} else obj_first.APXValue = "";
-			
+
 			var ETADate = _that.getView().byId("id_ETADate").getValue();
 			if (ETADate != "Please Select") {
 				obj_first.ETADate = _that.oDateFormat.format(new Date(ETADate));
@@ -1120,13 +1123,13 @@ sap.ui.define([
 			});
 		},
 
-		// onBeforeRendering: function () {
-		// 	_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oMasterRoute, _that);
-		// },
+		onBeforeRendering: function () {
+			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oMasterRoute, _that);
+		},
 
-		// _oMasterRoute: function (oEvent) {
-
-		// },
+		_oMasterRoute: function (oEvent) {
+			sap.ui.core.BusyIndicator.hide();
+		},
 
 		/*Exit Function for refreshing/resetting view */
 		onExit: function () {

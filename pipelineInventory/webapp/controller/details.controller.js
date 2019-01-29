@@ -74,11 +74,13 @@ sap.ui.define([
 					type: "GET",
 					success: function (oRowData) {
 						console.log("oRowData", oRowData);
+						sap.ui.core.BusyIndicator.hide();
 						_that.oVehicleDetailsJSON.setData(oRowData.d);
 						_that.getView().setModel(_that.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						sap.ui.getCore().setModel(_that.oVehicleDetailsJSON, "VehicleDetailsJSON");
+						_that.oTable.setModel(_that.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						_that.oVehicleDetailsJSON.updateBindings(true);
-						sap.ui.core.BusyIndicator.hide();
+						
 					},
 					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
@@ -172,8 +174,8 @@ sap.ui.define([
 		selectedScreen: function (oSelectedScreen) {
 			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
 			if (selectedScreenText == "Master") {
-				_that.oVehicleDetailsJSON.setData();
-				_that.oVehicleDetailsJSON.updateBindings(true);
+				// _that.oVehicleDetailsJSON.setData();
+				_that.oVehicleDetailsJSON.refresh(true);
 				_that.getRouter().navTo("Routemaster");
 			} else if (selectedScreenText == "Details") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Details");
@@ -437,8 +439,8 @@ sap.ui.define([
 		/*Exit Function for refreshing/resetting view */
 		onExit: function () {
 			_that.checkedData = [];
-			_that.destroy();
 			_that.oVehicleDetailsJSON.refresh();
+			_that.destroy();
 		}
 	});
 });
