@@ -594,33 +594,6 @@ sap.ui.define([
 				});
 			}
 		},
-
-		/*For Switching the Pages*/
-		selectedScreen: function (oSelectedScreen) {
-			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
-			if (selectedScreenText == "Master") {
-				_that.getRouter().navTo("Routemaster");
-			} else if (selectedScreenText == "Details") {
-				_that.getRouter().navTo("details");
-			} else if (selectedScreenText == "Vehicle Details") {
-				_that.getRouter().navTo("vehicleDetails");
-			} else if (selectedScreenText == "Order Change") {
-				_that.getRouter().navTo("orderChange");
-			} else if (selectedScreenText == "Ship To Dealer") {
-				_that.getRouter().navTo("shipToDealer");
-			} else if (selectedScreenText == "Ship To Dealer Response") {
-				_that.getRouter().navTo("shipToDealerResponse");
-			} else if (selectedScreenText == "Assign Vehicles") {
-				_that.getRouter().navTo("assignVehicles");
-			} else if (selectedScreenText == "Assign Vehicles Status") {
-				_that.getRouter().navTo("assignVehiclesStatus");
-			} else if (selectedScreenText == "Change History") {
-				_that.getRouter().navTo("changeHistory", {
-					SelectedDealer: SelectedDealer
-				});
-			}
-		},
-
 		//on Model Selection Change
 		onModelSelectionChange: function (oModel) {
 			_that.temp = [];
@@ -993,9 +966,13 @@ sap.ui.define([
 			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
 				_that.getRouter().navTo("vehicleDetailsNodata");
 			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_that.getRouter().navTo("changeHistory", {
-					SelectedDealer: SelectedDealer
-				});
+				if (SelectedDealer == undefined || SelectedDealer == "") {
+					sap.m.MessageBox.information("Please Select Dealer");
+				} else {
+					_that.getRouter().navTo("changeHistory", {
+						SelectedDealer: SelectedDealer
+					});
+				}
 			}
 		},
 

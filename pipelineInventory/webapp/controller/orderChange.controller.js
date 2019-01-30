@@ -111,7 +111,7 @@ sap.ui.define([
 				_that.getRouter().navTo("changeHistory");
 			}
 		},
-		
+
 		onRequestChange: function (oPost) {
 			var Obj = {};
 			_that.oOrderChangeJSON = _that.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
@@ -119,9 +119,15 @@ sap.ui.define([
 			Obj.Dealer = _that.getView().getModel("VehicleDetailsJSON").getData().selectedCustomerData[0].KUNNR;
 			Obj.NewModel = _that.oOrderChangeJSON.NewModel;
 			Obj.NewColour = _that.oOrderChangeJSON.NewColour;
-			
+
 			var oModel = new sap.ui.model.odata.v2.ODataModel(_that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
 			oModel.setUseBatch(false);
+			this._oToken = oModel.getHeaders()['x-csrf-token'];
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-Token': this._oToken
+				}
+			});
 			oModel.create("/OrderChangeSet", Obj, {
 				success: $.proxy(function (oResponse) {
 					console.log("orderChangeResponse", oResponse);
@@ -131,7 +137,7 @@ sap.ui.define([
 				}
 			});
 		},
-		
+
 		onExit: function () {
 			this.destroy();
 		}

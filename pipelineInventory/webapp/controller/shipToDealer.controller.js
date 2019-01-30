@@ -65,9 +65,11 @@ sap.ui.define([
 			if (oEvent.getParameters().arguments.vehicleData != undefined) {
 				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
 				for (var n = 0; n < VUIdata.length; n++) {
-					_that.oDropShipDataModel.getData().results.push(VUIdata[n]);
-					_that.oDropShipDataModel.updateBindings(true);
-					_that.getView().setModel(_that.oDropShipDataModel, "DropShipDataModel");
+					if (VUIdata[n].DropShip !== false) {
+						_that.oDropShipDataModel.getData().results.push(VUIdata[n]);
+						_that.oDropShipDataModel.updateBindings(true);
+						_that.getView().setModel(_that.oDropShipDataModel, "DropShipDataModel");
+					}
 				}
 			}
 		},
@@ -81,47 +83,51 @@ sap.ui.define([
 
 		onDealerChange: function (oDealer) {
 			SelectedDealer = oDealer.getParameters().selectedItem.getProperty("key");
-			_that._oViewModel.setProperty("/enableResubmitBtn", true);
+			if (_that.getView().setModel("DropShipDataModel").getData().results.length > 0) {
+				_that._oViewModel.setProperty("/enableResubmitBtn", true);
+			}
 		},
 
 		getResonseForSubmit: function () {
 			console.log("SelectedDealer", SelectedDealer);
 			var Obj = {};
 			_that.oJSON = _that.getView().setModel("DropShipDataModel").getData().results;
-			_that.responseData=[];
-			for (var i = 0; i < _that.oJSON.length; i++) {
+			_that.responseData = [];
+			if (_that.oJSON.length > 0) {
+				for (var i = 0; i < _that.oJSON.length; i++) {
 
-				Obj.Dealer_To = _that.oJSON[i].Dealer_To;
-				Obj.VHCLE = _that.oJSON[i].KUNNR;
-				Obj.Dealer = SelectedDealer;
-				Obj.Model = _that.oJSON[i].Model;
-				Obj.Modelyear = _that.oJSON[i].Modelyear;
-				Obj.Suffix = _that.oJSON[i].Suffix;
-				Obj.ExteriorColorCode = _that.oJSON[i].ExteriorColorCode;
-				Obj.INTCOL = _that.oJSON[i].INTCOL;
+					Obj.Dealer_To = _that.oJSON[i].Dealer_To;
+					Obj.VHCLE = _that.oJSON[i].KUNNR;
+					Obj.Dealer = SelectedDealer;
+					Obj.Model = _that.oJSON[i].Model;
+					Obj.Modelyear = _that.oJSON[i].Modelyear;
+					Obj.Suffix = _that.oJSON[i].Suffix;
+					Obj.ExteriorColorCode = _that.oJSON[i].ExteriorColorCode;
+					Obj.INTCOL = _that.oJSON[i].INTCOL;
 
-				var oModel = new sap.ui.model.odata.v2.ODataModel(_that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
-				this._oToken = oModel.getHeaders()['x-csrf-token'];
-				$.ajaxSetup({
-					headers: {
-						'X-CSRF-Token': this._oToken
-					}
-				});
-				oModel.create("/DropShipSet", Obj, {
-					success: $.proxy(function (oResponse) {
-						console.log("orderChangeResponse", oResponse);
-						_that.responseData.push(oResponse.results);
-					}, _that),
-					error: function (oError) {
-						console.log("orderChangeError", oError);
-					}
-				});
+					var oModel = new sap.ui.model.odata.v2.ODataModel(_that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
+					this._oToken = oModel.getHeaders()['x-csrf-token'];
+					$.ajaxSetup({
+						headers: {
+							'X-CSRF-Token': this._oToken
+						}
+					});
+					oModel.create("/DropShipSet", Obj, {
+						success: $.proxy(function (oResponse) {
+							console.log("Drop Ship Response", oResponse);
+							_that.responseData.push(oResponse.results);
+						}, _that),
+						error: function (oError) {
+							console.log("orderChangeError", oError);
+						}
+					});
+				}
 			}
 		},
 
 		onSubmitChanges: function () {
 			_that.getResonseForSubmit();
-			_that.getRouter().navTo("shipToDealerResponse",{
+			_that.getRouter().navTo("shipToDealerResponse", {
 				// data:JSON.stringify(_that.responseData);
 			});
 		},

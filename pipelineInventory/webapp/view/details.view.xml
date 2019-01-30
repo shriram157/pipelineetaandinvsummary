@@ -76,8 +76,8 @@
 					<OverflowToolbar>
 						<Label text="{i18n>VehicleDetails}" design="Bold" class="styleFontSize"/>
 						<ToolbarSpacer/>
-						<Button text="{i18n>DropShipVehicles}" type="Default" press="navToDropShipVehicles"/>
-						<Button text="{i18n>AssignVehicles}" type="Default" press="navToAssignVehicles"/>
+						<Button text="{i18n>DropShipVehicles}" type="Default" press="navToDropShipVehicles" enabled="{DetailsLocalModel>/enableDropShipBtn}" />
+						<Button text="{i18n>AssignVehicles}" type="Default" press="navToAssignVehicles" enabled="{DetailsLocalModel>/enableAssignVehicleBtn}" />
 						<Button text="{i18n>ExportToExcel}" type="Default" press="onDataExport"/>
 					</OverflowToolbar>
 					<Table items="{VehicleDetailsJSON>/results}" class="sapUiResponsiveMargin" mode="MultiSelect" id="Tab_vehicleDetails" selectionChange="vehicleSelect" growing="true" growingThreshold="6"

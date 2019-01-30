@@ -46,7 +46,13 @@ sap.ui.define([
 
 			_that.oTable = this.getView().byId("Tab_vehicleDetails");
 			_that.oTable.removeSelections();
-
+			_that._oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0,
+				enableDropShipBtn: false,
+				enableAssignVehicleBtn: false
+			});
+			_that.getView().setModel(_that._oViewModel, "DetailsLocalModel");
 			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oDetailsRoute, _that);
 
 		},
@@ -67,7 +73,8 @@ sap.ui.define([
 				var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=MATRIX eq '" + _that.routedData.MatrixVal +
 					"' and Model eq '" + _that.routedData.Model + "' and Modelyear eq '" + _that.routedData.ModelYear + "'and TCISeries eq '" + _that
 					.routedData.series + "'and Suffix eq '" + _that.routedData.suffix + "'and ExteriorColorCode eq '" + _that.routedData.ExteriorColorCode +
-					"'and APX eq '" + _that.routedData.APXValue + "'and ETA eq '" + _that.routedData.ETADate + "'and Dealer eq '" + _that.routedData.Dealer + "'&$format=json";
+					"'and APX eq '" + _that.routedData.APXValue + "'and ETA eq '" + _that.routedData.ETADate + "'and Dealer eq '" + _that.routedData.Dealer +
+					"'&$format=json";
 				$.ajax({
 					dataType: "json",
 					url: url,
@@ -80,7 +87,7 @@ sap.ui.define([
 						sap.ui.getCore().setModel(_that.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						_that.oTable.setModel(_that.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						_that.oVehicleDetailsJSON.updateBindings(true);
-						
+
 					},
 					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
@@ -113,13 +120,13 @@ sap.ui.define([
 			_that.oBinding = _that.oTable.getBinding("items");
 			var aFilters = [];
 			var newQuery = sQuery.tempFilter;
-			
+
 			// debugger;
 			if (sQuery) {
 				aFilters.push(new Filter("ZZVTN", sap.ui.model.FilterOperator.Contains, sQuery.VTN));
 				aFilters.push(new Filter("VHVIN", sap.ui.model.FilterOperator.Contains, sQuery.VIN));
 				var Query;
-				
+
 				if (newQuery[0] == "") {
 					Query = newQuery[1];
 					aFilters.push(new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.StartsWith, Query));
@@ -335,7 +342,7 @@ sap.ui.define([
 
 			var sQuery = tempFilter.split("*");
 			var Query;
-			if (sQuery.length>0) {
+			if (sQuery.length > 0) {
 				if (sQuery[0] == "") {
 					Query = sQuery[1];
 					aFilters = new Filter([
