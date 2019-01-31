@@ -1,4 +1,4 @@
-var _that;
+var _thatVD;
 sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
@@ -10,27 +10,27 @@ sap.ui.define([
 
 	return BaseController.extend("pipelineInventory.controller.vehicleDetails", {
 		onInit: function () {
-			_that = this;
+			_thatVD = this;
 
-			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+			_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
-			_that.getView().setModel(_that.oI18nModel, "i18n");
+			_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
 
 			if (window.location.search == "?language=fr") {
-				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
 				});
-				_that.getView().setModel(_that.oI18nModel, "i18n");
-				_that.sCurrentLocale = 'FR';
+				_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
+				_thatVD.sCurrentLocale = 'FR';
 			} else {
-				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
 				});
-				_that.getView().setModel(_that.oI18nModel, "i18n");
-				_that.sCurrentLocale = 'EN';
+				_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
+				_thatVD.sCurrentLocale = 'EN';
 			}
 
 			var sLocation = window.location.host;
@@ -41,62 +41,78 @@ sap.ui.define([
 			} else {
 				this.sPrefix = "";
 			}
-			_that.nodeJsUrl = this.sPrefix + "/node";
+			_thatVD.nodeJsUrl = this.sPrefix + "/node";
 			// this.getView().setModel(sap.ui.getCore().getModel("SelectJSONModel"), "SelectJSONModel");
-			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oVehicleDetailsRoute, _that);
+			_thatVD.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatVD._oVehicleDetailsRoute, _thatVD);
+		},
+
+		formatDate: function (oDate) {
+			if (oDate != "" && oDate != undefined) {
+				var date = JSON.parse(oDate);
+				jQuery.sap.require("sap.ui.core.format.DateFormat");
+				_thatVD.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+					pattern: "yyyy-MM-dd"
+				});
+				return _thatVD.oDateFormat.format(new Date(date));
+			}
 		},
 
 		_oVehicleDetailsRoute: function (oEvent) {
 			sap.ui.core.BusyIndicator.hide();
 			this.getView().setModel(sap.ui.getCore().getModel("VehicleDetailsJSON"), "VehicleDetailsJSON");
-			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+
+			_thatVD.oVehicleDetailsJSON = _thatVD.getView().getModel("VehicleDetailsJSON");
+
+			_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
-			_that.getView().setModel(_that.oI18nModel, "i18n");
+			_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
 
 			if (window.location.search == "?language=fr") {
-				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
 				});
-				_that.getView().setModel(_that.oI18nModel, "i18n");
-				_that.sCurrentLocale = 'FR';
+				_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
+				_thatVD.sCurrentLocale = 'FR';
 			} else {
-				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
 				});
-				_that.getView().setModel(_that.oI18nModel, "i18n");
-				_that.sCurrentLocale = 'EN';
+				_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
+				_thatVD.sCurrentLocale = 'EN';
 			}
 			if (oEvent.getParameter("arguments").OrderNumber != undefined) {
 				//console.log(oEvent.getParameter("arguments").data);
-				_that.oVehicleDetailsJSON = _that.getView().getModel("VehicleDetailsJSON");
+
 				var _OrderNumber = oEvent.getParameter("arguments").OrderNumber;
-				for (var i = 0; i < _that.oVehicleDetailsJSON.getData().results.length; i++) {
-					if (_that.oVehicleDetailsJSON.getData().results[i].VHCLE == _OrderNumber) {
-						_that.oVehicleDetailsJSON.getData().selectedVehicleData = [];
-						_that.oVehicleDetailsJSON.getData().selectedVehicleData.push(_that.oVehicleDetailsJSON.getData().results[i]);
-						_that.oVehicleDetailsJSON.getData().selectedVehicleData[0].AccessoriesInstalled = "";
-						_that.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNCVehicle = "";
-						_that.oVehicleDetailsJSON.updateBindings();
-					}
-				}
-				_that.oVehicleDetailsJSON.getData().selectedCustomerData = [];
-				var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('" + _OrderNumber + "')";
+
+				var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('" + _OrderNumber + "')";
 				$.ajax({
 					dataType: "json",
 					url: url,
 					type: "GET",
 					success: function (oRowData) {
-						_that.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d.results;
-						_that.oVehicleDetailsJSON.updateBindings();
+						console.log("CustomerData", oRowData);
+						_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = [];
+						_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
+						_thatVD.oVehicleDetailsJSON.updateBindings(true);
 					},
 					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
-						_that.errorFlag = true;
+						_thatVD.errorFlag = true;
 					}
 				});
+				for (var i = 0; i < _thatVD.oVehicleDetailsJSON.getData().results.length; i++) {
+					if (_thatVD.oVehicleDetailsJSON.getData().results[i].VHCLE == _OrderNumber) {
+						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData = [];
+						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData.push(_thatVD.oVehicleDetailsJSON.getData().results[i]);
+						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].AccessoriesInstalled = "";
+						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNCVehicle = "";
+						_thatVD.oVehicleDetailsJSON.updateBindings();
+					}
+				}
 			}
 
 			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('0000603687')
@@ -112,14 +128,14 @@ sap.ui.define([
 				window.history.go(-1);
 			} else {
 				//var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-				var oRouter = sap.ui.core.UIComponent.getRouterFor(_that);
+				var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatVD);
 				oRouter.navTo("details");
 			}
 		},
 
 		/*Navigate to Order Change screen*/
 		NavToOrderChange: function () {
-			var oRouter = sap.ui.core.UIComponent.getRouterFor(_that);
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatVD);
 			oRouter.navTo("orderChange", {
 				OrderNumber: sap.ui.getCore().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].ProductId
 			});
@@ -130,60 +146,60 @@ sap.ui.define([
 			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
 			if (selectedScreenText == "Master") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Pipeline ETA & Inventory Summary");
-				_that.getRouter().navTo("Routemaster");
+				_thatVD.getRouter().navTo("Routemaster");
 			} else if (selectedScreenText == "Details") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Details");
-				_that.getRouter().navTo("details");
+				_thatVD.getRouter().navTo("details");
 			} else if (selectedScreenText == "Vehicle Details") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Vehicle Details");
-				_that.getRouter().navTo("vehicleDetails");
+				_thatVD.getRouter().navTo("vehicleDetails");
 			} else if (selectedScreenText == "Order Change") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Order Change");
-				_that.getRouter().navTo("orderChange");
+				_thatVD.getRouter().navTo("orderChange");
 			} else if (selectedScreenText == "Ship To Dealer") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer");
-				_that.getRouter().navTo("shipToDealer");
+				_thatVD.getRouter().navTo("shipToDealer");
 			} else if (selectedScreenText == "Ship To Dealer Response") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer Response");
-				_that.getRouter().navTo("shipToDealerResponse");
+				_thatVD.getRouter().navTo("shipToDealerResponse");
 			} else if (selectedScreenText == "Assign Vehicles") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles");
-				_that.getRouter().navTo("assignVehicles");
+				_thatVD.getRouter().navTo("assignVehicles");
 			} else if (selectedScreenText == "Assign Vehicles Status") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles Status");
-				_that.getRouter().navTo("assignVehiclesStatus");
+				_thatVD.getRouter().navTo("assignVehiclesStatus");
 			} else if (selectedScreenText == "Change History") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Change History");
-				_that.getRouter().navTo("changeHistory");
+				_thatVD.getRouter().navTo("changeHistory");
 			}
 		},
 		onMenuLinkPress: function (oLink) {
 			var _oLinkPressed = oLink;
 			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
-			if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("PageTitle")) {
-				_that.getRouter().navTo("Routemaster");
-			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
-				_that.getRouter().navTo("vehicleDetailsNodata");
-			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_that.getRouter().navTo("changeHistory");
+			if (_oSelectedScreen == _thatVD.oI18nModel.getResourceBundle().getText("PageTitle")) {
+				_thatVD.getRouter().navTo("Routemaster");
+			} else if (_oSelectedScreen == _thatVD.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
+				_thatVD.getRouter().navTo("vehicleDetailsNodata");
+			} else if (_oSelectedScreen == _thatVD.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+				_thatVD.getRouter().navTo("changeHistory");
 			}
 		},
 
 		postVehicleUpdates: function (oPost) {
 			debugger;
 			var Obj = {};
-			_that.oVehicleDetailsJSON = _that.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
-			Obj.VHCLE = _that.oVehicleDetailsJSON.VHCLE;
-			Obj.NewAPX = _that.oVehicleDetailsJSON.APX;
-			Obj.AccessoriesInstalled = _that.oVehicleDetailsJSON.AccessoriesInstalled;
-			Obj.DNC = _that.oVehicleDetailsJSON.DNCVehicle;
-			Obj.Comments = _that.oVehicleDetailsJSON.Comments;
-			var oModel = new sap.ui.model.odata.v2.ODataModel(_that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
+			_thatVD.oVehicleDetailsJSON = _thatVD.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
+			Obj.VHCLE = _thatVD.oVehicleDetailsJSON.VHCLE;
+			Obj.NewAPX = _thatVD.oVehicleDetailsJSON.APX;
+			Obj.AccessoriesInstalled = _thatVD.oVehicleDetailsJSON.AccessoriesInstalled;
+			Obj.DNC = _thatVD.oVehicleDetailsJSON.DNCVehicle;
+			Obj.Comments = _thatVD.oVehicleDetailsJSON.Comments;
+			var oModel = new sap.ui.model.odata.v2.ODataModel(_thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
 			oModel.setUseBatch(false);
 			oModel.create("/VehicleDetailsSet", Obj, {
 				success: $.proxy(function (oResponse) {
 					console.log(oResponse);
-				}, _that),
+				}, _thatVD),
 				error: function (oError) {
 					sap.m.MessageBox.error(
 						"Error in data saving"

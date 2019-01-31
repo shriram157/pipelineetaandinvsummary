@@ -126,8 +126,8 @@
 									<Text text="{VehicleDetailsJSON>Model}"/>
 									<Text text="{VehicleDetailsJSON>Suffix}"/>
 									<Text text="{VehicleDetailsJSON>ExteriorColorCode}"/>
-									<Text text="{VehicleDetailsJSON>ETAFrom}"/>
-									<Text text="{VehicleDetailsJSON>ETA}"/>
+									<Text text="{path:'VehicleDetailsJSON>ETAFrom', formatter: '.formatDate'}"/>
+									<Text text="{path:'VehicleDetailsJSON>ETATo', formatter: '.formatDate'}" />
 								</cells>
 							</ColumnListItem>
 						</items>

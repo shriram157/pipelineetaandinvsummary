@@ -48,17 +48,17 @@
 								<Label text="{i18n>VIN}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/VHVIN}"/>
 								<Label text="{i18n>ETA}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ETA}"/>
+								<Text text="{path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} From - {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'} To"/>
 								<Label text="{i18n>VehicleDeliveredDate}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom} - {VehicleDetailsJSON>/selectedVehicleData/0/ETATo}"/>
+								<Text text="{path:'VehicleDetailsJSON>/selectedVehicleData/0/DeliveryDate', formatter: '.formatDate'}"/>
 								
 								<core:Title text="{i18n>AdditionalInformation}"/>
 								<Label text="{i18n>OrderingDealer}"/>
-								<Link text="{VehicleDetailsJSON>/selectedCustomerData/0/KUNNR}"/>
+								<Link text="{VehicleDetailsJSON>/selectedCustomerData/KUNNR}"/>
 								<Label text="{i18n>ShipToDealer}"/>
-								<Link text="{VehicleDetailsJSON>/selectedCustomerData/0/ZZKUNWE}"/>
+								<Link text="{VehicleDetailsJSON>/selectedCustomerData/ZZKUNWE}"/>
 								<Label text="{i18n>Plant}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/PLANTDESC}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/PLANTDESC}"/>
 								<Label text="{i18n>HoldVehicle}"/>
 								<Text text="Yes"/>
 								<Label text="{i18n>AccessoriesInstalled}" required="true"/>
@@ -76,25 +76,25 @@
 							<f:content>
 								<core:Title text="{i18n>CustomerInformation}"/>
 								<Label text="{i18n>CustomerName}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/ENDCU}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/ENDCU}"/>
 								<Label text="{i18n>Address}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/STREET} {VehicleDetailsJSON>/selectedCustomerData/0/POST_CODE}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/STREET} {VehicleDetailsJSON>/selectedCustomerData/POST_CODE}"/>
 								<Label text="{i18n>City}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/CITY}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/CITY}"/>
 								<Label text="{i18n>Province}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/REGIO}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/REGIO}"/>
 								<Label text="{i18n>PostalCode}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/POST_CODE}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/POST_CODE}"/>
 								<Label text="{i18n>PhoneNumber}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/TEL_NO}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/TEL_NO}"/>
 								<Label text="{i18n>Email}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/EMAIL}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/EMAIL}"/>
 								<Label text="{i18n>DriversLicense}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/ENDCU}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/ENDCU}"/>
 								<core:Title text="{i18n>AccessoryInformation}"/>
 								<Label text="{i18n>AccessoryName}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/MAKTX}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/0/MAKTX}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/MAKTX}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/MAKTX}"/>
 							</f:content>
 						</f:SimpleForm>
 					</VBox>

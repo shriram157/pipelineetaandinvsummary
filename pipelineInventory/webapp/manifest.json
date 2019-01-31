@@ -12,6 +12,16 @@
 		"sourceTemplate": {
 			"id": "servicecatalog.connectivityComponentForManifest",
 			"version": "0.0.0"
+		},
+		"dataSources": {
+			"ZPIPELINE_ETA_INVENT_SUMMARY_SRV": {
+				"uri": "/pipelineInventory-dest/node/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/metadata.xml"
+				}
+			}
 		}
 	},
 	"sap.ui": {
@@ -58,14 +68,24 @@
 					"bundleName": "pipelineInventory.i18n.i18n"
 				},
 				"preload": true
+			},
+			"OrderChangeModel": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request",
+					"json": true,
+					"useBatch": false
+				},
+				"dataSource": "ZPIPELINE_ETA_INVENT_SUMMARY_SRV",
+				"preload": false
 			}
 		},
 		"resources": {
-			"css": [
-				{
-					"uri": "css/style.css"
-				}
-			]
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		},
 		"routing": {
 			"config": {
@@ -77,58 +97,47 @@
 				"controlId": "idAppControl",
 				"clearControlAggregation": false
 			},
-			"routes": [
-				{
-					"name": "Routemaster",
-					"pattern": "Routemaster",
-					"target": "Routemaster"
-				},
-				{
-					"name": "details",
-					"pattern": "details/{tableFirst}",
-					"target": "details"
-				},
-				{
-					"name": "vehicleDetails",
-					"pattern": "vehicleDetails/:OrderNumber:",
-					"target": "vehicleDetails"
-				},
-				{
-					"name": "vehicleDetailsNodata",
-					"pattern": "vehicleDetailsNodata",
-					"target": "vehicleDetailsNodata"
-				},
-				{
-					"name": "orderChange",
-					"pattern": "orderChange/:OrderNumber:",
-					"target": "orderChange"
-				},
-				{
-					"name": "shipToDealer",
-					"pattern": "shipToDealer/{vehicleData}",
-					"target": "shipToDealer"
-				},
-				{
-					"name": "shipToDealerResponse",
-					"pattern": "shipToDealerResponse",
-					"target": "shipToDealerResponse"
-				},
-				{
-					"name": "assignVehicles",
-					"pattern": "assignVehicles/{vehicleData}",
-					"target": "assignVehicles"
-				},
-				{
-					"name": "assignVehiclesStatus",
-					"pattern": "assignVehiclesStatus",
-					"target": "assignVehiclesStatus"
-				},
-				{
-					"name": "changeHistory",
-					"pattern": "changeHistory/{SelectedDealer}",
-					"target": "changeHistory"
-				}
-			],
+			"routes": [{
+				"name": "Routemaster",
+				"pattern": "Routemaster",
+				"target": "Routemaster"
+			}, {
+				"name": "details",
+				"pattern": "details/{tableFirst}",
+				"target": "details"
+			}, {
+				"name": "vehicleDetails",
+				"pattern": "vehicleDetails/:OrderNumber:",
+				"target": "vehicleDetails"
+			}, {
+				"name": "vehicleDetailsNodata",
+				"pattern": "vehicleDetailsNodata",
+				"target": "vehicleDetailsNodata"
+			}, {
+				"name": "orderChange",
+				"pattern": "orderChange/:OrderNumber:",
+				"target": "orderChange"
+			}, {
+				"name": "shipToDealer",
+				"pattern": "shipToDealer/{vehicleData}",
+				"target": "shipToDealer"
+			}, {
+				"name": "shipToDealerResponse",
+				"pattern": "shipToDealerResponse",
+				"target": "shipToDealerResponse"
+			}, {
+				"name": "assignVehicles",
+				"pattern": "assignVehicles/{vehicleData}",
+				"target": "assignVehicles"
+			}, {
+				"name": "assignVehiclesStatus",
+				"pattern": "assignVehiclesStatus",
+				"target": "assignVehiclesStatus"
+			}, {
+				"name": "changeHistory",
+				"pattern": "changeHistory/{SelectedDealer}",
+				"target": "changeHistory"
+			}],
 			"targets": {
 				"Routemaster": {
 					"viewType": "XML",

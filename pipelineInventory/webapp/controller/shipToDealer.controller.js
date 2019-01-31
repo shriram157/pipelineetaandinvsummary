@@ -1,4 +1,4 @@
-var _that, SelectedDealer;
+var _thatSD, SelectedDealer;
 sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
@@ -10,26 +10,26 @@ sap.ui.define([
 	return BaseController.extend("pipelineInventory.controller.shipToDealer", {
 
 		onInit: function () {
-			_that = this;
-			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+			_thatSD = this;
+			_thatSD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
-			_that.getView().setModel(_that.oI18nModel, "i18n");
+			_thatSD.getView().setModel(_thatSD.oI18nModel, "i18n");
 
 			if (window.location.search == "?language=fr") {
-				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				_thatSD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
 				});
-				_that.getView().setModel(_that.oI18nModel, "i18n");
-				_that.sCurrentLocale = 'FR';
+				_thatSD.getView().setModel(_thatSD.oI18nModel, "i18n");
+				_thatSD.sCurrentLocale = 'FR';
 			} else {
-				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				_thatSD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
 				});
-				_that.getView().setModel(_that.oI18nModel, "i18n");
-				_that.sCurrentLocale = 'EN';
+				_thatSD.getView().setModel(_thatSD.oI18nModel, "i18n");
+				_thatSD.sCurrentLocale = 'EN';
 			}
 
 			var sLocation = window.location.host;
@@ -40,24 +40,24 @@ sap.ui.define([
 			} else {
 				this.sPrefix = "";
 			}
-			_that.nodeJsUrl = this.sPrefix + "/node";
+			_thatSD.nodeJsUrl = this.sPrefix + "/node";
 
-			_that.oDealerDataModel = new JSONModel();
-			_that.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
+			_thatSD.oDealerDataModel = new JSONModel();
+			_thatSD.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
 
-			_that.oDropShipDataModel = new JSONModel();
-			_that.getView().setModel(_that.oDropShipDataModel, "DropShipDataModel");
-			sap.ui.getCore().getModel(_that.oDropShipDataModel, "DropShipDataModel");
-			_that.oDropShipDataModel.getData().results = [];
+			_thatSD.oDropShipDataModel = new JSONModel();
+			_thatSD.getView().setModel(_thatSD.oDropShipDataModel, "DropShipDataModel");
+			sap.ui.getCore().getModel(_thatSD.oDropShipDataModel, "DropShipDataModel");
+			_thatSD.oDropShipDataModel.getData().results = [];
 
-			_that._oViewModel = new sap.ui.model.json.JSONModel({
+			_thatSD._oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
 				delay: 0,
 				enableResubmitBtn: false
 			});
-			_that.getView().setModel(_that._oViewModel, "LocalModel");
+			_thatSD.getView().setModel(_thatSD._oViewModel, "LocalModel");
 
-			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oShipToDealerRoute, _that);
+			_thatSD.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatSD._oShipToDealerRoute, _thatSD);
 		},
 
 		_oShipToDealerRoute: function (oEvent) {
@@ -66,9 +66,9 @@ sap.ui.define([
 				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
 				for (var n = 0; n < VUIdata.length; n++) {
 					if (VUIdata[n].DropShip !== false) {
-						_that.oDropShipDataModel.getData().results.push(VUIdata[n]);
-						_that.oDropShipDataModel.updateBindings(true);
-						_that.getView().setModel(_that.oDropShipDataModel, "DropShipDataModel");
+						_thatSD.oDropShipDataModel.getData().results.push(VUIdata[n]);
+						_thatSD.oDropShipDataModel.updateBindings(true);
+						_thatSD.getView().setModel(_thatSD.oDropShipDataModel, "DropShipDataModel");
 					}
 				}
 			}
@@ -83,29 +83,29 @@ sap.ui.define([
 
 		onDealerChange: function (oDealer) {
 			SelectedDealer = oDealer.getParameters().selectedItem.getProperty("key");
-			if (_that.getView().setModel("DropShipDataModel").getData().results.length > 0) {
-				_that._oViewModel.setProperty("/enableResubmitBtn", true);
+			if (_thatSD.getView().setModel("DropShipDataModel").getData().results.length > 0) {
+				_thatSD._oViewModel.setProperty("/enableResubmitBtn", true);
 			}
 		},
 
 		getResonseForSubmit: function () {
 			console.log("SelectedDealer", SelectedDealer);
 			var Obj = {};
-			_that.oJSON = _that.getView().setModel("DropShipDataModel").getData().results;
-			_that.responseData = [];
-			if (_that.oJSON.length > 0) {
-				for (var i = 0; i < _that.oJSON.length; i++) {
+			_thatSD.oJSON = _thatSD.getView().setModel("DropShipDataModel").getData().results;
+			_thatSD.responseData = [];
+			if (_thatSD.oJSON.length > 0) {
+				for (var i = 0; i < _thatSD.oJSON.length; i++) {
 
-					Obj.Dealer_To = _that.oJSON[i].Dealer_To;
-					Obj.VHCLE = _that.oJSON[i].KUNNR;
+					Obj.Dealer_To = _thatSD.oJSON[i].Dealer_To;
+					Obj.VHCLE = _thatSD.oJSON[i].KUNNR;
 					Obj.Dealer = SelectedDealer;
-					Obj.Model = _that.oJSON[i].Model;
-					Obj.Modelyear = _that.oJSON[i].Modelyear;
-					Obj.Suffix = _that.oJSON[i].Suffix;
-					Obj.ExteriorColorCode = _that.oJSON[i].ExteriorColorCode;
-					Obj.INTCOL = _that.oJSON[i].INTCOL;
+					Obj.Model = _thatSD.oJSON[i].Model;
+					Obj.Modelyear = _thatSD.oJSON[i].Modelyear;
+					Obj.Suffix = _thatSD.oJSON[i].Suffix;
+					Obj.ExteriorColorCode = _thatSD.oJSON[i].ExteriorColorCode;
+					Obj.INTCOL = _thatSD.oJSON[i].INTCOL;
 
-					var oModel = new sap.ui.model.odata.v2.ODataModel(_that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
+					var oModel = new sap.ui.model.odata.v2.ODataModel(_thatSD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
 					this._oToken = oModel.getHeaders()['x-csrf-token'];
 					$.ajaxSetup({
 						headers: {
@@ -115,8 +115,8 @@ sap.ui.define([
 					oModel.create("/DropShipSet", Obj, {
 						success: $.proxy(function (oResponse) {
 							console.log("Drop Ship Response", oResponse);
-							_that.responseData.push(oResponse.results);
-						}, _that),
+							_thatSD.responseData.push(oResponse.results);
+						}, _thatSD),
 						error: function (oError) {
 							console.log("orderChangeError", oError);
 						}
@@ -126,9 +126,9 @@ sap.ui.define([
 		},
 
 		onSubmitChanges: function () {
-			_that.getResonseForSubmit();
-			_that.getRouter().navTo("shipToDealerResponse", {
-				// data:JSON.stringify(_that.responseData);
+			_thatSD.getResonseForSubmit();
+			_thatSD.getRouter().navTo("shipToDealerResponse", {
+				// data:JSON.stringify(_thatSD.responseData);
 			});
 		},
 
@@ -136,42 +136,42 @@ sap.ui.define([
 			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
 			if (selectedScreenText == "Master") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Pipeline ETA & Inventory Summary");
-				_that.getRouter().navTo("Routemaster");
+				_thatSD.getRouter().navTo("Routemaster");
 			} else if (selectedScreenText == "Details") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Details");
-				_that.getRouter().navTo("details");
+				_thatSD.getRouter().navTo("details");
 			} else if (selectedScreenText == "Vehicle Details") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Vehicle Details");
-				_that.getRouter().navTo("vehicleDetails");
+				_thatSD.getRouter().navTo("vehicleDetails");
 			} else if (selectedScreenText == "Order Change") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Order Change");
-				_that.getRouter().navTo("orderChange");
+				_thatSD.getRouter().navTo("orderChange");
 			} else if (selectedScreenText == "Ship To Dealer") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer");
-				_that.getRouter().navTo("shipToDealer");
+				_thatSD.getRouter().navTo("shipToDealer");
 			} else if (selectedScreenText == "Ship To Dealer Response") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer Response");
-				_that.getRouter().navTo("shipToDealerResponse");
+				_thatSD.getRouter().navTo("shipToDealerResponse");
 			} else if (selectedScreenText == "Assign Vehicles") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles");
-				_that.getRouter().navTo("assignVehicles");
+				_thatSD.getRouter().navTo("assignVehicles");
 			} else if (selectedScreenText == "Assign Vehicles Status") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles Status");
-				_that.getRouter().navTo("assignVehiclesStatus");
+				_thatSD.getRouter().navTo("assignVehiclesStatus");
 			} else if (selectedScreenText == "Change History") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Change History");
-				_that.getRouter().navTo("changeHistory");
+				_thatSD.getRouter().navTo("changeHistory");
 			}
 		},
 		onMenuLinkPress: function (oLink) {
 			var _oLinkPressed = oLink;
 			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
-			if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("PageTitle")) {
-				_that.getRouter().navTo("Routemaster");
-			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
-				_that.getRouter().navTo("vehicleDetailsNodata");
-			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_that.getRouter().navTo("changeHistory");
+			if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("PageTitle")) {
+				_thatSD.getRouter().navTo("Routemaster");
+			} else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
+				_thatSD.getRouter().navTo("vehicleDetailsNodata");
+			} else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+				_thatSD.getRouter().navTo("changeHistory");
 			}
 		},
 

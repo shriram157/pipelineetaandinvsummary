@@ -1,4 +1,4 @@
-var _that;
+var _thatCH;
 sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
@@ -10,26 +10,26 @@ sap.ui.define([
 	return BaseController.extend("pipelineInventory.controller.changeHistory", {
 
 		onInit: function () {
-			_that = this;
-			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+			_thatCH = this;
+			_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
-			_that.getView().setModel(_that.oI18nModel, "i18n");
+			_thatCH.getView().setModel(_thatCH.oI18nModel, "i18n");
 
 			if (window.location.search == "?language=fr") {
-				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
 				});
-				_that.getView().setModel(_that.oI18nModel, "i18n");
-				_that.sCurrentLocale = 'FR';
+				_thatCH.getView().setModel(_thatCH.oI18nModel, "i18n");
+				_thatCH.sCurrentLocale = 'FR';
 			} else {
-				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
 				});
-				_that.getView().setModel(_that.oI18nModel, "i18n");
-				_that.sCurrentLocale = 'EN';
+				_thatCH.getView().setModel(_thatCH.oI18nModel, "i18n");
+				_thatCH.sCurrentLocale = 'EN';
 			}
 
 			var sLocation = window.location.host;
@@ -40,35 +40,35 @@ sap.ui.define([
 			} else {
 				this.sPrefix = "";
 			}
-			_that.nodeJsUrl = this.sPrefix + "/node";
+			_thatCH.nodeJsUrl = this.sPrefix + "/node";
 
-			_that.oChangeHistoryModel = new JSONModel();
-			_that.getView().setModel(_that.oChangeHistoryModel, "ChangeHistoryModel");
+			_thatCH.oChangeHistoryModel = new JSONModel();
+			_thatCH.getView().setModel(_thatCH.oChangeHistoryModel, "ChangeHistoryModel");
 
-			_that.oDealerDataModel = new JSONModel();
-			_that.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
+			_thatCH.oDealerDataModel = new JSONModel();
+			_thatCH.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
 
-			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oChangeHistoryRoute, _that);
+			_thatCH.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatCH._oChangeHistoryRoute, _thatCH);
 			// var err = JSON.parse(oError.response.body);
 			// sap.m.MessageBox.error(err.error.message.value);
 		},
 
 		_oChangeHistoryRoute: function (oEvent) {
 			sap.ui.core.BusyIndicator.hide();
-			_that.getView().setModel(_that.oChangeHistoryModel, "ChangeHistoryModel");
+			_thatCH.getView().setModel(_thatCH.oChangeHistoryModel, "ChangeHistoryModel");
 
 			if (oEvent.getParameters().arguments.SelectedDealer != undefined) {
-				_that.Dealer = oEvent.getParameters().arguments.SelectedDealer;
+				_thatCH.Dealer = oEvent.getParameters().arguments.SelectedDealer;
 
-				_that._oViewModel = new sap.ui.model.json.JSONModel({
+				_thatCH._oViewModel = new sap.ui.model.json.JSONModel({
 					busy: false,
 					delay: 0,
 					enableResubmitBtn: false
 				});
-				_that.getView().setModel(_that._oViewModel, "LocalModel");
+				_thatCH.getView().setModel(_thatCH._oViewModel, "LocalModel");
 				sap.ui.core.BusyIndicator.show();
 				//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '2400042193'&$format=json
-				var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '" + _that.Dealer +
+				var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '" + _thatCH.Dealer +
 					"'&$format=json";
 				$.ajax({
 					dataType: "json",
@@ -76,18 +76,18 @@ sap.ui.define([
 					type: "GET",
 					success: function (oChangeData) {
 						console.log("ChangeHistory Data", oChangeData);
-						_that.oChangeHistoryModel.setData(oChangeData.d);
-						_that.oChangeHistoryModel.updateBindings(true);
-						for (var n = 0; n < _that.oChangeHistoryModel.getData().results.length; n++) {
-							if (_that.oChangeHistoryModel.getData().results[n].Status == "Rejected") {
-								_that._oViewModel.setProperty("/enableResubmitBtn", true);
+						_thatCH.oChangeHistoryModel.setData(oChangeData.d);
+						_thatCH.oChangeHistoryModel.updateBindings(true);
+						for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
+							if (_thatCH.oChangeHistoryModel.getData().results[n].Status == "Rejected") {
+								_thatCH._oViewModel.setProperty("/enableResubmitBtn", true);
 							} else {
-								_that._oViewModel.setProperty("/enableResubmitBtn", false);
+								_thatCH._oViewModel.setProperty("/enableResubmitBtn", false);
 							}
 						}
 					},
 					error: function (oError) {
-						_that.errorFlag = true;
+						_thatCH.errorFlag = true;
 					}
 				});
 			}
@@ -96,7 +96,7 @@ sap.ui.define([
 		onDealerChange: function (oDealer) {
 			sap.ui.core.BusyIndicator.show();
 			var SelectedDealer = oDealer.getParameters().selectedItem.getProperty("key");
-			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '" + SelectedDealer +
+			var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '" + SelectedDealer +
 				"'&$format=json";
 			$.ajax({
 				dataType: "json",
@@ -105,19 +105,19 @@ sap.ui.define([
 				success: function (oChangeData) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log("ChangeHistory Data", oChangeData);
-					_that.oChangeHistoryModel.setData(oChangeData.d);
-					_that.oChangeHistoryModel.updateBindings(true);
-					for (var n = 0; n < _that.oChangeHistoryModel.getData().results.length; n++) {
-						if (_that.oChangeHistoryModel.getData().results[n].Status == "Rejected") {
-							_that._oViewModel.setProperty("/enableResubmitBtn", true);
+					_thatCH.oChangeHistoryModel.setData(oChangeData.d);
+					_thatCH.oChangeHistoryModel.updateBindings(true);
+					for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
+						if (_thatCH.oChangeHistoryModel.getData().results[n].Status == "Rejected") {
+							_thatCH._oViewModel.setProperty("/enableResubmitBtn", true);
 						} else {
-							_that._oViewModel.setProperty("/enableResubmitBtn", false);
+							_thatCH._oViewModel.setProperty("/enableResubmitBtn", false);
 						}
 					}
 				},
 				error: function (oError) {
 					sap.ui.core.BusyIndicator.hide();
-					_that.errorFlag = true;
+					_thatCH.errorFlag = true;
 				}
 			});
 		},
@@ -140,42 +140,42 @@ sap.ui.define([
 			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
 			if (selectedScreenText == "Master") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Pipeline ETA & Inventory Summary");
-				_that.getRouter().navTo("Routemaster");
+				_thatCH.getRouter().navTo("Routemaster");
 			} else if (selectedScreenText == "Details") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Details");
-				_that.getRouter().navTo("details");
+				_thatCH.getRouter().navTo("details");
 			} else if (selectedScreenText == "Vehicle Details") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Vehicle Details");
-				_that.getRouter().navTo("vehicleDetails");
+				_thatCH.getRouter().navTo("vehicleDetails");
 			} else if (selectedScreenText == "Order Change") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Order Change");
-				_that.getRouter().navTo("orderChange");
+				_thatCH.getRouter().navTo("orderChange");
 			} else if (selectedScreenText == "Ship To Dealer") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer");
-				_that.getRouter().navTo("shipToDealer");
+				_thatCH.getRouter().navTo("shipToDealer");
 			} else if (selectedScreenText == "Ship To Dealer Response") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer Response");
-				_that.getRouter().navTo("shipToDealerResponse");
+				_thatCH.getRouter().navTo("shipToDealerResponse");
 			} else if (selectedScreenText == "Assign Vehicles") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles");
-				_that.getRouter().navTo("assignVehicles");
+				_thatCH.getRouter().navTo("assignVehicles");
 			} else if (selectedScreenText == "Assign Vehicles Status") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles Status");
-				_that.getRouter().navTo("assignVehiclesStatus");
+				_thatCH.getRouter().navTo("assignVehiclesStatus");
 			} else if (selectedScreenText == "Change History") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Change History");
-				_that.getRouter().navTo("changeHistory");
+				_thatCH.getRouter().navTo("changeHistory");
 			}
 		},
 		onMenuLinkPress: function (oLink) {
 			var _oLinkPressed = oLink;
 			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
-			if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("PageTitle")) {
-				_that.getRouter().navTo("Routemaster");
-			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
-				_that.getRouter().navTo("vehicleDetailsNodata");
-			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_that.getRouter().navTo("changeHistory");
+			if (_oSelectedScreen == _thatCH.oI18nModel.getResourceBundle().getText("PageTitle")) {
+				_thatCH.getRouter().navTo("Routemaster");
+			} else if (_oSelectedScreen == _thatCH.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
+				_thatCH.getRouter().navTo("vehicleDetailsNodata");
+			} else if (_oSelectedScreen == _thatCH.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+				_thatCH.getRouter().navTo("changeHistory");
 			}
 		}
 	});

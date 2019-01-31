@@ -1,4 +1,4 @@
-var _that;
+var _thatSDR;
 sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
@@ -10,33 +10,33 @@ sap.ui.define([
 	return BaseController.extend("pipelineInventory.controller.shipToDealerResponse", {
 
 		onInit: function () {
-			_that = this;
-			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+			_thatSDR = this;
+			_thatSDR.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
-			_that.getView().setModel(_that.oI18nModel, "i18n");
+			_thatSDR.getView().setModel(_thatSDR.oI18nModel, "i18n");
 
 			if (window.location.search == "?language=fr") {
-				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				_thatSDR.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
 				});
-				_that.getView().setModel(_that.oI18nModel, "i18n");
-				_that.sCurrentLocale = 'FR';
+				_thatSDR.getView().setModel(_thatSDR.oI18nModel, "i18n");
+				_thatSDR.sCurrentLocale = 'FR';
 			} else {
-				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				_thatSDR.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
 				});
-				_that.getView().setModel(_that.oI18nModel, "i18n");
-				_that.sCurrentLocale = 'EN';
+				_thatSDR.getView().setModel(_thatSDR.oI18nModel, "i18n");
+				_thatSDR.sCurrentLocale = 'EN';
 			}
-			_that.getView().setModel(sap.ui.getCore().getModel("DropShipDataModel"), "DropShipDataModel");
-			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oShipToDealerResponseRoute, _that);
+			_thatSDR.getView().setModel(sap.ui.getCore().getModel("DropShipDataModel"), "DropShipDataModel");
+			_thatSDR.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatSDR._oShipToDealerResponseRoute, _thatSDR);
 		},
 
 		_oShipToDealerResponseRoute: function (oEvt) {
-			_that.getView().setModel(sap.ui.getCore().getModel("DropShipDataModel"), "DropShipDataModel");
+			_thatSDR.getView().setModel(sap.ui.getCore().getModel("DropShipDataModel"), "DropShipDataModel");
 		},
 		
 		onNavigateToVL: function (oNavEvent) {
@@ -50,42 +50,42 @@ sap.ui.define([
 			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
 			if (selectedScreenText == "Master") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Pipeline ETA & Inventory Summary");
-				_that.getRouter().navTo("Routemaster");
+				_thatSDR.getRouter().navTo("Routemaster");
 			} else if (selectedScreenText == "Details") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Details");
-				_that.getRouter().navTo("details");
+				_thatSDR.getRouter().navTo("details");
 			} else if (selectedScreenText == "Vehicle Details") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Vehicle Details");
-				_that.getRouter().navTo("vehicleDetails");
+				_thatSDR.getRouter().navTo("vehicleDetails");
 			} else if (selectedScreenText == "Order Change") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Order Change");
-				_that.getRouter().navTo("orderChange");
+				_thatSDR.getRouter().navTo("orderChange");
 			} else if (selectedScreenText == "Ship To Dealer") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer");
-				_that.getRouter().navTo("shipToDealer");
+				_thatSDR.getRouter().navTo("shipToDealer");
 			} else if (selectedScreenText == "Ship To Dealer Response") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer Response");
-				_that.getRouter().navTo("shipToDealerResponse");
+				_thatSDR.getRouter().navTo("shipToDealerResponse");
 			} else if (selectedScreenText == "Assign Vehicles") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles");
-				_that.getRouter().navTo("assignVehicles");
+				_thatSDR.getRouter().navTo("assignVehicles");
 			} else if (selectedScreenText == "Assign Vehicles Status") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles Status");
-				_that.getRouter().navTo("assignVehiclesStatus");
+				_thatSDR.getRouter().navTo("assignVehiclesStatus");
 			} else if (selectedScreenText == "Change History") {
 				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Change History");
-				_that.getRouter().navTo("changeHistory");
+				_thatSDR.getRouter().navTo("changeHistory");
 			}
 		},
 		onMenuLinkPress: function (oLink) {
 			var _oLinkPressed = oLink;
 			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
-			if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("PageTitle")) {
-				_that.getRouter().navTo("Routemaster");
-			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
-				_that.getRouter().navTo("vehicleDetailsNodata");
-			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_that.getRouter().navTo("changeHistory");
+			if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("PageTitle")) {
+				_thatSDR.getRouter().navTo("Routemaster");
+			} else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
+				_thatSDR.getRouter().navTo("vehicleDetailsNodata");
+			} else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+				_thatSDR.getRouter().navTo("changeHistory");
 			}
 		}
 
