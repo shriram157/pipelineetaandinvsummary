@@ -1,5 +1,5 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
-	xmlns:f="sap.ui.layout.form" controllerName="pipelineInventory.controller.vehicleDetails" xmlns:tnt="sap.tnt" 
+	xmlns:f="sap.ui.layout.form" controllerName="pipelineInventory.controller.vehicleDetails" xmlns:tnt="sap.tnt"
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
@@ -36,7 +36,11 @@
 								<Label text="{i18n>Suffix}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN}"/>
 								<Label text="{i18n>APX}"/>
-								<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>
+								<Select forceSelection="false" selectedKey="" id="apxVal"
+									items="{ path: 'VehicleDetailsJSON>/APXData'}">
+									<core:Item key="{VehicleDetailsJSON>zzapx}" text="{VehicleDetailsJSON>zzapx}"/>
+								</Select>
+								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>-->
 								<Label text="{i18n>Colour}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ExteriorColorCode} {VehicleDetailsJSON>/selectedVehicleData/0/EXTCOL_DESC_EN}"/>
 								<Label text="{i18n>OrderType}"/>
@@ -48,10 +52,10 @@
 								<Label text="{i18n>VIN}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/VHVIN}"/>
 								<Label text="{i18n>ETA}"/>
-								<Text text="{path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} From - {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'} To"/>
+								<Text
+									text="{path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} From - {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'} To"/>
 								<Label text="{i18n>VehicleDeliveredDate}"/>
 								<Text text="{path:'VehicleDetailsJSON>/selectedCustomerData/DeliveryDate', formatter: '.formatDate'}"/>
-								
 								<core:Title text="{i18n>AdditionalInformation}"/>
 								<Label text="{i18n>OrderingDealer}"/>
 								<Link text="{VehicleDetailsJSON>/selectedCustomerData/KUNNR}"/>
@@ -62,17 +66,25 @@
 								<Label text="{i18n>HoldVehicle}"/>
 								<Text text="Yes"/>
 								<Label text="{i18n>AccessoriesInstalled}" required="true"/>
-								<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/AccessoriesInstalled}"/>
+								<Select forceSelection="false" selectedKey="" id="accessoryVal"
+									items="{ path: 'VehicleDetailsJSON>/AcceessoryData'}">
+									<core:Item key="{VehicleDetailsJSON>AccessoryInstalled}" text="{VehicleDetailsJSON>AccessoryInstalled}"/>
+								</Select>
+								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/AccessoriesInstalled}"/>-->
 								<Label text="{i18n>DNCVehicle}" required="true"/>
-								<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/DNCVehicle}"/>
+								<Select forceSelection="false" selectedKey="" id="DNCVal"
+									items="{ path: 'VehicleDetailsJSON>/DNCData'}">
+									<core:Item key="{VehicleDetailsJSON>DNCVehicle}" text="{VehicleDetailsJSON>DNCVehicle}"/>
+								</Select>
+								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/DNCVehicle}"/>-->
 								<Label text="{i18n>Comments}"/>
 								<TextArea value="{VehicleDetailsJSON>/selectedVehicleData/0/Comments}" rows="4"/>
 							</f:content>
 						</f:SimpleForm>
 					</VBox>
 					<VBox class="sapUiSmallMargin">
-						<f:SimpleForm class="formDetails" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false"
-							emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+						<f:SimpleForm class="formDetails" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false" emptySpanL="0"
+							emptySpanM="0" columnsL="2" columnsM="2">
 							<f:content>
 								<core:Title text="{i18n>CustomerInformation}"/>
 								<Label text="{i18n>CustomerName}"/>

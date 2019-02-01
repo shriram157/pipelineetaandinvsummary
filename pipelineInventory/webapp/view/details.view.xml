@@ -110,9 +110,9 @@
 									<Text text="{VehicleDetailsJSON>ZMMSTA}"/>
 									<Link text="{VehicleDetailsJSON>ZZVTN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZVTN}"/>
 									<Link text="{VehicleDetailsJSON>VHVIN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>VHVIN}"/>
-									<Text text="{VehicleDetailsJSON>Model}"/>
-									<Text text="{VehicleDetailsJSON>Suffix}"/>
-									<Text text="{VehicleDetailsJSON>ExteriorColorCode}"/>
+									<Text text="{VehicleDetailsJSON>Model} {VehicleDetailsJSON>MODEL_DESC_EN}"/>
+									<Text text="{VehicleDetailsJSON>Suffix}  {VehicleDetailsJSON>SUFFIX_DESC_EN}"/>
+									<Text text="{VehicleDetailsJSON>ExteriorColorCode}  {VehicleDetailsJSON>EXTCOL_DESC_EN}"/>
 									<Text text="{path:'VehicleDetailsJSON>ETAFrom', formatter: '.formatDate'}"/>
 									<Text text="{path:'VehicleDetailsJSON>ETATo', formatter: '.formatDate'}" />
 								</cells>
