@@ -109,37 +109,6 @@ sap.ui.define([
 			}
 		},
 
-		selectedScreen: function (oSelectedScreen) {
-			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
-			if (selectedScreenText == "Master") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Pipeline ETA & Inventory Summary");
-				_thatOC.getRouter().navTo("Routemaster");
-			} else if (selectedScreenText == "Details") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Details");
-				_thatOC.getRouter().navTo("details");
-			} else if (selectedScreenText == "Vehicle Details") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Vehicle Details");
-				_thatOC.getRouter().navTo("vehicleDetails");
-			} else if (selectedScreenText == "Order Change") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Order Change");
-				_thatOC.getRouter().navTo("orderChange");
-			} else if (selectedScreenText == "Ship To Dealer") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer");
-				_thatOC.getRouter().navTo("shipToDealer");
-			} else if (selectedScreenText == "Ship To Dealer Response") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer Response");
-				_thatOC.getRouter().navTo("shipToDealerResponse");
-			} else if (selectedScreenText == "Assign Vehicles") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles");
-				_thatOC.getRouter().navTo("assignVehicles");
-			} else if (selectedScreenText == "Assign Vehicles Status") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles Status");
-				_thatOC.getRouter().navTo("assignVehiclesStatus");
-			} else if (selectedScreenText == "Change History") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Change History");
-				_thatOC.getRouter().navTo("changeHistory");
-			}
-		},
 		onMenuLinkPress: function (oLink) {
 			var _oLinkPressed = oLink;
 			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
@@ -180,7 +149,7 @@ sap.ui.define([
 					'X-CSRF-Token': _thatOC._oToken
 				}
 			});
-			OrderChangeModel.create("/OrderChangeSet", Obj, {
+			OrderChangeModel.create("/OrderChangeSet", Obj, null, {
 				success: $.proxy(function (oResponse) {
 					console.log("orderChangeResponse", oResponse);
 				}, _thatOC),

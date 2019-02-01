@@ -50,7 +50,7 @@
 								<Label text="{i18n>ETA}"/>
 								<Text text="{path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} From - {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'} To"/>
 								<Label text="{i18n>VehicleDeliveredDate}"/>
-								<Text text="{path:'VehicleDetailsJSON>/selectedVehicleData/0/DeliveryDate', formatter: '.formatDate'}"/>
+								<Text text="{path:'VehicleDetailsJSON>/selectedCustomerData/DeliveryDate', formatter: '.formatDate'}"/>
 								
 								<core:Title text="{i18n>AdditionalInformation}"/>
 								<Label text="{i18n>OrderingDealer}"/>
@@ -90,7 +90,7 @@
 								<Label text="{i18n>Email}"/>
 								<Text text="{VehicleDetailsJSON>/selectedCustomerData/EMAIL}"/>
 								<Label text="{i18n>DriversLicense}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/ENDCU}"/>
+								<Text text=""/>
 								<core:Title text="{i18n>AccessoryInformation}"/>
 								<Label text="{i18n>AccessoryName}"/>
 								<Text text="{VehicleDetailsJSON>/selectedCustomerData/MAKTX}"/>
