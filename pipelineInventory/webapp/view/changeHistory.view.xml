@@ -12,40 +12,14 @@
 							<Text class="clCustomFont" text="{i18n>PageTitle}"/>
 						</contentLeft>
 						<contentRight>
-							<!--<Select change="selectedScreen" selectedKey="Change History">-->
-							<!--	<items>-->
-							<!--		<core:Item key="Master" text="Master"/>-->
-							<!--		<core:Item key="Details" text="Details"/>-->
-							<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
-							<!--		<core:Item key="Order Change" text="Order Change"/>-->
-							<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
-							<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
-							<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
-							<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
-							<!--		<core:Item key="Change History" text="Change History"/>-->
-							<!--	</items>-->
-							<!--</Select>-->
 							<Button text="{i18n>Logout}"/>
 						</contentRight>
 					</Bar>
 				</customHeader>
 				<tnt:ToolHeader>
-					<!--<Select change="selectedScreen" selectedKey="Change History">-->
-					<!--	<items>-->
-					<!--		<core:Item key="Master" text="Master"/>-->
-					<!--		<core:Item key="Details" text="Details"/>-->
-					<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
-					<!--		<core:Item key="Order Change" text="Order Change"/>-->
-					<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
-					<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
-					<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
-					<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
-					<!--		<core:Item key="Change History" text="Change History"/>-->
-					<!--	</items>-->
-					<!--</Select>-->
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
-					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
+					<!--<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>-->
 				</tnt:ToolHeader>
 				<content>
 					<Label text="{i18n>ConfigurationChangeHistory}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
@@ -60,17 +34,7 @@
 						<ToolbarSpacer/>
 						<Button text="{i18n>Submit}" type="Accept"/>
 					</OverflowToolbar>
-					<!--<f:SimpleForm width="100%" editable="true" layout="ResponsiveGridLayout">-->
-					<!--	<l:HorizontalLayout class="styleHLayout">-->
-					<!--		<HBox>-->
-					<!--			<Select forceSelection="true" items="{SelectJSONModel>/SeriesCollection}">-->
-					<!--				<core:Item key="{SelectJSONModel>Series}" text="{SelectJSONModel>SeriesName} {SelectJSONModel>Dimension}"/>-->
-					<!--			</Select>-->
-					<!--		</HBox>-->
-					<!--		<Label text="" class="sapUiSmallMargin"/>-->
-					<!--		<Button text="{i18n>Submit}" type="Default"/>-->
-					<!--	</l:HorizontalLayout>-->
-					<!--</f:SimpleForm>-->
+					
 					<Table items="{ChangeHistoryModel>/results}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="5"
 						growingScrollToLoad="false">
 						<headerToolbar>
@@ -132,7 +96,7 @@
 									<Text text="{ChangeHistoryModel>NewModel}"/>
 									<Text text="{ChangeHistoryModel>NewSuffix}"/>
 									<Text text="{ChangeHistoryModel>NewAPX}"/>
-									<Text text="{ChangeHistoryModel>DateSubmitted}"/>
+									<Text text="{path:'ChangeHistoryModel>DateSubmitted', formatter: '.formatDate'}"/>
 									<Text text="{ChangeHistoryModel>Status}"/>
 									<Button text="{i18n>ReSubmit}" visible="{LocalModel>/enableResubmitBtn}" press="onNavigateToOC"/>
 								</cells>

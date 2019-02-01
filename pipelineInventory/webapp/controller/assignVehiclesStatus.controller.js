@@ -36,6 +36,13 @@ sap.ui.define([
 				_thatAVS.getView().setModel(_thatAVS.oI18nModel, "i18n");
 				_thatAVS.sCurrentLocale = 'EN';
 			}
+			
+			var _oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0
+			});
+			_thatAVS.getView().setModel(_oViewModel, "LocalAVSModel");
+			
 			_thatAVS.getView().setModel(sap.ui.getCore().getModel( "AssignVehiclesModel"), "AssignVehiclesModel");
 			_thatAVS.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatAVS._oAssignVehicleResponseRoute, _thatAVS);
 		},
@@ -49,38 +56,6 @@ sap.ui.define([
 				OrderNumber: oNavEvent.getSource().getModel("AssignVehiclesModel").getProperty(oNavEvent.getSource().getBindingContext(
 					"AssignVehiclesModel").sPath).VHCLE
 			});
-		},
-		
-		selectedScreen: function (oSelectedScreen) {
-			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
-			if (selectedScreenText == "Master") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Pipeline ETA & Inventory Summary");
-				_thatAVS.getRouter().navTo("Routemaster");
-			} else if (selectedScreenText == "Details") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Details");
-				_thatAVS.getRouter().navTo("details");
-			} else if (selectedScreenText == "Vehicle Details") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Vehicle Details");
-				_thatAVS.getRouter().navTo("vehicleDetails");
-			} else if (selectedScreenText == "Order Change") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Order Change");
-				_thatAVS.getRouter().navTo("orderChange");
-			} else if (selectedScreenText == "Ship To Dealer") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer");
-				_thatAVS.getRouter().navTo("shipToDealer");
-			} else if (selectedScreenText == "Ship To Dealer Response") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer Response");
-				_thatAVS.getRouter().navTo("shipToDealerResponse");
-			} else if (selectedScreenText == "Assign Vehicles") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles");
-				_thatAVS.getRouter().navTo("assignVehicles");
-			} else if (selectedScreenText == "Assign Vehicles Status") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles Status");
-				_thatAVS.getRouter().navTo("assignVehiclesStatus");
-			} else if (selectedScreenText == "Change History") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Change History");
-				_thatAVS.getRouter().navTo("changeHistory");
-			}
 		},
 		onMenuLinkPress: function (oLink) {
 			var _oLinkPressed = oLink;

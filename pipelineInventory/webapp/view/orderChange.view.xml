@@ -43,10 +43,10 @@
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZORDERTYPE}"/>
 								<Label text="{i18n>Status}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZMMSTA}"/>
-								<Label text="{i18n>ETAFrom}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom}"/>
-								<Label text="{i18n>ETATo}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ETATo}"/>
+								<Label text="{i18n>ETA}"/>
+								<Text text="From {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} To {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
+								<!--<Label text="{i18n>ETATo}"/>-->
+								<!--<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ETATo}"/>-->
 								<Label text="{i18n>VTN}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZVTN}"/>
 								
@@ -64,7 +64,7 @@
 								<Label text="{i18n>NewColour}" required="true"/>
 								<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewColour}"/>
 								<Label text="{i18n>DateTime}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ETA}"/>
+								<Text text="{path:'VehicleDetailsJSON>/selectedVehicleData/0/ETA', formatter: '.formatDate'}"/>
 								<Label text="{i18n>Status}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Status}"/>
 							</f:content>

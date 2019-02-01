@@ -15,7 +15,7 @@
 		},
 		"dataSources": {
 			"ZPIPELINE_ETA_INVENT_SUMMARY_SRV": {
-				"uri": "/pipelineInventory-dest/node/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/",
+				"uri": "/node/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",

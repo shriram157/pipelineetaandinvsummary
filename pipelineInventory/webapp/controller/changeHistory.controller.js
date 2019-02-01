@@ -48,25 +48,25 @@ sap.ui.define([
 			_thatCH.oDealerDataModel = new JSONModel();
 			_thatCH.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
 
+			_thatCH._oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0,
+				enableResubmitBtn: false
+			});
+			_thatCH.getView().setModel(_thatCH._oViewModel, "LocalModel");
+
 			_thatCH.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatCH._oChangeHistoryRoute, _thatCH);
 			// var err = JSON.parse(oError.response.body);
 			// sap.m.MessageBox.error(err.error.message.value);
 		},
 
 		_oChangeHistoryRoute: function (oEvent) {
-			sap.ui.core.BusyIndicator.hide();
+			sap.ui.core.BusyIndicator.show();
 			_thatCH.getView().setModel(_thatCH.oChangeHistoryModel, "ChangeHistoryModel");
 
 			if (oEvent.getParameters().arguments.SelectedDealer != undefined) {
 				_thatCH.Dealer = oEvent.getParameters().arguments.SelectedDealer;
 
-				_thatCH._oViewModel = new sap.ui.model.json.JSONModel({
-					busy: false,
-					delay: 0,
-					enableResubmitBtn: false
-				});
-				_thatCH.getView().setModel(_thatCH._oViewModel, "LocalModel");
-				sap.ui.core.BusyIndicator.show();
 				//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '2400042193'&$format=json
 				var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '" + _thatCH.Dealer +
 					"'&$format=json";
@@ -75,6 +75,7 @@ sap.ui.define([
 					url: url,
 					type: "GET",
 					success: function (oChangeData) {
+						sap.ui.core.BusyIndicator.hide();
 						console.log("ChangeHistory Data", oChangeData);
 						_thatCH.oChangeHistoryModel.setData(oChangeData.d);
 						_thatCH.oChangeHistoryModel.updateBindings(true);
@@ -103,7 +104,7 @@ sap.ui.define([
 				url: url,
 				type: "GET",
 				success: function (oChangeData) {
-					sap.ui.core.BusyIndicator.hide();
+					// sap.ui.core.BusyIndicator.hide();
 					console.log("ChangeHistory Data", oChangeData);
 					_thatCH.oChangeHistoryModel.setData(oChangeData.d);
 					_thatCH.oChangeHistoryModel.updateBindings(true);
@@ -121,52 +122,40 @@ sap.ui.define([
 				}
 			});
 		},
-		
+
 		onNavigateToVL: function (oNavEvent) {
 			this.getRouter().navTo("vehicleDetails", {
 				OrderNumber: oNavEvent.getSource().getModel("ChangeHistoryModel").getProperty(oNavEvent.getSource().getBindingContext(
 					"ChangeHistoryModel").sPath).VHCLE
 			});
 		},
-		onNavigateToOC: function (oResubmit){
+		onNavigateToOC: function (oResubmit) {
 			this.getRouter().navTo("orderChange", {
 				OrderNumber: oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
 					"ChangeHistoryModel").sPath).VHCLE
 			});
-			
-		},
 
-		selectedScreen: function (oSelectedScreen) {
-			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
-			if (selectedScreenText == "Master") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Pipeline ETA & Inventory Summary");
-				_thatCH.getRouter().navTo("Routemaster");
-			} else if (selectedScreenText == "Details") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Details");
-				_thatCH.getRouter().navTo("details");
-			} else if (selectedScreenText == "Vehicle Details") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Vehicle Details");
-				_thatCH.getRouter().navTo("vehicleDetails");
-			} else if (selectedScreenText == "Order Change") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Order Change");
-				_thatCH.getRouter().navTo("orderChange");
-			} else if (selectedScreenText == "Ship To Dealer") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer");
-				_thatCH.getRouter().navTo("shipToDealer");
-			} else if (selectedScreenText == "Ship To Dealer Response") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer Response");
-				_thatCH.getRouter().navTo("shipToDealerResponse");
-			} else if (selectedScreenText == "Assign Vehicles") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles");
-				_thatCH.getRouter().navTo("assignVehicles");
-			} else if (selectedScreenText == "Assign Vehicles Status") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles Status");
-				_thatCH.getRouter().navTo("assignVehiclesStatus");
-			} else if (selectedScreenText == "Change History") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Change History");
-				_thatCH.getRouter().navTo("changeHistory");
+		},
+		formatDate: function (oDate) {
+			if (oDate != "" && oDate != undefined) {
+				var Year = oDate.substring(0, 4);
+				var Month = oDate.substring(4, 6);
+				var Day = oDate.substring(6, 8);
+				var date = Year + "-" + Month + "-" + Day;
+				var Hours = oDate.substring(8, 10);
+				var Minute = oDate.substring(10, 12); 
+				var Seconds = oDate.substring(12, 14);
+				var Time = Hours+":"+Minute+":"+Seconds;
+				var dateTime = date+"\n/"+Time;
+				return dateTime;
+				// jQuery.sap.require("sap.ui.core.format.DateFormat");
+				// _thatDT.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+				// 	pattern: "yyyy-MM-dd"
+				// });
+				// return _thatDT.oDateFormat.format(new Date(date));
 			}
 		},
+
 		onMenuLinkPress: function (oLink) {
 			var _oLinkPressed = oLink;
 			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
@@ -174,9 +163,7 @@ sap.ui.define([
 				_thatCH.getRouter().navTo("Routemaster");
 			} else if (_oSelectedScreen == _thatCH.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
 				_thatCH.getRouter().navTo("vehicleDetailsNodata");
-			} else if (_oSelectedScreen == _thatCH.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_thatCH.getRouter().navTo("changeHistory");
-			}
+			} 
 		}
 	});
 });

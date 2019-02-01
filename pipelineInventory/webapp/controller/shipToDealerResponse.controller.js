@@ -31,6 +31,13 @@ sap.ui.define([
 				_thatSDR.getView().setModel(_thatSDR.oI18nModel, "i18n");
 				_thatSDR.sCurrentLocale = 'EN';
 			}
+			
+			var _oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0
+			});
+			_thatSDR.getView().setModel(_oViewModel, "LocalSDRModel");
+			
 			_thatSDR.getView().setModel(sap.ui.getCore().getModel("DropShipDataModel"), "DropShipDataModel");
 			_thatSDR.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatSDR._oShipToDealerResponseRoute, _thatSDR);
 		},
@@ -46,37 +53,6 @@ sap.ui.define([
 			});
 		},
 
-		selectedScreen: function (oSelectedScreen) {
-			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
-			if (selectedScreenText == "Master") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Pipeline ETA & Inventory Summary");
-				_thatSDR.getRouter().navTo("Routemaster");
-			} else if (selectedScreenText == "Details") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Details");
-				_thatSDR.getRouter().navTo("details");
-			} else if (selectedScreenText == "Vehicle Details") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Vehicle Details");
-				_thatSDR.getRouter().navTo("vehicleDetails");
-			} else if (selectedScreenText == "Order Change") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Order Change");
-				_thatSDR.getRouter().navTo("orderChange");
-			} else if (selectedScreenText == "Ship To Dealer") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer");
-				_thatSDR.getRouter().navTo("shipToDealer");
-			} else if (selectedScreenText == "Ship To Dealer Response") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer Response");
-				_thatSDR.getRouter().navTo("shipToDealerResponse");
-			} else if (selectedScreenText == "Assign Vehicles") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles");
-				_thatSDR.getRouter().navTo("assignVehicles");
-			} else if (selectedScreenText == "Assign Vehicles Status") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles Status");
-				_thatSDR.getRouter().navTo("assignVehiclesStatus");
-			} else if (selectedScreenText == "Change History") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Change History");
-				_thatSDR.getRouter().navTo("changeHistory");
-			}
-		},
 		onMenuLinkPress: function (oLink) {
 			var _oLinkPressed = oLink;
 			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
@@ -88,32 +64,6 @@ sap.ui.define([
 				_thatSDR.getRouter().navTo("changeHistory");
 			}
 		}
-
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf pipelineInventory.view.shipToDealerResponse
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf pipelineInventory.view.shipToDealerResponse
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf pipelineInventory.view.shipToDealerResponse
-		 */
-		//	onExit: function() {
-		//
-		//	}
 
 	});
 

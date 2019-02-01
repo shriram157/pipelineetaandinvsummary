@@ -73,6 +73,8 @@ sap.ui.define([
 				_thatDT.routedData = JSON.parse(oDetailsRoute.getParameters().arguments.tableFirst);
 				console.log("routedData", _thatDT.routedData);
 
+				_thatDT.SelectedDealer = _thatDT.routedData.Dealer;
+
 				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=MATRIX eq '" + _thatDT.routedData.MatrixVal +
 					"' and Model eq '" + _thatDT.routedData.Model + "' and Modelyear eq '" + _thatDT.routedData.ModelYear + "'and TCISeries eq '" +
 					_thatDT
@@ -109,12 +111,16 @@ sap.ui.define([
 
 		formatDate: function (oDate) {
 			if (oDate != "" && oDate != undefined) {
-				var date = JSON.parse(oDate);
-				jQuery.sap.require("sap.ui.core.format.DateFormat");
-				_thatDT.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
-					pattern: "yyyy-MM-dd"
-				});
-				return _thatDT.oDateFormat.format(new Date(date));
+				var Year = oDate.substring(0, 4);
+				var Month = oDate.substring(4, 6);
+				var Day = oDate.substring(6, 8);
+				var date = Year + "-" + Month + "-" + Day;
+				return date;
+				// jQuery.sap.require("sap.ui.core.format.DateFormat");
+				// _thatDT.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+				// 	pattern: "yyyy-MM-dd"
+				// });
+				// return _thatDT.oDateFormat.format(new Date(date));
 			}
 		},
 		/*Show Filtered data as per user input*/
@@ -194,39 +200,6 @@ sap.ui.define([
 			});
 		},
 
-		selectedScreen: function (oSelectedScreen) {
-			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
-			if (selectedScreenText == "Master") {
-				// _thatDT.oVehicleDetailsJSON.setData();
-				_thatDT.oVehicleDetailsJSON.refresh(true);
-				_thatDT.getRouter().navTo("Routemaster");
-			} else if (selectedScreenText == "Details") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Details");
-				_thatDT.getRouter().navTo("details");
-			} else if (selectedScreenText == "Vehicle Details") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Vehicle Details");
-				_thatDT.getRouter().navTo("vehicleDetails");
-			} else if (selectedScreenText == "Order Change") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Order Change");
-				_thatDT.getRouter().navTo("orderChange");
-			} else if (selectedScreenText == "Ship To Dealer") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer");
-				_thatDT.getRouter().navTo("shipToDealer");
-			} else if (selectedScreenText == "Ship To Dealer Response") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer Response");
-				_thatDT.getRouter().navTo("shipToDealerResponse");
-			} else if (selectedScreenText == "Assign Vehicles") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles");
-				_thatDT.getRouter().navTo("assignVehicles");
-			} else if (selectedScreenText == "Assign Vehicles Status") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles Status");
-				_thatDT.getRouter().navTo("assignVehiclesStatus");
-			} else if (selectedScreenText == "Change History") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Change History");
-				_thatDT.getRouter().navTo("changeHistory");
-			}
-		},
-
 		/*Function for Routing/Navigating from menu option as per selection */
 		onMenuLinkPress: function (oLink) {
 			var _oLinkPressed = oLink;
@@ -238,7 +211,11 @@ sap.ui.define([
 			} else if (_oSelectedScreen == _thatDT.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
 				_thatDT.getRouter().navTo("vehicleDetailsNodata");
 			} else if (_oSelectedScreen == _thatDT.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_thatDT.getRouter().navTo("changeHistory");
+				if (_thatDT.SelectedDealer != undefined) {
+					_thatDT.getRouter().navTo("changeHistory", {
+						SelectedDealer: _thatDT.SelectedDealer
+					});
+				}
 			}
 		},
 

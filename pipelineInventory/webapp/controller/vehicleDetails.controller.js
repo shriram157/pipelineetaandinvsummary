@@ -42,18 +42,28 @@ sap.ui.define([
 				this.sPrefix = "";
 			}
 			_thatVD.nodeJsUrl = this.sPrefix + "/node";
+			var _oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0
+			});
+			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
+			
 			// this.getView().setModel(sap.ui.getCore().getModel("SelectJSONModel"), "SelectJSONModel");
 			_thatVD.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatVD._oVehicleDetailsRoute, _thatVD);
 		},
 
 		formatDate: function (oDate) {
 			if (oDate != "" && oDate != undefined) {
-				var date = JSON.parse(oDate);
-				jQuery.sap.require("sap.ui.core.format.DateFormat");
-				_thatVD.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
-					pattern: "yyyy-MM-dd"
-				});
-				return _thatVD.oDateFormat.format(new Date(date));
+				var Year = oDate.substring(0, 4);
+				var Month = oDate.substring(4, 6);
+				var Day = oDate.substring(6, 8);
+				var date = Year + "-" + Month + "-" + Day;
+				return date;
+				// jQuery.sap.require("sap.ui.core.format.DateFormat");
+				// _thatVD.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+				// 	pattern: "yyyy-MM-dd"
+				// });
+				// return _thatVD.oDateFormat.format(new Date(date));
 			}
 		},
 
@@ -141,38 +151,6 @@ sap.ui.define([
 			});
 		},
 
-		/*Routing to selected screens*/
-		selectedScreen: function (oSelectedScreen) {
-			var selectedScreenText = oSelectedScreen.getParameters().selectedItem.getText();
-			if (selectedScreenText == "Master") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Pipeline ETA & Inventory Summary");
-				_thatVD.getRouter().navTo("Routemaster");
-			} else if (selectedScreenText == "Details") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Details");
-				_thatVD.getRouter().navTo("details");
-			} else if (selectedScreenText == "Vehicle Details") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Vehicle Details");
-				_thatVD.getRouter().navTo("vehicleDetails");
-			} else if (selectedScreenText == "Order Change") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Order Change");
-				_thatVD.getRouter().navTo("orderChange");
-			} else if (selectedScreenText == "Ship To Dealer") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer");
-				_thatVD.getRouter().navTo("shipToDealer");
-			} else if (selectedScreenText == "Ship To Dealer Response") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Ship To Dealer Response");
-				_thatVD.getRouter().navTo("shipToDealerResponse");
-			} else if (selectedScreenText == "Assign Vehicles") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles");
-				_thatVD.getRouter().navTo("assignVehicles");
-			} else if (selectedScreenText == "Assign Vehicles Status") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Assign Vehicles Status");
-				_thatVD.getRouter().navTo("assignVehiclesStatus");
-			} else if (selectedScreenText == "Change History") {
-				// oSelectedScreen.getSource().getParent().getContentLeft()[2].setText("Change History");
-				_thatVD.getRouter().navTo("changeHistory");
-			}
-		},
 		onMenuLinkPress: function (oLink) {
 			var _oLinkPressed = oLink;
 			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
@@ -181,12 +159,15 @@ sap.ui.define([
 			} else if (_oSelectedScreen == _thatVD.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
 				_thatVD.getRouter().navTo("vehicleDetailsNodata");
 			} else if (_oSelectedScreen == _thatVD.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_thatVD.getRouter().navTo("changeHistory");
+				if (_thatVD.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer != undefined) {
+					_thatVD.getRouter().navTo("changeHistory", {
+						SelectedDealer: _thatVD.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer
+					});
+				}
 			}
 		},
 
 		postVehicleUpdates: function (oPost) {
-			debugger;
 			var Obj = {};
 			_thatVD.oVehicleDetailsJSON = _thatVD.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
 			Obj.VHCLE = _thatVD.oVehicleDetailsJSON.VHCLE;

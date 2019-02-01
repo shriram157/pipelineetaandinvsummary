@@ -12,6 +12,11 @@ sap.ui.define([
 
 		onInit: function () {
 			_thatOC = this;
+			jQuery.sap.require("sap.ui.core.format.DateFormat");
+			_thatOC.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+				pattern: "yyyy-MM-dd"
+			});
+			_thatOC.curDate = _thatOC.oDateFormat.format(new Date());
 
 			_thatOC.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
@@ -43,6 +48,12 @@ sap.ui.define([
 				this.sPrefix = "";
 			}
 			_thatOC.nodeJsUrl = this.sPrefix + "/node";
+			
+			var _oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0
+			});
+			_thatOC.getView().setModel(_oViewModel, "LocalOCModel");
 
 			_thatOC.getView().setModel(sap.ui.getCore().getModel("VehicleDetailsJSON"), "VehicleDetailsJSON");
 			_thatOC.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatOC._oOrderChangeRoute, _thatOC);
@@ -62,10 +73,26 @@ sap.ui.define([
 						_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewAPX = "";
 						_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewColour = "";
 						_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Guidelines = "";
+						_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].CurrentDate = _thatOC.curDate;
 						_thatOC.oVehicleDetailsJSON.updateBindings(true);
 						_thatOC.oVehicleDetailsJSON.refresh(true);
 					}
 				}
+			}
+		},
+
+		formatDate: function (oDate) {
+			if (oDate != "" && oDate != undefined) {
+				var Year = oDate.substring(0, 4);
+				var Month = oDate.substring(4, 6);
+				var Day = oDate.substring(6, 8);
+				var date = Year + "-" + Month + "-" + Day;
+				return date;
+				// jQuery.sap.require("sap.ui.core.format.DateFormat");
+				// _thatDT.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+				// 	pattern: "yyyy-MM-dd"
+				// });
+				// return _thatDT.oDateFormat.format(new Date(date));
 			}
 		},
 
@@ -120,8 +147,15 @@ sap.ui.define([
 				_thatOC.getRouter().navTo("Routemaster");
 			} else if (_oSelectedScreen == _thatOC.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
 				_thatOC.getRouter().navTo("vehicleDetailsNodata");
-			} else if (_oSelectedScreen == _thatOC.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_thatOC.getRouter().navTo("changeHistory");
+			}
+			// else if (_oSelectedScreen == _thatOC.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+			// 	_thatOC.getRouter().navTo("changeHistory");
+			// 	_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer
+			// }
+			else if (_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer != undefined) {
+				_thatOC.getRouter().navTo("changeHistory", {
+					SelectedDealer: _thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer
+				});
 			}
 		},
 
@@ -134,7 +168,7 @@ sap.ui.define([
 				Obj.NewModel = _thatOC.oOrderChangeJSON.NewModel;
 			}
 			if (_thatOC.oOrderChangeJSON.NewColour != undefined) {
-				Obj.NewColour = _thatOC.oOrderChangeJSON.NewColour;
+				Obj.NewColor = _thatOC.oOrderChangeJSON.NewColour;
 			}
 
 			// var oModel = new sap.ui.model.odata.v2.ODataModel(_thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
