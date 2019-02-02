@@ -49,6 +49,12 @@ sap.ui.define([
 				this.sPrefix = "";
 			}
 			this.nodeJsUrl = this.sPrefix + "/node";
+			
+			var _oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0
+			});
+			_that.getView().setModel(_oViewModel, "LocalOCModel");
 
 			$.ajax({
 				dataType: "json",

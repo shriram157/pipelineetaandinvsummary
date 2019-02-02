@@ -36,7 +36,7 @@
 								<Label text="{i18n>Suffix}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN}"/>
 								<Label text="{i18n>APX}"/>
-								<Select forceSelection="false" selectedKey="" id="apxVal"
+								<Select forceSelection="false" selectedKey="" id="apxVal" change="onAPXChange"
 									items="{ path: 'VehicleDetailsJSON>/APXData'}">
 									<core:Item key="{VehicleDetailsJSON>zzapx}" text="{VehicleDetailsJSON>zzapx}"/>
 								</Select>
