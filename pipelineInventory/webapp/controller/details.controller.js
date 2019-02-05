@@ -381,28 +381,28 @@ sap.ui.define([
 				var row = "";
 				row = row.slice(0, -1);
 			}
+
 			row += '"Dealer",';
-			row += '"ETA",';
-			row += '"ETAFrom",';
-			row += '"ETATo",';
-			row += '"Colour EN",';
-			row += '"Model EN",';
-			row += '"SUffix EN",';
-			row += '"VIN",';
 			row += '"Order Number",';
 			row += '"Order Type",';
+			row += '"Status",';
+			row += '"VIN",';
 			row += '"VTN",';
+			row += '"Model EN",';
+			row += '"Suffix EN",';
+			row += '"Colour EN",';
+			row += '"ETAFrom",';
+			row += '"ETATo",';
 
 			CSV += row + '\r\n';
 
 			//loop is to extract each row
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
-				row += '"' + arrData[i].Dealer + '","' + arrData[i].ETA + '","' + arrData[i].ETAFrom + '","' + arrData[i].ETATo + '","' + arrData[
-						i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN +
-					'","' + arrData[i].Suffix + "-" + arrData[i].SUFFIX_DESC_EN + '","' +
-					arrData[i].VHVIN + '","' + arrData[i].ZZDLR_REF_NO +
-					'","' + arrData[i].ZZORDERTYPE + '","' + arrData[i].ZZVTN + '",';
+				row += '"' + arrData[i].Dealer + '","' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ZZORDERTYPE + '","' + arrData[i].ZMMSTA +
+					'","' +
+					arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i].Suffix +
+					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].ETAFrom + '","' + arrData[i].ETATo + '",';
 				//}
 				row.slice(1, row.length);
 				CSV += row + '\r\n';
