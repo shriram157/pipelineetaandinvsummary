@@ -386,11 +386,8 @@ sap.ui.define([
 			row += '"ETAFrom",';
 			row += '"ETATo",';
 			row += '"Colour EN",';
-			row += '"Colour FR",';
 			row += '"Model EN",';
-			row += '"Model FR",';
 			row += '"SUffix EN",';
-			row += '"Suffix FR",';
 			row += '"VIN",';
 			row += '"Order Number",';
 			row += '"Order Type",';
@@ -402,10 +399,8 @@ sap.ui.define([
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
 				row += '"' + arrData[i].Dealer + '","' + arrData[i].ETA + '","' + arrData[i].ETAFrom + '","' + arrData[i].ETATo + '","' + arrData[
-						i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN +
-					'","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_FR + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN +
-					'","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_FR +
-					'","' + arrData[i].Suffix + "-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].Suffix + "-" + arrData[i].SUFFIX_DESC_FR + '","' +
+						i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN +
+					'","' + arrData[i].Suffix + "-" + arrData[i].SUFFIX_DESC_EN + '","' +
 					arrData[i].VHVIN + '","' + arrData[i].ZZDLR_REF_NO +
 					'","' + arrData[i].ZZORDERTYPE + '","' + arrData[i].ZZVTN + '",';
 				//}

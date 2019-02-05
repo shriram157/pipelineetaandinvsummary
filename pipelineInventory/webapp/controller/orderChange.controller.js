@@ -141,20 +141,30 @@ sap.ui.define([
 			}
 
 			// var oModel = new sap.ui.model.odata.v2.ODataModel(_thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
-			var OrderChangeModel = _thatOC.getOwnerComponent().getModel("OrderChangeModel");
-			// _thatOC.OrderChangeModel.setUseBatch(false);
-			_thatOC._oToken = OrderChangeModel.getHeaders()['x-csrf-token'];
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-Token': _thatOC._oToken
-				}
-			});
-			OrderChangeModel.create("/OrderChangeSet", Obj, null, {
+			// var OrderChangeModel = _thatOC.getOwnerComponent().getModel("OrderChangeModel");
+			// // _thatOC.OrderChangeModel.setUseBatch(false);
+			// _thatOC._oToken = OrderChangeModel.getHeaders()['x-csrf-token'];
+			// $.ajaxSetup({
+			// 	headers: {
+			// 		'X-CSRF-Token': _thatOC._oToken
+			// 	}
+			// });
+			var OrderChangeModel = new sap.ui.model.odata.v2.ODataModel(_thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
+			OrderChangeModel.setUseBatch(false);
+			OrderChangeModel.create("/OrderChangeSet", Obj, {
 				success: $.proxy(function (oResponse) {
-					console.log("orderChangeResponse", oResponse);
+					console.log(oResponse);
+					if (oResponse.Error != "") {
+						sap.m.MessageBox.error(oResponse.Error);
+					}
+					else{
+						sap.m.MessageBox.success("Succesfully posted");
+					}
 				}, _thatOC),
 				error: function (oError) {
-					console.log("orderChangeError", oError);
+					sap.m.MessageBox.error(
+						"Error in data posting"
+					);
 				}
 			});
 		},

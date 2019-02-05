@@ -35,6 +35,15 @@
         "entryPath": "/sap/opu/odata"
       },
       "description": "DG2 200"
+    },
+    {
+      "path": "https://soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html",
+      "target": {
+        "type": "destination",
+        "name": "navToSoldOrder",
+        "entryPath": "https://soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html"
+      },
+      "description": "Navigation to Sold Order Application"
     }
   ],
   "sendWelcomeFileRedirect": true

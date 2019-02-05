@@ -5,7 +5,8 @@ sap.ui.define([
 	'sap/ui/core/routing/History',
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/resource/ResourceModel',
-], function (BaseController, History, JSONModel, ResourceModel) {
+	"sap/m/MessageBox"
+], function (BaseController, History, JSONModel, ResourceModel, MessageBox) {
 	"use strict";
 
 	return BaseController.extend("pipelineInventory.controller.vehicleDetails", {
@@ -222,6 +223,12 @@ sap.ui.define([
 			oModel.create("/VehicleDetailsSet", Obj, {
 				success: $.proxy(function (oResponse) {
 					console.log(oResponse);
+					if (oResponse.Error != "") {
+						sap.m.MessageBox.error(oResponse.Error);
+					}
+					else{
+						sap.m.MessageBox.success("Vehicle succesfully updated");
+					}
 				}, _thatVD),
 				error: function (oError) {
 					sap.m.MessageBox.error(
@@ -229,6 +236,10 @@ sap.ui.define([
 					);
 				}
 			});
+		},
+		
+		navToSoldOrer:function(){
+			_thatVD.getRouter().navTo("/navToSoldOrder");
 		},
 
 		onExit: function () {

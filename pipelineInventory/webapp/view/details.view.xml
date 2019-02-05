@@ -106,7 +106,7 @@
 							<ColumnListItem>
 								<cells>
 									<Link text="{VehicleDetailsJSON>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZDLR_REF_NO}"/>
-									<Text text="{VehicleDetailsJSON>ZZORDERTYPE}"/>
+									<Text text="{VehicleDetailsJSON>ZZORDERTYPE} - {VehicleDetailsJSON>ORDERTYPE_DESC_EN}"/>
 									<Text text="{VehicleDetailsJSON>ZMMSTA}"/>
 									<Link text="{VehicleDetailsJSON>ZZVTN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZVTN}"/>
 									<Link text="{VehicleDetailsJSON>VHVIN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>VHVIN}"/>
