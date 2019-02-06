@@ -37,11 +37,11 @@
 					
 					<Table items="{ChangeHistoryModel>/results}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="5"
 						growingScrollToLoad="false">
-						<headerToolbar>
-							<Toolbar>
-								<MessageStrip text="{i18n>Disclaimer}" type="Information" showIcon="true"></MessageStrip>
-							</Toolbar>
-						</headerToolbar>
+						<!--<headerToolbar>-->
+						<!--	<Toolbar>-->
+						<!--		<MessageStrip text="{i18n>Disclaimer}" type="Information" showIcon="true"></MessageStrip>-->
+						<!--	</Toolbar>-->
+						<!--</headerToolbar>-->
 						<columns>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 								<Text text="{i18n>OrderNumber}"/>

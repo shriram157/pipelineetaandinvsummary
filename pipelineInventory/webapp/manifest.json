@@ -115,7 +115,7 @@
 				"target": "vehicleDetailsNodata"
 			}, {
 				"name": "orderChange",
-				"pattern": "orderChange/{OrderNumber}",
+				"pattern": "orderChange/:OrderNumber:",
 				"target": "orderChange"
 			}, {
 				"name": "orderChange2",

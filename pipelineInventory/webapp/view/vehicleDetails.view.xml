@@ -58,9 +58,9 @@
 								<Text text="{path:'VehicleDetailsJSON>/selectedCustomerData/DeliveryDate', formatter: '.formatDate'}"/>
 								<core:Title text="{i18n>AdditionalInformation}"/>
 								<Label text="{i18n>OrderingDealer}"/>
-								<Link text="{VehicleDetailsJSON>/selectedCustomerData/KUNNR}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/KUNNR}"/>
 								<Label text="{i18n>ShipToDealer}"/>
-								<Link text="{VehicleDetailsJSON>/selectedCustomerData/ZZKUNWE}"/>
+								<Text text="{VehicleDetailsJSON>/selectedCustomerData/ZZKUNWE}"/>
 								<Label text="{i18n>Plant}"/>
 								<Text text="{VehicleDetailsJSON>/selectedCustomerData/PLANTDESC}"/>
 								<Label text="{i18n>HoldVehicle}"/>
