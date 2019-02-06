@@ -114,6 +114,17 @@
     background: #8080807d;
 }
 
+.guideLines{ width:100% !important;}
+.guideLines .sapUiRespGridBreak.sapUiRespGridSpanL6.sapUiRespGridSpanM6.sapUiRespGridSpanS12.sapUiRespGridSpanXL6 {
+    width: 100%;
+}
+.guideLines .sapUiRGLContainerCont {
+    padding: 1rem;
+}
+.newLine{
+	display:block;
+	width: 100% !important;;
+}
 
 /*#blankBG, #blankBG>div, .blankBG {*/
 /*	background: #fff !important;*/

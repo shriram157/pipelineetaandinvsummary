@@ -44,7 +44,7 @@
 								<Label text="{i18n>Colour}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ExteriorColorCode} {VehicleDetailsJSON>/selectedVehicleData/0/EXTCOL_DESC_EN}"/>
 								<Label text="{i18n>OrderType}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZORDERTYPE}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZORDERTYPE} - {VehicleDetailsJSON>/selectedVehicleData/0/ORDERTYPE_DESC_EN}"/>
 								<Label text="{i18n>Status}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZMMSTA}"/>
 								<Label text="{i18n>VTN}"/>

@@ -1,5 +1,5 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
-	xmlns:f="sap.ui.layout.form" controllerName="pipelineInventory.controller.orderChange" xmlns:tnt="sap.tnt" 
+	xmlns:f="sap.ui.layout.form" controllerName="pipelineInventory.controller.orderChange" xmlns:tnt="sap.tnt"
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
@@ -23,16 +23,16 @@
 				</tnt:ToolHeader>
 				<content>
 					<VBox class="sapUiSmallMargin">
-						<f:SimpleForm class="formDetails" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false"
-							emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+						<f:SimpleForm class="formDetails" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false" emptySpanL="0"
+							emptySpanM="0" columnsL="2" columnsM="2">
 							<f:content>
 								<core:Title text="{i18n>CurrentVehicleConfig}"/>
 								<Label text="{i18n>ModelYear}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Modelyear}"/>
 								<Label text="{i18n>Series}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries} {VehicleDetailsJSON>/selectedVehicleData/0/SERIES_DESC_EN}"/>
 								<Label text="{i18n>Model}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Model}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Model} {VehicleDetailsJSON>/selectedVehicleData/0/MODEL_DESC_EN}"/>
 								<Label text="{i18n>Suffix}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN}"/>
 								<Label text="{i18n>APX}"/>
@@ -40,21 +40,21 @@
 								<Label text="{i18n>Colour}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ExteriorColorCode} {VehicleDetailsJSON>/selectedVehicleData/0/EXTCOL_DESC_EN}"/>
 								<Label text="{i18n>OrderType}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZORDERTYPE}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZORDERTYPE} {VehicleDetailsJSON>/selectedVehicleData/0/ORDERTYPE_DESC_EN}"/>
 								<Label text="{i18n>Status}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZMMSTA}"/>
 								<Label text="{i18n>ETA}"/>
-								<Text text="From {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} To {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
+								<Text
+									text="From {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} To {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
 								<!--<Label text="{i18n>ETATo}"/>-->
 								<!--<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ETATo}"/>-->
 								<Label text="{i18n>VTN}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZVTN}"/>
-								
 								<core:Title text="{i18n>NewVehicleConfig}"/>
 								<Label text="{i18n>ModelYear}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Modelyear}"/>
 								<Label text="{i18n>Series}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries} {VehicleDetailsJSON>/selectedVehicleData/0/SERIES_DESC_EN}"/>
 								<Label text="{i18n>NewModel}" required="true"/>
 								<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewModel}"/>
 								<Label text="{i18n>NewSuffix}" required="true"/>
@@ -71,10 +71,11 @@
 						</f:SimpleForm>
 					</VBox>
 					<VBox>
-						<f:SimpleForm class="formDetails" editable="false" layout="ResponsiveGridLayout">
+						<f:SimpleForm class="formDetails guideLines" editable="false" layout="ResponsiveGridLayout">
 							<f:content>
-								<core:Title text="{i18n>Guidelines}" />
-								<TextArea value="{VehicleDetailsJSON>/selectedVehicleData/0/Guidelines}" rows="8" />
+								<core:Title text="{i18n>Guidelines}"/>
+								<Text class="newLine" text="{i18n>Guideline1}"/>
+								<Text class="newLine" text="{i18n>Guideline2}"/>
 							</f:content>
 						</f:SimpleForm>
 					</VBox>

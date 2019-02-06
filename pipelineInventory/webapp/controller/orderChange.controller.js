@@ -48,7 +48,7 @@ sap.ui.define([
 				this.sPrefix = "";
 			}
 			_thatOC.nodeJsUrl = this.sPrefix + "/node";
-			
+
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
 				delay: 0
@@ -60,22 +60,52 @@ sap.ui.define([
 		},
 
 		_oOrderChangeRoute: function (oEvent) {
-			if (oEvent.getParameter("arguments").OrderNumber != undefined) {
-				_thatOC.oVehicleDetailsJSON = _thatOC.getView().getModel("VehicleDetailsJSON");
+			sap.ui.core.BusyIndicator.hide();
+			if (oEvent.getParameters().name == "orderChange2") {
+				if (oEvent.getParameter("arguments").Data != undefined) {
+					var Data = JSON.parse(oEvent.getParameter("arguments").Data);
+					Data.NewSuffix = Data.NewSuffix.replace("%2F", "/");
+					Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
+					_thatOC.oVehicleDetailsJSON = new sap.ui.model.json.JSONModel();
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData = [];
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData.push(Data);
+					
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Model = Data.NewModel;
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Suffix = Data.NewSuffix;
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].APX = Data.NewAPX;
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Colour = Data.NewColor;
+					
+					_thatOC.oVehicleDetailsJSON.updateBindings(true);
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewModel = "";
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewSuffix = "";
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewAPX = "";
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Status = "";
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewColour = "";
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Guidelines = "";
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].CurrentDate = _thatOC.curDate;
+					_thatOC.oVehicleDetailsJSON.updateBindings(true);
+					_thatOC.oVehicleDetailsJSON.refresh(true);
+					_thatOC.getView().setModel(_thatOC.oVehicleDetailsJSON, "VehicleDetailsJSON");
+				}
+			} else {
+				if (oEvent.getParameter("arguments").OrderNumber != undefined) {
+					_thatOC.oVehicleDetailsJSON = _thatOC.getView().getModel("VehicleDetailsJSON");
 
-				var _OrderNumber = oEvent.getParameter("arguments").OrderNumber;
-				for (var i = 0; i < _thatOC.oVehicleDetailsJSON.getData().results.length; i++) {
-					if (_thatOC.oVehicleDetailsJSON.getData().results[i].OrderNumber == _OrderNumber) {
-						_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData = [];
-						_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData.push(_thatOC.oVehicleDetailsJSON.getData().results[i]);
-						_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewModel = "";
-						_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewSuffix = "";
-						_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewAPX = "";
-						_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewColour = "";
-						_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Guidelines = "";
-						_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].CurrentDate = _thatOC.curDate;
-						_thatOC.oVehicleDetailsJSON.updateBindings(true);
-						_thatOC.oVehicleDetailsJSON.refresh(true);
+					var _OrderNumber = oEvent.getParameter("arguments").OrderNumber;
+					for (var i = 0; i < _thatOC.oVehicleDetailsJSON.getData().results.length; i++) {
+						if (_thatOC.oVehicleDetailsJSON.getData().results[i].OrderNumber == _OrderNumber) {
+							_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData = [];
+							_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData.push(_thatOC.oVehicleDetailsJSON.getData().results[i]);
+							_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewModel = "";
+							_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewSuffix = "";
+							_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewAPX = "";
+							_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Status = "";
+							_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewColour = "";
+							_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Guidelines = "";
+							_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].CurrentDate = _thatOC.curDate;
+							_thatOC.oVehicleDetailsJSON.updateBindings(true);
+							_thatOC.oVehicleDetailsJSON.refresh(true);
+						}
 					}
 				}
 			}
@@ -156,8 +186,9 @@ sap.ui.define([
 					console.log(oResponse);
 					if (oResponse.Error != "") {
 						sap.m.MessageBox.error(oResponse.Error);
-					}
-					else{
+					} else {
+						_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Status = "Requested";
+						_thatOC.getView().getModel("VehicleDetailsJSON").updateBindings(true);
 						sap.m.MessageBox.success("Succesfully posted");
 					}
 				}, _thatOC),

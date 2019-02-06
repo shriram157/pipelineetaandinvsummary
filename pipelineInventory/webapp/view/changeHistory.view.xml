@@ -32,7 +32,7 @@
 							</ComboBox>
 						</HBox>
 						<ToolbarSpacer/>
-						<Button text="{i18n>Submit}" type="Accept"/>
+						<Button text="{i18n>Submit}" type="Accept" enabled="{LocalModel>/enablesubmitBtn}" />
 					</OverflowToolbar>
 					
 					<Table items="{ChangeHistoryModel>/results}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="5"
@@ -62,7 +62,7 @@
 								<Text text="{i18n>Old APX}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>Old Color}"/>
+								<Text text="{i18n>Old Colour}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="{i18n>New Model}"/>
@@ -72,6 +72,9 @@
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="{i18n>New APX}"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
+								<Text text="{i18n>New Colour}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="{i18n>SubmissionDateTime}"/>
@@ -96,9 +99,10 @@
 									<Text text="{ChangeHistoryModel>NewModel}"/>
 									<Text text="{ChangeHistoryModel>NewSuffix}"/>
 									<Text text="{ChangeHistoryModel>NewAPX}"/>
+									<Text text="{ChangeHistoryModel>NewColor}"/>
 									<Text text="{path:'ChangeHistoryModel>DateSubmitted', formatter: '.formatDate'}"/>
 									<Text text="{ChangeHistoryModel>Status}"/>
-									<Button text="{i18n>ReSubmit}" visible="{LocalModel>/enableResubmitBtn}" press="onNavigateToOC"/>
+									<Button text="{i18n>ReSubmit}" press="onNavigateToOC" id="ResubmitBTN" visible="{ChangeHistoryModel>visible}"/>
 								</cells>
 							</ColumnListItem>
 						</items>
