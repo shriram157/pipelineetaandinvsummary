@@ -56,15 +56,26 @@
 								<Label text="{i18n>Series}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries} {VehicleDetailsJSON>/selectedVehicleData/0/SERIES_DESC_EN}"/>
 								<Label text="{i18n>NewModel}" required="true"/>
-								<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewModel}"/>
+								<Select id="ID_modelSelect" forceSelection="true" items="{VehicleDetailsJSON>/modelData}" change="onModelSelectionChange">
+									<core:Item key="{VehicleDetailsJSON>Model}" text="{VehicleDetailsJSON>Model} - {VehicleDetailsJSON>ENModelDesc}"/>
+								</Select>
+								<!--<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewModel}"/>-->
 								<Label text="{i18n>NewSuffix}" required="true"/>
-								<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewSuffix}"/>
+								<!--<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewSuffix}"/>-->
+								<Select id="ID_suffixSelect" forceSelection="true" items="{VehicleDetailsJSON>/suffixData}" change="onSuffixChange">
+									<core:Item key="{VehicleDetailsJSON>Suffix}" text="{VehicleDetailsJSON>Suffix} - {VehicleDetailsJSON>SuffixDescriptionEN} / {VehicleDetailsJSON>MarktgIntDescEN}"/>
+									<!--/ {GlobalJSONModel>MarktgIntDescEN}-->
+								</Select>
 								<Label text="{i18n>NewAPX}" required="true"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>
 								<Label text="{i18n>NewColour}" required="true"/>
-								<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewColour}"/>
+								<Select id="ID_ExteriorColorSelect" forceSelection="true" items="{VehicleDetailsJSON>/colorData}">
+									<core:Item key="{VehicleDetailsJSON>ExteriorColorCode}"
+										text="{VehicleDetailsJSON>ExteriorColorCode} - {VehicleDetailsJSON>MarketingDescriptionEXTColorEN}"/>
+								</Select>
+								<!--<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewColour}"/>-->
 								<Label text="{i18n>DateTime}"/>
-								<Text text="{path:'VehicleDetailsJSON>/selectedVehicleData/0/ETA', formatter: '.formatDate'}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/CurrentDate}"/>
 								<Label text="{i18n>Status}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Status}"/>
 							</f:content>

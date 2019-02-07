@@ -73,8 +73,8 @@ sap.ui.define([
 		},
 		_oVehicleDetailsRoute: function (oEvent) {
 			sap.ui.core.BusyIndicator.hide();
-			this.getView().setModel(sap.ui.getCore().getModel("VehicleDetailsJSON"), "VehicleDetailsJSON");
 
+			_thatVD.getView().setModel(sap.ui.getCore().getModel("VehicleDetailsJSON"), "VehicleDetailsJSON");
 			_thatVD.oVehicleDetailsJSON = _thatVD.getView().getModel("VehicleDetailsJSON");
 
 			_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
@@ -97,34 +97,41 @@ sap.ui.define([
 				_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
 				_thatVD.sCurrentLocale = 'EN';
 			}
-			if (oEvent.getParameter("arguments").OrderNumber != undefined) {
-				//console.log(oEvent.getParameter("arguments").data);
+			if (oEvent.getParameters().name != "orderChange") {
+				if (oEvent.getParameters().name == "vehicleDetails2") {
+					if (oEvent.getParameter("arguments").VCData2 != undefined) {
+						var Data = JSON.parse(oEvent.getParameter("arguments").VCData2);
+						Data.NewSuffix = Data.NewSuffix.replace("%2F", "/");
+						Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
 
-				var _OrderNumber = oEvent.getParameter("arguments").OrderNumber;
-
-				var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('" + _OrderNumber + "')";
-				$.ajax({
-					dataType: "json",
-					url: url,
-					type: "GET",
-					success: function (oRowData) {
-						console.log("CustomerData", oRowData);
-						_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = [];
-						_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
-						_thatVD.oVehicleDetailsJSON.updateBindings(true);
-					},
-					error: function (oError) {
-						sap.ui.core.BusyIndicator.hide();
-						_thatVD.errorFlag = true;
-					}
-				});
-
-				for (var i = 0; i < _thatVD.oVehicleDetailsJSON.getData().results.length; i++) {
-					if (_thatVD.oVehicleDetailsJSON.getData().results[i].VHCLE == _OrderNumber) {
+						_thatVD.oVehicleDetailsJSON = new sap.ui.model.json.JSONModel();
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData = [];
 						_thatVD.oVehicleDetailsJSON.getData().AcceessoryData = [];
 						_thatVD.oVehicleDetailsJSON.getData().DNCData = [];
-						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData.push(_thatVD.oVehicleDetailsJSON.getData().results[i]);
+						_thatVD.oVehicleDetailsJSON.getData().APXData = [];
+						_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = [];
+						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData.push(Data);
+
+						var _OrderNumber = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].VHCLE;
+						var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('" + _OrderNumber + "')";
+						$.ajax({
+							dataType: "json",
+							url: url,
+							type: "GET",
+							success: function (oRowData) {
+								console.log("CustomerData", oRowData);
+								_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
+								_thatVD.oVehicleDetailsJSON.updateBindings(true);
+							},
+							error: function (oError) {
+								sap.ui.core.BusyIndicator.hide();
+								_thatVD.errorFlag = true;
+							}
+						});
+						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Model = Data.NewModel;
+						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Suffix = Data.NewSuffix;
+						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].APX = Data.NewAPX;
+						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ExteriorColorCode = Data.NewColor;
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].AccessoriesInstalled = "";
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNCVehicle = "";
 						_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[0] = {
@@ -143,17 +150,18 @@ sap.ui.define([
 						_thatVD.oVehicleDetailsJSON.getData().DNCData[2] = {
 							"DNCVehicle": "DNC Demo Loaner"
 						};
-
-						_thatVD.oVehicleDetailsJSON.updateBindings();
+						_thatVD.oVehicleDetailsJSON.updateBindings(true);
+						_thatVD.oVehicleDetailsJSON.refresh(true);
+						_thatVD.getView().setModel(_thatVD.oVehicleDetailsJSON, "VehicleDetailsJSON");
+						var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
 						$.ajax({
 							dataType: "json",
-							url: _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + _thatVD.oVehicleDetailsJSON.getData()
-								.selectedVehicleData[0].Modelyear + "' and zzmodel eq '" + _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Model +
-								"' and zzsuffix eq '" + _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Suffix + "'",
+							url: _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + data.Modelyear +
+								"' and zzmodel eq '" +
+								data.Model + "' and zzsuffix eq '" + data.Suffix + "'",
 							type: "GET",
 							success: function (oRowData) {
-								console.log("CustomerData", oRowData);
-								_thatVD.oVehicleDetailsJSON.getData().APXData = [];
+								console.log("APXData", oRowData);
 								_thatVD.oVehicleDetailsJSON.getData().APXData = oRowData.d.results;
 								_thatVD.oVehicleDetailsJSON.updateBindings(true);
 							},
@@ -163,12 +171,118 @@ sap.ui.define([
 							}
 						});
 					}
+
+				} else {
+					if (oEvent.getParameter("arguments").VCData != undefined) {
+						var Data = JSON.parse(oEvent.getParameter("arguments").VCData);
+						Data.Suffix = Data.Suffix.replace("%2F", "/");
+						// Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
+						if (_thatVD.oVehicleDetailsJSON.getData().results.length > 0) {
+							for (var i = 0; i < _thatVD.oVehicleDetailsJSON.getData().results.length; i++) {
+								if (_thatVD.oVehicleDetailsJSON.getData().results[i].VHCLE == Data.VHCLE) {
+									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData = [];
+									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData = [];
+									_thatVD.oVehicleDetailsJSON.getData().DNCData = [];
+									_thatVD.oVehicleDetailsJSON.getData().APXData = [];
+									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData.push(_thatVD.oVehicleDetailsJSON.getData().results[i]);
+									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].AccessoriesInstalled = "";
+									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNCVehicle = "";
+									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[0] = {
+										"AccessoryInstalled": "Yes"
+									};
+									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[1] = {
+										"AccessoryInstalled": "No"
+									};
+
+									_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
+										"DNCVehicle": ""
+									};
+									_thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
+										"DNCVehicle": "Do Not Call"
+									};
+									_thatVD.oVehicleDetailsJSON.getData().DNCData[2] = {
+										"DNCVehicle": "DNC Demo Loaner"
+									};
+
+									_thatVD.oVehicleDetailsJSON.updateBindings();
+
+									var _OrderNumber = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].VHCLE;
+
+									var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('" + _OrderNumber + "')";
+									$.ajax({
+										dataType: "json",
+										url: url,
+										type: "GET",
+										success: function (oRowData) {
+											console.log("CustomerData", oRowData);
+											_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
+											_thatVD.oVehicleDetailsJSON.updateBindings(true);
+										},
+										error: function (oError) {
+											sap.ui.core.BusyIndicator.hide();
+											_thatVD.errorFlag = true;
+										}
+									});
+									var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
+
+									$.ajax({
+										dataType: "json",
+										url: _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + data.Modelyear +
+											"' and zzmodel eq '" +
+											data.Model + "' and zzsuffix eq '" + data.Suffix + "'",
+										type: "GET",
+										success: function (oRowData) {
+											console.log("APXData", oRowData);
+											_thatVD.oVehicleDetailsJSON.getData().APXData = oRowData.d.results;
+											_thatVD.oVehicleDetailsJSON.updateBindings(true);
+										},
+										error: function (oError) {
+											sap.ui.core.BusyIndicator.hide();
+											_thatVD.errorFlag = true;
+										}
+									});
+								}
+							}
+						}
+					}
 				}
 			}
-
-			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('0000603687')
 		},
 
+		getAPXData: function (data) {
+			$.ajax({
+				dataType: "json",
+				url: _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + data.Modelyear + "' and zzmodel eq '" +
+					data.Model + "' and zzsuffix eq '" + data.Suffix + "'",
+				type: "GET",
+				success: function (oRowData) {
+					console.log("APXData", oRowData);
+					_thatVD.oVehicleDetailsJSON.getData().APXData = oRowData.d.results;
+					_thatVD.oVehicleDetailsJSON.updateBindings(true);
+				},
+				error: function (oError) {
+					sap.ui.core.BusyIndicator.hide();
+					_thatVD.errorFlag = true;
+				}
+			});
+		},
+		getCustomerData: function (_OrderNumber) {
+			var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('" + _OrderNumber + "')";
+			$.ajax({
+				dataType: "json",
+				url: url,
+				type: "GET",
+				success: function (oRowData) {
+					console.log("CustomerData", oRowData);
+					_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
+					_thatVD.oVehicleDetailsJSON.updateBindings(true);
+				},
+				error: function (oError) {
+					sap.ui.core.BusyIndicator.hide();
+					_thatVD.errorFlag = true;
+				}
+			});
+		},
 		/*Back Navigation*/
 		NavigateBack: function () {
 			// this.getRouter().navTo("details", {});
@@ -186,9 +300,19 @@ sap.ui.define([
 
 		/*Navigate to Order Change screen*/
 		NavToOrderChange: function () {
+			var obj = _thatVD.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatVD);
+			if (obj.NewSuffix != undefined) {
+				obj.NewSuffix = obj.NewSuffix.replace("/", "%2F");
+			}
+			if (obj.OldSuffix != undefined) {
+				obj.OldSuffix = obj.OldSuffix.replace("/", "%2F");
+			}
+			if (obj.Suffix != undefined) {
+				obj.Suffix = obj.Suffix.replace("/", "%2F");
+			}
 			oRouter.navTo("orderChange", {
-				OrderNumber: sap.ui.getCore().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].ProductId
+				Data: JSON.stringify(obj)
 			});
 		},
 
@@ -225,8 +349,7 @@ sap.ui.define([
 					console.log(oResponse);
 					if (oResponse.Error != "") {
 						sap.m.MessageBox.error(oResponse.Error);
-					}
-					else{
+					} else {
 						sap.m.MessageBox.success("Vehicle succesfully updated");
 					}
 				}, _thatVD),
@@ -237,11 +360,18 @@ sap.ui.define([
 				}
 			});
 		},
-		
-		navToSoldOrer:function(){
-			_thatVD.getRouter().navTo("/navToSoldOrder");
-		},
 
+		navToSoldOrer: function () {
+			jQuery.sap.require("jquery.sap.storage");
+			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.session);
+			sap.ushell.components.vehicleFromPipeline = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
+			//Get data from Storage
+			oStorage.get("myLocalData");
+			//Set data into Storage
+			oStorage.put("myLocalData", _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0]);
+			window.location.href= "https://soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html";
+			jQuery.sap.require("jquery.sap.storage");
+		},
 		onExit: function () {
 			this.destroy();
 		}

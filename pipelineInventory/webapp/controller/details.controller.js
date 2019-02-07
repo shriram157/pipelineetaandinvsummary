@@ -171,7 +171,7 @@ sap.ui.define([
 
 				var oFilter = new sap.ui.model.Filter({
 					aFilters: aFilters,
-					bAnd: true,
+					bAnd: false,
 					_bMultiFilter: true
 				});
 
@@ -194,9 +194,13 @@ sap.ui.define([
 
 		/*Navigate to Vehicle Details page*/
 		onNavigateToVL: function (oNavEvent) {
+			var Data = oNavEvent.getSource().getModel("VehicleDetailsJSON").getProperty(oNavEvent.getSource().getBindingContext(
+				"VehicleDetailsJSON").sPath);
+			Data.Suffix = Data.Suffix.replace("/", "%2F");
+			Data.__metadata = "";
 			this.getRouter().navTo("vehicleDetails", {
-				OrderNumber: oNavEvent.getSource().getModel("VehicleDetailsJSON").getProperty(oNavEvent.getSource().getBindingContext(
-					"VehicleDetailsJSON").sPath).VHCLE
+				VCData: JSON.stringify(Data)
+
 			});
 		},
 
@@ -357,17 +361,6 @@ sap.ui.define([
 			} else {
 				_thatDT.oBinding.filter([]);
 			}
-
-			// sQuery = sQuery.replace("*", "%");
-			// debugger;
-			// if (sQuery && sQuery.length > 0) {
-			// 	aFilters = new Filter([
-			// 		new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EQ, sQuery)
-			// 	], false);
-			// 	_thatDT.oBinding.filter(aFilters);
-			// } else {
-			// 	_thatDT.oBinding.filter([]);
-			// }
 		},
 
 		onDataExport: function (oEvent) {
@@ -399,10 +392,9 @@ sap.ui.define([
 			//loop is to extract each row
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
-				row += '"' + arrData[i].Dealer + '","' + arrData[i].ZZDLR_REF_NO + "-" + arrData[i].ORDERTYPE_DESC_EN + '","' + arrData[i].MODEL_DESC_EN  + '","' + arrData[i].ZMMSTA +
-					'","' +
-					arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i].Suffix +
-					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].ETAFrom + '","' + arrData[i].ETATo + '",';
+				row += '"' + arrData[i].Dealer + '","' + arrData[i].ZZDLR_REF_NO +'","' + arrData[i].ZZORDERTYPE + "-" + arrData[i].ORDERTYPE_DESC_EN +'","' + arrData[i].ZMMSTA +	'","' +	arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i].Suffix +
+					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].ETAFrom +
+					'","' + arrData[i].ETATo + '",';
 				//}
 				row.slice(1, row.length);
 				CSV += row + '\r\n';

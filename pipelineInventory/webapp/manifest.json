@@ -54,6 +54,7 @@
 			"libs": {
 				"sap.ui.layout": {},
 				"sap.ui.core": {},
+				"sap.ushell": {},
 				"sap.m": {}
 			}
 		},
@@ -107,19 +108,23 @@
 				"target": "details"
 			}, {
 				"name": "vehicleDetails",
-				"pattern": "vehicleDetails/{OrderNumber}",
+				"pattern": "vehicleDetails/{VCData}",
 				"target": "vehicleDetails"
+			}, {
+				"name": "vehicleDetails2",
+				"pattern": "vehicleDetails2/{VCData2}",
+				"target": "vehicleDetails2"
 			}, {
 				"name": "vehicleDetailsNodata",
 				"pattern": "vehicleDetailsNodata",
 				"target": "vehicleDetailsNodata"
 			}, {
 				"name": "orderChange",
-				"pattern": "orderChange/:OrderNumber:",
+				"pattern": "orderChange/{Data}",
 				"target": "orderChange"
 			}, {
 				"name": "orderChange2",
-				"pattern": "orderChange2/{Data}",
+				"pattern": "orderChange2/{Data2}",
 				"target": "orderChange2"
 			}, {
 				"name": "shipToDealer",
@@ -159,6 +164,10 @@
 					"viewName": "details"
 				},
 				"vehicleDetails": {
+					"viewType": "XML",
+					"viewName": "vehicleDetails"
+				},
+				"vehicleDetails2": {
 					"viewType": "XML",
 					"viewName": "vehicleDetails"
 				},

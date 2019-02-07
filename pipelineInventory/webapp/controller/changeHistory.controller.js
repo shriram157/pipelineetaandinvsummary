@@ -143,19 +143,23 @@ sap.ui.define([
 		},
 
 		onNavigateToVL: function (oNavEvent) {
-			this.getRouter().navTo("vehicleDetails", {
-				OrderNumber: oNavEvent.getSource().getModel("ChangeHistoryModel").getProperty(oNavEvent.getSource().getBindingContext(
-					"ChangeHistoryModel").sPath).VHCLE
+			var obj = oNavEvent.getSource().getModel("ChangeHistoryModel").getProperty(oNavEvent.getSource().getBindingContext(
+				"ChangeHistoryModel").sPath);
+			obj.NewSuffix = obj.NewSuffix.replace("/", "%2F");
+			obj.OldSuffix = obj.OldSuffix.replace("/", "%2F");
+			obj.__metadata = "";
+			this.getRouter().navTo("vehicleDetails2", {
+				VCData2: JSON.stringify(obj)
 			});
 		},
 		onNavigateToOC: function (oResubmit) {
-			var data =oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
-					"ChangeHistoryModel").sPath);
-			data.NewSuffix= data.NewSuffix.replace("/","%2F");
-			data.OldSuffix= data.OldSuffix.replace("/","%2F");
-			data.__metadata="";
+			var data = oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
+				"ChangeHistoryModel").sPath);
+			data.NewSuffix = data.NewSuffix.replace("/", "%2F");
+			data.OldSuffix = data.OldSuffix.replace("/", "%2F");
+			data.__metadata = "";
 			this.getRouter().navTo("orderChange2", {
-				Data: JSON.stringify(data)
+				Data2: JSON.stringify(data)
 			});
 
 		},
