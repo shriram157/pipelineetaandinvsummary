@@ -12,7 +12,7 @@ global.__base = __dirname + '/';
 
 //Initialize Express App for XSA UAA and HDBEXT Middleware
 var passport = require('passport');
-// var xssec = require('@sap/xssec');
+var xssec = require('@sap/xssec');
 var xsHDBConn = require('@sap/hdbext');
 var express = require('express');
 
@@ -23,13 +23,17 @@ var appContext = logging.createAppContext();
 //Initialize Express App for XS UAA and HDBEXT Middleware
 var app = express();
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";  // TODO: 
-// passport.use('JWT', new xssec.JWTStrategy(xsenv.getServices({
-// 	uaa: {
-// 		tag: 'xsuaa'
-// 	}
-// }).uaa));
+passport.use('JWT', new xssec.JWTStrategy(xsenv.getServices({
+	uaa: {
+		tag: 'xsuaa'
+	}
+}).uaa));
 app.use(logging.expressMiddleware(appContext));
 app.use(passport.initialize());
+app.use(passport.authenticate('JWT', {
+	session: false
+}));
+
 // var hanaOptions = `node server.js`.getServices({
 // 	hana: {
 // 		tag: 'hana'
@@ -46,7 +50,7 @@ app.use(passport.initialize());
 // );
 
 //Setup Routes
-var router = require('./myRouter')(app, server);
+var router = require('./router')(app, server);
 
 //Start the Server
 server.on('request', app);

@@ -12,12 +12,13 @@ modules:
       service-name: pipelineInventory_node
       service-url: '${default-url}'
       disk-quota: 256MB
-      memory: 128MB
+      memory: 256MB
     provides:
       - name: pipelineInventory_node_api
         properties:
           url: '${default-url}'
     requires:
+      - name: uaa_pipelineInventory
       - name: PIPELINE_INVENTORY_APIM_CUPS
 
   - name: pipelineInventory
@@ -30,6 +31,7 @@ modules:
        builder: grunt
     requires:
      - name: dest_pipelineInventory
+     - name: uaa_pipelineInventory
      - name: pipelineInventory_node_api
        group: destinations
        properties:
@@ -38,17 +40,24 @@ modules:
           forwardAuthToken: true 
     provides:
       - name: pipelineInventory
-resources:
-  - name: PIPELINE_INVENTORY_APIM_CUPS
-    type: org.cloudfoundry.existing-service
-    parameters:
-      service-name: PIPELINE_INVENTORY_APIM_CUPS
-    properties:
-      odata-call-service-name: '${service-name}'
 
+resources:
   - name: dest_pipelineInventory
     parameters:
        service-plan: lite
        service: destination
     type: org.cloudfoundry.managed-service
 
+  - name: uaa_pipelineInventory
+    parameters:
+       service: xsuaa
+       service-plan: application
+       path: ./xs-security.json
+    type: org.cloudfoundry.managed-service
+
+  - name: PIPELINE_INVENTORY_APIM_CUPS
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: PIPELINE_INVENTORY_APIM_CUPS
+    properties:
+      odata-call-service-name: '${service-name}'
