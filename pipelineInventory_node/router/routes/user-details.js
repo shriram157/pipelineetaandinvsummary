@@ -40,7 +40,8 @@ module.exports = function () {
 			"attributes": [],
 			"samlAttributes": userAttributes,
 			legacyDealer: "",
-			legacyDealerName: ""
+			legacyDealerName: "",
+			"sales":[]
 		};
 
 		var userType = userAttributes.UserType[0];
@@ -79,9 +80,10 @@ module.exports = function () {
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
 				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004' or BusinessPartnerType eq 'Z005') and zstatus ne 'X'" +
 				"&$orderby=BusinessPartner asc";
+				console.log("bpReqUrl",bpReqUrl);
 
-			/*(bpReqUrl = url + "/API_BUSINESS_PARTNER/A_CustomerSalesArea?$filter=SalesOffice eq '" + bpZone +
-				"'&$format=json&?sap-client=" + s4Client;*/
+			// bpReqUrl = url + "/API_BUSINESS_PARTNER/A_CustomerSalesArea?$filter=SalesOffice eq '" + bpZone +
+			// 	"'&$format=json&?sap-client=" + s4Client;
 
 			// TODO: will need to query for customer numbers, then call A_BusinessPartner to get actual BP information
 		}
@@ -90,7 +92,7 @@ module.exports = function () {
 		else {
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
 				"&$expand=to_Customer&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004' or BusinessPartnerType eq 'Z005') and zstatus ne 'X'" +
-				"&$orderby=BusinessPartner asc";
+				"&$orderby=BusinessPartner asc";console.log("bpReqUrl",bpReqUrl);
 		}
 
 		//req.logMessage("debug", "BP URL: %s", bpReqUrl);
@@ -124,6 +126,7 @@ module.exports = function () {
 						}
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
 							if (customerSalesArea.results[i].SalesOffice === bpZone) {
+								resBody.sales.push(customerSalesArea.results[i]);
 								return true;
 							}
 						}
@@ -140,6 +143,7 @@ module.exports = function () {
 						BusinessPartnerType: bpResults[i].BusinessPartnerType,
 						SearchTerm2: bpResults[i].SearchTerm2
 					};
+					// bpAttributes.Sales = bpResults[i].sales;
 					try {
 						toCustomerAttr1 = bpResults[i].to_Customer.Attribute1;
 					} catch (e) {
@@ -147,13 +151,13 @@ module.exports = function () {
 					}
 
 					if (toCustomerAttr1 === "01") {
-						bpAttributes.Division = "10";
+						bpAttributes.Division = "10"; //TOY
 						bpAttributes.Attribute = "01";
 					} else if (toCustomerAttr1 === "02") {
-						bpAttributes.Division = "20";
+						bpAttributes.Division = "20"; //LEX
 						bpAttributes.Attribute = "02";
 					} else if (toCustomerAttr1 === "03") {
-						bpAttributes.Division = "Dual";
+						bpAttributes.Division = "Dual"; //DUAL
 						bpAttributes.Attribute = "03";
 					} else if (toCustomerAttr1 === "04") {
 						bpAttributes.Division = "10";

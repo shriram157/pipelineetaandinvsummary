@@ -1,7 +1,7 @@
 ID: pipelineInventory
 _schema-version: '3.1'
 description: MTA Project for Pipeline Inventory
-version: 0.0.1
+version: 0.0.2
 modules:
   - name: pipelineInventory_node
     type: nodejs

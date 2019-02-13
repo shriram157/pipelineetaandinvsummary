@@ -7,7 +7,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (Controller, JSONModel, ResourceModel, BaseController, MessageBox) {
 	"use strict";
-	
+
 	return BaseController.extend("pipelineInventory.controller.master", {
 		/*Initialization of the page data*/
 		onInit: function () {
@@ -39,22 +39,97 @@ sap.ui.define([
 				_that.sCurrentLocale = 'EN';
 			}
 
-			// _that.oDataService = "/node";
+			_that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
+
 			var sLocation = window.location.host;
 			var sLocation_conf = sLocation.search("webide");
 
 			if (sLocation_conf == 0) {
 				this.sPrefix = "/pipelineInventory-dest";
+
+				var attributes = [{
+					"Attribute": "01",
+					"BusinessPartner": "01003",
+					"BusinessPartnerKey": "2400001003",
+					"BusinessPartnerName": "Sunrise Toyota Inc.xyz1.",
+					"BusinessPartnerType": "Z001",
+					"Division": "10",
+					"SearchTerm2": "01003"
+				}, {
+					"Attribute": "02",
+					"BusinessPartner": "01050",
+					"BusinessPartnerKey": "2400001050",
+					"BusinessPartnerName": "Kelowna Toyota Inc.1234",
+					"BusinessPartnerType": "Z001",
+					"Division": "10",
+					"SearchTerm2": "01050"
+				}];
+
+				var samlAttributes = {
+					"Language": ["English"],
+					"UserType": ["Zone"],
+					"Zone": ["1"]
+				};
+
+				_that.BusinessPartnerData.getData().DealerList = attributes;
+				_that.BusinessPartnerData.getData().SamlList = samlAttributes;
+				_that.BusinessPartnerData.updateBindings(true);
+				_that.BusinessPartnerData.refresh(true);
+				_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
+
 			} else {
 				this.sPrefix = "";
 			}
 			this.nodeJsUrl = this.sPrefix + "/node";
-			
+
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
 				delay: 0
 			});
 			_that.getView().setModel(_oViewModel, "LocalOCModel");
+			// _that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
+
+			// _that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
+			_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
+
+			$.ajax({
+				dataType: "json",
+				url: "/userDetails/attributes",
+				type: "GET",
+				success: function (userAttributes) {
+					_that.BusinessPartnerData.getData().DealerList = [];
+					_that.BusinessPartnerData.getData().SamlList = [];
+					console.log("User Attributes", userAttributes);
+					// if (userAttributes.samlAttributes.Zone != undefined) {
+					// this.Zone = userAttributes.samlAttributes.Zone[0] + "000";
+					_that.BusinessPartnerData.getData().DealerList = userAttributes.attributes;
+					_that.BusinessPartnerData.getData().SamlList = userAttributes.samlAttributes;
+					_that.BusinessPartnerData.updateBindings(true);
+					_that.BusinessPartnerData.refresh(true);
+					// var url = _that.nodeJsUrl + "/API_BUSINESS_PARTNER/A_CustomerSalesArea?$filter=SalesOffice eq '" + this.Zone +
+					// 	"'&$format=json";
+					// $.ajax({
+					// 	dataType: "json",
+					// 	url: url,
+					// 	type: "GET",
+					// 	success: function (salesData) {
+					// 		console.log("salesData", salesData);
+					// 	},
+					// 	error: function (oError) {}
+					// });
+					// }
+				},
+				error: function (oError) {}
+			});
+			$.ajax({
+				dataType: "json",
+				url: "/userDetails/currentScopesForUser",
+				type: "GET",
+				success: function (scopesData) {
+					console.log("currentScopesForUser", scopesData);
+				},
+				error: function (oError) {}
+			});
 
 			$.ajax({
 				dataType: "json",
@@ -365,9 +440,9 @@ sap.ui.define([
 					"BusinessPartner": "2400001116",
 					"SearchTerm2": "01116"
 				}]
-			}
-			_that.oBusinessDataModel.getData().DealerList = dealerCodes.DealerList;
-			console.log("dealerCodes", dealerCodes);
+			};
+			// _that.oBusinessDataModel.getData().DealerList = dealerCodes.DealerList;
+			// console.log("dealerCodes", dealerCodes);
 			_that.oUserModel.setData(userData);
 			_that.oUserModel.updateBindings(true);
 			/*Getting Year dropdown data*/
@@ -433,10 +508,10 @@ sap.ui.define([
 			// 	// })(c);
 			// }
 
-			_that.oBusinessDataModel.updateBindings(true);
-			_that.oBusinessDataModel.refresh(true);
-			sap.ui.getCore().setModel(_that.oBusinessDataModel, "BusinessDataModel");
-			_that.getView().setModel(_that.oBusinessDataModel, "BusinessDataModel");
+			// _that.oBusinessDataModel.updateBindings(true);
+			// _that.oBusinessDataModel.refresh(true);
+			// sap.ui.getCore().setModel(_that.oBusinessDataModel, "BusinessDataModel");
+			// _that.getView().setModel(_that.oBusinessDataModel, "BusinessDataModel");
 
 			_that.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 			_that.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
@@ -497,7 +572,26 @@ sap.ui.define([
 		},
 
 		onDealerChange: function (oDealer) {
-			SelectedDealer = oDealer.getParameters().selectedItem.getProperty("key");
+			_that.userType = "";
+			SelectedDealer = oDealer.getParameters().selectedItem.getText().split("-")[0];
+			var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
+			if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
+				if (SelectedDealerType == "Z004") {
+					_that.userType = "ZZU";
+				} else {
+					_that.userType = "ZDU";
+				}
+			} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
+				_that.userType = "ZDU";
+			} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
+				if (SelectedDealerType == "Z004") {
+					_that.userType = "NZU";
+				} else if (SelectedDealerType == "Z001") {
+					_that.userType = "NDU";
+				} else {
+					_that.userType = "NNU";
+				}
+			}
 		},
 
 		/*Fetch data on apply filter click for all three tables*/
@@ -531,8 +625,9 @@ sap.ui.define([
 				_that.ETADate = _that.oDateFormat.format(new Date(ETADate));
 			} else _that.ETADate = "";
 
+			//?$filter=UserType eq 'DDU' and Dealer eq
 			//Model eq '"+_that.ID_model+"' and Modelyear eq '"+_that.ID_modelYearPicker+"' and TCISeries eq '"+_that.ID_seriesDesc+"' and Suffix eq 'AL' and ExteriorColorCode eq '"+_that.ID_ExteriorColorCode+"' and APX eq '"+_that.ID_APXValue+"' and ETA eq '"+_that.ETADate+"' &$format=json
-			filteredData = "?$filter=Dealer eq '" + SelectedDealer + "' and Model eq '" + _that.ID_model +
+			filteredData = "?$filter=UserType eq '" + _that.userType + "' and Dealer eq '" + SelectedDealer + "' and Model eq '" + _that.ID_model +
 				"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc +
 				"' and Suffix eq '" + _that.ID_marktgIntDesc + "' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
 				_that.ID_APXValue +
