@@ -132,7 +132,7 @@
 				"target": "shipToDealer"
 			}, {
 				"name": "shipToDealerResponse",
-				"pattern": "shipToDealerResponse",
+				"pattern": "shipToDealerResponse/{data}",
 				"target": "shipToDealerResponse"
 			}, {
 				"name": "assignVehicles",
@@ -140,7 +140,7 @@
 				"target": "assignVehicles"
 			}, {
 				"name": "assignVehiclesStatus",
-				"pattern": "assignVehiclesStatus",
+				"pattern": "assignVehiclesStatus/{data}",
 				"target": "assignVehiclesStatus"
 			}, {
 				"name": "changeHistory",

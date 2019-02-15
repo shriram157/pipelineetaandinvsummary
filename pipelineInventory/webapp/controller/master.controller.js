@@ -63,6 +63,14 @@ sap.ui.define([
 					"BusinessPartnerType": "Z001",
 					"Division": "10",
 					"SearchTerm2": "01050"
+				}, {
+					"Attribute": "01",
+					"BusinessPartner": "01002",
+					"BusinessPartnerKey": "2400501002",
+					"BusinessPartnerName": "",
+					"BusinessPartnerType": "Z004",
+					"Division": "10",
+					"SearchTerm2": "01002"
 				}];
 
 				var samlAttributes = {
@@ -573,7 +581,7 @@ sap.ui.define([
 
 		onDealerChange: function (oDealer) {
 			_that.userType = "";
-			SelectedDealer = oDealer.getParameters().selectedItem.getText().split("-")[0];
+			var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
 			var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
 			if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 				if (SelectedDealerType == "Z004") {
@@ -590,6 +598,11 @@ sap.ui.define([
 					_that.userType = "NDU";
 				} else {
 					_that.userType = "NNU";
+				}
+			}
+			for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
+				if (SelectedDealerKey == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
+					SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
 				}
 			}
 		},
@@ -1081,12 +1094,15 @@ sap.ui.define([
 		onTable1Press: function (oTableClick) {
 			if (oTableClick.getParameters().columnIndex.length == 1) {
 				_that.ColumnIndex = "0" + oTableClick.getParameters().columnIndex;
+			} else {
+				_that.ColumnIndex = oTableClick.getParameters().columnIndex;
 			}
 			_that.RowIndex = (Number(oTableClick.getParameters().rowIndex) + 1).toString();
 			console.log(_that.RowIndex, _that.ColumnIndex);
 			// _that.getRowDataTable1(_that.RowIndex, _that.ColumnIndex);
 			var obj_first = {};
 			obj_first.Dealer = SelectedDealer;
+			obj_first.userType = _that.userType;
 			obj_first.MatrixVal = "A" + _that.RowIndex + _that.ColumnIndex;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 
@@ -1122,12 +1138,15 @@ sap.ui.define([
 		onTable2Press: function (oTableClick) {
 			if (oTableClick.getParameters().columnIndex.length == 1) {
 				_that.ColumnIndex = "0" + oTableClick.getParameters().columnIndex;
+			} else {
+				_that.ColumnIndex = oTableClick.getParameters().columnIndex;
 			}
 			_that.RowIndex = (Number(oTableClick.getParameters().rowIndex) + 1).toString();
 			console.log(_that.RowIndex, _that.ColumnIndex);
 			// _that.getRowDataTable1(_that.RowIndex, _that.ColumnIndex);
 			var obj_first = {};
 			obj_first.Dealer = SelectedDealer;
+			obj_first.userType = _that.userType;
 			obj_first.MatrixVal = "B" + _that.RowIndex + _that.ColumnIndex;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 
@@ -1163,12 +1182,15 @@ sap.ui.define([
 		onTable3Press: function (oTableClick) {
 			if (oTableClick.getParameters().columnIndex.length == 1) {
 				_that.ColumnIndex = "0" + oTableClick.getParameters().columnIndex;
+			} else {
+				_that.ColumnIndex = oTableClick.getParameters().columnIndex;
 			}
 			_that.RowIndex = (Number(oTableClick.getParameters().rowIndex) + 1).toString();
 			console.log(_that.RowIndex, _that.ColumnIndex);
 			// _that.getRowDataTable1(_that.RowIndex, _that.ColumnIndex);
 			var obj_first = {};
 			obj_first.Dealer = SelectedDealer;
+			obj_first.userType = _that.userType;
 			obj_first.MatrixVal = "C" + _that.RowIndex + _that.ColumnIndex;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 

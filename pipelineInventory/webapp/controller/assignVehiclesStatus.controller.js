@@ -42,19 +42,27 @@ sap.ui.define([
 				delay: 0
 			});
 			_thatAVS.getView().setModel(_oViewModel, "LocalAVSModel");
-			
-			_thatAVS.getView().setModel(sap.ui.getCore().getModel( "AssignVehiclesModel"), "AssignVehiclesModel");
 			_thatAVS.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatAVS._oAssignVehicleResponseRoute, _thatAVS);
 		},
 
 		_oAssignVehicleResponseRoute: function (oEvt) {
-			_thatAVS.getView().setModel(sap.ui.getCore().getModel( "AssignVehiclesModel"), "AssignVehiclesModel");
+			_thatAVS.oAssignVStatusModel = new sap.ui.model.json.JSONModel();
+			_thatAVS.getView().setModel(_thatAVS.oAssignVStatusModel, "AssignVStatusModel");
+			
+			if (oEvt.getParameters().arguments.data != undefined) {
+				var VUIdata = JSON.parse(oEvt.getParameters().arguments.data);
+				_thatAVS.oAssignVStatusModel.getData().responseResults = [];
+				for (var n = 0; n < VUIdata.length; n++) {
+						_thatAVS.oAssignVStatusModel.getData().responseResults.push(VUIdata[n]);
+						_thatAVS.oAssignVStatusModel.updateBindings(true);
+				}
+			}
 		},
 		
 		onNavigateToVL: function (oNavEvent) {
 			this.getRouter().navTo("vehicleDetails", {
-				OrderNumber: oNavEvent.getSource().getModel("AssignVehiclesModel").getProperty(oNavEvent.getSource().getBindingContext(
-					"AssignVehiclesModel").sPath).VHCLE
+				OrderNumber: oNavEvent.getSource().getModel("AssignVStatusModel").getProperty(oNavEvent.getSource().getBindingContext(
+					"AssignVStatusModel").sPath).VHCLE
 			});
 		},
 		onMenuLinkPress: function (oLink) {

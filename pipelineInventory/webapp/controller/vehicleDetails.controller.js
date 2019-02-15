@@ -362,15 +362,29 @@ sap.ui.define([
 		},
 
 		navToSoldOrer: function () {
-			jQuery.sap.require("jquery.sap.storage");
-			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.session);
-			sap.ushell.components.vehicleFromPipeline = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
-			//Get data from Storage
-			oStorage.get("myLocalData");
-			//Set data into Storage
-			oStorage.put("myLocalData", _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0]);
-			window.location.href= "https://soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html";
-			jQuery.sap.require("jquery.sap.storage");
+			// jQuery.sap.require("jquery.sap.storage");
+			// var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.session);
+			// sap.ushell.components.vehicleFromPipeline = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
+			// //Get data from Storage
+			// oStorage.get("myLocalData");
+			// //Set data into Storage
+			// oStorage.put("myLocalData", _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0]);
+			var data= _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
+			var modelyear = data.Modelyear;
+			var modelkey = data.Model;
+			var serieskey = data.TCISeries;
+			var suffixkey = data.Suffix;
+			var apxkey = data.APX;
+			var colorkey = data.ExteriorColorCode;
+			var vtnn =data.ZZVTN;
+			var todate = data.ETATo;
+			var fromdate = data.ETAFrom;
+			
+			// var keys ="/"+modelyear+"/"+modelkey+"/"+serieskey+"/"+suffixkey+"/"+apxkey+"/"+colorkey+"/"; 
+			var keys ="/"+modelyear+"/"+modelkey+"/"+serieskey+"/"+suffixkey+"/"+apxkey+"/"+colorkey+"/"+vtnn+"/"+fromdate+"/"+todate+"/";
+			window.location.href= "https://soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2"+keys;
+			//{modelyear}/{modelkey}/{serieskey}/{suffixkey}/{apxkey}/{colorkey}/{vtnn}/{fromdate}/{todate}
+			// jQuery.sap.require("jquery.sap.storage");
 		},
 		onExit: function () {
 			this.destroy();

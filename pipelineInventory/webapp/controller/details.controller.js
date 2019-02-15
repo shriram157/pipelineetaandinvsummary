@@ -5,8 +5,9 @@ sap.ui.define([
 	'sap/ui/model/resource/ResourceModel',
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/Filter',
+	"sap/ui/core/routing/History",
 	"sap/m/MessageBox"
-], function (BaseController, ResourceModel, JSONModel, Filter, MessageBox) {
+], function (BaseController, ResourceModel, JSONModel, Filter, History, MessageBox) {
 	"use strict";
 
 	return BaseController.extend("pipelineInventory.controller.details", {
@@ -74,14 +75,14 @@ sap.ui.define([
 				console.log("routedData", _thatDT.routedData);
 
 				_thatDT.SelectedDealer = _thatDT.routedData.Dealer;
+				_thatDT.UserType = _thatDT.routedData.userType;
 
 				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=MATRIX eq '" + _thatDT.routedData.MatrixVal +
 					"' and Model eq '" + _thatDT.routedData.Model + "' and Modelyear eq '" + _thatDT.routedData.ModelYear + "'and TCISeries eq '" +
-					_thatDT
-					.routedData.series + "'and Suffix eq '" + _thatDT.routedData.suffix + "'and ExteriorColorCode eq '" + _thatDT.routedData.ExteriorColorCode +
+					_thatDT.routedData.series + "'and Suffix eq '" + _thatDT.routedData.suffix + "'and ExteriorColorCode eq '" + _thatDT.routedData.ExteriorColorCode +
 					"'and APX eq '" + _thatDT.routedData.APXValue + "'and ETA eq '" + _thatDT.routedData.ETADate + "'and Dealer eq '" + _thatDT.routedData
 					.Dealer +
-					"'&$format=json";
+					"'and UserType eq '" + _thatDT.UserType + "' &$format=json";
 				$.ajax({
 					dataType: "json",
 					url: url,
@@ -220,12 +221,41 @@ sap.ui.define([
 						SelectedDealer: _thatDT.SelectedDealer
 					});
 				}
+			} else if (_oSelectedScreen == _thatDT.oI18nModel.getResourceBundle().getText("Back")) {
+				var oHistory = History.getInstance();
+				var sPreviousHash = oHistory.getPreviousHash();
+				if (sPreviousHash !== undefined) {
+					window.history.go(-1);
+				} else {
+					sap.ui.core.UIComponent.getRouterFor(_thatDT).navTo("Routemaster");
+				}
 			}
 		},
 
 		vehicleSelect: function (oVUID) {
-			oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem.getBindingContext(
-				"VehicleDetailsJSON").getPath()).__metadata = "";
+			if (oVUID.getParameters().selected == true) {
+				oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem.getBindingContext(
+					"VehicleDetailsJSON").getPath()).__metadata = "";
+
+				var checkedItem = oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
+					.getBindingContext("VehicleDetailsJSON").getPath());
+				if (checkedItem.DropShip == true) {
+					_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
+				} else {
+					_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+				}
+				if (checkedItem.AssignVehicle == true) {
+					_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
+				} else {
+					_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
+				}
+			} else {
+				_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+				_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
+			}
+			// enableDropShipBtn: false,
+			// enableAssignVehicleBtn: false
+
 			_thatDT.checkedData.push(oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
 				.getBindingContext("VehicleDetailsJSON").getPath()));
 		},
@@ -392,7 +422,9 @@ sap.ui.define([
 			//loop is to extract each row
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
-				row += '"' + arrData[i].Dealer + '","' + arrData[i].ZZDLR_REF_NO +'","' + arrData[i].ZZORDERTYPE + "-" + arrData[i].ORDERTYPE_DESC_EN +'","' + arrData[i].ZMMSTA +	'","' +	arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i].Suffix +
+				row += '"' + arrData[i].Dealer + '","' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ZZORDERTYPE + "-" + arrData[i].ORDERTYPE_DESC_EN +
+					'","' + arrData[i].ZMMSTA + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN +
+					'","' + arrData[i].Suffix +
 					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].ETAFrom +
 					'","' + arrData[i].ETATo + '",';
 				//}
