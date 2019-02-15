@@ -105,9 +105,9 @@ sap.ui.define([
 			if (_thatAV.oJSON.length > 0) {
 				for (var i = 0; i < _thatAV.oJSON.length; i++) {
 
-					Obj.Dealer_To = _thatAV.oJSON[i].Dealer_To;
+					Obj.Dealer_To =SelectedDealerA;
 					Obj.VHCLE = _thatAV.oJSON[i].KUNNR;
-					Obj.Dealer = SelectedDealerA;
+					Obj.Dealer = _thatAV.oJSON[i].Dealer;
 					Obj.Model = _thatAV.oJSON[i].Model;
 					Obj.Modelyear = _thatAV.oJSON[i].Modelyear;
 					Obj.Suffix = _thatAV.oJSON[i].Suffix;
@@ -137,7 +137,7 @@ sap.ui.define([
 									_thatAV.oDropShipDataModel.refresh(true);
 								}
 								jQuery.sap.delayedCall(1000, _thatAV, function () {
-									_thatAV.getRouter().navTo("shipToDealerResponse", {
+									_thatAV.getRouter().navTo("assignVehiclesStatus", {
 										data: JSON.stringify(data)
 									});
 								});

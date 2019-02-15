@@ -103,9 +103,9 @@ sap.ui.define([
 			if (_thatSD.oJSON.length > 0) {
 				for (var i = 0; i < _thatSD.oJSON.length; i++) {
 
-					Obj.Dealer_To = _thatSD.oJSON[i].Dealer_To;
+					Obj.Dealer_To = SelectedDealerS;
 					Obj.VHCLE = _thatSD.oJSON[i].KUNNR;
-					Obj.Dealer = SelectedDealerS;
+					Obj.Dealer = _thatSD.oJSON[i].Dealer;
 					Obj.Model = _thatSD.oJSON[i].Model;
 					Obj.Modelyear = _thatSD.oJSON[i].Modelyear;
 					Obj.Suffix = _thatSD.oJSON[i].Suffix;
