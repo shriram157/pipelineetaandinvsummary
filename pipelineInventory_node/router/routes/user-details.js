@@ -78,7 +78,7 @@ module.exports = function () {
 			}
 
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
-				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004' or BusinessPartnerType eq 'Z005')" +
+				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
 				"&$orderby=BusinessPartner asc";
 				console.log("bpReqUrl",bpReqUrl);
 
@@ -91,7 +91,7 @@ module.exports = function () {
 		// National user (TCI user)
 		else {
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
-				"&$expand=to_Customer&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004' or BusinessPartnerType eq 'Z005')" +
+				"&$expand=to_Customer&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
 				"&$orderby=BusinessPartner asc";console.log("bpReqUrl",bpReqUrl);
 		}
 
@@ -126,7 +126,7 @@ module.exports = function () {
 						}
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
 							if (customerSalesArea.results[i].SalesOffice === bpZone) {
-								resBody.sales.push(customerSalesArea.results[i]);
+								resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
 								return true;
 							}
 						}
