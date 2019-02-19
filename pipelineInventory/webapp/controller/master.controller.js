@@ -117,6 +117,7 @@ sap.ui.define([
 					for (var i = 0; i < _that.BusinessPartnerData.getData().Dealers.length; i++) {
 						if (aBusinessPartnerKey[_that.BusinessPartnerData.getData().Dealers[i].BusinessPartnerKey])
 							_that.BusinessPartnerData.getData().DealerList.push(_that.BusinessPartnerData.getData().Dealers[i]);
+					}
 						if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 							_that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0]+"000";
 							_that.BusinessPartnerData.getData().DealerList.unshift({
@@ -129,7 +130,6 @@ sap.ui.define([
 						} else {
 							_that.salesOffice = "";
 						}
-					}
 
 					_that.BusinessPartnerData.updateBindings(true);
 					_that.BusinessPartnerData.refresh(true);
