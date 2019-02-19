@@ -60,6 +60,7 @@ sap.ui.define([
 		},
 
 		_oOrderChangeRoute: function (oEvent) {
+			_thatOC.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
 			if (oEvent.getParameters().name == "orderChange2") {
 				if (oEvent.getParameter("arguments").Data2 != undefined) {
@@ -322,7 +323,8 @@ sap.ui.define([
 			if (_thatOC.getView().byId("ID_ExteriorColorSelect").getSelectedKey() != undefined) {
 				Obj.NewColor = _thatOC.getView().byId("ID_ExteriorColorSelect").getSelectedKey();
 			}
-			var OrderChangeModel = new sap.ui.model.odata.v2.ODataModel(_thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
+			var OrderChangeModel = _thatOC.getOwnerComponent().getModel("DataModel");
+			//new sap.ui.model.odata.v2.ODataModel(_thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
 			OrderChangeModel.setUseBatch(false);
 			OrderChangeModel.create("/OrderChangeSet", Obj, {
 				success: $.proxy(function (oResponse) {

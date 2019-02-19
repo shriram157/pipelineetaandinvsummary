@@ -42,6 +42,7 @@ sap.ui.define([
 		},
 
 		_oShipToDealerResponseRoute: function (oEvt) {
+			_thatSDR.getView().setBusy(false);
 			_thatSDR.oDropResponseModel = new sap.ui.model.json.JSONModel();
 			_thatSDR.getView().setModel(_thatSDR.oDropResponseModel, "DropResponseModel");
 			

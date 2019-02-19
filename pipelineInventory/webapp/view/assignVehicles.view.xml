@@ -90,6 +90,9 @@
 						</items>
 					</Table>
 				</content>
+				<footer>
+					<OverflowToolbar></OverflowToolbar>
+				</footer>
 			</Page>
 		</pages>
 	</App>

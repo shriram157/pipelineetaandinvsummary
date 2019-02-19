@@ -12,6 +12,11 @@ sap.ui.define([
 		/*Initialization of the page data*/
 		onInit: function () {
 			_that = this;
+			var _oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0
+			});
+			_that.getView().setModel(_oViewModel, "LocalOCModel");
 			_that.errorFlag = false;
 			jQuery.sap.require("sap.ui.core.format.DateFormat");
 			_that.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
@@ -41,6 +46,7 @@ sap.ui.define([
 
 			_that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
 
+			//Local Testing
 			var sLocation = window.location.host;
 			var sLocation_conf = sLocation.search("webide");
 
@@ -86,18 +92,10 @@ sap.ui.define([
 				_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 
 			} else {
+				//Cloud Deployment
 				this.sPrefix = "";
 			}
 			this.nodeJsUrl = this.sPrefix + "/node";
-
-			var _oViewModel = new sap.ui.model.json.JSONModel({
-				busy: false,
-				delay: 0
-			});
-			_that.getView().setModel(_oViewModel, "LocalOCModel");
-			// _that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
-
-			// _that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
 			_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 
 			$.ajax({
@@ -105,27 +103,24 @@ sap.ui.define([
 				url: "/userDetails/attributes",
 				type: "GET",
 				success: function (userAttributes) {
+					_that.BusinessPartnerData.getData().Dealers = [];
 					_that.BusinessPartnerData.getData().DealerList = [];
 					_that.BusinessPartnerData.getData().SamlList = [];
 					console.log("User Attributes", userAttributes);
-					// if (userAttributes.samlAttributes.Zone != undefined) {
-					// this.Zone = userAttributes.samlAttributes.Zone[0] + "000";
-					_that.BusinessPartnerData.getData().DealerList = userAttributes.attributes;
+					_that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
 					_that.BusinessPartnerData.getData().SamlList = userAttributes.samlAttributes;
+
+					var aBusinessPartnerKey = userAttributes.sales.reduce(function (obj, hash) {
+						obj[hash.Customer] = true;
+						return obj;
+					}, {});
+					for (var i = 0; i < _that.BusinessPartnerData.getData().Dealers.length; i++) {
+						if (aBusinessPartnerKey[_that.BusinessPartnerData.getData().Dealers[i].BusinessPartnerKey])
+							_that.BusinessPartnerData.getData().DealerList.push(_that.BusinessPartnerData.getData().Dealers[i]);
+					}
+
 					_that.BusinessPartnerData.updateBindings(true);
 					_that.BusinessPartnerData.refresh(true);
-					// var url = _that.nodeJsUrl + "/API_BUSINESS_PARTNER/A_CustomerSalesArea?$filter=SalesOffice eq '" + this.Zone +
-					// 	"'&$format=json";
-					// $.ajax({
-					// 	dataType: "json",
-					// 	url: url,
-					// 	type: "GET",
-					// 	success: function (salesData) {
-					// 		console.log("salesData", salesData);
-					// 	},
-					// 	error: function (oError) {}
-					// });
-					// }
 				},
 				error: function (oError) {}
 			});
@@ -190,267 +185,6 @@ sap.ui.define([
 					}
 				}
 			};
-
-			var dealerCodes = {
-				DealerList: [{
-					"BusinessPartner": "2400053164",
-					"SearchTerm2": "53164"
-				}, {
-					"BusinessPartner": "2400053183",
-					"SearchTerm2": "53183"
-				}, {
-					"BusinessPartner": "2400042176",
-					"SearchTerm2": "42176"
-				}, {
-					"BusinessPartner": "2400034030",
-					"SearchTerm2": "34030"
-				}, {
-					"BusinessPartner": "2400053151",
-					"SearchTerm2": "53151"
-				}, {
-					"BusinessPartner": "2400053006",
-					"SearchTerm2": "53006"
-				}, {
-					"BusinessPartner": "2400042348",
-					"SearchTerm2": "42348"
-				}, {
-					"BusinessPartner": "2400101190",
-					"SearchTerm2": "01190"
-				}, {
-					"BusinessPartner": "2400095018",
-					"SearchTerm2": "95018"
-				}, {
-					"BusinessPartner": "2400053171",
-					"SearchTerm2": "53171"
-				}, {
-					"BusinessPartner": "2400053187",
-					"SearchTerm2": "53187"
-				}, {
-					"BusinessPartner": "2400001082",
-					"SearchTerm2": "01082"
-				}, {
-					"BusinessPartner": "2400042309",
-					"SearchTerm2": "42309"
-				}, {
-					"BusinessPartner": "2400053070",
-					"SearchTerm2": "53070"
-				}, {
-					"BusinessPartner": "2400042076",
-					"SearchTerm2": "42076"
-				}, {
-					"BusinessPartner": "2400001050",
-					"SearchTerm2": "01050"
-				}, {
-					"BusinessPartner": "2400101520",
-					"SearchTerm2": "01520"
-				}, {
-					"BusinessPartner": "2400042352",
-					"SearchTerm2": "42352"
-				}, {
-					"BusinessPartner": "2400053207",
-					"SearchTerm2": "53207"
-				}, {
-					"SearchTerm2": "53178",
-					"BusinessPartner": "2400053178"
-				}, {
-					"SearchTerm2": "01132",
-					"BusinessPartner": "2400001132"
-				}, {
-					"SearchTerm2": "42120",
-					"BusinessPartner": "2400042120"
-				}, {
-					"SearchTerm2": "14071",
-					"BusinessPartner": "2400014071"
-				}, {
-					"SearchTerm2": "00014",
-					"BusinessPartner": "2400100014"
-				}, {
-					"SearchTerm2": "01092",
-					"BusinessPartner": "2400001092"
-				}, {
-					"SearchTerm2": "53167",
-					"BusinessPartner": "2400053167"
-				}, {
-					"SearchTerm2": "53168",
-					"BusinessPartner": "2400053168"
-				}, {
-					"SearchTerm2": "53170",
-					"BusinessPartner": "2400053170"
-				}, {
-					"SearchTerm2": "00000",
-					"BusinessPartner": "2400500000"
-				}, {
-					"SearchTerm2": "01049",
-					"BusinessPartner": "2400001049"
-				}, {
-					"SearchTerm2": "14090",
-					"BusinessPartner": "2400014090"
-				}, {
-					"SearchTerm2": "53185",
-					"BusinessPartner": "2400053185"
-				}, {
-					"SearchTerm2": "01114",
-					"BusinessPartner": "2400001114"
-				}, {
-					"SearchTerm2": "53014",
-					"BusinessPartner": "2400053014"
-				}, {
-					"SearchTerm2": "42177",
-					"BusinessPartner": "2400042177"
-				}, {
-					"SearchTerm2": "42178",
-					"BusinessPartner": "2400042178"
-				}, {
-					"SearchTerm2": "14105",
-					"BusinessPartner": "2400014105"
-				}, {
-					"SearchTerm2": "53053",
-					"BusinessPartner": "2400053053"
-				}, {
-					"SearchTerm2": "53067",
-					"BusinessPartner": "2400053067"
-				}, {
-					"SearchTerm2": "14073",
-					"BusinessPartner": "2400014073"
-				}, {
-					"SearchTerm2": "42193",
-					"BusinessPartner": "2400042193"
-				}, {
-					"SearchTerm2": "01088",
-					"BusinessPartner": "2400001088"
-				}, {
-					"SearchTerm2": "42306",
-					"BusinessPartner": "2400042306"
-				}, {
-					"SearchTerm2": "00158",
-					"BusinessPartner": "2400200158"
-				}, {
-					"SearchTerm2": "00099",
-					"BusinessPartner": "2400500099"
-				}, {
-					"SearchTerm2": "01003",
-					"BusinessPartner": "2400001003"
-				}, {
-					"SearchTerm2": "85006",
-					"BusinessPartner": "2400085006"
-				}, {
-					"SearchTerm2": "42270",
-					"BusinessPartner": "2400542270"
-				}, {
-					"SearchTerm2": "01125",
-					"BusinessPartner": "2400001125"
-				}, {
-					"SearchTerm2": "42360",
-					"BusinessPartner": "2400042360"
-				}, {
-					"SearchTerm2": "42217",
-					"BusinessPartner": "2400542217"
-				}, {
-					"SearchTerm2": "01572",
-					"BusinessPartner": "2400101572"
-				}, {
-					"SearchTerm2": "95013",
-					"BusinessPartner": "2400095013"
-				}, {
-					"SearchTerm2": "42999",
-					"BusinessPartner": "2400042999"
-				}, {
-					"SearchTerm2": "42337",
-					"BusinessPartner": "2400042337"
-				}, {
-					"SearchTerm2": "42327",
-					"BusinessPartner": "2400042327"
-				}, {
-					"SearchTerm2": "53159",
-					"BusinessPartner": "2400053159"
-				}, {
-					"SearchTerm2": "42069",
-					"BusinessPartner": "2400042069"
-				}, {
-					"SearchTerm2": "01078",
-					"BusinessPartner": "2400001078"
-				}, {
-					"SearchTerm2": "01075",
-					"BusinessPartner": "2400001075"
-				}, {
-					"SearchTerm2": "01089",
-					"BusinessPartner": "2400001089"
-				}, {
-					"SearchTerm2": "53013",
-					"BusinessPartner": "2400053013"
-				}, {
-					"SearchTerm2": "00000",
-					"BusinessPartner": "2400300000"
-				}, {
-					"SearchTerm2": "00422",
-					"BusinessPartner": "2400100422"
-				}, {
-					"SearchTerm2": "85001",
-					"BusinessPartner": "2400085001"
-				}, {
-					"SearchTerm2": "65431",
-					"BusinessPartner": "2400065431"
-				}, {
-					"SearchTerm2": "53140",
-					"BusinessPartner": "2400053140"
-				}, {
-					"SearchTerm2": "75003",
-					"BusinessPartner": "2400075003"
-				}, {
-					"SearchTerm2": "53152",
-					"BusinessPartner": "2400053152"
-				}, {
-					"SearchTerm2": "14082",
-					"BusinessPartner": "2400014082"
-				}, {
-					"BusinessPartner": "2400099998",
-					"SearchTerm2": "99998"
-				}, {
-					"BusinessPartner": "2400088888",
-					"SearchTerm2": "88888"
-				}, {
-					"BusinessPartner": "2400042130",
-					"SearchTerm2": "42130"
-				}, {
-					"BusinessPartner": "2400053144",
-					"SearchTerm2": "53144"
-				}, {
-					"BusinessPartner": "2400053124",
-					"SearchTerm2": "53124"
-				}, {
-					"BusinessPartner": "2400042361",
-					"SearchTerm2": "42361"
-				}, {
-					"BusinessPartner": "2400042328",
-					"SearchTerm2": "42328"
-				}, {
-					"BusinessPartner": "2400042366",
-					"SearchTerm2": "42366"
-				}, {
-					"BusinessPartner": "2400001141",
-					"SearchTerm2": "01141"
-				}, {
-					"BusinessPartner": "2400042353",
-					"SearchTerm2": "42353"
-				}, {
-					"BusinessPartner": "2400014084",
-					"SearchTerm2": "14084"
-				}, {
-					"SearchTerm2": "42051",
-					"BusinessPartner": "2400042051"
-				}, {
-					"BusinessPartner": "2400001109",
-					"SearchTerm2": "01109"
-				}, {
-					"BusinessPartner": "2400001115",
-					"SearchTerm2": "01115"
-				}, {
-					"BusinessPartner": "2400001116",
-					"SearchTerm2": "01116"
-				}]
-			};
-			// _that.oBusinessDataModel.getData().DealerList = dealerCodes.DealerList;
-			// console.log("dealerCodes", dealerCodes);
 			_that.oUserModel.setData(userData);
 			_that.oUserModel.updateBindings(true);
 			/*Getting Year dropdown data*/
@@ -479,47 +213,6 @@ sap.ui.define([
 					_that.oI18nModel.getResourceBundle().getText("ErrorNoData")
 				);
 			}
-
-			// var Dealer = _that.oUserModel.getData().userContext.userAttributes.DealerCode[0];
-			// for (var c = 0; c < dealerCodes.DealerList.length; c++) {
-			// 	sap.ui.core.BusyIndicator.show();
-			// 	var Dealer = dealerCodes.DealerList[c].DealerCode;
-			// 	// (function (c) {
-			// 	$.ajax({
-			// 		dataType: "json",
-			// 		async: true,
-			// 		url: _that.nodeJsUrl +
-			// 			"/API_BUSINESS_PARTNER/A_BusinessPartner?$filter=SearchTerm2 eq '" + Dealer +
-			// 			"' and BusinessPartnerGrouping eq 'Z003'&$orderby=BusinessPartnerName",
-			// 		type: "GET",
-			// 		success: function (oDealerData) {
-			// 			_that.DealerData = {};
-			// 			$.each(oDealerData.d.results, function (i, item) {
-			// 				_that.oBusinessDataModel.getData().DealerList.push({
-			// 					"BusinessPartner": item.BusinessPartner,
-			// 					"BusinessPartnerGrouping": item.BusinessPartnerGrouping,
-			// 					"BusinessPartnerName": item.BusinessPartnerName,
-			// 					"OrganizationBPName1": item.OrganizationBPName1,
-			// 					"SearchTerm2": item.SearchTerm2,
-			// 					"SearchTerm1": item.SearchTerm1
-			// 				});
-			// 			});
-			// 			_that.oBusinessDataModel.updateBindings(true);
-
-			// 			sap.ui.core.BusyIndicator.hide();
-			// 			console.log("_that.oBusinessDataModel", _that.oBusinessDataModel);
-			// 		},
-			// 		error: function (oError) {
-			// 			_that.errorFlag = true;
-			// 		}
-			// 	});
-			// 	// })(c);
-			// }
-
-			// _that.oBusinessDataModel.updateBindings(true);
-			// _that.oBusinessDataModel.refresh(true);
-			// sap.ui.getCore().setModel(_that.oBusinessDataModel, "BusinessDataModel");
-			// _that.getView().setModel(_that.oBusinessDataModel, "BusinessDataModel");
 
 			_that.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 			_that.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
@@ -581,28 +274,37 @@ sap.ui.define([
 
 		onDealerChange: function (oDealer) {
 			_that.userType = "";
-			var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
-			var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
-			if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
-				if (SelectedDealerType == "Z004") {
-					_that.userType = "ZZU";
-				} else {
+			if (oDealer.getParameters().selectedItem != undefined) {
+				_that.getView().byId("ID_marktgIntDesc").setSelectedKey("Please Select");
+				_that.getView().byId("ID_modelDesc").setSelectedKey("Please Select");
+				_that.getView().byId("ID_seriesDesc").setSelectedKey("Please Select");
+				_that.getView().byId("ID_ExteriorColorCode").setSelectedKey("Please Select");
+				_that.getView().byId("ID_APXValue").setSelectedKey("Please Select");
+				_that.getView().byId("id_ETADate").setValue();
+
+				var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
+				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
+				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
+					if (SelectedDealerType == "Z004") {
+						_that.userType = "ZZU";
+					} else {
+						_that.userType = "ZDU";
+					}
+				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
 					_that.userType = "ZDU";
+				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
+					if (SelectedDealerType == "Z004") {
+						_that.userType = "NZU";
+					} else if (SelectedDealerType == "Z001") {
+						_that.userType = "NDU";
+					} else {
+						_that.userType = "NNU";
+					}
 				}
-			} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
-				_that.userType = "ZDU";
-			} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
-				if (SelectedDealerType == "Z004") {
-					_that.userType = "NZU";
-				} else if (SelectedDealerType == "Z001") {
-					_that.userType = "NDU";
-				} else {
-					_that.userType = "NNU";
-				}
-			}
-			for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
-				if (SelectedDealerKey == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
-					SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
+				for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
+					if (SelectedDealerKey == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
+						SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
+					}
 				}
 			}
 		},
@@ -623,6 +325,7 @@ sap.ui.define([
 
 			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select") {
 				_that.ID_marktgIntDesc = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
+				_that.intcolor = _that.getView().getModel("GlobalJSONModel").getProperty( _that.getView().byId("ID_marktgIntDesc").getSelectedItem().getBindingContext("GlobalJSONModel").sPath).intColorCode;
 			} else _that.ID_marktgIntDesc = "";
 
 			if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
@@ -637,14 +340,13 @@ sap.ui.define([
 			if (ETADate != "Please Select") {
 				_that.ETADate = _that.oDateFormat.format(new Date(ETADate));
 			} else _that.ETADate = "";
-
-			//?$filter=UserType eq 'DDU' and Dealer eq
-			//Model eq '"+_that.ID_model+"' and Modelyear eq '"+_that.ID_modelYearPicker+"' and TCISeries eq '"+_that.ID_seriesDesc+"' and Suffix eq 'AL' and ExteriorColorCode eq '"+_that.ID_ExteriorColorCode+"' and APX eq '"+_that.ID_APXValue+"' and ETA eq '"+_that.ETADate+"' &$format=json
-			filteredData = "?$filter=UserType eq '" + _that.userType + "' and Dealer eq '" + SelectedDealer + "' and Model eq '" + _that.ID_model +
-				"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc +
-				"' and Suffix eq '" + _that.ID_marktgIntDesc + "' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
-				_that.ID_APXValue +
-				"' and ETA eq '" + _that.ETADate + "' &$format=json";
+			_that.salesoffice = "";
+			//VKBUR
+			filteredData = "?$filter=VKBUR eq '" + _that.salesoffice + "' and UserType eq '" + _that.userType + "' and Dealer eq '" +
+				SelectedDealer + "' and Model eq '" + _that.ID_model +
+				"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
+				"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
+				_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' &$format=json";
 			_that.fetchCountsforTables(filteredData);
 		},
 
@@ -764,7 +466,8 @@ sap.ui.define([
 								_that.oGlobalJSONModel.getData().suffixData.push({
 									"Suffix": _that.temp[n].Suffix,
 									"SuffixDescriptionEN": _that.temp[n].SuffixDescriptionEN,
-									"MarktgIntDescEN": _that.temp1[m].mrktg_int_desc_en
+									"MarktgIntDescEN": _that.temp1[m].mrktg_int_desc_en,
+									"intColorCode":_that.temp1[m].int_c
 								});
 								sap.ui.core.BusyIndicator.hide();
 								_that.oGlobalJSONModel.updateBindings(true);
@@ -946,22 +649,6 @@ sap.ui.define([
 			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey("Please Select");
 			_that.getView().byId("ID_APXValue").getSelectedKey("Please Select");
 
-			// if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {
-			// 	_that.getView().byId("ID_seriesDesc").setValue();
-			// }
-			// if (_that.getView().byId("ID_modelDesc").getSelectedKey() != "Please Select") {
-			// 	_that.getView().byId("ID_modelDesc").setValue();
-			// }
-			// if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select") {
-			// 	_that.getView().byId("ID_marktgIntDesc").setValue();
-			// }
-			// if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
-			// 	_that.getView().byId("ID_ExteriorColorCode").setValue();
-			// }
-			// if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
-			// 	_that.getView().byId("ID_APXValue").setValue();
-			// }
-
 			sap.ui.core.BusyIndicator.show();
 			var ModelYear = oModVal.getParameters("selectedItem").selectedItem.getKey();
 			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + ModelYear + "'";
@@ -984,53 +671,6 @@ sap.ui.define([
 				}
 			});
 		},
-
-		// fetchinitialSeries: function (arrResults) {
-		// 	var n;
-		// 	for (n = 0; n < arrResults.length; n++) {
-		// 		var TCiSeries = arrResults[n].TCISeries;
-		// 		$.ajax({
-		// 			dataType: "json",
-		// 			url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=ModelSeriesNo eq '" + TCiSeries +
-		// 				"'",
-		// 			type: "GET",
-		// 			success: function (oData) {
-		// 				console.log("Series Data", oData.d.results);
-		// 				var b = 0;
-		// 				for (var i = 0; i < oData.d.results.length; i++) {
-		// 					var ModelSeriesNo = oData.d.results[i].ModelSeriesNo;
-		// 					for (var j = 0; j < _that.oGlobalJSONModel.getData().seriesData.length; j++) {
-		// 						if (ModelSeriesNo != _that.oGlobalJSONModel.getData().seriesData[j].ModelSeriesNo) {
-		// 							b++;
-		// 						}
-		// 					}
-		// 					if (b == _that.oGlobalJSONModel.getData().seriesData.length) {
-		// 						_that.oGlobalJSONModel.getData().seriesData.push({
-		// 							"ModelSeriesNo": oData.d.results[i].ModelSeriesNo,
-		// 							"TCISeriesDescriptionEN": oData.d.results[i].TCISeriesDescriptionEN
-		// 						});
-
-		// 						_that.oGlobalJSONModel.updateBindings(true);
-		// 					}
-		// 					b = 0;
-		// 				}
-		// 				sap.ui.core.BusyIndicator.hide();
-		// 				_that.oGlobalJSONModel.updateBindings(true);
-		// 			},
-		// 			error: function (oError) {
-		// 				sap.ui.core.BusyIndicator.hide();
-		// 				_that.errorFlag = true;
-		// 			}
-		// 		});
-		// 	}
-
-		// 	_that.oGlobalJSONModel.getData().seriesData.unshift({
-		// 		"ModelSeriesNo": "Please Select",
-		// 		"TCISeriesDescriptionEN": ""
-		// 	});
-		// 	console.log("_that.oGlobalJSONModel.getData().seriesData", _that.oGlobalJSONModel.getData().seriesData);
-		// 	_that.oGlobalJSONModel.updateBindings(true);
-		// },
 
 		fetchSeries: function (arrResults) {
 			// debugger;
@@ -1067,9 +707,7 @@ sap.ui.define([
 
 		/*Funtion to get the changed year*/
 		handleYearChange: function (oYearEvent) {
-			// oYearEvent.getSource().setMinDate(new Date("2017"));
-			// oYearEvent.getSource().setMaxDate(new Date("2019"));
-			///ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '2020'
+			//code goes here
 		},
 
 		/*Function for Routing/Navigating from menu option as per selection */
@@ -1092,106 +730,69 @@ sap.ui.define([
 		},
 
 		onTable1Press: function (oTableClick) {
-			if (oTableClick.getParameters().columnIndex.length == 1) {
-				_that.ColumnIndex = "0" + oTableClick.getParameters().columnIndex;
+			if (oTableClick.getParameters().columnIndex.length < 2) {
+				var ColumnIndex = "0" + oTableClick.getParameters().columnIndex;
 			} else {
-				_that.ColumnIndex = oTableClick.getParameters().columnIndex;
+				ColumnIndex = oTableClick.getParameters().columnIndex;
+				if (ColumnIndex == "15") {
+					ColumnIndex = "14";
+				}
+				if (ColumnIndex == "16") {
+					ColumnIndex = "15";
+				}
 			}
 			_that.RowIndex = (Number(oTableClick.getParameters().rowIndex) + 1).toString();
-			console.log(_that.RowIndex, _that.ColumnIndex);
-			// _that.getRowDataTable1(_that.RowIndex, _that.ColumnIndex);
 			var obj_first = {};
-			obj_first.Dealer = SelectedDealer;
-			obj_first.userType = _that.userType;
-			obj_first.MatrixVal = "A" + _that.RowIndex + _that.ColumnIndex;
-			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
-
-			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {
-				obj_first.series = _that.getView().byId("ID_seriesDesc").getSelectedKey();
-			} else obj_first.series = "";
-
-			if (_that.getView().byId("ID_modelDesc").getSelectedKey() != "Please Select") {
-				obj_first.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
-			} else obj_first.Model = "";
-
-			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select") {
-				obj_first.suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
-			} else obj_first.suffix = "";
-
-			if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
-				obj_first.ExteriorColorCode = _that.getView().byId("ID_ExteriorColorCode").getSelectedKey();
-			} else obj_first.ExteriorColorCode = "";
-
-			if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
-				obj_first.APXValue = _that.getView().byId("ID_APXValue").getSelectedKey();
-			} else obj_first.APXValue = "";
-
-			var ETADate = _that.getView().byId("id_ETADate").getValue();
-			if (ETADate != "Please Select") {
-				obj_first.ETADate = _that.oDateFormat.format(new Date(ETADate));
-			} else obj_first.ETADate = "";
-
+			obj_first.MatrixVal = "A" + _that.RowIndex + ColumnIndex;
+			_that.getObjectData(obj_first);
 			_that.getRouter().navTo("details", {
 				tableFirst: JSON.stringify(obj_first)
 			});
 		},
 		onTable2Press: function (oTableClick) {
-			if (oTableClick.getParameters().columnIndex.length == 1) {
-				_that.ColumnIndex = "0" + oTableClick.getParameters().columnIndex;
+			if (oTableClick.getParameters().columnIndex.length < 2) {
+				var ColumnIndex = "0" + oTableClick.getParameters().columnIndex;
 			} else {
-				_that.ColumnIndex = oTableClick.getParameters().columnIndex;
+				ColumnIndex = oTableClick.getParameters().columnIndex;
+				if (ColumnIndex == "15") {
+					ColumnIndex = "14";
+				}
+				if (ColumnIndex == "16") {
+					ColumnIndex = "15";
+				}
 			}
 			_that.RowIndex = (Number(oTableClick.getParameters().rowIndex) + 1).toString();
-			console.log(_that.RowIndex, _that.ColumnIndex);
-			// _that.getRowDataTable1(_that.RowIndex, _that.ColumnIndex);
 			var obj_first = {};
-			obj_first.Dealer = SelectedDealer;
-			obj_first.userType = _that.userType;
-			obj_first.MatrixVal = "B" + _that.RowIndex + _that.ColumnIndex;
-			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
-
-			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {
-				obj_first.series = _that.getView().byId("ID_seriesDesc").getSelectedKey();
-			} else obj_first.series = "";
-
-			if (_that.getView().byId("ID_modelDesc").getSelectedKey() != "Please Select") {
-				obj_first.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
-			} else obj_first.Model = "";
-
-			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select") {
-				obj_first.suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
-			} else obj_first.suffix = "";
-
-			if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
-				obj_first.ExteriorColorCode = _that.getView().byId("ID_ExteriorColorCode").getSelectedKey();
-			} else obj_first.ExteriorColorCode = "";
-
-			if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
-				obj_first.APXValue = _that.getView().byId("ID_APXValue").getSelectedKey();
-			} else obj_first.APXValue = "";
-
-			var ETADate = _that.getView().byId("id_ETADate").getValue();
-			if (ETADate != "Please Select") {
-				obj_first.ETADate = _that.oDateFormat.format(new Date(ETADate));
-			} else obj_first.ETADate = "";
-
+			obj_first.MatrixVal = "B" + _that.RowIndex + ColumnIndex;
+			_that.getObjectData(obj_first);
 			_that.getRouter().navTo("details", {
 				tableFirst: JSON.stringify(obj_first)
 			});
 		},
 		onTable3Press: function (oTableClick) {
-			if (oTableClick.getParameters().columnIndex.length == 1) {
-				_that.ColumnIndex = "0" + oTableClick.getParameters().columnIndex;
+			if (oTableClick.getParameters().columnIndex.length < 2) {
+				var ColumnIndex = "0" + oTableClick.getParameters().columnIndex;
 			} else {
-				_that.ColumnIndex = oTableClick.getParameters().columnIndex;
+				ColumnIndex = oTableClick.getParameters().columnIndex;
+				if (ColumnIndex == "15") {
+					ColumnIndex = "14";
+				}
+				if (ColumnIndex == "16") {
+					ColumnIndex = "15";
+				}
 			}
 			_that.RowIndex = (Number(oTableClick.getParameters().rowIndex) + 1).toString();
-			console.log(_that.RowIndex, _that.ColumnIndex);
-			// _that.getRowDataTable1(_that.RowIndex, _that.ColumnIndex);
 			var obj_first = {};
+			obj_first.MatrixVal = "C" + _that.RowIndex + ColumnIndex;
+			_that.getObjectData(obj_first);
+			_that.getRouter().navTo("details", {
+				tableFirst: JSON.stringify(obj_first)
+			});
+		},
+
+		getObjectData: function (obj_first) {
 			obj_first.Dealer = SelectedDealer;
 			obj_first.userType = _that.userType;
-			obj_first.MatrixVal = "C" + _that.RowIndex + _that.ColumnIndex;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 
 			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {
@@ -1219,9 +820,6 @@ sap.ui.define([
 				obj_first.ETADate = _that.oDateFormat.format(new Date(ETADate));
 			} else obj_first.ETADate = "";
 
-			_that.getRouter().navTo("details", {
-				tableFirst: JSON.stringify(obj_first)
-			});
 		},
 
 		onBeforeRendering: function () {
@@ -1229,6 +827,7 @@ sap.ui.define([
 		},
 
 		_oMasterRoute: function (oEvent) {
+			_that.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
 		},
 

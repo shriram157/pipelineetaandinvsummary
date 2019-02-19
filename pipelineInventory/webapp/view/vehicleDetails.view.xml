@@ -36,8 +36,7 @@
 								<Label text="{i18n>Suffix}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN}"/>
 								<Label text="{i18n>APX}"/>
-								<Select forceSelection="false" selectedKey="" id="apxVal" change="onAPXChange"
-									items="{ path: 'VehicleDetailsJSON>/APXData'}">
+								<Select forceSelection="false" selectedKey="" id="apxVal" change="onAPXChange" items="{ path: 'VehicleDetailsJSON>/APXData'}">
 									<core:Item key="{VehicleDetailsJSON>zzapx}" text="{VehicleDetailsJSON>zzapx}"/>
 								</Select>
 								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>-->
@@ -66,14 +65,12 @@
 								<Label text="{i18n>HoldVehicle}"/>
 								<Text text="Yes"/>
 								<Label text="{i18n>AccessoriesInstalled}" required="true"/>
-								<Select forceSelection="false" selectedKey="" id="accessoryVal"
-									items="{ path: 'VehicleDetailsJSON>/AcceessoryData'}">
+								<Select forceSelection="false" selectedKey="" id="accessoryVal" items="{ path: 'VehicleDetailsJSON>/AcceessoryData'}">
 									<core:Item key="{VehicleDetailsJSON>AccessoryInstalled}" text="{VehicleDetailsJSON>AccessoryInstalled}"/>
 								</Select>
 								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/AccessoriesInstalled}"/>-->
 								<Label text="{i18n>DNCVehicle}" required="true"/>
-								<Select forceSelection="false" selectedKey="" id="DNCVal"
-									items="{ path: 'VehicleDetailsJSON>/DNCData'}">
+								<Select forceSelection="false" selectedKey="" id="DNCVal" items="{ path: 'VehicleDetailsJSON>/DNCData'}">
 									<core:Item key="{VehicleDetailsJSON>DNCVehicle}" text="{VehicleDetailsJSON>DNCVehicle}"/>
 								</Select>
 								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/DNCVehicle}"/>-->
@@ -118,6 +115,11 @@
 						<Button text="{i18n>Back}" type="Default" press="NavigateBack"/>
 					</OverflowToolbar>
 				</content>
+				<footer>
+					<Toolbar>
+						<!--<ToolbarSpacer/>-->
+					</Toolbar>
+				</footer>
 			</Page>
 		</pages>
 	</App>

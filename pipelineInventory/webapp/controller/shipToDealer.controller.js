@@ -60,6 +60,7 @@ sap.ui.define([
 		},
 
 		_oShipToDealerRoute: function (oEvent) {
+			_thatSD.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
 			if (oEvent.getParameters().arguments.vehicleData != undefined) {
 				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
@@ -97,57 +98,60 @@ sap.ui.define([
 
 		getResonseForSubmit: function () {
 			console.log("SelectedDealerS", SelectedDealerS);
-			var Obj = {};
 			_thatSD.oJSON = _thatSD.getView().getModel("DropShipDataModel").getData().results;
 			_thatSD.responseData = [];
+			var DataModel = _thatSD.getOwnerComponent().getModel("DataModel");
+			// var oModel = new sap.ui.model.odata.v2.ODataModel(_thatSD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
+			DataModel.setUseBatch(false);
+			this._oToken = DataModel.getHeaders()['x-csrf-token'];
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-Token': this._oToken
+				}
+			});
 			if (_thatSD.oJSON.length > 0) {
 				for (var i = 0; i < _thatSD.oJSON.length; i++) {
-
-					Obj.Dealer_To = SelectedDealerS;
-					Obj.VHCLE = _thatSD.oJSON[i].KUNNR;
-					Obj.Dealer = _thatSD.oJSON[i].Dealer;
-					Obj.Model = _thatSD.oJSON[i].Model;
-					Obj.Modelyear = _thatSD.oJSON[i].Modelyear;
-					Obj.Suffix = _thatSD.oJSON[i].Suffix;
-					Obj.ExteriorColorCode = _thatSD.oJSON[i].ExteriorColorCode;
-					Obj.INTCOL = _thatSD.oJSON[i].INTCOL;
-
-					var oModel = new sap.ui.model.odata.v2.ODataModel(_thatSD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
-					oModel.setUseBatch(false);
-					this._oToken = oModel.getHeaders()['x-csrf-token'];
-					$.ajaxSetup({
-						headers: {
-							'X-CSRF-Token': this._oToken
-						}
-					});
-					oModel.create("/DropShipSet", Obj, {
-						success: $.proxy(function (oResponse) {
-							console.log("Drop Ship Response", oResponse);
-							_thatSD.responseData.push(oResponse);
-							if (_thatSD.responseData.length > 0) {
-								var data = _thatSD.oDropShipDataModel.getData().results;
-								for (var i = 0; i < data.length; i++) {
-									if (_thatSD.responseData[0].VHCLE == data[i].VHCLE) {
-										data[i].Error = _thatSD.responseData[0].Error;
-										data[i].Status = _thatSD.responseData[0].Status;
-									}
-									_thatSD.oDropShipDataModel.updateBindings(true);
-									_thatSD.oDropShipDataModel.refresh(true);
-								}
-								jQuery.sap.delayedCall(1000, _thatSD, function () {
-									_thatSD.getRouter().navTo("shipToDealerResponse", {
-										data: JSON.stringify(data)
-									});
-								});
-							}
-
-						}, _thatSD),
-						error: function (oError) {
-							console.log("orderChangeError", oError);
-						}
-					});
+					this.dropshipData(DataModel, _thatSD.oJSON[i]);
 				}
 			}
+		},
+
+		dropshipData: function (model, jsonData) {
+			var Obj = {};
+			Obj.Dealer_To = SelectedDealerS;
+			Obj.VHCLE = jsonData.VHCLE;
+			Obj.Dealer = jsonData.Dealer;
+			Obj.Model = jsonData.Model;
+			Obj.Modelyear = jsonData.Modelyear;
+			Obj.Suffix = jsonData.Suffix;
+			Obj.ExteriorColorCode = jsonData.ExteriorColorCode;
+			Obj.INTCOL = jsonData.INTCOL;
+
+			model.create("/DropShipSet", Obj, {
+				success: $.proxy(function (oResponse) {
+					console.log("Drop Ship Response", oResponse);
+					_thatSD.responseData.push(oResponse);
+					if (_thatSD.responseData.length > 0) {
+						var data = _thatSD.oDropShipDataModel.getData().results;
+						for (var i = 0; i < data.length; i++) {
+							for (var j = 0; j < _thatSD.responseData.length; j++) {
+							if (_thatSD.responseData[j].VHCLE == data[i].VHCLE) {
+								data[i].Error = _thatSD.responseData[j].Error;
+								data[i].Status = _thatSD.responseData[j].Status;
+							}
+							_thatSD.oDropShipDataModel.updateBindings(true);
+							_thatSD.oDropShipDataModel.refresh(true);
+							}
+						}
+						_thatSD.getRouter().navTo("shipToDealerResponse", {
+							data: JSON.stringify(data)
+						});
+					}
+				}, _thatSD),
+				error: function (oError) {
+					console.log("orderChangeError", oError);
+				}
+			});
 		},
 
 		onSubmitChanges: function () {
@@ -169,7 +173,11 @@ sap.ui.define([
 		},
 
 		onExit: function () {
-			this.destroy();
+			_thatSD.oDropShipDataModel.setData();
+			_thatSD.oDropShipDataModel.updateBindings(true);
+			_thatSD.oDropShipDataModel.refresh(true);
+			_thatSD.responseData = [];
+			_thatSD.destroy();
 		}
 	});
 });

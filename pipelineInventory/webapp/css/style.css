@@ -135,3 +135,46 @@
 	color:blue;
 	text-decoration: underline;
 }
+
+/* CSS for filter notification */
+
+.filterNotification {
+    background: #3d4954;
+    display: block;
+    margin: 0 0.2rem 0 2rem  !important;
+    overflow: hidden;
+}
+
+.filterNotification .sapUiVltCell:nth-child(1) {
+    width: 95%;
+    padding: 0.5rem;
+}
+
+.filterNotification .sapUiVltCell:nth-child(2) {
+    width: 2rem;
+    height: 2rem;
+}
+
+.filterNotification .sapUiVltCell:nth-child(2) .sapMBtn {
+    height: 2rem;
+    padding: 0;
+}
+
+.filterNotification .sapUiVltCell:nth-child(2) .sapMBtn>span {
+    background: transparent;
+    border: transparent;
+    color: #fff;
+    font-weight: 700;
+    font-size: large;
+}
+
+.filterNotification .sapUiVltCell {
+    float: left;
+    overflow: hidden;
+    /*padding: 0.5rem;*/
+    margin-left: 0;
+}
+
+.filterNotification .sapMText {
+	color:#fff;
+}

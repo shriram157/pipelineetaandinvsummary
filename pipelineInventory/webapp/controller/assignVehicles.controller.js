@@ -47,7 +47,6 @@ sap.ui.define([
 			_thatAV.oAssignVehiclesModel = new JSONModel();
 			_thatAV.getView().setModel(_thatAV.oAssignVehiclesModel, "AssignVehiclesModel");
 			sap.ui.getCore().getModel(_thatAV.oAssignVehiclesModel, "AssignVehiclesModel");
-			
 
 			_thatAV._oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
@@ -60,6 +59,15 @@ sap.ui.define([
 		},
 
 		_oAssignVehicleRoute: function (oEvent) {
+			// window.onhashchange = function () {
+			// 	if (window.innerDocClick != false) {
+			// 		//Your own in-page mechanism triggered the hash change
+			// 	} else {
+			// 		//Browser back button was clicked
+			// 		_thatAV.getView().setBusy(false);
+			// 	}
+			// };
+			_thatAV.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
 			if (oEvent.getParameters().arguments.vehicleData != undefined) {
 				_thatAV.oAssignVehiclesModel.getData().results = [];
@@ -86,69 +94,75 @@ sap.ui.define([
 			var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
 			if (_thatAV.getView().getModel("AssignVehiclesModel").getData().results.length > 0) {
 				_thatAV._oViewModel.setProperty("/enableResubmitBtn", true);
-			}
-			else{
+			} else {
 				_thatAV._oViewModel.setProperty("/enableResubmitBtn", false);
 			}
-			for(var d=0; d<_thatAV.getView().getModel("BusinessDataModel").getData().DealerList.length;d++){
-				if(SelectedDealerKey == _thatAV.getView().getModel("BusinessDataModel").getData().DealerList[d].BusinessPartner){
-					SelectedDealerA= _thatAV.getView().getModel("BusinessDataModel").getData().DealerList[d].BusinessPartnerKey;
+			for (var d = 0; d < _thatAV.getView().getModel("BusinessDataModel").getData().DealerList.length; d++) {
+				if (SelectedDealerKey == _thatAV.getView().getModel("BusinessDataModel").getData().DealerList[d].BusinessPartner) {
+					SelectedDealerA = _thatAV.getView().getModel("BusinessDataModel").getData().DealerList[d].BusinessPartnerKey;
 				}
 			}
 		},
-		
+
 		getResonseForSubmit: function () {
 			console.log("SelectedDealerA", SelectedDealerA);
-			var Obj = {};
+
 			_thatAV.oJSON = _thatAV.getView().getModel("AssignVehiclesModel").getData().results;
 			_thatAV.responseData = [];
+			var oModel = _thatAV.getOwnerComponent().getModel("DataModel");
+			//new sap.ui.model.odata.v2.ODataModel(_thatAV.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
+			oModel.setUseBatch(false);
+			this._oToken = oModel.getHeaders()['x-csrf-token'];
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-Token': this._oToken
+				}
+			});
 			if (_thatAV.oJSON.length > 0) {
 				for (var i = 0; i < _thatAV.oJSON.length; i++) {
-
-					Obj.Dealer_To =SelectedDealerA;
-					Obj.VHCLE = _thatAV.oJSON[i].KUNNR;
-					Obj.Dealer = _thatAV.oJSON[i].Dealer;
-					Obj.Model = _thatAV.oJSON[i].Model;
-					Obj.Modelyear = _thatAV.oJSON[i].Modelyear;
-					Obj.Suffix = _thatAV.oJSON[i].Suffix;
-					Obj.ExteriorColorCode = _thatAV.oJSON[i].ExteriorColorCode;
-					Obj.INTCOL = _thatAV.oJSON[i].INTCOL;
-
-					var oModel = new sap.ui.model.odata.v2.ODataModel(_thatAV.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
-					oModel.setUseBatch(false);
-					this._oToken = oModel.getHeaders()['x-csrf-token'];
-					$.ajaxSetup({
-						headers: {
-							'X-CSRF-Token': this._oToken
-						}
-					});
-					oModel.create("/AssignVehicleSet", Obj, {
-						success: $.proxy(function (oResponse) {
-							console.log("AssignVehicleSetResponse", oResponse);
-							_thatAV.responseData.push(oResponse.results);
-							if (_thatAV.responseData.length > 0) {
-								var data = _thatAV.oDropShipDataModel.getData().results;
-								for (var i = 0; i < data.length; i++) {
-									if (_thatAV.responseData[0].VHCLE == data[i].VHCLE) {
-										data[i].Error = _thatAV.responseData[0].Error;
-										data[i].Status = _thatAV.responseData[0].Status;
-									}
-									_thatAV.oDropShipDataModel.updateBindings(true);
-									_thatAV.oDropShipDataModel.refresh(true);
-								}
-								jQuery.sap.delayedCall(1000, _thatAV, function () {
-									_thatAV.getRouter().navTo("assignVehiclesStatus", {
-										data: JSON.stringify(data)
-									});
-								});
-							}
-						}, _thatAV),
-						error: function (oError) {
-							console.log("orderChangeError", oError);
-						}
-					});
+					this.assignVehiclePost(oModel, _thatAV.oJSON[i]);
 				}
 			}
+		},
+
+		assignVehiclePost: function (oModel, oData) {
+			var Obj = {};
+			Obj.Dealer_To = SelectedDealerA;
+			Obj.VHCLE = oData.VHCLE;
+			Obj.Dealer = oData.Dealer;
+			Obj.Model = oData.Model;
+			Obj.Modelyear = oData.Modelyear;
+			Obj.Suffix = oData.Suffix;
+			Obj.ExteriorColorCode = oData.ExteriorColorCode;
+			Obj.INTCOL = oData.INTCOL;
+
+			oModel.create("/AssignVehicleSet", Obj, {
+				success: $.proxy(function (oResponse) {
+					console.log("AssignVehicleSetResponse", oResponse);
+					_thatAV.responseData.push(oResponse.results);
+					if (_thatAV.responseData.length > 0) {
+						var data = _thatAV.oDropShipDataModel.getData().results;
+						for (var i = 0; i < data.length; i++) {
+							for (var j = 0; j < _thatAV.responseData.length; j++) {
+								if (_thatAV.responseData[j].VHCLE == data[i].VHCLE) {
+									data[i].Error = _thatAV.responseData[j].Error;
+									data[i].Status = _thatAV.responseData[j].Status;
+								}
+								_thatAV.oDropShipDataModel.updateBindings(true);
+								_thatAV.oDropShipDataModel.refresh(true);
+							}
+						}
+						jQuery.sap.delayedCall(1000, _thatAV, function () {
+							_thatAV.getRouter().navTo("assignVehiclesStatus", {
+								data: JSON.stringify(data)
+							});
+						});
+					}
+				}, _thatAV),
+				error: function (oError) {
+					console.log("orderChangeError", oError);
+				}
+			});
 		},
 
 		onSubmitChanges: function () {
@@ -171,6 +185,10 @@ sap.ui.define([
 			}
 		},
 		onExit: function () {
+			_thatAV.oAssignVehiclesModel.setData();
+			_thatAV.oAssignVehiclesModel.updateBindings(true);
+			_thatAV.oAssignVehiclesModel.refresh(true);
+			_thatAV.responseData = [];
 			_thatAV.destroy();
 		}
 

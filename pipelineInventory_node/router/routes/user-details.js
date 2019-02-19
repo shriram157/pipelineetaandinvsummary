@@ -41,7 +41,7 @@ module.exports = function () {
 			"samlAttributes": userAttributes,
 			legacyDealer: "",
 			legacyDealerName: "",
-			"sales":[]
+			"sales": []
 		};
 
 		var userType = userAttributes.UserType[0];
@@ -80,7 +80,7 @@ module.exports = function () {
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
 				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
 				"&$orderby=BusinessPartner asc";
-				console.log("bpReqUrl",bpReqUrl);
+			console.log("bpReqUrl", bpReqUrl);
 
 			// bpReqUrl = url + "/API_BUSINESS_PARTNER/A_CustomerSalesArea?$filter=SalesOffice eq '" + bpZone +
 			// 	"'&$format=json&?sap-client=" + s4Client;
@@ -91,8 +91,9 @@ module.exports = function () {
 		// National user (TCI user)
 		else {
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
-				"&$expand=to_Customer&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
-				"&$orderby=BusinessPartner asc";console.log("bpReqUrl",bpReqUrl);
+				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
+				"&$orderby=BusinessPartner asc";
+			console.log("bpReqUrl", bpReqUrl);
 		}
 
 		//req.logMessage("debug", "BP URL: %s", bpReqUrl);
@@ -126,9 +127,35 @@ module.exports = function () {
 						}
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
 							if (customerSalesArea.results[i].SalesOffice === bpZone) {
-								resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
+								if ((customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10")) {
+									if (customerSalesArea.results[i].Customer !== "2400500000") {
+										resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
+									}
+								}
 								return true;
 							}
+						}
+						return false;
+					});
+				}
+				if (userType === "National") {
+					bpResults = bpResults.filter(o => {
+						if (!o.to_Customer) {
+							return false;
+						}
+						var customerSalesArea = o.to_Customer.to_CustomerSalesArea;
+						if (!customerSalesArea) {
+							return false;
+						}
+						for (var i = 0; i < customerSalesArea.results.length; i++) {
+							// if (customerSalesArea.results[i].SalesOffice.includes("1000", "2000", "3000", "4000", "5000", "7000", "9000")) {
+							if (bpZone) {
+								if ((customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10")) {
+									resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
+								}
+							}
+							return true;
+							// }
 						}
 						return false;
 					});
@@ -150,26 +177,26 @@ module.exports = function () {
 						//req.logMessage("warn", "No to_Customer.Attribute1 returned from BP.");
 					}
 
-					if (toCustomerAttr1 === "01") {
-						bpAttributes.Division = "10"; //TOY
-						bpAttributes.Attribute = "01";
-					} else if (toCustomerAttr1 === "02") {
-						bpAttributes.Division = "20"; //LEX
-						bpAttributes.Attribute = "02";
-					} else if (toCustomerAttr1 === "03") {
-						bpAttributes.Division = "Dual"; //DUAL
-						bpAttributes.Attribute = "03";
-					} else if (toCustomerAttr1 === "04") {
-						bpAttributes.Division = "10";
-						bpAttributes.Attribute = "04";
-					} else if (toCustomerAttr1 === "05") {
-						bpAttributes.Division = "Dual";
-						bpAttributes.Attribute = "05";
-					} else {
-						// Set as Toyota dealer as fallback
-						bpAttributes.Division = "10";
-						bpAttributes.Attribute = "01";
-					}
+					// if (toCustomerAttr1 === "01") {
+					// 	bpAttributes.Division = "10"; //TOY
+					// 	bpAttributes.Attribute = "01";
+					// } else if (toCustomerAttr1 === "02") {
+					// 	bpAttributes.Division = "20"; //LEX
+					// 	bpAttributes.Attribute = "02";
+					// } else if (toCustomerAttr1 === "03") {
+					// 	bpAttributes.Division = "Dual"; //DUAL
+					// 	bpAttributes.Attribute = "03";
+					// } else if (toCustomerAttr1 === "04") {
+					// 	bpAttributes.Division = "10";
+					// 	bpAttributes.Attribute = "04";
+					// } else if (toCustomerAttr1 === "05") {
+					// 	bpAttributes.Division = "Dual";
+					// 	bpAttributes.Attribute = "05";
+					// } else {
+					// 	// Set as Toyota dealer as fallback
+					// 	bpAttributes.Division = "10";
+					// 	bpAttributes.Attribute = "01";
+					// }
 
 					if (userType === "Dealer") {
 						if (bpAttributes.BusinessPartner === dealerCode || bpAttributes.SearchTerm2 === dealerCode) {

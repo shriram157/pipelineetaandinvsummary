@@ -72,6 +72,7 @@ sap.ui.define([
 			_thatVD.newAPX = oNewApx.getParameters().selectedItem.getKey();
 		},
 		_oVehicleDetailsRoute: function (oEvent) {
+			_thatVD.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
 
 			_thatVD.getView().setModel(sap.ui.getCore().getModel("VehicleDetailsJSON"), "VehicleDetailsJSON");
@@ -342,7 +343,8 @@ sap.ui.define([
 			Obj.AccessoriesInstalled = _thatVD.getView().byId("accessoryVal").getSelectedKey(); //oVehicleDetailsJSON.AccessoriesInstalled;
 			Obj.DNC = _thatVD.getView().byId("DNCVal").getSelectedKey(); //DNCVal //_thatVD.oVehicleDetailsJSON.DNCVehicle;
 			Obj.Comments = _thatVD.oVehicleDetailsJSON.Comments;
-			var oModel = new sap.ui.model.odata.v2.ODataModel(_thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
+			var oModel = _thatVD.getOwnerComponent().getModel("DataModel");
+			//new sap.ui.model.odata.v2.ODataModel(_thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
 			oModel.setUseBatch(false);
 			oModel.create("/VehicleDetailsSet", Obj, {
 				success: $.proxy(function (oResponse) {
