@@ -12,37 +12,11 @@
 							<Text class="clCustomFont" text="{i18n>PageTitle}"/>
 						</contentLeft>
 						<contentRight>
-							<!--<Select change="selectedScreen" selectedKey="Assign Vehicles">-->
-							<!--	<items>-->
-							<!--		<core:Item key="Master" text="Master"/>-->
-							<!--		<core:Item key="Details" text="Details"/>-->
-							<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
-							<!--		<core:Item key="Order Change" text="Order Change"/>-->
-							<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
-							<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
-							<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
-							<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
-							<!--		<core:Item key="Change History" text="Change History"/>-->
-							<!--	</items>-->
-							<!--</Select>-->
 							<Button text="{i18n>Logout}"/>
 						</contentRight>
 					</Bar>
 				</customHeader>
 				<tnt:ToolHeader>
-					<!--<Select change="selectedScreen" selectedKey="Assign Vehicles">-->
-					<!--	<items>-->
-					<!--		<core:Item key="Master" text="Master"/>-->
-					<!--		<core:Item key="Details" text="Details"/>-->
-					<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
-					<!--		<core:Item key="Order Change" text="Order Change"/>-->
-					<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
-					<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
-					<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
-					<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
-					<!--		<core:Item key="Change History" text="Change History"/>-->
-					<!--	</items>-->
-					<!--</Select>-->
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
@@ -54,7 +28,7 @@
 							<Label text="{i18n>AssigningDealer}" design="Bold" class="styleFontSizeSmall sapUiSmallMargin" required="required"/>
 							<ComboBox showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
 								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
-								<core:ListItem key="{BusinessDataModel>BusinessPartner}" text="{BusinessDataModel>SearchTerm2} {BusinessDataModel>OrganizationBPName1}"/>
+								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}" text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}"/>
 							</ComboBox>
 						</HBox>
 						<ToolbarSpacer/>
@@ -116,6 +90,9 @@
 						</items>
 					</Table>
 				</content>
+				<footer>
+					<OverflowToolbar></OverflowToolbar>
+				</footer>
 			</Page>
 		</pages>
 	</App>

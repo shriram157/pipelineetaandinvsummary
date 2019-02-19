@@ -72,6 +72,7 @@ sap.ui.define([
 			_thatVD.newAPX = oNewApx.getParameters().selectedItem.getKey();
 		},
 		_oVehicleDetailsRoute: function (oEvent) {
+			_thatVD.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
 
 			_thatVD.getView().setModel(sap.ui.getCore().getModel("VehicleDetailsJSON"), "VehicleDetailsJSON");
@@ -342,7 +343,8 @@ sap.ui.define([
 			Obj.AccessoriesInstalled = _thatVD.getView().byId("accessoryVal").getSelectedKey(); //oVehicleDetailsJSON.AccessoriesInstalled;
 			Obj.DNC = _thatVD.getView().byId("DNCVal").getSelectedKey(); //DNCVal //_thatVD.oVehicleDetailsJSON.DNCVehicle;
 			Obj.Comments = _thatVD.oVehicleDetailsJSON.Comments;
-			var oModel = new sap.ui.model.odata.v2.ODataModel(_thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
+			var oModel = _thatVD.getOwnerComponent().getModel("DataModel");
+			//new sap.ui.model.odata.v2.ODataModel(_thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
 			oModel.setUseBatch(false);
 			oModel.create("/VehicleDetailsSet", Obj, {
 				success: $.proxy(function (oResponse) {
@@ -362,15 +364,29 @@ sap.ui.define([
 		},
 
 		navToSoldOrer: function () {
-			jQuery.sap.require("jquery.sap.storage");
-			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.session);
-			sap.ushell.components.vehicleFromPipeline = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
-			//Get data from Storage
-			oStorage.get("myLocalData");
-			//Set data into Storage
-			oStorage.put("myLocalData", _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0]);
-			window.location.href= "https://soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html";
-			jQuery.sap.require("jquery.sap.storage");
+			// jQuery.sap.require("jquery.sap.storage");
+			// var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.session);
+			// sap.ushell.components.vehicleFromPipeline = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
+			// //Get data from Storage
+			// oStorage.get("myLocalData");
+			// //Set data into Storage
+			// oStorage.put("myLocalData", _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0]);
+			var data= _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
+			var modelyear = data.Modelyear;
+			var modelkey = data.Model;
+			var serieskey = data.TCISeries;
+			var suffixkey = data.Suffix;
+			var apxkey = data.APX;
+			var colorkey = data.ExteriorColorCode;
+			var vtnn =data.ZZVTN;
+			var todate = data.ETATo;
+			var fromdate = data.ETAFrom;
+			
+			// var keys ="/"+modelyear+"/"+modelkey+"/"+serieskey+"/"+suffixkey+"/"+apxkey+"/"+colorkey+"/"; 
+			var keys ="/"+modelyear+"/"+modelkey+"/"+serieskey+"/"+suffixkey+"/"+apxkey+"/"+colorkey+"/"+vtnn+"/"+fromdate+"/"+todate+"/";
+			window.location.href= "https://soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2"+keys;
+			//{modelyear}/{modelkey}/{serieskey}/{suffixkey}/{apxkey}/{colorkey}/{vtnn}/{fromdate}/{todate}
+			// jQuery.sap.require("jquery.sap.storage");
 		},
 		onExit: function () {
 			this.destroy();

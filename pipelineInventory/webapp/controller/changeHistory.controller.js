@@ -61,6 +61,7 @@ sap.ui.define([
 		},
 
 		_oChangeHistoryRoute: function (oEvent) {
+			_thatCH.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.show();
 			_thatCH.getView().setModel(_thatCH.oChangeHistoryModel, "ChangeHistoryModel");
 

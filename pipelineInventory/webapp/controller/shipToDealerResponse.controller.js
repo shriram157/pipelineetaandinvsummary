@@ -37,19 +37,29 @@ sap.ui.define([
 				delay: 0
 			});
 			_thatSDR.getView().setModel(_oViewModel, "LocalSDRModel");
-			
-			_thatSDR.getView().setModel(sap.ui.getCore().getModel("DropShipDataModel"), "DropShipDataModel");
+			// _thatSDR.getView().setModel(sap.ui.getCore().getModel("DropShipDataModel"), "DropShipDataModel");
 			_thatSDR.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatSDR._oShipToDealerResponseRoute, _thatSDR);
 		},
 
 		_oShipToDealerResponseRoute: function (oEvt) {
-			_thatSDR.getView().setModel(sap.ui.getCore().getModel("DropShipDataModel"), "DropShipDataModel");
+			_thatSDR.getView().setBusy(false);
+			_thatSDR.oDropResponseModel = new sap.ui.model.json.JSONModel();
+			_thatSDR.getView().setModel(_thatSDR.oDropResponseModel, "DropResponseModel");
+			
+			if (oEvt.getParameters().arguments.data != undefined) {
+				var VUIdata = JSON.parse(oEvt.getParameters().arguments.data);
+				_thatSDR.oDropResponseModel.getData().responseResults = [];
+				for (var n = 0; n < VUIdata.length; n++) {
+						_thatSDR.oDropResponseModel.getData().responseResults.push(VUIdata[n]);
+						_thatSDR.oDropResponseModel.updateBindings(true);
+				}
+			}
 		},
 		
 		onNavigateToVL: function (oNavEvent) {
 			this.getRouter().navTo("vehicleDetails", {
-				OrderNumber: oNavEvent.getSource().getModel("DropShipDataModel").getProperty(oNavEvent.getSource().getBindingContext(
-					"DropShipDataModel").sPath).VHCLE
+				OrderNumber: oNavEvent.getSource().getModel("DropResponseModel").getProperty(oNavEvent.getSource().getBindingContext(
+					"DropResponseModel").sPath).VHCLE
 			});
 		},
 

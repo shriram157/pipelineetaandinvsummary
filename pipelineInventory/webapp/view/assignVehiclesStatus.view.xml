@@ -11,44 +11,18 @@
 							<Text class="clCustomFont" text="{i18n>PageTitle}"/>
 						</contentLeft>
 						<contentRight>
-							<!--<Select change="selectedScreen" selectedKey="Assign Vehicles Status">-->
-							<!--	<items>-->
-							<!--		<core:Item key="Master" text="Master"/>-->
-							<!--		<core:Item key="Details" text="Details"/>-->
-							<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
-							<!--		<core:Item key="Order Change" text="Order Change"/>-->
-							<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
-							<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
-							<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
-							<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
-							<!--		<core:Item key="Change History" text="Change History"/>-->
-							<!--	</items>-->
-							<!--</Select>-->
 							<Button text="{i18n>Logout}"/>
 						</contentRight>
 					</Bar>
 				</customHeader>
 				<tnt:ToolHeader>
-					<!--<Select change="selectedScreen" selectedKey="Assign Vehicles Status">-->
-					<!--	<items>-->
-					<!--		<core:Item key="Master" text="Master"/>-->
-					<!--		<core:Item key="Details" text="Details"/>-->
-					<!--		<core:Item key="Vehicle Details" text="Vehicle Details"/>-->
-					<!--		<core:Item key="Order Change" text="Order Change"/>-->
-					<!--		<core:Item key="Ship To Dealer" text="Ship To Dealer"/>-->
-					<!--		<core:Item key="Ship To Dealer Response" text="Ship To Dealer Response"/>-->
-					<!--		<core:Item key="Assign Vehicles" text="Assign Vehicles"/>-->
-					<!--		<core:Item key="Assign Vehicles Status" text="Assign Vehicles Status"/>-->
-					<!--		<core:Item key="Change History" text="Change History"/>-->
-					<!--	</items>-->
-					<!--</Select>-->
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
 				<content>
 					<Label text="{i18n>VehicleAssignmentStatus}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
-					<Table items="{AssignVehiclesModel>/results}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="7" growingScrollToLoad="false">
+					<Table items="{AssignVStatusModel>/results}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="7" growingScrollToLoad="false">
 						<columns>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 								<Text text="{i18n>OrderNumber}"/>
@@ -84,21 +58,24 @@
 						<items>
 							<ColumnListItem>
 								<cells>
-									<Link text="{AssignVehiclesModel>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{AssignVehiclesModel>ZZDLR_REF_NO}"/>
-									<Text text="{AssignVehiclesModel>ZZORDERTYPE}"/>
-									<Text text="{AssignVehiclesModel>ZMMSTA}"/>
-									<Text text="{AssignVehiclesModel>ZZVTN}" tooltip="{AssignVehiclesModel>ZZVTN}"/>
-									<Text text="{AssignVehiclesModel>VHVIN}" tooltip="{AssignVehiclesModel>VHVIN}"/>
-									<Text text="{AssignVehiclesModel>Model}"/>
-									<Text text="{AssignVehiclesModel>Suffix}"/>
-									<Text text="{AssignVehiclesModel>ExteriorColorCode}"/>
-									<Text text=""/>
-									<Text text=""/>
+									<Link text="{AssignVStatusModel>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{AssignVStatusModel>ZZDLR_REF_NO}"/>
+									<Text text="{AssignVStatusModel>ZZORDERTYPE}"/>
+									<Text text="{AssignVStatusModel>ZMMSTA}"/>
+									<Text text="{AssignVStatusModel>ZZVTN}" tooltip="{AssignVStatusModel>ZZVTN}"/>
+									<Text text="{AssignVStatusModel>VHVIN}" tooltip="{AssignVStatusModel>VHVIN}"/>
+									<Text text="{AssignVStatusModel>Model}"/>
+									<Text text="{AssignVStatusModel>Suffix}"/>
+									<Text text="{AssignVStatusModel>ExteriorColorCode}"/>
+									<Text text="{AssignVStatusModel>Status}"/>
+									<Text text="{AssignVStatusModel>Error}"/>
 								</cells>
 							</ColumnListItem>
 						</items>
 					</Table>
 				</content>
+				<footer>
+					<OverflowToolbar></OverflowToolbar>
+				</footer>
 			</Page>
 		</pages>
 	</App>

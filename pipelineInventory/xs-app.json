@@ -1,20 +1,23 @@
 {
-  "welcomeFile": "/pipelineInventory/index.html",
-  "authenticationMethod": "none",
-  "logout": {
-    "logoutEndpoint": "/do/logout"
-  },
-  "routes": [
-    {
-      "source": "^/pipelineInventory/(.*)$",
-      "target": "$1",
-      "localDir": "webapp"
-    },
-       {
-      "source": "/node(.*)",
-      "destination": "core-node-backend",
-      "csrfProtection": false,
-      "authenticationType": "none"
-    }
-  ]
+	"welcomeFile": "/pipelineInventory/index.html",
+	"authenticationMethod": "route",
+	"logout": {
+		"logoutEndpoint": "/do/logout"
+	},
+	"routes": [{
+		"source": "^/pipelineInventory/(.*)$",
+		"target": "$1",
+		"localDir": "webapp",
+		"authenticationType": "xsuaa"
+	}, {
+		"source": "/node(.*)",
+		"destination": "core-node-backend",
+		"csrfProtection": false,
+		"authenticationType": "xsuaa"
+	}, {
+		"source": "/userDetails(.*)",
+		"destination": "core-node-backend",
+		"csrfProtection": false,
+		"authenticationType": "xsuaa"
+	}]
 }

@@ -28,7 +28,7 @@
 							<Label text="{i18n>Dealer}" design="Bold" class="styleFontSizeSmall sapUiSmallMargin" required="required"/>
 							<ComboBox showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
 								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
-								<core:ListItem key="{BusinessDataModel>BusinessPartner}" text="{BusinessDataModel>SearchTerm2} {BusinessDataModel>OrganizationBPName1}"/>
+								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}" text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}"/>
 							</ComboBox>
 						</HBox>
 						<ToolbarSpacer/>
@@ -108,6 +108,9 @@
 						</items>
 					</Table>
 				</content>
+				<footer>
+					<OverflowToolbar></OverflowToolbar>
+				</footer>
 			</Page>
 		</pages>
 	</App>

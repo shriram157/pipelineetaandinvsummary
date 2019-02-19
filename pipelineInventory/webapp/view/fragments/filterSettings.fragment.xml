@@ -1,0 +1,42 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleSettingsConfirm">
+		<sortItems>
+			<ViewSettingsItem text="VTN" key="ZZVTN" selected="true" />
+			<ViewSettingsItem text="VIN" key="VHVIN" />
+			<ViewSettingsItem text="Order Type" key="ZZORDERTYPE" />
+			<ViewSettingsItem text="Order Number" key="ZZDLR_REF_NO" />
+		</sortItems>
+		<filterItems>
+			<ViewSettingsFilterItem
+				text="VTN"
+				key="ZZVTN"
+				multiSelect="true"
+				items="{VehicleDetailsJSON>/results}">
+				<items>
+					<ViewSettingsItem text="{VehicleDetailsJSON>ZZVTN}" key="ZZVTN" />
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem
+				text="VIN"
+				key="VHVIN"
+				multiSelect="true"
+				items="{VehicleDetailsJSON>/results}">
+				<items>
+					<ViewSettingsItem text="{VehicleDetailsJSON>VHVIN}" key="VHVIN" />
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem
+				text="Order Number"
+				key="ZZDLR_REF_NO"
+				multiSelect="true"
+				items="{VehicleDetailsJSON>/results}">
+				<items>
+					<ViewSettingsItem text="{VehicleDetailsJSON>ZZDLR_REF_NO}" key="ZZDLR_REF_NO" />
+				</items>
+			</ViewSettingsFilterItem>
+		</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>
