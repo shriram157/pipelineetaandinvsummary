@@ -832,8 +832,10 @@ sap.ui.define([
 				var intcol = _that.getView().getModel("GlobalJSONModel").getProperty(_that.getView().byId("ID_marktgIntDesc").getSelectedItem().getBindingContext(
 					"GlobalJSONModel").sPath).intColorCode;
 				obj_first.intcolor = intcol;
-			} else obj_first.suffix = "";
-
+			} else {
+				obj_first.suffix = "";
+				obj_first.intcolor = "";
+			}
 			if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
 				obj_first.ExteriorColorCode = _that.getView().byId("ID_ExteriorColorCode").getSelectedKey();
 			} else obj_first.ExteriorColorCode = "";
