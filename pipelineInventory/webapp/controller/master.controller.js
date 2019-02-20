@@ -118,18 +118,18 @@ sap.ui.define([
 						if (aBusinessPartnerKey[_that.BusinessPartnerData.getData().Dealers[i].BusinessPartnerKey])
 							_that.BusinessPartnerData.getData().DealerList.push(_that.BusinessPartnerData.getData().Dealers[i]);
 					}
-						if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
-							_that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0]+"000";
-							_that.BusinessPartnerData.getData().DealerList.unshift({
-								BusinessPartner: "Zone All",
-								BusinessPartnerKey: "",
-								BusinessPartnerName: "",
-								BusinessPartnerType: "",
-								SearchTerm2: ""
-							});
-						} else {
-							_that.salesOffice = "";
-						}
+					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
+						_that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
+						_that.BusinessPartnerData.getData().DealerList.unshift({
+							BusinessPartner: "Zone All",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+					} else {
+						_that.salesOffice = "";
+					}
 
 					_that.BusinessPartnerData.updateBindings(true);
 					_that.BusinessPartnerData.refresh(true);
@@ -344,12 +344,14 @@ sap.ui.define([
 				if (_that.getView().byId("ID_marktgIntDesc").getSelectedItem() != null) {
 					var intcol = _that.getView().getModel("GlobalJSONModel").getProperty(_that.getView().byId("ID_marktgIntDesc").getSelectedItem().getBindingContext(
 						"GlobalJSONModel").sPath).intColorCode;
-					if (intcol != undefined) {
-						_that.intcolor = intcol;
-					} else _that.intcolor = "";
+					_that.intcolor = intcol;
+
 				}
 
-			} else _that.ID_marktgIntDesc = "";_that.intcolor = "";
+			} else {
+				_that.ID_marktgIntDesc = "";
+				_that.intcolor = "";
+			}
 
 			if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
 				_that.ID_ExteriorColorCode = _that.getView().byId("ID_ExteriorColorCode").getSelectedKey();
