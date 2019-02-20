@@ -60,15 +60,15 @@
 							<ColumnListItem>
 								<cells>
 									<Link text="{DropResponseModel>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{DropResponseModel>ZZDLR_REF_NO}"/>
-									<Text text="{DropResponseModel>ZZORDERTYPE}"/>
+									<Text text="{DropResponseModel>ZZORDERTYPE} - {DropResponseModel>ORDERTYPE_DESC_EN}"/>
 									<Text text="{DropResponseModel>ZMMSTA}"/>
-									<Text text="{DropResponseModel>ZZVTN}" tooltip="{DropResponseModel>ZZVTN}"/>
-									<Text text="{DropResponseModel>VHVIN}" tooltip="{DropResponseModel>VHVIN}"/>
-									<Text text="{DropResponseModel>Model}"/>
-									<Text text="{DropResponseModel>Suffix}"/>
-									<Text text="{DropResponseModel>ExteriorColorCode}"/>
-									<Text text="{DropResponseModel>Status}"/>
-									<Text text="{DropResponseModel>Error}"/>
+									<Link text="{DropResponseModel>ZZVTN}" tooltip="{DropResponseModel>ZZVTN}"/>
+									<Link text="{DropResponseModel>VHVIN}" tooltip="{DropResponseModel>VHVIN}"/>
+									<Text text="{DropResponseModel>Model} {DropResponseModel>MODEL_DESC_EN}"/>
+									<Text text="{DropResponseModel>Suffix} {DropResponseModel>SUFFIX_DESC_EN}/{DropResponseModel>INTCOL_DESC_EN}"/>
+									<Text text="{DropResponseModel>ExteriorColorCode} {DropResponseModel>EXTCOL_DESC_EN}"/>
+									<Text text="{path:'DropResponseModel>Status'}"/>
+									<Text text="{path:'DropResponseModel>Error'}"/>
 								</cells>
 							</ColumnListItem>
 						</items>

@@ -77,9 +77,9 @@ sap.ui.define([
 
 				_thatDT.SelectedDealer = _thatDT.routedData.Dealer;
 				_thatDT.UserType = _thatDT.routedData.userType;
-
+				//intcolor
 				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=MATRIX eq '" + _thatDT.routedData.MatrixVal +
-					"' and Model eq '" + _thatDT.routedData.Model + "' and Modelyear eq '" + _thatDT.routedData.ModelYear + "'and TCISeries eq '" +
+					"' and Model eq '" + _thatDT.routedData.Model +"' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and Modelyear eq '" + _thatDT.routedData.ModelYear + "'and TCISeries eq '" +
 					_thatDT.routedData.series + "'and Suffix eq '" + _thatDT.routedData.suffix + "'and ExteriorColorCode eq '" + _thatDT.routedData.ExteriorColorCode +
 					"'and APX eq '" + _thatDT.routedData.APXValue + "'and ETA eq '" + _thatDT.routedData.ETADate + "'and Dealer eq '" + _thatDT.routedData
 					.Dealer +

@@ -91,7 +91,7 @@
 								<cells>
 									<Link text="{ChangeHistoryModel>ZZDLR_REF_NO}" press="onNavigateToVL"/>
 									<Link text="{ChangeHistoryModel>VTN}" press="onNavigateToVL"/>
-									<Text text="{ChangeHistoryModel>TCISeries}"/>
+									<Text text="{ChangeHistoryModel>TCISeries} {ChangeHistoryModel>SERIES_DESC_EN}"/>
 									<Text text="{ChangeHistoryModel>OldModel}"/>
 									<Text text="{ChangeHistoryModel>OldSuffix}"/>
 									<Text text="{ChangeHistoryModel>OldAPX}"/>

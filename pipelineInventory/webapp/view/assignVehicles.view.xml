@@ -76,15 +76,15 @@
 							<ColumnListItem>
 								<cells>
 									<Link text="{AssignVehiclesModel>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{AssignVehiclesModel>ZZDLR_REF_NO}"/>
-									<Text text="{AssignVehiclesModel>ZZORDERTYPE}"/>
+									<Text text="{AssignVehiclesModel>ZZORDERTYPE} - {AssignVehiclesModel>ORDERTYPE_DESC_EN}"/>
 									<Text text="{AssignVehiclesModel>ZMMSTA}"/>
-									<Text text="{AssignVehiclesModel>ZZVTN}" tooltip="{AssignVehiclesModel>ZZVTN}"/>
-									<Text text="{AssignVehiclesModel>VHVIN}" tooltip="{AssignVehiclesModel>VHVIN}"/>
-									<Text text="{AssignVehiclesModel>Model}"/>
-									<Text text="{AssignVehiclesModel>Suffix}"/>
-									<Text text="{AssignVehiclesModel>ExteriorColorCode}"/>
-									<Text text="{AssignVehiclesModel>ETAFrom}"/>
-									<Text text="{AssignVehiclesModel>ETA}"/>
+									<Link text="{AssignVehiclesModel>ZZVTN}" tooltip="{AssignVehiclesModel>ZZVTN}"/>
+									<Link text="{AssignVehiclesModel>VHVIN}" tooltip="{AssignVehiclesModel>VHVIN}"/>
+									<Text text="{AssignVehiclesModel>Model} {AssignVehiclesModel>MODEL_DESC_EN}"/>
+									<Text text="{AssignVehiclesModel>Suffix} {AssignVehiclesModel>SUFFIX_DESC_EN}/{AssignVehiclesModel>INTCOL_DESC_EN}"/>
+									<Text text="{AssignVehiclesModel>ExteriorColorCode} {AssignVehiclesModel>EXTCOL_DESC_EN}"/>
+									<Text text="{path:'AssignVehiclesModel>ETAFrom', formatter: '.formatDate'}"/>
+									<Text text="{path:'AssignVehiclesModel>ETATo', formatter: '.formatDate'}"/>
 								</cells>
 							</ColumnListItem>
 						</items>

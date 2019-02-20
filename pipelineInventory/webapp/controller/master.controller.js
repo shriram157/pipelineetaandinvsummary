@@ -829,6 +829,9 @@ sap.ui.define([
 
 			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select") {
 				obj_first.suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
+				var intcol = _that.getView().getModel("GlobalJSONModel").getProperty(_that.getView().byId("ID_marktgIntDesc").getSelectedItem().getBindingContext(
+					"GlobalJSONModel").sPath).intColorCode;
+				obj_first.intcolor = intcol;
 			} else obj_first.suffix = "";
 
 			if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {

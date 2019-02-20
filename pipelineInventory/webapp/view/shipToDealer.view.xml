@@ -78,15 +78,15 @@
 							<ColumnListItem>
 								<cells>
 									<Link text="{DropShipDataModel>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{DropShipDataModel>ZZDLR_REF_NO}"/>
-									<Text text="{DropShipDataModel>ZZORDERTYPE}"/>
+									<Text text="{DropShipDataModel>ZZORDERTYPE} - {DropShipDataModel>ORDERTYPE_DESC_EN}"/>
 									<Text text="{DropShipDataModel>ZMMSTA}"/>
-									<Text text="{DropShipDataModel>ZZVTN}" tooltip="{DropShipDataModel>ZZVTN}"/>
-									<Text text="{DropShipDataModel>VHVIN}" tooltip="{DropShipDataModel>VHVIN}"/>
-									<Text text="{DropShipDataModel>Model}"/>
-									<Text text="{DropShipDataModel>Suffix}"/>
-									<Text text="{DropShipDataModel>ExteriorColorCode}"/>
-									<Text text="{DropShipDataModel>ETAFrom}"/>
-									<Text text="{DropShipDataModel>ETA}"/>
+									<Link text="{DropShipDataModel>ZZVTN}" tooltip="{DropShipDataModel>ZZVTN}"/>
+									<Link text="{DropShipDataModel>VHVIN}" tooltip="{DropShipDataModel>VHVIN}"/>
+									<Text text="{DropShipDataModel>Model} {DropShipDataModel>MODEL_DESC_EN}"/>
+									<Text text="{DropShipDataModel>Suffix} {DropShipDataModel>SUFFIX_DESC_EN}/{DropShipDataModel>INTCOL_DESC_EN}"/>
+									<Text text="{DropShipDataModel>ExteriorColorCode} {DropShipDataModel>EXTCOL_DESC_EN}"/>
+									<Text text="{path:'DropShipDataModel>ETAFrom', formatter: '.formatDate'}"/>
+									<Text text="{path:'DropShipDataModel>ETATo', formatter: '.formatDate'}"/>
 								</cells>
 							</ColumnListItem>
 						</items>
