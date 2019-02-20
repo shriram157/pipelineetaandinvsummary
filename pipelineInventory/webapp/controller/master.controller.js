@@ -45,6 +45,8 @@ sap.ui.define([
 			}
 
 			_that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
+			_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
+			sap.ui.getCore().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 
 			//Local Testing
 			var sLocation = window.location.host;
@@ -89,15 +91,14 @@ sap.ui.define([
 				_that.BusinessPartnerData.getData().SamlList = samlAttributes;
 				_that.BusinessPartnerData.updateBindings(true);
 				_that.BusinessPartnerData.refresh(true);
-				_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 
 			} else {
 				//Cloud Deployment
 				this.sPrefix = "";
 			}
 			this.nodeJsUrl = this.sPrefix + "/node";
-			_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
-
+			// _that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
+			sap.ui.core.BusyIndicator.show();
 			$.ajax({
 				dataType: "json",
 				url: "/userDetails/attributes",
@@ -130,7 +131,7 @@ sap.ui.define([
 					} else {
 						_that.salesOffice = "";
 					}
-
+					sap.ui.core.BusyIndicator.hide();
 					_that.BusinessPartnerData.updateBindings(true);
 					_that.BusinessPartnerData.refresh(true);
 				},
@@ -181,7 +182,6 @@ sap.ui.define([
 
 			/*Global Model initialization and mapping on view*/
 			_that.oGlobalJSONModel = new JSONModel();
-			_that.oBusinessDataModel = new JSONModel();
 			_that.oUserModel = new JSONModel();
 			_that.oModelYearModel = new JSONModel();
 			_that.getView().setModel(_that.oModelYearModel, "ModelYearModel");

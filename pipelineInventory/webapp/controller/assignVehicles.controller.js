@@ -41,7 +41,7 @@ sap.ui.define([
 			}
 			_thatAV.nodeJsUrl = this.sPrefix + "/node";
 
-			_thatAV.oDealerDataModel = new JSONModel();
+			// _thatAV.oDealerDataModel = new JSONModel();
 			_thatAV.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
 
 			_thatAV.oAssignVehiclesModel = new JSONModel();

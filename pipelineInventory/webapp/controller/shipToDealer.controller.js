@@ -42,7 +42,7 @@ sap.ui.define([
 			}
 			_thatSD.nodeJsUrl = this.sPrefix + "/node";
 
-			_thatSD.oDealerDataModel = new JSONModel();
+			// _thatSD.oDealerDataModel = new JSONModel();
 			_thatSD.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
 
 			_thatSD.oDropShipDataModel = new JSONModel();
