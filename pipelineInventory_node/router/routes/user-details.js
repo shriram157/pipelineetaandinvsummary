@@ -148,8 +148,8 @@ module.exports = function () {
 							return false;
 						}
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
-							// if (customerSalesArea.results[i].SalesOffice.includes("1000", "2000", "3000", "4000", "5000", "7000", "9000")) {
-							if (bpZone) {
+							if (customerSalesArea.results[i].SalesOffice== "1000"|| customerSalesArea.results[i].SalesOffice== "2000"||customerSalesArea.results[i].SalesOffice== "3000" ||customerSalesArea.results[i].SalesOffice== "4000"||customerSalesArea.results[i].SalesOffice== "5000"||customerSalesArea.results[i].SalesOffice== "7000"||customerSalesArea.results[i].SalesOffice=="9000") {
+							// if (bpZone) {
 								if ((customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10")) {
 									resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
 								}
