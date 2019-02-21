@@ -171,7 +171,7 @@ sap.ui.define([
 			_thatOC.Modelyear = _thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Modelyear;
 			_thatOC.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
 			_thatOC.oVehicleDetailsJSON.getData().suffixData = [];
-			$.ajax({
+			/*$.ajax({
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_configuration?$filter=Model eq '" + _thatOC.Model +
 					"'and ModelYear eq '" + _thatOC.Modelyear + "'",
@@ -219,6 +219,30 @@ sap.ui.define([
 							error: function (oError) {
 								sap.ui.core.BusyIndicator.hide();
 							}
+						});
+						_thatOC.oVehicleDetailsJSON.updateBindings(true);
+					} else {
+						sap.ui.core.BusyIndicator.hide();
+					}
+				},*/
+			$.ajax({
+				dataType: "json",
+				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _thatOC.Model + "' and Modelyear eq '" +
+					_thatOC.Modelyear + "'",
+				type: "GET",
+				success: function (oData) {
+					if (oData.d.results.length > 0) {
+						_thatOC.oVehicleDetailsJSON.getData().suffixData = oData.d.results;
+						sap.ui.core.BusyIndicator.hide();
+						_thatOC.oVehicleDetailsJSON.getData().suffixData.unshift({
+							"Model": "",
+							"Modelyear": "",
+							"Suffix": "",
+							"int_c": "",
+							"SuffixDescriptionEN": "",
+							"SuffixDescriptionFR": "",
+							"mrktg_int_desc_en": "",
+							"mrktg_int_desc_fr": ""
 						});
 						_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					} else {
@@ -307,7 +331,7 @@ sap.ui.define([
 				});
 			}
 		},
-		
+
 		_DataValidate: function (oPost) {
 			var sUserInput = _thatOC.getView().byId("ID_modelSelect").getSelectedKey();
 			var sUserInput2 = _thatOC.getView().byId("ID_suffixSelect").getSelectedKey();
@@ -317,7 +341,7 @@ sap.ui.define([
 			var oInputControl2 = _thatOC.getView().byId("ID_suffixSelect");
 			var oInputControl3 = _thatOC.getView().byId("ID_ExteriorColorSelect");
 			// var oInputControl4 = _thatOC.getView().byId("APXrequired");
-			
+
 			if (sUserInput && sUserInput2 && sUserInput3) {
 				oInputControl.setValueState(sap.ui.core.ValueState.Success);
 				oInputControl2.setValueState(sap.ui.core.ValueState.Success);
