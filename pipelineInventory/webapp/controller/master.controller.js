@@ -121,6 +121,7 @@ sap.ui.define([
 				url: "/userDetails/attributes",
 				type: "GET",
 				success: function (userAttributes) {
+					sap.ui.core.BusyIndicator.hide();
 					_that.BusinessPartnerData.getData().Dealers = [];
 					_that.BusinessPartnerData.getData().DealerList = [];
 					_that.BusinessPartnerData.getData().SamlList = [];
@@ -152,7 +153,7 @@ sap.ui.define([
 					_that.BusinessPartnerData.updateBindings(true);
 					_that.BusinessPartnerData.refresh(true);
 				},
-				error: function (oError) {}
+				error: function (oError) {sap.ui.core.BusyIndicator.hide();}
 			});
 			$.ajax({
 				dataType: "json",
