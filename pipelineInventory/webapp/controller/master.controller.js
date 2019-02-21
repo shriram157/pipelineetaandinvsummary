@@ -7,7 +7,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (Controller, JSONModel, ResourceModel, BaseController, MessageBox) {
 	"use strict";
-
+	var Division, DivUser;
 	return BaseController.extend("pipelineInventory.controller.master", {
 		/*Initialization of the page data*/
 		onInit: function () {
@@ -42,6 +42,23 @@ sap.ui.define([
 				});
 				_that.getView().setModel(_that.oI18nModel, "i18n");
 				_that.sCurrentLocale = 'EN';
+			}
+
+			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+			if (isDivisionSent) {
+				Division = window.location.search.match(/Division=([^&]*)/i)[1];
+				var currentImageSource;
+				if (Division == '10') // set the toyoto logo
+				{
+					DivUser = "TOY";
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
+
+				} else { // set the lexus logo
+					DivUser = "LEX";
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/Lexus.png");
+				}
 			}
 
 			_that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
@@ -146,10 +163,10 @@ sap.ui.define([
 				},
 				error: function (oError) {}
 			});
-
+			
 			$.ajax({
 				dataType: "json",
-				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields",
+				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser + "'",
 				type: "GET",
 				success: function (oData) {
 					if (oData.d.results.length > 0) {
@@ -458,14 +475,14 @@ sap.ui.define([
 						_that.oGlobalJSONModel.getData().suffixData = oData.d.results;
 						sap.ui.core.BusyIndicator.hide();
 						_that.oGlobalJSONModel.getData().suffixData.unshift({
-							"Model":"",
-							"Modelyear":"",
-							"Suffix":"Please Select",
-							"int_c":"",
-							"SuffixDescriptionEN":"",
-							"SuffixDescriptionFR":"",
-							"mrktg_int_desc_en":"",
-							"mrktg_int_desc_fr":""
+							"Model": "",
+							"Modelyear": "",
+							"Suffix": "Please Select",
+							"int_c": "",
+							"SuffixDescriptionEN": "",
+							"SuffixDescriptionFR": "",
+							"mrktg_int_desc_en": "",
+							"mrktg_int_desc_fr": ""
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
 					} else {

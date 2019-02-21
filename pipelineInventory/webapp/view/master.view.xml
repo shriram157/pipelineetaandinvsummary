@@ -49,7 +49,7 @@
 								</Select>
 								<Label text="{i18n>Suffix}"/>
 								<Select id="ID_marktgIntDesc" forceSelection="true" items="{GlobalJSONModel>/suffixData}" change="onSuffixChange">
-									<core:Item key="{GlobalJSONModel>Suffix}" text="{GlobalJSONModel>Suffix} - {GlobalJSONModel>SuffixDescriptionEN} / {GlobalJSONModel>MarktgIntDescEN}"/>
+									<core:Item key="{GlobalJSONModel>Suffix}" text="{GlobalJSONModel>Suffix} - {GlobalJSONModel>SuffixDescriptionEN} / {GlobalJSONModel>mrktg_int_desc_en}"/>
 									<!--/ {GlobalJSONModel>MarktgIntDescEN}-->
 								</Select>
 								<core:Title text=""/>
