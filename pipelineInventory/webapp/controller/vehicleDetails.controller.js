@@ -1,4 +1,3 @@
-var _thatVD;
 sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
@@ -8,7 +7,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (BaseController, History, JSONModel, ResourceModel, MessageBox) {
 	"use strict";
-
+	var _thatVD;
 	return BaseController.extend("pipelineInventory.controller.vehicleDetails", {
 		onInit: function () {
 			_thatVD = this;

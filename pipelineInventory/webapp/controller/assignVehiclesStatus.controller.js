@@ -1,4 +1,3 @@
-var _thatAVS;
 sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
@@ -6,7 +5,7 @@ sap.ui.define([
 	'sap/ui/model/json/JSONModel',
 ], function (BaseController, ResourceModel, JSONModel) {
 	"use strict";
-
+	var _thatAVS;
 	return BaseController.extend("pipelineInventory.controller.assignVehiclesStatus", {
 
 		/**

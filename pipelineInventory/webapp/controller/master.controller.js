@@ -1,4 +1,3 @@
-var _that, filteredData, SelectedDealer, seriesdata = [];
 sap.ui.define([
 	'sap/ui/core/mvc/Controller',
 	'sap/ui/model/json/JSONModel',
@@ -7,7 +6,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (Controller, JSONModel, ResourceModel, BaseController, MessageBox) {
 	"use strict";
-	var Division, DivUser;
+	var Division, DivUser, _that, filteredData, SelectedDealer, seriesdata = [];
 	return BaseController.extend("pipelineInventory.controller.master", {
 		/*Initialization of the page data*/
 		onInit: function () {
@@ -127,6 +126,7 @@ sap.ui.define([
 					_that.BusinessPartnerData.getData().SamlList = [];
 					console.log("User Attributes", userAttributes);
 					_that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
+					_that.BusinessPartnerData.setSizeLimit(userAttributes.attributes.length);
 					_that.BusinessPartnerData.getData().SamlList = userAttributes.samlAttributes;
 
 					var aBusinessPartnerKey = userAttributes.sales.reduce(function (obj, hash) {
@@ -845,6 +845,7 @@ sap.ui.define([
 		getObjectData: function (obj_first) {
 			obj_first.Dealer = SelectedDealer;
 			obj_first.userType = _that.userType;
+			obj_first.salesOffice = _that.salesOffice;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 
 			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {

@@ -1,4 +1,3 @@
-var _thatDT, clicks, num, numpre;
 sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
@@ -9,7 +8,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (BaseController, ResourceModel, JSONModel, Filter, History, MessageBox) {
 	"use strict";
-
+	var _thatDT, clicks, num, numpre;
 	return BaseController.extend("pipelineInventory.controller.details", {
 		onInit: function () {
 			_thatDT = this;
@@ -77,8 +76,10 @@ sap.ui.define([
 
 				_thatDT.SelectedDealer = _thatDT.routedData.Dealer;
 				_thatDT.UserType = _thatDT.routedData.userType;
+				_thatDT.salesOffice = _thatDT.routedData.salesOffice;
 				//intcolor
-				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=MATRIX eq '" + _thatDT.routedData.MatrixVal +
+				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=VKBUR eq '" + _thatDT.salesOffice +
+					"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
 					"' and Model eq '" + _thatDT.routedData.Model + "' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and Modelyear eq '" +
 					_thatDT.routedData.ModelYear + "'and TCISeries eq '" +
 					_thatDT.routedData.series + "'and Suffix eq '" + _thatDT.routedData.suffix + "'and ExteriorColorCode eq '" + _thatDT.routedData.ExteriorColorCode +

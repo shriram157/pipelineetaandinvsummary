@@ -1,4 +1,3 @@
-var _thatSDR;
 sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
@@ -6,7 +5,7 @@ sap.ui.define([
 	'sap/ui/model/resource/ResourceModel',
 ], function (BaseController, JSONModel, ResourceModel) {
 	"use strict";
-
+	var _thatSDR;
 	return BaseController.extend("pipelineInventory.controller.shipToDealerResponse", {
 
 		onInit: function () {

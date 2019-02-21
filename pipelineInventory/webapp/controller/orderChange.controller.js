@@ -1,4 +1,3 @@
-var _thatOC;
 sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
@@ -7,7 +6,7 @@ sap.ui.define([
 	'sap/ui/model/resource/ResourceModel',
 ], function (BaseController, History, JSONModel, ResourceModel) {
 	"use strict";
-
+	var _thatOC;
 	return BaseController.extend("pipelineInventory.controller.orderChange", {
 
 		onInit: function () {
