@@ -333,6 +333,24 @@ sap.ui.define([
 			}
 		},
 
+		_DataValidate: function (oPost) {
+			_thatVD.getView().byId("accessoryVal");
+
+			var sUserInput = _thatVD.getView().byId("accessoryVal").getSelectedKey();
+			var sUserInput2 = _thatVD.getView().byId("DNCVal").getSelectedKey();
+			
+			var oInputControl = _thatVD.getView().byId("accessoryVal");
+			var oInputControl2 = _thatVD.getView().byId("DNCVal");
+			if (sUserInput && sUserInput2) {
+				oInputControl.setValueState(sap.ui.core.ValueState.Success);
+				oInputControl2.setValueState(sap.ui.core.ValueState.Success);
+				_thatVD.postVehicleUpdates(oPost);
+			} else {
+				oInputControl.setValueState(sap.ui.core.ValueState.Error);
+				oInputControl2.setValueState(sap.ui.core.ValueState.Error);
+			}
+		},
+
 		postVehicleUpdates: function (oPost) {
 			var Obj = {};
 			_thatVD.oVehicleDetailsJSON = _thatVD.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
@@ -364,29 +382,20 @@ sap.ui.define([
 		},
 
 		navToSoldOrer: function () {
-			// jQuery.sap.require("jquery.sap.storage");
-			// var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.session);
-			// sap.ushell.components.vehicleFromPipeline = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
-			// //Get data from Storage
-			// oStorage.get("myLocalData");
-			// //Set data into Storage
-			// oStorage.put("myLocalData", _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0]);
-			var data= _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
+			var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
 			var modelyear = data.Modelyear;
 			var modelkey = data.Model;
 			var serieskey = data.TCISeries;
 			var suffixkey = data.Suffix;
 			var apxkey = data.APX;
 			var colorkey = data.ExteriorColorCode;
-			var vtnn =data.ZZVTN;
+			var vtnn = data.ZZVTN;
 			var todate = data.ETATo;
 			var fromdate = data.ETAFrom;
-			
-			// var keys ="/"+modelyear+"/"+modelkey+"/"+serieskey+"/"+suffixkey+"/"+apxkey+"/"+colorkey+"/"; 
-			var keys ="/"+modelyear+"/"+modelkey+"/"+serieskey+"/"+suffixkey+"/"+apxkey+"/"+colorkey+"/"+vtnn+"/"+fromdate+"/"+todate+"/";
-			window.location.href= "https://soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2"+keys;
-			//{modelyear}/{modelkey}/{serieskey}/{suffixkey}/{apxkey}/{colorkey}/{vtnn}/{fromdate}/{todate}
-			// jQuery.sap.require("jquery.sap.storage");
+
+			var keys = "/" + modelyear + "/" + modelkey + "/" + serieskey + "/" + suffixkey + "/" + apxkey + "/" + colorkey + "/" + vtnn + "/" +
+				fromdate + "/" + todate + "/";
+			window.location.href = "https://soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2" + keys;
 		},
 		onExit: function () {
 			this.destroy();

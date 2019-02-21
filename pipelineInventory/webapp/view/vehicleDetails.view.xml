@@ -109,7 +109,7 @@
 					</VBox>
 					<OverflowToolbar>
 						<ToolbarSpacer/>
-						<Button text="{i18n>Save}" type="Default" press="postVehicleUpdates"/>
+						<Button text="{i18n>Save}" type="Default" press="_DataValidate"/>
 						<Button text="{i18n>SoldOrder}" type="Default" press="navToSoldOrer"/>
 						<Button text="{i18n>OrderChange}" type="Default" press="NavToOrderChange"/>
 						<Button text="{i18n>Back}" type="Default" press="NavigateBack"/>

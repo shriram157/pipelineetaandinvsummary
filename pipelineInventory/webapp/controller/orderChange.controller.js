@@ -308,6 +308,30 @@ sap.ui.define([
 				});
 			}
 		},
+		
+		_DataValidate: function (oPost) {
+			var sUserInput = _thatOC.getView().byId("ID_modelSelect").getSelectedKey();
+			var sUserInput2 = _thatOC.getView().byId("ID_suffixSelect").getSelectedKey();
+			var sUserInput3 = _thatOC.getView().byId("ID_ExteriorColorSelect").getSelectedKey();
+			// var sUserInput4 = _thatOC.getView().byId("APXrequired").getValue();
+			var oInputControl = _thatOC.getView().byId("ID_modelSelect");
+			var oInputControl2 = _thatOC.getView().byId("ID_suffixSelect");
+			var oInputControl3 = _thatOC.getView().byId("ID_ExteriorColorSelect");
+			// var oInputControl4 = _thatOC.getView().byId("APXrequired");
+			
+			if (sUserInput && sUserInput2 && sUserInput3) {
+				oInputControl.setValueState(sap.ui.core.ValueState.Success);
+				oInputControl2.setValueState(sap.ui.core.ValueState.Success);
+				oInputControl3.setValueState(sap.ui.core.ValueState.Success);
+				// oInputControl4.setValueState(sap.ui.core.ValueState.Success);
+				_thatOC.onRequestChange(oPost);
+			} else {
+				oInputControl.setValueState(sap.ui.core.ValueState.Error);
+				oInputControl2.setValueState(sap.ui.core.ValueState.Error);
+				oInputControl3.setValueState(sap.ui.core.ValueState.Error);
+				// oInputControl4.setValueState(sap.ui.core.ValueState.Error);
+			}
+		},
 
 		onRequestChange: function (oPost) {
 			var Obj = {};

@@ -103,12 +103,7 @@ sap.ui.define([
 			var DataModel = _thatSD.getOwnerComponent().getModel("DataModel");
 			// var oModel = new sap.ui.model.odata.v2.ODataModel(_thatSD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
 			DataModel.setUseBatch(false);
-			this._oToken = DataModel.getHeaders()['x-csrf-token'];
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-Token': this._oToken
-				}
-			});
+			
 			if (_thatSD.oJSON.length > 0) {
 				for (var i = 0; i < _thatSD.oJSON.length; i++) {
 					this.dropshipData(DataModel, _thatSD.oJSON[i]);
@@ -126,6 +121,13 @@ sap.ui.define([
 			Obj.Suffix = jsonData.Suffix;
 			Obj.ExteriorColorCode = jsonData.ExteriorColorCode;
 			Obj.INTCOL = jsonData.INTCOL;
+			
+			this._oToken = model.getHeaders()['x-csrf-token'];
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-Token': this._oToken
+				}
+			});
 
 			model.create("/DropShipSet", Obj, {
 				success: $.proxy(function (oResponse) {

@@ -68,7 +68,7 @@
 									<!--/ {GlobalJSONModel>MarktgIntDescEN}-->
 								</Select>
 								<Label text="{i18n>NewAPX}" required="true"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}" id="APXrequired"/>
 								<Label text="{i18n>NewColour}" required="true"/>
 								<Select id="ID_ExteriorColorSelect" forceSelection="true" items="{VehicleDetailsJSON>/colorData}">
 									<core:Item key="{VehicleDetailsJSON>ExteriorColorCode}"
@@ -94,7 +94,7 @@
 					<OverflowToolbar>
 						<ToolbarSpacer/>
 						<Button text="{i18n>Cancel}" type="Default" press="NavigateBack"/>
-						<Button text="{i18n>Request}" type="Default" press="onRequestChange"/>
+						<Button text="{i18n>Request}" type="Default" press="_DataValidate"/>
 					</OverflowToolbar>
 				</content>
 				<footer>

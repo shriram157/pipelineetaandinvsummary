@@ -112,12 +112,7 @@ sap.ui.define([
 			var oModel = _thatAV.getOwnerComponent().getModel("DataModel");
 			//new sap.ui.model.odata.v2.ODataModel(_thatAV.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
 			oModel.setUseBatch(false);
-			this._oToken = oModel.getHeaders()['x-csrf-token'];
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-Token': this._oToken
-				}
-			});
+			
 			if (_thatAV.oJSON.length > 0) {
 				for (var i = 0; i < _thatAV.oJSON.length; i++) {
 					this.assignVehiclePost(oModel, _thatAV.oJSON[i]);
@@ -135,6 +130,13 @@ sap.ui.define([
 			Obj.Suffix = oData.Suffix;
 			Obj.ExteriorColorCode = oData.ExteriorColorCode;
 			Obj.INTCOL = oData.INTCOL;
+			
+			this._oToken = oModel.getHeaders()['x-csrf-token'];
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-Token': this._oToken
+				}
+			});
 
 			oModel.create("/AssignVehicleSet", Obj, {
 				success: $.proxy(function (oResponse) {
