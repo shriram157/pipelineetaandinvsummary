@@ -79,7 +79,8 @@ sap.ui.define([
 				_thatDT.UserType = _thatDT.routedData.userType;
 				//intcolor
 				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=MATRIX eq '" + _thatDT.routedData.MatrixVal +
-					"' and Model eq '" + _thatDT.routedData.Model +"' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and Modelyear eq '" + _thatDT.routedData.ModelYear + "'and TCISeries eq '" +
+					"' and Model eq '" + _thatDT.routedData.Model + "' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and Modelyear eq '" +
+					_thatDT.routedData.ModelYear + "'and TCISeries eq '" +
 					_thatDT.routedData.series + "'and Suffix eq '" + _thatDT.routedData.suffix + "'and ExteriorColorCode eq '" + _thatDT.routedData.ExteriorColorCode +
 					"'and APX eq '" + _thatDT.routedData.APXValue + "'and ETA eq '" + _thatDT.routedData.ETADate + "'and Dealer eq '" + _thatDT.routedData
 					.Dealer +
@@ -287,11 +288,33 @@ sap.ui.define([
 		},
 
 		vehicleSelect: function (oVUID) {
-			if (oVUID.getParameters().selected == true) {
+			var checkedItem;
+			if (oVUID.getParameters().selected && oVUID.getParameter("selectAll")) {
+				console.log(oVUID.getParameters().listItems);
+				_thatDT.checkedData = [];
+				for (var l = 0; l < oVUID.getParameters().listItems.length; l++) {
+					oVUID.getParameters().listItems[l].getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItems[
+						l].getBindingContext("VehicleDetailsJSON").getPath()).__metadata = "";
+					checkedItem = oVUID.getParameters().listItems[l].getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItems[
+						l].getBindingContext("VehicleDetailsJSON").getPath());
+					if (checkedItem.DropShip == true) {
+						_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
+					} else {
+						_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+					}
+					if (checkedItem.AssignVehicle == true) {
+						_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
+					} else {
+						_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
+					}
+					_thatDT.checkedData.push(oVUID.getParameters().listItems[l].getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters()
+						.listItems[l].getBindingContext("VehicleDetailsJSON").getPath()));
+				}
+			} else if (oVUID.getParameters().selected == true) {
 				oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem.getBindingContext(
 					"VehicleDetailsJSON").getPath()).__metadata = "";
 
-				var checkedItem = oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
+				checkedItem = oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
 					.getBindingContext("VehicleDetailsJSON").getPath());
 				if (checkedItem.DropShip == true) {
 					_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
@@ -303,15 +326,12 @@ sap.ui.define([
 				} else {
 					_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
 				}
+				_thatDT.checkedData.push(oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
+					.getBindingContext("VehicleDetailsJSON").getPath()));
 			} else {
 				_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
 				_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
 			}
-			// enableDropShipBtn: false,
-			// enableAssignVehicleBtn: false
-
-			_thatDT.checkedData.push(oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
-				.getBindingContext("VehicleDetailsJSON").getPath()));
 		},
 
 		navToDropShipVehicles: function () {
