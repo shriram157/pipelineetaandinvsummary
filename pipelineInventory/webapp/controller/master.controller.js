@@ -6,7 +6,8 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (Controller, JSONModel, ResourceModel, BaseController, MessageBox) {
 	"use strict";
-	var Division, DivUser, _that, filteredData, SelectedDealer, seriesdata = [],sSelectedLocale;
+	var Division, DivUser, _that, filteredData, SelectedDealer, seriesdata = [],
+		sSelectedLocale;
 	return BaseController.extend("pipelineInventory.controller.master", {
 		/*Initialization of the page data*/
 		onInit: function () {
@@ -152,6 +153,49 @@ sap.ui.define([
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
+					} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
+						_that.BusinessPartnerData.getData().DealerList[0].unshift({
+							BusinessPartner: "Zone Pacific",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+						_that.BusinessPartnerData.getData().DealerList[1].unshift({
+							BusinessPartner: "Zone Prairie",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+						_that.BusinessPartnerData.getData().DealerList[2].unshift({
+							BusinessPartner: "Zone Central",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+						_that.BusinessPartnerData.getData().DealerList[3].unshift({
+							BusinessPartner: "Zone Atlantic",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+						_that.BusinessPartnerData.getData().DealerList[4].unshift({
+							BusinessPartner: "Zone Quebec",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+						_that.BusinessPartnerData.getData().DealerList[5].unshift({
+							BusinessPartner: "Zone Lexus",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
 					} else {
 						_that.salesOffice = "";
 					}
@@ -159,7 +203,9 @@ sap.ui.define([
 					_that.BusinessPartnerData.updateBindings(true);
 					_that.BusinessPartnerData.refresh(true);
 				},
-				error: function (oError) {sap.ui.core.BusyIndicator.hide();}
+				error: function (oError) {
+					sap.ui.core.BusyIndicator.hide();
+				}
 			});
 			$.ajax({
 				dataType: "json",
@@ -170,7 +216,7 @@ sap.ui.define([
 				},
 				error: function (oError) {}
 			});
-			
+
 			$.ajax({
 				dataType: "json",
 				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser + "'",
@@ -331,10 +377,25 @@ sap.ui.define([
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
 					_that.userType = "ZDU";
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
-					
-					if(SelectedDealerKey == "National All"){
+					if (SelectedDealerKey == "National All") {
 						_that.userType = "NNA";
-					} else if (SelectedDealerKey == "Zone All") {
+					} else if (SelectedDealerKey == "Zone Pacific") {
+						_that.salesOffice = "1000";
+						_that.userType = "NZA";
+					} else if (SelectedDealerKey == "Zone Prairie") {
+						_that.salesOffice = "2000";
+						_that.userType = "NZA";
+					} else if (SelectedDealerKey == "Zone Central") {
+						_that.salesOffice = "3000";
+						_that.userType = "NZA";
+					} else if (SelectedDealerKey == "Zone Atlantic") {
+						_that.salesOffice = "5000";
+						_that.userType = "NZA";
+					} else if (SelectedDealerKey == "Zone Quebec") {
+						_that.salesOffice = "4000";
+						_that.userType = "NZA";
+					} else if (SelectedDealerKey == "Zone Lexus") {
+						_that.salesOffice = "9000";
 						_that.userType = "NZA";
 					} else if (SelectedDealerType == "Z004") {
 						_that.userType = "NZU";
