@@ -400,7 +400,8 @@ sap.ui.define([
 
 			var keys = "/" + modelyear + "/" + modelkey + "/" + serieskey + "/" + suffixkey + "/" + apxkey + "/" + colorkey + "/" + vtnn + "/" +
 				fromdate + "/" + todate + "/";
-			window.location.href = "https://soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2" + keys;
+				
+			window.location.href = "https://qa-soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2" + keys;
 		},
 		onExit: function () {
 			this.destroy();
