@@ -331,7 +331,12 @@ sap.ui.define([
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
 					_that.userType = "ZDU";
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
-					if (SelectedDealerType == "Z004") {
+					
+					if(SelectedDealerKey == "National All"){
+						_that.userType = "NNA";
+					} else if (SelectedDealerKey == "Zone All") {
+						_that.userType = "NZA";
+					} else if (SelectedDealerType == "Z004") {
 						_that.userType = "NZU";
 					} else if (SelectedDealerType == "Z001") {
 						_that.userType = "NDU";
