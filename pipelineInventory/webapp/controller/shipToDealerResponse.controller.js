@@ -57,7 +57,7 @@ sap.ui.define([
 		
 		onNavigateToVL: function (oNavEvent) {
 			this.getRouter().navTo("vehicleDetails", {
-				OrderNumber: oNavEvent.getSource().getModel("DropResponseModel").getProperty(oNavEvent.getSource().getBindingContext(
+				VCData: oNavEvent.getSource().getModel("DropResponseModel").getProperty(oNavEvent.getSource().getBindingContext(
 					"DropResponseModel").sPath).VHCLE
 			});
 		},

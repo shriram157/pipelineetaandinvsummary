@@ -22,7 +22,7 @@
 				</tnt:ToolHeader>
 				<content>
 					<Label text="{i18n>VehicleAssignmentStatus}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
-					<Table items="{AssignVStatusModel>/results}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="7" growingScrollToLoad="false">
+					<Table items="{AssignVStatusModel>/responseResults}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="7" growingScrollToLoad="false">
 						<columns>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 								<Text text="{i18n>OrderNumber}"/>

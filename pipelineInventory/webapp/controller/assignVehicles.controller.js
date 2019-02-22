@@ -83,7 +83,7 @@ sap.ui.define([
 
 		onNavigateToVL: function (oNavEvent) {
 			this.getRouter().navTo("vehicleDetails", {
-				OrderNumber: oNavEvent.getSource().getModel("AssignVehiclesModel").getProperty(oNavEvent.getSource().getBindingContext(
+				VCData: oNavEvent.getSource().getModel("AssignVehiclesModel").getProperty(oNavEvent.getSource().getBindingContext(
 					"AssignVehiclesModel").sPath).VHCLE
 			});
 		},
@@ -140,17 +140,18 @@ sap.ui.define([
 			oModel.create("/AssignVehicleSet", Obj, {
 				success: $.proxy(function (oResponse) {
 					console.log("AssignVehicleSetResponse", oResponse);
-					_thatAV.responseData.push(oResponse.results);
+					oResponse.__metadata = "";
+					_thatAV.responseData.push(oResponse);
 					if (_thatAV.responseData.length > 0) {
-						var data = _thatAV.oDropShipDataModel.getData().results;
+						var data = _thatAV.oAssignVehiclesModel.getData().results;
 						for (var i = 0; i < data.length; i++) {
 							for (var j = 0; j < _thatAV.responseData.length; j++) {
 								if (_thatAV.responseData[j].VHCLE == data[i].VHCLE) {
 									data[i].Error = _thatAV.responseData[j].Error;
 									data[i].Status = _thatAV.responseData[j].Status;
 								}
-								_thatAV.oDropShipDataModel.updateBindings(true);
-								_thatAV.oDropShipDataModel.refresh(true);
+								_thatAV.oAssignVehiclesModel.updateBindings(true);
+								_thatAV.oAssignVehiclesModel.refresh(true);
 							}
 						}
 						jQuery.sap.delayedCall(1000, _thatAV, function () {

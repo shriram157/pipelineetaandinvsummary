@@ -35,7 +35,7 @@ sap.ui.define([
 				_thatAVS.getView().setModel(_thatAVS.oI18nModel, "i18n");
 				_thatAVS.sCurrentLocale = 'EN';
 			}
-			
+
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
 				delay: 0
@@ -48,20 +48,20 @@ sap.ui.define([
 			_thatAVS.getView().setBusy(false);
 			_thatAVS.oAssignVStatusModel = new sap.ui.model.json.JSONModel();
 			_thatAVS.getView().setModel(_thatAVS.oAssignVStatusModel, "AssignVStatusModel");
-			
+
 			if (oEvt.getParameters().arguments.data != undefined) {
 				var VUIdata = JSON.parse(oEvt.getParameters().arguments.data);
 				_thatAVS.oAssignVStatusModel.getData().responseResults = [];
 				for (var n = 0; n < VUIdata.length; n++) {
-						_thatAVS.oAssignVStatusModel.getData().responseResults.push(VUIdata[n]);
-						_thatAVS.oAssignVStatusModel.updateBindings(true);
+					_thatAVS.oAssignVStatusModel.getData().responseResults.push(VUIdata[n]);
+					_thatAVS.oAssignVStatusModel.updateBindings(true);
 				}
 			}
 		},
-		
+
 		onNavigateToVL: function (oNavEvent) {
 			this.getRouter().navTo("vehicleDetails", {
-				OrderNumber: oNavEvent.getSource().getModel("AssignVStatusModel").getProperty(oNavEvent.getSource().getBindingContext(
+				VCData: oNavEvent.getSource().getModel("AssignVStatusModel").getProperty(oNavEvent.getSource().getBindingContext(
 					"AssignVStatusModel").sPath).VHCLE
 			});
 		},

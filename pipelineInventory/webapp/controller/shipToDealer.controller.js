@@ -76,7 +76,7 @@ sap.ui.define([
 
 		onNavigateToVL: function (oNavEvent) {
 			this.getRouter().navTo("vehicleDetails", {
-				OrderNumber: oNavEvent.getSource().getModel("DropShipDataModel").getProperty(oNavEvent.getSource().getBindingContext(
+				VCData: oNavEvent.getSource().getModel("DropShipDataModel").getProperty(oNavEvent.getSource().getBindingContext(
 					"DropShipDataModel").sPath).VHCLE
 			});
 		},
@@ -131,6 +131,7 @@ sap.ui.define([
 			model.create("/DropShipSet", Obj, {
 				success: $.proxy(function (oResponse) {
 					console.log("Drop Ship Response", oResponse);
+					oResponse.__metadata = "";
 					_thatSD.responseData.push(oResponse);
 					if (_thatSD.responseData.length > 0) {
 						var data = _thatSD.oDropShipDataModel.getData().results;
