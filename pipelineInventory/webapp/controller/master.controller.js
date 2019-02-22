@@ -154,42 +154,42 @@ sap.ui.define([
 							SearchTerm2: ""
 						});
 					} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
-						_that.BusinessPartnerData.getData().DealerList[0].unshift({
+						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "Zone Pacific",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
-						_that.BusinessPartnerData.getData().DealerList[1].unshift({
+						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "Zone Prairie",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
-						_that.BusinessPartnerData.getData().DealerList[2].unshift({
+						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "Zone Central",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
-						_that.BusinessPartnerData.getData().DealerList[3].unshift({
+						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "Zone Atlantic",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
-						_that.BusinessPartnerData.getData().DealerList[4].unshift({
+						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "Zone Quebec",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
-						_that.BusinessPartnerData.getData().DealerList[5].unshift({
+						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "Zone Lexus",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
