@@ -6,7 +6,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (Controller, JSONModel, ResourceModel, BaseController, MessageBox) {
 	"use strict";
-	var Division, DivUser, _that, filteredData, SelectedDealer, seriesdata = [];
+	var Division, DivUser, _that, filteredData, SelectedDealer, seriesdata = [],sSelectedLocale;
 	return BaseController.extend("pipelineInventory.controller.master", {
 		/*Initialization of the page data*/
 		onInit: function () {
@@ -27,20 +27,26 @@ sap.ui.define([
 			});
 			_that.getView().setModel(_that.oI18nModel, "i18n");
 
-			if (window.location.search == "?language=fr") {
+			var isLocaleSent = window.location.search.match(/language=([^&]*)/i);
+			if (isLocaleSent) {
+				sSelectedLocale = window.location.search.match(/language=([^&]*)/i)[1];
+			} else {
+				sSelectedLocale = "EN"; // default is english 
+			}
+			if (sSelectedLocale == "fr") {
 				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
 				});
-				_that.getView().setModel(_that.oI18nModel, "i18n");
-				_that.sCurrentLocale = 'FR';
+				this.getView().setModel(_that.oI18nModel, "i18n");
+				this.sCurrentLocale = 'FR';
 			} else {
 				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
 				});
-				_that.getView().setModel(_that.oI18nModel, "i18n");
-				_that.sCurrentLocale = 'EN';
+				this.getView().setModel(_that.oI18nModel, "i18n");
+				this.sCurrentLocale = 'EN';
 			}
 
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);

@@ -6,7 +6,7 @@ sap.ui.define([
 	'sap/ui/model/resource/ResourceModel',
 ], function (BaseController, History, JSONModel, ResourceModel) {
 	"use strict";
-	var _thatOC;
+	var _thatOC,sSelectedLocale;
 	return BaseController.extend("pipelineInventory.controller.orderChange", {
 
 		onInit: function () {
@@ -22,20 +22,26 @@ sap.ui.define([
 			});
 			_thatOC.getView().setModel(_thatOC.oI18nModel, "i18n");
 
-			if (window.location.search == "?language=fr") {
+			var isLocaleSent = window.location.search.match(/language=([^&]*)/i);
+			if (isLocaleSent) {
+				sSelectedLocale = window.location.search.match(/language=([^&]*)/i)[1];
+			} else {
+				sSelectedLocale = "EN"; // default is english 
+			}
+			if (sSelectedLocale == "fr") {
 				_thatOC.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
 				});
-				_thatOC.getView().setModel(_thatOC.oI18nModel, "i18n");
-				_thatOC.sCurrentLocale = 'FR';
+				this.getView().setModel(_thatOC.oI18nModel, "i18n");
+				this.sCurrentLocale = 'FR';
 			} else {
 				_thatOC.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
 				});
-				_thatOC.getView().setModel(_thatOC.oI18nModel, "i18n");
-				_thatOC.sCurrentLocale = 'EN';
+				this.getView().setModel(_thatOC.oI18nModel, "i18n");
+				this.sCurrentLocale = 'EN';
 			}
 
 			var sLocation = window.location.host;
@@ -70,10 +76,10 @@ sap.ui.define([
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData = [];
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData.push(Data);
 
-					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Model = Data.NewModel;
-					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Suffix = Data.NewSuffix;
-					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].APX = Data.NewAPX;
-					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Colour = Data.NewColor;
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Model = Data.OldModel;
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Suffix = Data.OldSuffix;
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].APX = Data.OldAPX;
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].ExteriorColorCode = Data.OldColor;
 
 					_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewModel = "";

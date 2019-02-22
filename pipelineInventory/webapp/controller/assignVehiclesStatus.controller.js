@@ -5,14 +5,9 @@ sap.ui.define([
 	'sap/ui/model/json/JSONModel',
 ], function (BaseController, ResourceModel, JSONModel) {
 	"use strict";
-	var _thatAVS;
+	var _thatAVS,sSelectedLocale;
 	return BaseController.extend("pipelineInventory.controller.assignVehiclesStatus", {
-
-		/**
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf pipelineInventory.view.assignVehiclesStatus
-		 */
+		
 		onInit: function () {
 			_thatAVS = this;
 			_thatAVS.oI18nModel = new sap.ui.model.resource.ResourceModel({
@@ -20,20 +15,26 @@ sap.ui.define([
 			});
 			_thatAVS.getView().setModel(_thatAVS.oI18nModel, "i18n");
 
-			if (window.location.search == "?language=fr") {
+			var isLocaleSent = window.location.search.match(/language=([^&]*)/i);
+			if (isLocaleSent) {
+				sSelectedLocale = window.location.search.match(/language=([^&]*)/i)[1];
+			} else {
+				sSelectedLocale = "EN"; // default is english 
+			}
+			if (sSelectedLocale == "fr") {
 				_thatAVS.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
 				});
-				_thatAVS.getView().setModel(_thatAVS.oI18nModel, "i18n");
-				_thatAVS.sCurrentLocale = 'FR';
+				this.getView().setModel(_thatAVS.oI18nModel, "i18n");
+				this.sCurrentLocale = 'FR';
 			} else {
 				_thatAVS.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
 				});
-				_thatAVS.getView().setModel(_thatAVS.oI18nModel, "i18n");
-				_thatAVS.sCurrentLocale = 'EN';
+				this.getView().setModel(_thatAVS.oI18nModel, "i18n");
+				this.sCurrentLocale = 'EN';
 			}
 
 			var _oViewModel = new sap.ui.model.json.JSONModel({
