@@ -7,7 +7,7 @@ modules:
     type: nodejs
     path: pipelineInventory_node
     parameters:
-      host: pipelineInventory_node
+      host: tci-dev-pipelineetaandinvsummary-node
       register-service-url: true
       service-name: pipelineInventory_node
       service-url: '${default-url}'
@@ -25,6 +25,7 @@ modules:
     type: html5
     path: pipelineInventory
     parameters:
+       host: tci-dev-pipelineetaandinvsummary
        disk-quota: 256M
        memory: 256M
     build-parameters:
