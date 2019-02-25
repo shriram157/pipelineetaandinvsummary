@@ -1,64 +1,60 @@
 ID: pipelineInventory
 _schema-version: '3.1'
-description: MTA Project for Pipeline Inventory
+description: Pipeline ETA and inventory summary consolidated app
 version: 0.0.2
-modules:
-  - name: pipelineInventory_node
-    type: nodejs
-    path: pipelineInventory_node
-    parameters:
-      host: tci-dev-pipelineetaandinvsummary-node
-      register-service-url: true
-      service-name: pipelineInventory_node
-      service-url: '${default-url}'
-      disk-quota: 256MB
-      memory: 256MB
-    provides:
-      - name: pipelineInventory_node_api
-        properties:
-          url: '${default-url}'
-    requires:
-      - name: uaa_pipelineInventory
-      - name: PIPELINE_INVENTORY_APIM_CUPS
 
-  - name: pipelineInventory
-    type: html5
-    path: pipelineInventory
-    parameters:
-       host: tci-dev-pipelineetaandinvsummary
-       disk-quota: 256M
-       memory: 256M
-    build-parameters:
-       builder: grunt
-    requires:
-     - name: dest_pipelineInventory
-     - name: uaa_pipelineInventory
+modules:
+ - name: pipelineInventory_node
+   type: nodejs
+   path: pipelineInventory_node
+   parameters:
+     host: tci-dev-pipelineetaandinvsummary-node
+     disk-quota: 256MB
+     memory: 256MB
+   provides:
      - name: pipelineInventory_node_api
-       group: destinations
        properties:
-          name: core-node-backend
-          url: '~{url}'
-          forwardAuthToken: true 
-    provides:
-      - name: pipelineInventory
+         url: '${default-url}'
+   requires:
+     - name: application-logs_pipelineInventory
+     - name: uaa_pipelineInventory
+     - name: PIPELINE_INVENTORY_APIM_CUPS
+
+ - name: pipelineInventory
+   type: html5
+   path: pipelineInventory
+   parameters:
+      host: tci-dev-pipelineetaandinvsummary
+      disk-quota: 256M
+      memory: 512M
+   build-parameters:
+      builder: grunt
+   requires:
+    - name: application-logs_pipelineInventory
+    - name: uaa_pipelineInventory
+    - name: pipelineInventory_node_api
+      group: destinations
+      properties:
+         name: core-node-backend
+         forwardAuthToken: true
+         timeout: 60000
+         url: '~{url}'
 
 resources:
-  - name: dest_pipelineInventory
-    parameters:
-       service-plan: lite
-       service: destination
-    type: org.cloudfoundry.managed-service
+ - name: application-logs_pipelineInventory
+   parameters:
+      service: application-logs
+      service-plan: lite
+   type: org.cloudfoundry.managed-service
 
-  - name: uaa_pipelineInventory
-    parameters:
-       service: xsuaa
-       service-plan: application
-       path: ./xs-security.json
-    type: org.cloudfoundry.managed-service
+ - name: uaa_pipelineInventory
+   parameters:
+      path: ./xs-security.json
+      service: xsuaa
+      service-plan: application
+   type: org.cloudfoundry.managed-service
 
-  - name: PIPELINE_INVENTORY_APIM_CUPS
-    type: org.cloudfoundry.existing-service
-    parameters:
+ - name: PIPELINE_INVENTORY_APIM_CUPS
+   type: org.cloudfoundry.existing-service
+   parameters:
       service-name: PIPELINE_INVENTORY_APIM_CUPS
-    properties:
-      odata-call-service-name: '${service-name}'
