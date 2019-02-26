@@ -163,7 +163,7 @@
 							<t:Column>
 								<t:multiLabels>
 									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center"/>
+									<Label text="" textAlign="Center"/>
 									<Label text="{i18n>TTLFleet} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
@@ -173,7 +173,7 @@
 							<t:Column>
 								<t:multiLabels>
 									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center"/>
+									<Label text="" textAlign="Center"/>
 									<Label text="{i18n>DealerElite} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>

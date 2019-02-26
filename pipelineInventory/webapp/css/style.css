@@ -134,6 +134,7 @@
 .TabFontStyle {
 	color:blue;
 	text-decoration: underline;
+	cursor:pointer;
 }
 
 /* CSS for filter notification */

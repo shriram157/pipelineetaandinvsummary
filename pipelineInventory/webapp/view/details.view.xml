@@ -53,11 +53,11 @@
 							</HBox>
 							<HBox>
 								<Label text="" class="sapUiSmallMargin"/>
-								<Button text="{i18n>ApplyFilters}" type="Default" press="onApplyFilterBtn">
+								<!--<Button text="{i18n>ApplyFilters}" type="Default" press="onApplyFilterBtn">
 									<layoutData>
 										<l:GridData span="L2 M12 S12"/>
 									</layoutData>
-								</Button>
+								</Button>-->
 							</HBox>
 						</f:content>
 					</f:SimpleForm>
