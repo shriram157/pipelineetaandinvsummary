@@ -338,12 +338,14 @@ sap.ui.define([
 			_that.getView().byId("tableMultiHeader").getColumns()[15].setHeaderSpan([2, 2, 1]);
 
 			_that.getView().byId("tableMultiHeader2").getColumns()[1].setHeaderSpan([6, 6, 1]);
-			_that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([7, 3, 1]);
+			_that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([7, 1, 1]);
+			_that.getView().byId("tableMultiHeader2").getColumns()[8].setHeaderSpan([7, 2, 1]);
 			_that.getView().byId("tableMultiHeader2").getColumns()[10].setHeaderSpan([7, 4, 1]);
 			_that.getView().byId("tableMultiHeader2").getColumns()[15].setHeaderSpan([2, 2, 1]);
 
 			_that.getView().byId("tableMultiHeader3").getColumns()[1].setHeaderSpan([6, 6, 1]);
-			_that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([7, 3, 1]);
+			_that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([7, 1, 1]);
+			_that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([7, 2, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[10].setHeaderSpan([7, 4, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[15].setHeaderSpan([2, 2, 1]);
 
@@ -777,7 +779,7 @@ sap.ui.define([
 			sap.ui.core.BusyIndicator.show();
 			var ModelYear = oModVal.getParameters("selectedItem").selectedItem.getKey();
 			
-			var url = _that.nodeJsUrl + "ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq "+DivUser+"&$orderby=ProductHierarchy asc";
+			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq "+DivUser+"&$orderby=ProductHierarchy asc";
 			console.log("Series:"+url)
 			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + ModelYear + "'";
 			$.ajax({

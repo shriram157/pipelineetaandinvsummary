@@ -52,7 +52,7 @@
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/VHVIN}"/>
 								<Label text="{i18n>ETA}"/>
 								<Text
-									text="{path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} From - {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'} To"/>
+									text="From {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} To {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
 								<Label text="{i18n>VehicleDeliveredDate}"/>
 								<Text text="{path:'VehicleDetailsJSON>/selectedCustomerData/DeliveryDate', formatter: '.formatDate'}"/>
 								<core:Title text="{i18n>AdditionalInformation}"/>
@@ -64,12 +64,12 @@
 								<Text text="{VehicleDetailsJSON>/selectedCustomerData/PLANTDESC}"/>
 								<Label text="{i18n>HoldVehicle}"/>
 								<Text text="Yes"/>
-								<Label text="{i18n>AccessoriesInstalled}" required="true"/>
+								<Label text="{i18n>AccessoriesInstalled}" required="false"/>
 								<Select forceSelection="false" selectedKey="" id="accessoryVal" items="{ path: 'VehicleDetailsJSON>/AcceessoryData'}">
 									<core:Item key="{VehicleDetailsJSON>AccessoryInstalled}" text="{VehicleDetailsJSON>AccessoryInstalled}"/>
 								</Select>
 								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/AccessoriesInstalled}"/>-->
-								<Label text="{i18n>DNCVehicle}" required="true"/>
+								<Label text="{i18n>DNCVehicle}" required="false"/>
 								<Select forceSelection="false" selectedKey="" id="DNCVal" items="{ path: 'VehicleDetailsJSON>/DNCData'}">
 									<core:Item key="{VehicleDetailsJSON>DNCVehicle}" text="{VehicleDetailsJSON>DNCVehicle}"/>
 								</Select>
