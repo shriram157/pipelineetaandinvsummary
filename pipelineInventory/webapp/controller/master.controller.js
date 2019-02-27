@@ -301,7 +301,9 @@ sap.ui.define([
 
 			_that.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 			_that.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
-			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + _that.ModelYear + "'";
+			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser +
+				"' &$orderby=ProductHierarchy asc";
+			//	var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + _that.ModelYear + "'";
 			$.ajax({
 				dataType: "json",
 				url: url,
@@ -310,7 +312,20 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
-						_that.fetchSeries(oModelData.d.results);
+						//	_that.fetchSeries(oModelData.d.results);
+
+						for (var i = 0; i < oModelData.d.results.length; i++) {
+							_that.oGlobalJSONModel.getData().seriesData.push({
+								"ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
+								"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN
+							});
+						}
+						_that.oGlobalJSONModel.getData().seriesData.unshift({
+							"ModelSeriesNo": "Please Select",
+							"TCISeriesDescriptionEN": "Please Select"
+						});
+						_that.oGlobalJSONModel.updateBindings(true);
+
 					} else {
 						sap.ui.core.BusyIndicator.hide();
 					}
@@ -782,7 +797,8 @@ sap.ui.define([
 			sap.ui.core.BusyIndicator.show();
 			var ModelYear = oModVal.getParameters("selectedItem").selectedItem.getKey();
 
-			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser +"' &$orderby=ProductHierarchy asc";
+			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser +
+				"' &$orderby=ProductHierarchy asc";
 			console.log("Series:" + url)
 				//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + ModelYear + "'";
 			$.ajax({
@@ -794,7 +810,19 @@ sap.ui.define([
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
 						//_that.oGlobalJSONModel.getData().seriesData push to this. remove fetch series function
-						_that.fetchSeries(oModelData.d.results);
+						//_that.fetchSeries(oModelData.d.results);
+						for (var i = 0; i < oModelData.d.results.length; i++) {
+							_that.oGlobalJSONModel.getData().seriesData.push({
+								"ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
+								"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN
+							});
+						}
+						_that.oGlobalJSONModel.getData().seriesData.unshift({
+							"ModelSeriesNo": "Please Select",
+							"TCISeriesDescriptionEN": "Please Select"
+						});
+						_that.oGlobalJSONModel.updateBindings(true);
+						//_that.oGlobalJSONModel.getData().seriesData.push(oModelData.d.results);
 					} else {
 						sap.ui.core.BusyIndicator.hide();
 					}
