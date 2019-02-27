@@ -3,7 +3,7 @@
 
 "use strict";
 
-module.exports = function () {
+module.exports = function (log) {
 	var express = require("express");
 	var request = require("request");
 	var xsenv = require("@sap/xsenv");
@@ -18,7 +18,7 @@ module.exports = function () {
 			name: apimServiceName
 		}
 	}));
-	//log.logMessage("debug", "Properties of APIM user-provided service '%s' : %s", apimServiceName, JSON.stringify(options));
+	log.logMessage("debug", "Properties of APIM user-provided service '%s' : %s", apimServiceName, JSON.stringify(options));
 
 	var xsuaaService = xsenv.getServices({
 		xsuaa: {
@@ -80,12 +80,6 @@ module.exports = function () {
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
 				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
 				"&$orderby=BusinessPartner asc";
-			console.log("bpReqUrl", bpReqUrl);
-
-			// bpReqUrl = url + "/API_BUSINESS_PARTNER/A_CustomerSalesArea?$filter=SalesOffice eq '" + bpZone +
-			// 	"'&$format=json&?sap-client=" + s4Client;
-
-			// TODO: will need to query for customer numbers, then call A_BusinessPartner to get actual BP information
 		}
 
 		// National user (TCI user)
@@ -93,10 +87,9 @@ module.exports = function () {
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
 				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
 				"&$orderby=BusinessPartner asc";
-			console.log("bpReqUrl", bpReqUrl);
 		}
 
-		//req.logMessage("debug", "BP URL: %s", bpReqUrl);
+		req.logMessage("debug", "BP URL: %s", bpReqUrl);
 		var bpReqHeaders = {
 			"APIKey": APIKey,
 			"Authorization": "Basic " + new Buffer(s4User + ":" + s4Password).toString("base64"),
@@ -109,7 +102,7 @@ module.exports = function () {
 			var toCustomerAttr1 = null;
 			var bpAttributes = null;
 
-			//log.logMessage("debug", "Response body from proxied BP call: %s", bpResBodyStr);
+			log.logMessage("debug", "Response body from proxied BP call: %s", bpResBodyStr);
 
 			if (!bpErr && bpRes.statusCode === 200) {
 				var bpResBody = JSON.parse(bpResBodyStr);
@@ -148,8 +141,11 @@ module.exports = function () {
 							return false;
 						}
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
-							if (customerSalesArea.results[i].SalesOffice== "1000"|| customerSalesArea.results[i].SalesOffice== "2000"||customerSalesArea.results[i].SalesOffice== "3000" ||customerSalesArea.results[i].SalesOffice== "4000"||customerSalesArea.results[i].SalesOffice== "5000"||customerSalesArea.results[i].SalesOffice== "7000"||customerSalesArea.results[i].SalesOffice=="9000") {
-							// if (bpZone) {
+							if (customerSalesArea.results[i].SalesOffice == "1000" || customerSalesArea.results[i].SalesOffice == "2000" ||
+								customerSalesArea.results[i].SalesOffice == "3000" || customerSalesArea.results[i].SalesOffice == "4000" ||
+								customerSalesArea.results[i].SalesOffice == "5000" || customerSalesArea.results[i].SalesOffice == "7000" ||
+								customerSalesArea.results[i].SalesOffice == "9000") {
+								// if (bpZone) {
 								if ((customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10")) {
 									resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
 								}
@@ -174,7 +170,7 @@ module.exports = function () {
 					try {
 						toCustomerAttr1 = bpResults[i].to_Customer.Attribute1;
 					} catch (e) {
-						//req.logMessage("warn", "No to_Customer.Attribute1 returned from BP.");
+						req.logMessage("info", "The Data is sent without Attribute value for the BP", bpResults[i].BusinessPartner);
 					}
 
 					// if (toCustomerAttr1 === "01") {
@@ -211,10 +207,10 @@ module.exports = function () {
 						resBody.attributes.push(bpAttributes);
 					}
 				}
-				//req.logMessage("debug", "Response body: %s", JSON.stringify(resBody));
+				req.logMessage("debug", "Response body: %s", JSON.stringify(resBody));
 				return res.type("application/json").status(200).send(resBody);
 			} else {
-				//req.logMessage("error", "Proxied BP call %s FAILED: %s", bpReqUrl, bpErr);
+				req.logMessage("error", "Proxied BP call %s FAILED: %s", bpReqUrl, bpErr);
 				return res.type("application/json").status(400).send(bpResBody);
 			}
 		});
@@ -225,8 +221,8 @@ module.exports = function () {
 		var scopes = req.authInfo.scopes;
 		var userAttributes = req.authInfo.userAttributes;
 
-		//req.logMessage("debug", "Scopes from JWT: %s", JSON.stringify(scopes));
-		//req.logMessage("debug", "User attributes from JWT: %s", JSON.stringify(userAttributes));
+		req.logMessage("debug", "Scopes from JWT: %s", JSON.stringify(scopes));
+		req.logMessage("debug", "User attributes from JWT: %s", JSON.stringify(userAttributes));
 
 		var role = "Unknown";
 		var manageVehicles = false;
@@ -247,22 +243,22 @@ module.exports = function () {
 			} else if (scopes[i] === xsAppName + ".View_Vehicle_Summary") {
 				viewVehicleSummary = true;
 			} else {
-				//req.logMessage("warn", "Unrecognized scope: %s", scopes[i]);
+				req.logMessage("warn", "Unrecognized scope: %s", scopes[i]);
 			}
 		}
 
-		//req.logMessage("debug", "manageVehicles: %s", manageVehicles);
-		//req.logMessage("debug", "manageVehicleConfigDetails: %s", manageVehicleConfigDetails);
-		//req.logMessage("debug", "updateVehicleDetails: %s", updateVehicleDetails);
-		//req.logMessage("debug", "viewVehicleDetails: %s", viewVehicleDetails);
-		//req.logMessage("debug", "viewVehicleSummary: %s", viewVehicleSummary);
+		req.logMessage("debug", "manageVehicles: %s", manageVehicles);
+		req.logMessage("debug", "manageVehicleConfigDetails: %s", manageVehicleConfigDetails);
+		req.logMessage("debug", "updateVehicleDetails: %s", updateVehicleDetails);
+		req.logMessage("debug", "viewVehicleDetails: %s", viewVehicleDetails);
+		req.logMessage("debug", "viewVehicleSummary: %s", viewVehicleSummary);
 
 		if (!manageVehicles && manageVehicleConfigDetails && updateVehicleDetails && viewVehicleDetails && viewVehicleSummary) {
 			role = "Dealer_User";
 		} else if (manageVehicles && !manageVehicleConfigDetails && !updateVehicleDetails && viewVehicleDetails && viewVehicleSummary) {
 			role = userAttributes.Zone ? "TCI_Zone_User" : "TCI_User";
 		}
-		//req.logMessage("debug", "role: %s", role);
+		req.logMessage("debug", "role: %s", role);
 
 		return res.type("application/json").status(200).send(JSON.stringify({
 			loggedUserType: [
