@@ -135,14 +135,17 @@ sap.ui.define([
 					_that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
 					_that.BusinessPartnerData.setSizeLimit(userAttributes.attributes.length);
 					_that.BusinessPartnerData.getData().SamlList = userAttributes.samlAttributes;
-
-					var aBusinessPartnerKey = userAttributes.sales.reduce(function (obj, hash) {
-						obj[hash.Customer] = true;
-						return obj;
-					}, {});
-					for (var i = 0; i < _that.BusinessPartnerData.getData().Dealers.length; i++) {
-						if (aBusinessPartnerKey[_that.BusinessPartnerData.getData().Dealers[i].BusinessPartnerKey])
-							_that.BusinessPartnerData.getData().DealerList.push(_that.BusinessPartnerData.getData().Dealers[i]);
+					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
+						_that.BusinessPartnerData.getData().DealerList = userAttributes.attributes;
+					} else {
+						var aBusinessPartnerKey = userAttributes.sales.reduce(function (obj, hash) {
+							obj[hash.Customer] = true;
+							return obj;
+						}, {});
+						for (var i = 0; i < _that.BusinessPartnerData.getData().Dealers.length; i++) {
+							if (aBusinessPartnerKey[_that.BusinessPartnerData.getData().Dealers[i].BusinessPartnerKey])
+								_that.BusinessPartnerData.getData().DealerList.push(_that.BusinessPartnerData.getData().Dealers[i]);
+						}
 					}
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 						_that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
@@ -775,13 +778,13 @@ sap.ui.define([
 			_that.getView().byId("ID_marktgIntDesc").getSelectedKey("Please Select");
 			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey("Please Select");
 			_that.getView().byId("ID_APXValue").getSelectedKey("Please Select");
-			
+
 			sap.ui.core.BusyIndicator.show();
 			var ModelYear = oModVal.getParameters("selectedItem").selectedItem.getKey();
-			
-			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq "+DivUser+"&$orderby=ProductHierarchy asc";
-			console.log("Series:"+url)
-			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + ModelYear + "'";
+
+			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser +"' &$orderby=ProductHierarchy asc";
+			console.log("Series:" + url)
+				//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + ModelYear + "'";
 			$.ajax({
 				dataType: "json",
 				url: url,
@@ -790,6 +793,7 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
+						//_that.oGlobalJSONModel.getData().seriesData push to this. remove fetch series function
 						_that.fetchSeries(oModelData.d.results);
 					} else {
 						sap.ui.core.BusyIndicator.hide();
