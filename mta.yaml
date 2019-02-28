@@ -8,17 +8,23 @@ modules:
    type: nodejs
    path: pipelineInventory_node
    parameters:
-     host: tci-dev-pipelineetaandinvsummary-node
-     disk-quota: 256MB
-     memory: 256MB
+      host: tci-dev-pipelineetaandinvsummary-node
+      disk-quota: 256M
+      memory: 256M
+   properties:
+      LOG_LEVEL: info
+      LOG_REFERER: true
+      LOG_REMOTE_USER: true
+      LOG_SENSITIVE_CONNECTION_DATA: true
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
    provides:
-     - name: pipelineInventory_node_api
-       properties:
-         url: '${default-url}'
+    - name: pipelineInventory_node_api
+      properties:
+         url: ${default-url}
    requires:
-     - name: application-logs_pipelineInventory
-     - name: uaa_pipelineInventory
-     - name: PIPELINE_INVENTORY_APIM_CUPS
+    - name: application-logs_pipelineInventory
+    - name: uaa_pipelineInventory
+    - name: PIPELINE_INVENTORY_APIM_CUPS
 
  - name: pipelineInventory
    type: html5
@@ -55,6 +61,6 @@ resources:
    type: org.cloudfoundry.managed-service
 
  - name: PIPELINE_INVENTORY_APIM_CUPS
-   type: org.cloudfoundry.existing-service
    parameters:
       service-name: PIPELINE_INVENTORY_APIM_CUPS
+   type: org.cloudfoundry.existing-service
