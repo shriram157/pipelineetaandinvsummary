@@ -8,7 +8,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (BaseController, ResourceModel, JSONModel, Filter, History, MessageBox) {
 	"use strict";
-	var _thatDT, clicks, num, numpre,sSelectedLocale;
+	var _thatDT, clicks, num, numpre, sSelectedLocale;
 	return BaseController.extend("pipelineInventory.controller.details", {
 		onInit: function () {
 			_thatDT = this;
@@ -181,6 +181,38 @@ sap.ui.define([
 			if (!_thatDT._oSettingsDialog) {
 				_thatDT._oSettingsDialog = sap.ui.xmlfragment("pipelineInventory.view.fragments.filterSettings", _thatDT);
 				_thatDT.getView().addDependent(_thatDT._oSettingsDialog);
+
+				function removeDuplicateValues(PropertyName, JSONModel, JSONModelName) {
+					var lookup = {};
+					var items = _thatDT.oVehicleDetailsJSON.getData().results;
+					var ModelArray = [];
+					for (var item, i = 0; item = items[i++];) {
+						var name = item[PropertyName];
+						if (!(name in lookup)) {
+							lookup[name] = 1;
+							var ModelObj = {};
+							if(JSONModelName == "FilterETAFromJSON"){
+								ModelObj.ETAFromText =  name.slice(0,4) +"-"+ name.slice(4,6)+"-"+name.slice(6,8);
+								ModelObj[PropertyName] = name;
+							}else if(JSONModelName == "FilterETAToJSON"){
+								ModelObj.ETAToText =  name.slice(0,4) +"-"+ name.slice(4,6)+"-"+name.slice(6,8);
+								ModelObj[PropertyName] = name;
+							}
+							ModelObj[PropertyName] = name;
+							ModelArray.push(ModelObj);
+						}
+					}
+					JSONModel.setData(ModelArray);
+					_thatDT.setModel(JSONModel, JSONModelName);
+				}
+				removeDuplicateValues("MODEL_DESC_EN", new sap.ui.model.json.JSONModel(), "FilterModelJSON");
+				removeDuplicateValues("SUFFIX_DESC_EN", new sap.ui.model.json.JSONModel(), "FilterSuffixJSON");
+				removeDuplicateValues("ZZORDERTYPE", new sap.ui.model.json.JSONModel(), "FilterOrderTypeJSON");
+				removeDuplicateValues("ZMMSTA", new sap.ui.model.json.JSONModel(), "FilterStatusJSON");
+				removeDuplicateValues("EXTCOL_DESC_EN", new sap.ui.model.json.JSONModel(), "FilterColourJSON");
+				removeDuplicateValues("ETAFrom", new sap.ui.model.json.JSONModel(), "FilterETAFromJSON");
+				removeDuplicateValues("ETATo", new sap.ui.model.json.JSONModel(), "FilterETAToJSON");
+
 				_thatDT.setModel(_thatDT.VehicleDetailsJSON, "VehicleDetailsJSON");
 			}
 			_thatDT._oSettingsDialog.open();
@@ -495,8 +527,8 @@ sap.ui.define([
 			row += '"Order Number",';
 			row += '"Order Type",';
 			row += '"Status",';
-			row += '"VIN",';
 			row += '"VTN",';
+			row += '"VIN",';
 			row += '"Model EN",';
 			row += '"Suffix EN",';
 			row += '"Colour EN",';
