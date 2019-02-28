@@ -163,6 +163,12 @@ sap.ui.define([
 				var sPath2 = oItem.getKey();
 				var sValue1 = oItem.getText();
 				var sValue2 = oItem.getText();
+				if(sPath2.indexOf("-") != -1){
+					sPath2 = oItem.getKey().split("-")[0];
+					sValue1 = oItem.getKey().split("-")[1];
+					sValue2 = oItem.getKey().split("-")[1];
+				}
+				
 				var oFilter = new Filter(sPath2, sOperator, sValue1, sValue2);
 				aFilters.push(oFilter);
 

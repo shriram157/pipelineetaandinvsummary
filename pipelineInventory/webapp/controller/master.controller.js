@@ -396,7 +396,7 @@ sap.ui.define([
 						_that.userType = "ZDU";
 					}
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
-					_that.userType = "ZDU";
+					_that.userType = "DDU";
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
 					if (SelectedDealerKey == "National All") {
 						_that.userType = "NNA";

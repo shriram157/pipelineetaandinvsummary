@@ -55,12 +55,12 @@
 			</ViewSettingsFilterItem>
 			<ViewSettingsFilterItem text="ETA From" key="ETAFrom" multiSelect="true" items="{FilterETAFromJSON>/}">
 				<items>
-					<ViewSettingsItem text="{FilterETAFromJSON>ETAFrom}" key="ETAFrom"/>
+					<ViewSettingsItem text="{FilterETAFromJSON>ETAFromText}" key="ETAFrom-{FilterETAFromJSON>ETAFrom}"/>
 				</items>
 			</ViewSettingsFilterItem>
 			<ViewSettingsFilterItem text="ETA To" key="ETATo" multiSelect="true" items="{FilterETAToJSON>/}">
 				<items>
-					<ViewSettingsItem text="{FilterETAToJSON>ETATo}" key="ETATo"/>
+					<ViewSettingsItem text="{FilterETAToJSON>ETAToText}" key="ETATo-{FilterETAToJSON>ETATo}"/>
 				</items>
 			</ViewSettingsFilterItem>
 		</filterItems>

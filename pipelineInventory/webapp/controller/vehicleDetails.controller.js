@@ -126,6 +126,7 @@ sap.ui.define([
 							type: "GET",
 							success: function (oRowData) {
 								console.log("CustomerData", oRowData);
+								oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5,10)+"-"+oRowData.d.KUNNR.split("-")[1]
 								_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 								_thatVD.oVehicleDetailsJSON.updateBindings(true);
 							},
@@ -151,10 +152,10 @@ sap.ui.define([
 							"DNCVehicle": ""
 						};
 						_thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
-							"DNCVehicle": "Do Not Call"
+							"DNCVehicle": "DNC Vehicle"
 						};
 						_thatVD.oVehicleDetailsJSON.getData().DNCData[2] = {
-							"DNCVehicle": "DNC Demo Loaner"
+							"DNCVehicle": "DNC Demo / Loaner Vehicle"
 						};
 						_thatVD.oVehicleDetailsJSON.updateBindings(true);
 						_thatVD.oVehicleDetailsJSON.refresh(true);
@@ -204,10 +205,10 @@ sap.ui.define([
 										"DNCVehicle": ""
 									};
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
-										"DNCVehicle": "Do Not Call"
+										"DNCVehicle": "DNC Vehicle"
 									};
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[2] = {
-										"DNCVehicle": "DNC Demo Loaner"
+										"DNCVehicle": "DNC Demo / Loaner Vehicle"
 									};
 
 									_thatVD.oVehicleDetailsJSON.updateBindings();
@@ -221,6 +222,7 @@ sap.ui.define([
 										type: "GET",
 										success: function (oRowData) {
 											console.log("CustomerData", oRowData);
+											oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5,10)+"-"+oRowData.d.KUNNR.split("-")[1]
 											_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 											_thatVD.oVehicleDetailsJSON.updateBindings(true);
 										},
@@ -280,6 +282,7 @@ sap.ui.define([
 				type: "GET",
 				success: function (oRowData) {
 					console.log("CustomerData", oRowData);
+					oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5,10)+"-"+oRowData.d.KUNNR.split("-")[1]
 					_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 					_thatVD.oVehicleDetailsJSON.updateBindings(true);
 				},
