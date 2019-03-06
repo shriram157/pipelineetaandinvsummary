@@ -242,15 +242,18 @@ module.exports = function (appContext) {
 		tracer.debug("User attributes from JWT: %s", JSON.stringify(userAttributes));
 
 		var role = "Unknown";
-		var manageVehicles = false;
+		var assignVehicles = false;
+		var dropShipVehicles = false;
 		var manageVehicleConfigDetails = false;
 		var updateVehicleDetails = false;
 		var viewVehicleDetails = false;
 		var viewVehicleSummary = false;
 
 		for (var i = 0; i < scopes.length; i++) {
-			if (scopes[i] === xsAppName + ".Manage_Vehicles") {
-				manageVehicles = true;
+			if (scopes[i] === xsAppName + ".Assign_Vehicles") {
+				assignVehicles = true;
+			} else if (scopes[i] === xsAppName + ".Drop_Ship_Vehicles") {
+				dropShipVehicles = true;
 			} else if (scopes[i] === xsAppName + ".Manage_Vehicle_Config_Details") {
 				manageVehicleConfigDetails = true;
 			} else if (scopes[i] === xsAppName + ".Update_Vehicle_Details") {
@@ -264,17 +267,23 @@ module.exports = function (appContext) {
 			}
 		}
 
-		var scopeLogMessage = "manageVehicles: " + manageVehicles + "\n";
+		var scopeLogMessage = "assignVehicles: " + assignVehicles + "\n";
+		scopeLogMessage += "dropShipVehicles: " + dropShipVehicles + "\n";
 		scopeLogMessage += "manageVehicleConfigDetails: " + manageVehicleConfigDetails + "\n";
 		scopeLogMessage += "updateVehicleDetails: " + updateVehicleDetails + "\n";
 		scopeLogMessage += "viewVehicleDetails: " + viewVehicleDetails + "\n";
 		scopeLogMessage += "viewVehicleSummary: " + viewVehicleSummary + "\n";
 		tracer.debug(scopeLogMessage);
 
-		if (!manageVehicles && manageVehicleConfigDetails && updateVehicleDetails && viewVehicleDetails && viewVehicleSummary) {
+		if (!assignVehicles && !dropShipVehicles && manageVehicleConfigDetails && updateVehicleDetails &&
+			viewVehicleDetails && viewVehicleSummary) {
 			role = "Dealer_User";
-		} else if (manageVehicles && !manageVehicleConfigDetails && !updateVehicleDetails && viewVehicleDetails && viewVehicleSummary) {
-			role = userAttributes.Zone ? "TCI_Zone_User" : "TCI_User";
+		} else if (assignVehicles && dropShipVehicles && !manageVehicleConfigDetails && !updateVehicleDetails &&
+			viewVehicleDetails && viewVehicleSummary) {
+			role = userAttributes.Zone ? "TCI_Zone_Admin" : "TCI_User";
+		} else if (assignVehicles && !dropShipVehicles && !manageVehicleConfigDetails && !updateVehicleDetails &&
+			viewVehicleDetails && viewVehicleSummary) {
+			role = "TCI_Zone_User";
 		}
 		tracer.debug("role: %s", role);
 

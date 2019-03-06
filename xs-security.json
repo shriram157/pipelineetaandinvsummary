@@ -3,8 +3,11 @@
 	"tenant-mode": "dedicated",
 	"description": "Security profile of called application",
 	"scopes": [{
-		"name": "$XSAPPNAME.Manage_Vehicles",
-		"description": "Manage vehicles"
+		"name": "$XSAPPNAME.Assign_Vehicles",
+		"description": "Assign vehicles"
+	}, {
+		"name": "$XSAPPNAME.Drop_Ship_Vehicles",
+		"description": "Drop ship vehicles"
 	}, {
 		"name": "$XSAPPNAME.Manage_Vehicle_Config_Details",
 		"description": "Manage vehicle configuration details"
@@ -53,7 +56,8 @@
 		"name": "TCI_User",
 		"description": "TCI user",
 		"scope-references": [
-			"$XSAPPNAME.Manage_Vehicles",
+			"$XSAPPNAME.Assign_Vehicles",
+			"$XSAPPNAME.Drop_Ship_Vehicles",
 			"$XSAPPNAME.View_Vehicle_Details",
 			"$XSAPPNAME.View_Vehicle_Summary"
 		],
@@ -62,10 +66,24 @@
 			"UserType"
 		]
 	}, {
+		"name": "TCI_Zone_Admin",
+		"description": "TCI zone admin",
+		"scope-references": [
+			"$XSAPPNAME.Assign_Vehicles",
+			"$XSAPPNAME.Drop_Ship_Vehicles",
+			"$XSAPPNAME.View_Vehicle_Details",
+			"$XSAPPNAME.View_Vehicle_Summary"
+		],
+		"attribute-references": [
+			"Language",
+			"UserType",
+			"Zone"
+		]
+	}, {
 		"name": "TCI_Zone_User",
 		"description": "TCI zone user",
 		"scope-references": [
-			"$XSAPPNAME.Manage_Vehicles",
+			"$XSAPPNAME.Assign_Vehicles",
 			"$XSAPPNAME.View_Vehicle_Details",
 			"$XSAPPNAME.View_Vehicle_Summary"
 		],
