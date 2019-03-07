@@ -2,8 +2,9 @@ sap.ui.define([
 	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
 	'sap/ui/model/json/JSONModel',
-	'sap/ui/model/resource/ResourceModel'
-], function (BaseController, JSONModel, ResourceModel) {
+	'sap/ui/model/resource/ResourceModel',
+	"sap/ui/core/routing/History"
+], function (BaseController, JSONModel, ResourceModel,History) {
 	"use strict";
 	var _thatSD, SelectedDealerS,sSelectedLocale;
 	return BaseController.extend("pipelineInventory.controller.shipToDealer", {
@@ -177,6 +178,15 @@ sap.ui.define([
 				_thatSD.getRouter().navTo("changeHistory", {
 					SelectedDealer: SelectedDealerS
 				});
+			}else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("Back")) {
+				var oHistory = History.getInstance();
+				var sPreviousHash = oHistory.getPreviousHash();
+				if (sPreviousHash !== undefined) {
+					window.history.go(-1);
+				}else{
+						var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatSD);
+						oRouter.navTo("details");
+				} 
 			}
 		},
 

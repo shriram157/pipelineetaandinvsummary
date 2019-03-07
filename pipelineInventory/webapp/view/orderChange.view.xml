@@ -20,6 +20,12 @@
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
+					<ToolbarSpacer>
+						<layoutData>
+							<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+						</layoutData>
+					</ToolbarSpacer>
+					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="NavigateBack"/>
 				</tnt:ToolHeader>
 				<content>
 					<VBox class="sapUiSmallMargin">
@@ -34,7 +40,8 @@
 								<Label text="{i18n>Model}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Model} {VehicleDetailsJSON>/selectedVehicleData/0/MODEL_DESC_EN}"/>
 								<Label text="{i18n>Suffix}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN} / {VehicleDetailsJSON>/selectedVehicleData/0/INTCOL_DESC_EN}"/>
+								<Text
+									text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN} / {VehicleDetailsJSON>/selectedVehicleData/0/INTCOL_DESC_EN}"/>
 								<Label text="{i18n>APX}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>
 								<Label text="{i18n>Colour}"/>

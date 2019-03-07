@@ -1,5 +1,6 @@
 <mvc:View controllerName="pipelineInventory.controller.master" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:t="sap.ui.table" displayBlock="true" xmlns:tnt="sap.tnt" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	xmlns:t="sap.ui.table" displayBlock="true" xmlns:tnt="sap.tnt" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form">
 	<App id="idAppControl">
 		<pages>
 			<Page showNavButton="false" class="ETAMaster stylePageSection">
@@ -22,21 +23,25 @@
 				</tnt:ToolHeader>
 				<content>
 					<Label text="{i18n>PageTitle}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
-					<HBox>
-						<Label text="{i18n>Dealer}" design="Bold" class="styleFontSizeSmall sapUiSmallMargin" required="required"/>
-						<ComboBox showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
-							items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartnerName' } }">
-							<core:ListItem key="{BusinessDataModel>BusinessPartnerType}" text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}"/>
-						</ComboBox>
-					</HBox>
+					<f:SimpleForm id="dealerformContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="1" adjustLabelSpan="true" emptySpanL="0"
+						emptySpanM="3" columnsL="3" columnsM="3" class="styleForms">
+						<f:content>
+							<Label text="{i18n>Dealer}" design="Bold" required="required"/>
+							<ComboBox showSecondaryValues="true" width="25em" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
+								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartnerName' } }">
+								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}"
+									text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}"/>
+							</ComboBox>
+						</f:content>
+					</f:SimpleForm>
 					<VBox class="sapUiSmallMargin stylePosition">
 						<f:SimpleForm id="formContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false" emptySpanL="0"
 							emptySpanM="0" columnsL="2" columnsM="2" class="styleForms">
 							<f:content>
 								<core:Title text=""/>
 								<Label text="{i18n>ModelYear}"/>
-								<ComboBox id="ID_modelYearPicker" selectionChange="onModelYearChange" change="onModelYearInput" showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey=""
-									items="{ path: 'ModelYearModel>/ModelYearList', sorter: { path: 'ModelYearList' } }">
+								<ComboBox id="ID_modelYearPicker" selectionChange="onModelYearChange" change="onModelYearInput" showSecondaryValues="true"
+									filterSecondaryValues="true" value="" selectedKey="" items="{ path: 'ModelYearModel>/ModelYearList', sorter: { path: 'ModelYearList' } }">
 									<core:ListItem key="{ModelYearModel>ModelYear}" text="{ModelYearModel>ModelYear}"/>
 								</ComboBox>
 								<Label text="{i18n>Series}"/>
@@ -49,7 +54,8 @@
 								</Select>
 								<Label text="{i18n>Suffix}"/>
 								<Select id="ID_marktgIntDesc" forceSelection="true" items="{GlobalJSONModel>/suffixData}" change="onSuffixChange">
-									<core:Item key="{GlobalJSONModel>Suffix}" text="{GlobalJSONModel>Suffix} - {GlobalJSONModel>SuffixDescriptionEN} / {GlobalJSONModel>mrktg_int_desc_en}"/>
+									<core:Item key="{GlobalJSONModel>Suffix}"
+										text="{GlobalJSONModel>Suffix} - {GlobalJSONModel>SuffixDescriptionEN} / {GlobalJSONModel>mrktg_int_desc_en}"/>
 									<!--/ {GlobalJSONModel>MarktgIntDescEN}-->
 								</Select>
 								<core:Title text=""/>
@@ -63,7 +69,8 @@
 									<core:Item key="{GlobalJSONModel>APX}" text="{GlobalJSONModel>APX}"/>
 								</Select>
 								<Label text="{i18n>ETA}"/>
-								<DatePicker id="id_ETADate" value="" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy" change="handleETAChange" class="sapUiSmallMarginBottom">
+								<DatePicker id="id_ETADate" value="" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy" change="handleETAChange"
+									class="sapUiSmallMarginBottom">
 									<layoutData>
 										<l:GridData span="XL2 L4 M4 S4"/>
 									</layoutData>
@@ -73,8 +80,8 @@
 						</f:SimpleForm>
 						<Button text="{i18n>ApplyFilters}" type="Default" class="styleBtnPositioned" press="applyFiltersBtn"/>
 					</VBox>
-					<t:Table id="tableMultiHeader" selectionMode="None" rows="{GlobalJSONModel>/ETAResults}" visibleRowCount="6"
-						class="styleMultiHeaderTable" cellClick="onTable1Press">
+					<t:Table id="tableMultiHeader" selectionMode="None" rows="{GlobalJSONModel>/ETAResults}" visibleRowCount="6" class="styleMultiHeaderTable"
+						cellClick="onTable1Press">
 						<t:extension>
 							<Toolbar>
 								<Title id="title0" text="{i18n>PipelineETASummary}"/>
@@ -117,7 +124,7 @@
 									<Label text="{i18n>OpenStock} " tooltip="{i18n>OpenStock} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
-									<Text text="{GlobalJSONModel>Openstock}"  textAlign="Center" class="TabFontStyle"/>
+									<Text text="{GlobalJSONModel>Openstock}" textAlign="Center" class="TabFontStyle"/>
 								</t:template>
 							</t:Column>
 							<t:Column>
@@ -127,7 +134,7 @@
 									<Label text="{i18n>DNCStock} " tooltip="{i18n>DNCStock} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
-									<Text text="{GlobalJSONModel>Dncstock}" textAlign="Center"  class="TabFontStyle"/>
+									<Text text="{GlobalJSONModel>Dncstock}" textAlign="Center" class="TabFontStyle"/>
 								</t:template>
 							</t:Column>
 							<t:Column>
@@ -153,7 +160,7 @@
 							<t:Column>
 								<t:multiLabels sortProperty="Retail">
 									<Label text="Priority Units" textAlign="Center" width="100%"/>
-									<Label text="Retail" textAlign="Center" width="100%" />
+									<Label text="Retail" textAlign="Center" width="100%"/>
 									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
@@ -332,7 +339,7 @@
 							<t:Column>
 								<t:multiLabels sortProperty="Retail">
 									<Label text="Priority Units" textAlign="Center" width="100%"/>
-									<Label text="Retail" textAlign="Center" width="100%" />
+									<Label text="Retail" textAlign="Center" width="100%"/>
 									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
@@ -511,7 +518,7 @@
 							<t:Column>
 								<t:multiLabels sortProperty="Retail">
 									<Label text="Priority Units" textAlign="Center" width="100%"/>
-									<Label text="Retail" textAlign="Center" width="100%" />
+									<Label text="Retail" textAlign="Center" width="100%"/>
 									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
@@ -601,7 +608,7 @@
 								<t:multiLabels>
 									<Label text="References"/>
 									<Label text=""/>
-									<Label text="Drop Ship" tooltip="Drop Ship" textAlign="Center"  wrapping="true"/>
+									<Label text="Drop Ship" tooltip="Drop Ship" textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
 									<Text text="{GlobalJSONModel>Dropship}" textAlign="Center" class="TabFontStyle" width="100%"/>

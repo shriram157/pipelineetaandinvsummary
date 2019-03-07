@@ -20,6 +20,12 @@
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
+					<ToolbarSpacer>
+						<layoutData>
+							<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+						</layoutData>
+					</ToolbarSpacer>
+					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
 				<content>
 					<Label text="{i18n>VehicleAssignment}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
@@ -28,7 +34,8 @@
 							<Label text="{i18n>AssigningDealer}" design="Bold" class="styleFontSizeSmall sapUiSmallMargin" required="required"/>
 							<ComboBox showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
 								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
-								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}" text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}"/>
+								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}"
+									text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}"/>
 							</ComboBox>
 						</HBox>
 						<ToolbarSpacer/>

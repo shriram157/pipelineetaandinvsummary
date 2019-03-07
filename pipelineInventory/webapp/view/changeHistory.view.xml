@@ -20,6 +20,12 @@
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<!--<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>-->
+					<ToolbarSpacer>
+						<layoutData>
+							<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+						</layoutData>
+					</ToolbarSpacer>
+					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
 				<content>
 					<Label text="{i18n>ConfigurationChangeHistory}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
@@ -28,13 +34,13 @@
 							<Label text="{i18n>Dealer}" design="Bold" class="styleFontSizeSmall sapUiSmallMargin" required="required"/>
 							<ComboBox showSecondaryValues="true" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
 								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
-								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}" text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}"/>
+								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}"
+									text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}"/>
 							</ComboBox>
 						</HBox>
 						<ToolbarSpacer/>
-						<Button text="{i18n>Submit}" type="Accept" enabled="{LocalModel>/enablesubmitBtn}" />
+						<Button text="{i18n>Submit}" type="Accept" enabled="{LocalModel>/enablesubmitBtn}"/>
 					</OverflowToolbar>
-					
 					<Table items="{ChangeHistoryModel>/results}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="5"
 						growingScrollToLoad="false">
 						<!--<headerToolbar>-->
