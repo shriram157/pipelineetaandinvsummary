@@ -3,12 +3,13 @@
 
 "use strict";
 
-module.exports = function (log) {
+module.exports = function (appContext) {
 	var express = require("express");
 	var request = require("request");
 	var xsenv = require("@sap/xsenv");
 
 	var router = express.Router();
+	var routerTracer = appContext.createLogContext().getTracer(__filename);
 
 	// TODO: provide service name via environment variable instead
 	var apimServiceName = "PIPELINE_INVENTORY_APIM_CUPS";
@@ -18,7 +19,7 @@ module.exports = function (log) {
 			name: apimServiceName
 		}
 	}));
-	log.logMessage("debug", "Properties of APIM user-provided service '%s' : %s", apimServiceName, JSON.stringify(options));
+	routerTracer.debug("Properties of APIM user-provided service '%s' : %s", apimServiceName, JSON.stringify(options));
 
 	var xsuaaService = xsenv.getServices({
 		xsuaa: {
@@ -33,8 +34,10 @@ module.exports = function (log) {
 	var s4Password = options.apim.password;
 
 	router.get("/attributes", (req, res) => {
+		var logger = req.loggingContext.getLogger("/Application/Route/UserDetails/Attributes");
+		var tracer = req.loggingContext.getTracer(__filename);
 		var userAttributes = req.authInfo.userAttributes;
-		//req.logMessage("debug", "User attributes from JWT: %s", JSON.stringify(userAttributes));
+		tracer.debug("User attributes from JWT: %s", JSON.stringify(userAttributes));
 
 		var resBody = {
 			"attributes": [],
@@ -73,7 +76,7 @@ module.exports = function (log) {
 			} else if (zone === "7") {
 				bpZone = "9000";
 			} else {
-				//req.logMessage("error", "Unrecognized zone ID: %s", zone);
+				logger.warning("Unrecognized zone ID: %s", zone);
 				return res.type("plain/text").status(500).send("Unknown zone ID.");
 			}
 
@@ -89,7 +92,7 @@ module.exports = function (log) {
 				"&$orderby=BusinessPartner asc";
 		}
 
-		req.logMessage("debug", "BP URL: %s", bpReqUrl);
+		tracer.debug("BP URL: %s", bpReqUrl);
 		var bpReqHeaders = {
 			"APIKey": APIKey,
 			"Authorization": "Basic " + new Buffer(s4User + ":" + s4Password).toString("base64"),
@@ -102,7 +105,7 @@ module.exports = function (log) {
 			var toCustomerAttr1 = null;
 			var bpAttributes = null;
 
-			log.logMessage("debug", "Response body from proxied BP call: %s", bpResBodyStr);
+			tracer.debug("Response body from proxied BP call: %s", bpResBodyStr);
 
 			if (!bpErr && bpRes.statusCode === 200) {
 				var bpResBody = JSON.parse(bpResBodyStr);
@@ -207,22 +210,24 @@ module.exports = function (log) {
 						resBody.attributes.push(bpAttributes);
 					}
 				}
-				req.logMessage("debug", "Response body: %s", JSON.stringify(resBody));
+				tracer.debug("Response body: %s", JSON.stringify(resBody));
 				return res.type("application/json").status(200).send(resBody);
 			} else {
-				req.logMessage("error", "Proxied BP call %s FAILED: %s", bpReqUrl, bpErr);
+				logger.error("Proxied BP call %s FAILED: %s", bpReqUrl, bpErr);
 				return res.type("application/json").status(400).send(bpResBody);
 			}
 		});
 	});
 
 	router.get("/currentScopesForUser", (req, res) => {
+		var logger = req.loggingContext.getLogger("/Application/Route/UserDetails/CurrentScopesForUser");
+		var tracer = req.loggingContext.getTracer(__filename);
 		var xsAppName = xsuaaService.xsappname;
 		var scopes = req.authInfo.scopes;
 		var userAttributes = req.authInfo.userAttributes;
 
-		req.logMessage("debug", "Scopes from JWT: %s", JSON.stringify(scopes));
-		req.logMessage("debug", "User attributes from JWT: %s", JSON.stringify(userAttributes));
+		tracer.debug("Scopes from JWT: %s", JSON.stringify(scopes));
+		tracer.debug("User attributes from JWT: %s", JSON.stringify(userAttributes));
 
 		var role = "Unknown";
 		var manageVehicles = false;
@@ -247,18 +252,19 @@ module.exports = function (log) {
 			}
 		}
 
-		req.logMessage("debug", "manageVehicles: %s", manageVehicles);
-		req.logMessage("debug", "manageVehicleConfigDetails: %s", manageVehicleConfigDetails);
-		req.logMessage("debug", "updateVehicleDetails: %s", updateVehicleDetails);
-		req.logMessage("debug", "viewVehicleDetails: %s", viewVehicleDetails);
-		req.logMessage("debug", "viewVehicleSummary: %s", viewVehicleSummary);
+		var scopeLogMessage = "manageVehicles: " + manageVehicles + "\n";
+		scopeLogMessage += "manageVehicleConfigDetails: " + manageVehicleConfigDetails + "\n";
+		scopeLogMessage += "updateVehicleDetails: " + updateVehicleDetails + "\n";
+		scopeLogMessage += "viewVehicleDetails: " + viewVehicleDetails + "\n";
+		scopeLogMessage += "viewVehicleSummary: " + viewVehicleSummary + "\n";
+		tracer.debug(scopeLogMessage);
 
 		if (!manageVehicles && manageVehicleConfigDetails && updateVehicleDetails && viewVehicleDetails && viewVehicleSummary) {
 			role = "Dealer_User";
 		} else if (manageVehicles && !manageVehicleConfigDetails && !updateVehicleDetails && viewVehicleDetails && viewVehicleSummary) {
 			role = userAttributes.Zone ? "TCI_Zone_User" : "TCI_User";
 		}
-		req.logMessage("debug", "role: %s", role);
+		tracer.debug("role: %s", role);
 
 		return res.type("application/json").status(200).send(JSON.stringify({
 			loggedUserType: [
