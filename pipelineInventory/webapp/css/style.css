@@ -135,6 +135,7 @@
 	color:blue;
 	text-decoration: underline;
 	cursor:pointer;
+	width:100%;
 }
 
 /* CSS for filter notification */

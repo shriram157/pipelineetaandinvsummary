@@ -20,10 +20,17 @@
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
+					<ToolbarSpacer>
+						<layoutData>
+							<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
+						</layoutData>
+					</ToolbarSpacer>
+					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
 				<content>
 					<Label text="{i18n>DropShipStatus}" design="Bold" class="styleFontSize sapUiSmallMargin sapUiSmallPadding"/>
-					<Table items="{DropResponseModel>/responseResults}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="7" growingScrollToLoad="false">
+					<Table items="{DropResponseModel>/responseResults}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="7"
+						growingScrollToLoad="false">
 						<columns>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 								<Text text="{i18n>OrderNumber}"/>

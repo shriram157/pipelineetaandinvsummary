@@ -3,7 +3,8 @@ sap.ui.define([
 	'pipelineInventory/controller/BaseController',
 	'sap/ui/model/resource/ResourceModel',
 	'sap/ui/model/json/JSONModel',
-], function (BaseController, ResourceModel, JSONModel) {
+	"sap/ui/core/routing/History"
+], function (BaseController, ResourceModel, JSONModel,History) {
 	"use strict";
 	var _thatAVS,sSelectedLocale;
 	return BaseController.extend("pipelineInventory.controller.assignVehiclesStatus", {
@@ -75,6 +76,12 @@ sap.ui.define([
 				_thatAVS.getRouter().navTo("vehicleDetailsNodata");
 			} else if (_oSelectedScreen == _thatAVS.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
 				_thatAVS.getRouter().navTo("changeHistory");
+			} else if (_oSelectedScreen == _thatAVS.oI18nModel.getResourceBundle().getText("Back")) {
+				var oHistory = History.getInstance();
+				var sPreviousHash = oHistory.getPreviousHash();
+				if (sPreviousHash !== undefined) {
+					window.history.go(-1);
+				}
 			}
 		}
 	});

@@ -222,7 +222,7 @@ sap.ui.define([
 										type: "GET",
 										success: function (oRowData) {
 											console.log("CustomerData", oRowData);
-											oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5,10)+"-"+oRowData.d.KUNNR.split("-")[1]
+											oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5,10)+"-"+oRowData.d.KUNNR.split("-")[1];
 											_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 											_thatVD.oVehicleDetailsJSON.updateBindings(true);
 										},
