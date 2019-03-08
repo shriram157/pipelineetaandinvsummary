@@ -58,7 +58,7 @@ sap.ui.define([
 				enableDropShipBtn: false,
 				enableAssignVehicleBtn: false
 			});
-			/*Logic for logo change depending upon Toyota and Lexus user*/
+			/*Logic for logo change depending upon Toyota and Lexus users*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
 				Division = window.location.search.match(/Division=([^&]*)/i)[1];
