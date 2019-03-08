@@ -4,9 +4,9 @@ sap.ui.define([
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/resource/ResourceModel',
 	"sap/ui/core/routing/History"
-], function (BaseController, JSONModel, ResourceModel,History) {
+], function (BaseController, JSONModel, ResourceModel, History) {
 	"use strict";
-	var _thatCH, SelectedDealerCH,sSelectedLocale;
+	var _thatCH, SelectedDealerCH, sSelectedLocale,Division;
 	return BaseController.extend("pipelineInventory.controller.changeHistory", {
 
 		onInit: function () {
@@ -61,6 +61,20 @@ sap.ui.define([
 			});
 			_thatCH.getView().setModel(_thatCH._oViewModel, "LocalModel");
 
+			/*Logic for logo change depending upon Toyota and Lexus user*/
+			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+			if (isDivisionSent) {
+				Division = window.location.search.match(/Division=([^&]*)/i)[1];
+				var currentImageSource;
+				if (Division == '10') // set the toyoto logo
+				{
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
+				} else { // set the lexus logo
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/Lexus.png");
+				}
+			}
 			_thatCH.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatCH._oChangeHistoryRoute, _thatCH);
 			// var err = JSON.parse(oError.response.body);
 			// sap.m.MessageBox.error(err.error.message.value);
@@ -197,13 +211,13 @@ sap.ui.define([
 				_thatCH.getRouter().navTo("Routemaster");
 			} else if (_oSelectedScreen == _thatCH.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
 				_thatCH.getRouter().navTo("vehicleDetailsNodata");
-			}else if (_oSelectedScreen == _thatCH.oI18nModel.getResourceBundle().getText("Back")) {
+			} else if (_oSelectedScreen == _thatCH.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();
 				var sPreviousHash = oHistory.getPreviousHash();
 				if (sPreviousHash !== undefined) {
 					window.history.go(-1);
-				}else{
-						_thatCH.getRouter().navTo("vehicleDetailsNodata");
+				} else {
+					_thatCH.getRouter().navTo("vehicleDetailsNodata");
 				}
 			}
 		}

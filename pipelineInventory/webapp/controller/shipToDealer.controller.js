@@ -6,7 +6,7 @@ sap.ui.define([
 	"sap/ui/core/routing/History"
 ], function (BaseController, JSONModel, ResourceModel,History) {
 	"use strict";
-	var _thatSD, SelectedDealerS,sSelectedLocale;
+	var _thatSD, SelectedDealerS,sSelectedLocale,Division;
 	return BaseController.extend("pipelineInventory.controller.shipToDealer", {
 
 		onInit: function () {
@@ -61,6 +61,21 @@ sap.ui.define([
 				enableResubmitBtn: false
 			});
 			_thatSD.getView().setModel(_thatSD._oViewModel, "LocalModel");
+			
+			/*Logic for logo change depending upon Toyota and Lexus user*/
+			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+			if (isDivisionSent) {
+				Division = window.location.search.match(/Division=([^&]*)/i)[1];
+				var currentImageSource;
+				if (Division == '10') // set the toyoto logo
+				{
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
+				} else { // set the lexus logo
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/Lexus.png");
+				}
+			}
 
 			_thatSD.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatSD._oShipToDealerRoute, _thatSD);
 		},

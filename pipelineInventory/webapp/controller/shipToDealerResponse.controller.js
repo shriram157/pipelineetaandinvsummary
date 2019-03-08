@@ -4,9 +4,9 @@ sap.ui.define([
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/resource/ResourceModel',
 	"sap/ui/core/routing/History"
-], function (BaseController, JSONModel, ResourceModel,History) {
+], function (BaseController, JSONModel, ResourceModel, History) {
 	"use strict";
-	var _thatSDR,sSelectedLocale;
+	var _thatSDR, sSelectedLocale,Division;
 	return BaseController.extend("pipelineInventory.controller.shipToDealerResponse", {
 
 		onInit: function () {
@@ -37,12 +37,27 @@ sap.ui.define([
 				this.getView().setModel(_thatSDR.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
 			}
-			
+
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
 				delay: 0
 			});
 			_thatSDR.getView().setModel(_oViewModel, "LocalSDRModel");
+			/*Logic for logo change depending upon Toyota and Lexus user*/
+			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+			if (isDivisionSent) {
+				Division = window.location.search.match(/Division=([^&]*)/i)[1];
+				var currentImageSource;
+				if (Division == '10') // set the toyoto logo
+				{
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
+				} else { // set the lexus logo
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/Lexus.png");
+				}
+			}
+
 			// _thatSDR.getView().setModel(sap.ui.getCore().getModel("DropShipDataModel"), "DropShipDataModel");
 			_thatSDR.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatSDR._oShipToDealerResponseRoute, _thatSDR);
 		},
@@ -51,17 +66,17 @@ sap.ui.define([
 			_thatSDR.getView().setBusy(false);
 			_thatSDR.oDropResponseModel = new sap.ui.model.json.JSONModel();
 			_thatSDR.getView().setModel(_thatSDR.oDropResponseModel, "DropResponseModel");
-			
+
 			if (oEvt.getParameters().arguments.data != undefined) {
 				var VUIdata = JSON.parse(oEvt.getParameters().arguments.data);
 				_thatSDR.oDropResponseModel.getData().responseResults = [];
 				for (var n = 0; n < VUIdata.length; n++) {
-						_thatSDR.oDropResponseModel.getData().responseResults.push(VUIdata[n]);
-						_thatSDR.oDropResponseModel.updateBindings(true);
+					_thatSDR.oDropResponseModel.getData().responseResults.push(VUIdata[n]);
+					_thatSDR.oDropResponseModel.updateBindings(true);
 				}
 			}
 		},
-		
+
 		onNavigateToVL: function (oNavEvent) {
 			this.getRouter().navTo("vehicleDetails", {
 				VCData: oNavEvent.getSource().getModel("DropResponseModel").getProperty(oNavEvent.getSource().getBindingContext(
@@ -78,12 +93,12 @@ sap.ui.define([
 				_thatSDR.getRouter().navTo("vehicleDetailsNodata");
 			} else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
 				_thatSDR.getRouter().navTo("changeHistory");
-			}else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("Back")) {
+			} else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();
 				var sPreviousHash = oHistory.getPreviousHash();
 				if (sPreviousHash !== undefined) {
 					window.history.go(-1);
-				}else{
+				} else {
 					_thatSDR.getRouter().navTo("vehicleDetailsNodata");
 				}
 			}

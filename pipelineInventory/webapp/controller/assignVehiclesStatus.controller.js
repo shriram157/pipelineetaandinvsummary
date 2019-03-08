@@ -4,11 +4,11 @@ sap.ui.define([
 	'sap/ui/model/resource/ResourceModel',
 	'sap/ui/model/json/JSONModel',
 	"sap/ui/core/routing/History"
-], function (BaseController, ResourceModel, JSONModel,History) {
+], function (BaseController, ResourceModel, JSONModel, History) {
 	"use strict";
-	var _thatAVS,sSelectedLocale;
+	var _thatAVS, sSelectedLocale,Division;
 	return BaseController.extend("pipelineInventory.controller.assignVehiclesStatus", {
-		
+
 		onInit: function () {
 			_thatAVS = this;
 			_thatAVS.oI18nModel = new sap.ui.model.resource.ResourceModel({
@@ -43,6 +43,21 @@ sap.ui.define([
 				delay: 0
 			});
 			_thatAVS.getView().setModel(_oViewModel, "LocalAVSModel");
+			/*Logic for logo change depending upon Toyota and Lexus user*/
+			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+			if (isDivisionSent) {
+				Division = window.location.search.match(/Division=([^&]*)/i)[1];
+				var currentImageSource;
+				if (Division == '10') // set the toyoto logo
+				{
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
+				} else { // set the lexus logo
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/Lexus.png");
+				}
+			}
+
 			_thatAVS.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatAVS._oAssignVehicleResponseRoute, _thatAVS);
 		},
 
