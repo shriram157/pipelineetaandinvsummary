@@ -1,3 +1,5 @@
+var selectedDDValues = [],
+	seriesModel = "";
 sap.ui.define([
 	'sap/ui/core/mvc/Controller',
 	'sap/ui/model/json/JSONModel',
@@ -352,22 +354,29 @@ sap.ui.define([
 					ModelYear: _futureYear
 				}]
 			};
+			/*code change for defect number 9302*/
 			_that.getView().byId("tableMultiHeader").getColumns()[1].setHeaderSpan([6, 6, 1]);
-			_that.getView().byId("tableMultiHeader").getColumns()[7].setHeaderSpan([7, 1, 1]);
-			_that.getView().byId("tableMultiHeader").getColumns()[8].setHeaderSpan([7, 2, 1]);
-			_that.getView().byId("tableMultiHeader").getColumns()[10].setHeaderSpan([7, 4, 1]);
+			_that.getView().byId("tableMultiHeader").getColumns()[7].setHeaderSpan([1, 1, 1]);
+			_that.getView().byId("tableMultiHeader").getColumns()[8].setHeaderSpan([6, 6, 1]);
+			//_that.getView().byId("tableMultiHeader").getColumns()[7].setHeaderSpan([7, 1, 1]);
+			//_that.getView().byId("tableMultiHeader").getColumns()[8].setHeaderSpan([7, 2, 1]);
+			//_that.getView().byId("tableMultiHeader").getColumns()[10].setHeaderSpan([7, 4, 1]);
 			_that.getView().byId("tableMultiHeader").getColumns()[15].setHeaderSpan([2, 2, 1]);
 
 			_that.getView().byId("tableMultiHeader2").getColumns()[1].setHeaderSpan([6, 6, 1]);
-			_that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([7, 1, 1]);
-			_that.getView().byId("tableMultiHeader2").getColumns()[8].setHeaderSpan([7, 2, 1]);
-			_that.getView().byId("tableMultiHeader2").getColumns()[10].setHeaderSpan([7, 4, 1]);
+			_that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([1, 1, 1]);
+			_that.getView().byId("tableMultiHeader2").getColumns()[8].setHeaderSpan([6, 6, 1]);
+			//_that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([7, 1, 1]);
+			//_that.getView().byId("tableMultiHeader2").getColumns()[8].setHeaderSpan([7, 2, 1]);
+			//_that.getView().byId("tableMultiHeader2").getColumns()[10].setHeaderSpan([7, 4, 1]);
 			_that.getView().byId("tableMultiHeader2").getColumns()[15].setHeaderSpan([2, 2, 1]);
 
 			_that.getView().byId("tableMultiHeader3").getColumns()[1].setHeaderSpan([6, 6, 1]);
-			_that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([7, 1, 1]);
-			_that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([7, 2, 1]);
-			_that.getView().byId("tableMultiHeader3").getColumns()[10].setHeaderSpan([7, 4, 1]);
+			_that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([1, 1, 1]);
+			_that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([6, 6, 1]);
+			//_that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([7, 1, 1]);
+			//_that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([7, 2, 1]);
+			//_that.getView().byId("tableMultiHeader3").getColumns()[10].setHeaderSpan([7, 4, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[15].setHeaderSpan([2, 2, 1]);
 
 			for (var n = 1; n < _that.getView().byId("tableMultiHeader3").getRows()[2].getCells().length; n++) {
@@ -376,8 +385,53 @@ sap.ui.define([
 			for (var n = 1; n < _that.getView().byId("tableMultiHeader3").getRows()[5].getCells().length; n++) {
 				_that.getView().byId("tableMultiHeader3").getRows()[5].getCells()[n].removeStyleClass("TabFontStyle");
 			}
-		},
 
+		},
+		onAfterRendering: function () {
+			/*Defect number 9293 code start*/
+			if (selectedDDValues.length != 0) {
+				_that.oGlobalJSONModel.setData(seriesModel);
+				_that.oGlobalJSONModel.updateBindings(true);
+				_that.userType = selectedDDValues[selectedDDValues.length - 2];
+				_that.intcolor = selectedDDValues[selectedDDValues.length - 1];
+				if (selectedDDValues[0] != "") {
+					_that.getView().byId("ID_DealearPicker").setSelectedKey(selectedDDValues[0]);
+				} else if (selectedDDValues[selectedDDValues.length - 3] != "") {
+					_that.getView().byId("ID_DealearPicker").setSelectedItem(selectedDDValues[selectedDDValues.length - 3]);
+				}
+				for (var i = 0; i < selectedDDValues.length; i++) {
+					if (selectedDDValues[i] != "") {
+						switch (i) {
+						case 1:
+							_that.modelYearPicker.setSelectedKey(selectedDDValues[i]);
+							break;
+						case 2:
+							_that.getView().byId("ID_seriesDesc").setSelectedKey(selectedDDValues[i]);
+							break;
+						case 3:
+							_that.getView().byId("ID_modelDesc").setSelectedKey(selectedDDValues[i]);
+							break;
+						case 4:
+							_that.getView().byId("ID_marktgIntDesc").setSelectedKey(selectedDDValues[i]);
+							break;
+						case 5:
+							_that.getView().byId("ID_ExteriorColorCode").setSelectedKey(selectedDDValues[i]);
+							break;
+						case 6:
+							_that.getView().byId("ID_APXValue").setSelectedKey(selectedDDValues[i]);
+							break;
+						case 7:
+							_that.getView().byId("id_ETADate").setValue(selectedDDValues[i]);
+							break;
+
+						}
+
+					}
+				}
+
+			}
+			/*Defect number 9293 code end*/
+		},
 		onDealerChange: function (oDealer) {
 			_that.userType = "";
 			if (oDealer.getParameters().selectedItem != undefined) {
@@ -480,6 +534,14 @@ sap.ui.define([
 				_that.ETADate = _that.oDateFormat.format(new Date(ETADate));
 			} else _that.ETADate = "";
 			//VKBUR
+			/*adding logic to store selected values from dropdown*/
+			selectedDDValues = [_that.getView().byId("ID_DealearPicker").getSelectedKey(), _that.ID_modelYearPicker, _that.ID_seriesDesc, _that
+				.ID_model, _that.getView().byId("ID_marktgIntDesc").getSelectedKey(), _that.ID_ExteriorColorCode,
+				_that.ID_APXValue, _that.getView().byId("id_ETADate").getValue(), _that.getView().byId("ID_DealearPicker").getSelectedItem(),
+				_that.userType, _that.intcolor
+			];
+			seriesModel = _that.oGlobalJSONModel.getData();
+			console.log(selectedDDValues)
 			filteredData = "?$filter=VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType + "' and Dealer eq '" +
 				SelectedDealer + "' and Model eq '" + _that.ID_model +
 				"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
@@ -724,10 +786,11 @@ sap.ui.define([
 							"Model": "Please Select",
 							"ENModelDesc": ""
 						});
-						_that.oGlobalJSONModel.updateBindings(true);
+					
 					} else {
 						sap.ui.core.BusyIndicator.hide();
 					}
+						_that.oGlobalJSONModel.updateBindings(true);
 				},
 				error: function (oError) {
 					sap.ui.core.BusyIndicator.hide();

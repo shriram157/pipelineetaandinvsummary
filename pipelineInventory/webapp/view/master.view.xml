@@ -27,7 +27,7 @@
 						emptySpanM="3" columnsL="3" columnsM="3" class="styleForms">
 						<f:content>
 							<Label text="{i18n>Dealer}" design="Bold" required="required"/>
-							<ComboBox showSecondaryValues="true" width="25em" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
+							<ComboBox id="ID_DealearPicker" showSecondaryValues="true" width="25em" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
 								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartnerName' } }">
 								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}"
 									text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}"/>
@@ -157,10 +157,10 @@
 									<Text text="{GlobalJSONModel>DncdemoLoaner}" textAlign="Center" class="TabFontStyle"/>
 								</t:template>
 							</t:Column>
-							<t:Column>
-								<t:multiLabels sortProperty="Retail">
-									<Label text="Priority Units" textAlign="Center" width="100%"/>
+						<t:Column>
+								<t:multiLabels>
 									<Label text="Retail" textAlign="Center" width="100%"/>
+									<Label text=""/>
 									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
@@ -169,8 +169,8 @@
 							</t:Column>
 							<t:Column>
 								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="" textAlign="Center"/>
+									<Label text="Priority Units" textAlign="Center" width="100%"/>
+									<Label text="Fleet" textAlign="Center" width="100%"/>
 									<Label text="{i18n>TTLFleet} " tooltip="{i18n>TTLFleet} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
@@ -338,8 +338,8 @@
 							</t:Column>
 							<t:Column>
 								<t:multiLabels sortProperty="Retail">
-									<Label text="Priority Units" textAlign="Center" width="100%"/>
 									<Label text="Retail" textAlign="Center" width="100%"/>
+									<Label text=""/>
 									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
@@ -348,8 +348,8 @@
 							</t:Column>
 							<t:Column>
 								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center"/>
+									<Label text="Priority Units" textAlign="Center" width="100%"/>
+									<Label text="Fleet" textAlign="Center" width="100%"/>
 									<Label text="{i18n>TTLFleet} " tooltip="{i18n>TTLFleet} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
@@ -517,8 +517,8 @@
 							</t:Column>
 							<t:Column>
 								<t:multiLabels sortProperty="Retail">
-									<Label text="Priority Units" textAlign="Center" width="100%"/>
 									<Label text="Retail" textAlign="Center" width="100%"/>
+									<Label text="" textAlign="Center" width="100%"/>
 									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
@@ -527,8 +527,8 @@
 							</t:Column>
 							<t:Column>
 								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center"/>
+									<Label text="Priority Units" textAlign="Center" width="100%"/>
+									<Label text="Fleet" textAlign="Center" width="100%"/>
 									<Label text="{i18n>TTLFleet} " tooltip="{i18n>TTLFleet} " textAlign="Center" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
