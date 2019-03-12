@@ -8,6 +8,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (Controller, JSONModel, ResourceModel, BaseController, MessageBox) {
 	"use strict";
+	
 	var Division, DivUser, _that, filteredData, SelectedDealer, seriesdata = [],
 		sSelectedLocale;
 	return BaseController.extend("pipelineInventory.controller.master", {
