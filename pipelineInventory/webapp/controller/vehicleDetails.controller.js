@@ -419,7 +419,9 @@ sap.ui.define([
 			var keys = "/" + modelyear + "/" + modelkey + "/" + serieskey + "/" + suffixkey + "/" + apxkey + "/" + colorkey + "/" + vtnn + "/" +
 				fromdate + "/" + todate + "/";
 				
-			window.location.href = "https://qa-soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2" + keys;
+			window.location.href = "https://tci-qas-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html#/page2" + keys;
+			//https://qa-soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2
+			//https://tci-qas-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html#/page2/2018/YZ3DCT/SIE/BB/00/0070/1234/20181212/20181224
 		},
 		onExit: function () {
 			this.destroy();
