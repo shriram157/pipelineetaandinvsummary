@@ -144,6 +144,9 @@ sap.ui.define([
 								oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5,10)+"-"+oRowData.d.KUNNR.split("-")[1]
 								_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 								_thatVD.oVehicleDetailsJSON.updateBindings(true);
+								/*Defect Number 9937 solution start*/
+								_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Comments = oRowData.d.Comments;
+								/*Defect Number 9937 solution End*/
 							},
 							error: function (oError) {
 								sap.ui.core.BusyIndicator.hide();

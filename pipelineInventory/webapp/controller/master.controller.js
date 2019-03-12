@@ -386,7 +386,9 @@ sap.ui.define([
 			for (var n = 1; n < _that.getView().byId("tableMultiHeader3").getRows()[5].getCells().length; n++) {
 				_that.getView().byId("tableMultiHeader3").getRows()[5].getCells()[n].removeStyleClass("TabFontStyle");
 			}
-
+			/*Defect Number 10427 Code Start*/
+			_that.getView().byId("id_ETADate").setMinDate(new Date());
+			/*Defect Number 10427 Code End*/
 		},
 		onAfterRendering: function () {
 			/*Defect number 9293 code start*/
