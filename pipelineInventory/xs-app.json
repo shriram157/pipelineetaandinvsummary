@@ -8,16 +8,34 @@
 		"source": "^/pipelineetaandinvsummary/(.*)$",
 		"target": "$1",
 		"localDir": "webapp",
-		"authenticationType": "xsuaa"
+		"scope": [
+			"$XSAPPNAME.Manage_Vehicles",
+			"$XSAPPNAME.Manage_Vehicle_Config_Details",
+			"$XSAPPNAME.Update_Vehicle_Details",
+			"$XSAPPNAME.View_Vehicle_Details",
+			"$XSAPPNAME.View_Vehicle_Summary"
+		]
 	}, {
 		"source": "/node(.*)",
 		"destination": "core-node-backend",
 		"csrfProtection": false,
-		"authenticationType": "xsuaa"
+		"scope": [
+			"$XSAPPNAME.Manage_Vehicles",
+			"$XSAPPNAME.Manage_Vehicle_Config_Details",
+			"$XSAPPNAME.Update_Vehicle_Details",
+			"$XSAPPNAME.View_Vehicle_Details",
+			"$XSAPPNAME.View_Vehicle_Summary"
+		]
 	}, {
 		"source": "/userDetails(.*)",
 		"destination": "core-node-backend",
 		"csrfProtection": false,
-		"authenticationType": "xsuaa"
+		"scope": [
+			"$XSAPPNAME.Manage_Vehicles",
+			"$XSAPPNAME.Manage_Vehicle_Config_Details",
+			"$XSAPPNAME.Update_Vehicle_Details",
+			"$XSAPPNAME.View_Vehicle_Details",
+			"$XSAPPNAME.View_Vehicle_Summary"
+		]
 	}]
 }
