@@ -173,7 +173,7 @@ module.exports = function (appContext) {
 					try {
 						toCustomerAttr1 = bpResults[i].to_Customer.Attribute1;
 					} catch (e) {
-						req.logMessage("info", "The Data is sent without Attribute value for the BP", bpResults[i].BusinessPartner);
+						logger.error("The Data is sent without Attribute value for the BP: %s", bpResults[i].BusinessPartner);
 					}
 
 					// if (toCustomerAttr1 === "01") {
@@ -248,7 +248,7 @@ module.exports = function (appContext) {
 			} else if (scopes[i] === xsAppName + ".View_Vehicle_Summary") {
 				viewVehicleSummary = true;
 			} else {
-				req.logMessage("warn", "Unrecognized scope: %s", scopes[i]);
+				tracer.warning("Unrecognized scope: %s", scopes[i]);
 			}
 		}
 
