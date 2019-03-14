@@ -284,6 +284,7 @@ sap.ui.define([
 
 			_thatOC.oVehicleDetailsJSON.getData().colorData = [];
 			$.ajax({
+				
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_exterior_trim?$filter=ModelYear eq '" + Modelyear +
 					"' and Model eq '" + Model + "' and Suffix eq '" + Suffix + "' and TCISeries eq '" + series + "'",
