@@ -717,7 +717,7 @@ sap.ui.define([
 			_that.oGlobalJSONModel.getData().colorData = [];
 			$.ajax({
 				dataType: "json",
-				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV//zc_exterior_trim?$filter=ModelYear eq '" + Modelyear +
+				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_exterior_trim?$filter=ModelYear eq '" + Modelyear +
 					"' and Model eq '" + Model + "' and Suffix eq '" + Suffix + "' and TCISeries eq '" + series + "'",
 				type: "GET",
 				success: function (oData) {
