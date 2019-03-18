@@ -84,7 +84,8 @@
 							<ColumnListItem>
 								<cells>
 									<Link text="{DropShipDataModel>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{DropShipDataModel>ZZDLR_REF_NO}"/>
-									<Text text="{DropShipDataModel>ZZORDERTYPE} - {DropShipDataModel>ORDERTYPE_DESC_EN}"/>
+									<!--{DropShipDataModel>ZZORDERTYPE} removed from order type (defect number 10426)-->
+									<Text text="{DropShipDataModel>ORDERTYPE_DESC_EN}"/>
 									<Text text="{DropShipDataModel>ZMMSTA}"/>
 									<Link text="{DropShipDataModel>ZZVTN}" tooltip="{DropShipDataModel>ZZVTN}"/>
 									<Link text="{DropShipDataModel>VHVIN}" tooltip="{DropShipDataModel>VHVIN}"/>
