@@ -242,6 +242,9 @@ sap.ui.define([
 											console.log("CustomerData", oRowData);
 											oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5,10)+"-"+oRowData.d.KUNNR.split("-")[1];
 											_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
+											/*Defect Number 9937 solution start*/
+											_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Comments = oRowData.d.Comments;
+											/*Defect Number 9937 solution End*/
 											_thatVD.oVehicleDetailsJSON.updateBindings(true);
 										},
 										error: function (oError) {

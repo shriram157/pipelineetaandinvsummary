@@ -161,7 +161,7 @@
 								<t:multiLabels>
 									<Label text="Retail" textAlign="Center" width="100%"/>
 									<Label text=""/>
-									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" wrapping="true"/>
+									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" width="100%" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
 									<Text text="{GlobalJSONModel>Retail}" textAlign="Center" class="TabFontStyle"/>
@@ -340,7 +340,7 @@
 								<t:multiLabels sortProperty="Retail">
 									<Label text="Retail" textAlign="Center" width="100%"/>
 									<Label text=""/>
-									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" wrapping="true"/>
+									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" width="100%" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
 									<Text text="{GlobalJSONModel>Retail}" textAlign="Center" class="TabFontStyle"/>
@@ -519,7 +519,7 @@
 								<t:multiLabels sortProperty="Retail">
 									<Label text="Retail" textAlign="Center" width="100%"/>
 									<Label text="" textAlign="Center" width="100%"/>
-									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" wrapping="true"/>
+									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" width="100%" wrapping="true"/>
 								</t:multiLabels>
 								<t:template>
 									<Text text="{GlobalJSONModel>Retail}" textAlign="Center" class="TabFontStyle" width="100%"/>
