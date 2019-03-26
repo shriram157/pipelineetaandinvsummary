@@ -150,6 +150,9 @@ sap.ui.define([
 								_that.BusinessPartnerData.getData().DealerList.push(_that.BusinessPartnerData.getData().Dealers[i]);
 						}
 					}
+					if(_that.BusinessPartnerData.getData().SamlList.UserType[0] == "TCI_Zone_Admin"){
+						_that.BusinessPartnerData.getData().DealerList._TCIZoneAdmin = true;
+					}
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 						_that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
 						_that.BusinessPartnerData.getData().DealerList.unshift({
