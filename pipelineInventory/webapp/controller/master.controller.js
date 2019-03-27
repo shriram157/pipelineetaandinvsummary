@@ -8,7 +8,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (Controller, JSONModel, ResourceModel, BaseController, MessageBox) {
 	"use strict";
-	
+
 	var Division, DivUser, _that, filteredData, SelectedDealer, seriesdata = [],
 		sSelectedLocale;
 	return BaseController.extend("pipelineInventory.controller.master", {
@@ -115,6 +115,8 @@ sap.ui.define([
 				_that.salesOffice = "1000";
 				_that.BusinessPartnerData.getData().DealerList = attributes;
 				_that.BusinessPartnerData.getData().SamlList = samlAttributes;
+				// _that.BusinessPartnerData.getData().DealerList._TCIZoneAdmin = "ZoneAdmin";
+				_that.BusinessPartnerData.getData().DealerList._TCIZoneAdmin = "ZoneONLY";
 				_that.BusinessPartnerData.updateBindings(true);
 				_that.BusinessPartnerData.refresh(true);
 
@@ -150,8 +152,10 @@ sap.ui.define([
 								_that.BusinessPartnerData.getData().DealerList.push(_that.BusinessPartnerData.getData().Dealers[i]);
 						}
 					}
-					if(_that.BusinessPartnerData.getData().SamlList.UserType[0] == "TCI_Zone_Admin"){
-						_that.BusinessPartnerData.getData().DealerList._TCIZoneAdmin = true;
+					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "TCI_Zone_Admin") {
+						_that.BusinessPartnerData.getData().DealerList._TCIZoneAdmin = "ZoneAdmin";
+					} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
+						_that.BusinessPartnerData.getData().DealerList._TCIZoneAdmin = "ZoneONLY";
 					}
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 						_that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
@@ -792,11 +796,11 @@ sap.ui.define([
 							"Model": "Please Select",
 							"ENModelDesc": ""
 						});
-					
+
 					} else {
 						sap.ui.core.BusyIndicator.hide();
 					}
-						_that.oGlobalJSONModel.updateBindings(true);
+					_that.oGlobalJSONModel.updateBindings(true);
 				},
 				error: function (oError) {
 					sap.ui.core.BusyIndicator.hide();

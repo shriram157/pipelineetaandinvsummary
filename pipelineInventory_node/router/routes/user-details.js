@@ -135,7 +135,7 @@ module.exports = function (appContext) {
 						}
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
 							if (customerSalesArea.results[i].SalesOffice === bpZone) {
-								if ((customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10")) {
+								if ((customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10" && customerSalesArea.results[i].SalesGroup != "T99")) {
 									if (customerSalesArea.results[i].Customer !== "2400500000") {
 										resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
 									}
@@ -161,7 +161,7 @@ module.exports = function (appContext) {
 								customerSalesArea.results[i].SalesOffice == "5000" || customerSalesArea.results[i].SalesOffice == "7000" ||
 								customerSalesArea.results[i].SalesOffice == "9000") {
 								// if (bpZone) {
-								if ((customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10")) {
+								if ((customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10" && customerSalesArea.results[i].SalesGroup != "T99")) {
 									resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
 								}
 							}
