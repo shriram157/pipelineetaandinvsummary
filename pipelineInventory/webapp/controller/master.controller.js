@@ -135,6 +135,12 @@ sap.ui.define([
 				success: function (scopesData) {
 					console.log("currentScopesForUser", scopesData);
 					scopesData = scopesData.loggedUserType[0];
+					if (scopesData == "TCI_Zone_Admin") {
+						sap.ui.getCore().getModel("BusinessDataModel").getData().DealerList._TCIZoneAdmin = "ZoneAdmin";
+					} else if (scopesData == "TCI_Zone_User") {
+						sap.ui.getCore().getModel("BusinessDataModel").getData().DealerList._TCIZoneAdmin = "ZoneONLY";
+					}
+					sap.ui.getCore().getModel("BusinessDataModel").updateBindings(true);
 				},
 				error: function (oError) {}
 			});
@@ -160,15 +166,12 @@ sap.ui.define([
 							return obj;
 						}, {});
 						for (var i = 0; i < _that.BusinessPartnerData.getData().Dealers.length; i++) {
-							if (aBusinessPartnerKey[_that.BusinessPartnerData.getData().Dealers[i].BusinessPartnerKey])
+							if (aBusinessPartnerKey[_that.BusinessPartnerData.getData().Dealers[i].BusinessPartnerKey]){
 								_that.BusinessPartnerData.getData().DealerList.push(_that.BusinessPartnerData.getData().Dealers[i]);
+							}
 						}
 					}
-					if (scopesData == "TCI_Zone_Admin") {
-						_that.BusinessPartnerData.getData().DealerList._TCIZoneAdmin = "ZoneAdmin";
-					} else if (scopesData == "TCI_Zone_User") {
-						_that.BusinessPartnerData.getData().DealerList._TCIZoneAdmin = "ZoneONLY";
-					}
+					
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 						_that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
 						_that.BusinessPartnerData.getData().DealerList.unshift({
