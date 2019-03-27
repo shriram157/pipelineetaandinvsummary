@@ -10,7 +10,7 @@ sap.ui.define([
 	"use strict";
 
 	var Division, DivUser, _that, filteredData, SelectedDealer, seriesdata = [],
-		sSelectedLocale;
+		sSelectedLocale, scopesData;
 	return BaseController.extend("pipelineInventory.controller.master", {
 		/*Initialization of the page data*/
 		onInit: function () {
@@ -127,6 +127,18 @@ sap.ui.define([
 			this.nodeJsUrl = this.sPrefix + "/node";
 			// _that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 			sap.ui.core.BusyIndicator.show();
+			
+			$.ajax({
+				dataType: "json",
+				url: "/userDetails/currentScopesForUser",
+				type: "GET",
+				success: function (scopesData) {
+					console.log("currentScopesForUser", scopesData);
+					scopesData = scopesData.loggedUserType[0];
+				},
+				error: function (oError) {}
+			});
+
 			$.ajax({
 				dataType: "json",
 				url: "/userDetails/attributes",
@@ -152,9 +164,9 @@ sap.ui.define([
 								_that.BusinessPartnerData.getData().DealerList.push(_that.BusinessPartnerData.getData().Dealers[i]);
 						}
 					}
-					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "TCI_Zone_Admin") {
+					if (scopesData == "TCI_Zone_Admin") {
 						_that.BusinessPartnerData.getData().DealerList._TCIZoneAdmin = "ZoneAdmin";
-					} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
+					} else if (scopesData == "TCI_Zone_User") {
 						_that.BusinessPartnerData.getData().DealerList._TCIZoneAdmin = "ZoneONLY";
 					}
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
@@ -220,16 +232,6 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 				}
 			});
-			$.ajax({
-				dataType: "json",
-				url: "/userDetails/currentScopesForUser",
-				type: "GET",
-				success: function (scopesData) {
-					console.log("currentScopesForUser", scopesData);
-				},
-				error: function (oError) {}
-			});
-
 			$.ajax({
 				dataType: "json",
 				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser + "'",
