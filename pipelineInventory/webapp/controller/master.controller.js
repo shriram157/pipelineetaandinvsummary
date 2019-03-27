@@ -136,9 +136,9 @@ sap.ui.define([
 					console.log("currentScopesForUser", scopesData);
 					scopesData = scopesData.loggedUserType[0];
 					if (scopesData == "TCI_Zone_Admin") {
-						sap.ui.getCore().getModel("BusinessDataModel").getData().DealerList._TCIZoneAdmin = "ZoneAdmin";
+						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "ZoneAdmin";
 					} else if (scopesData == "TCI_Zone_User") {
-						sap.ui.getCore().getModel("BusinessDataModel").getData().DealerList._TCIZoneAdmin = "ZoneONLY";
+						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "ZoneONLY";
 					}
 					sap.ui.getCore().getModel("BusinessDataModel").updateBindings(true);
 				},

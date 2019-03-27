@@ -89,7 +89,7 @@ sap.ui.define([
 
 			_thatDT.oTable = _thatDT.getView().byId("Tab_vehicleDetails");
 			_thatDT.oTable.removeSelections();
-			var dealerData = sap.ui.getCore().getModel("BusinessDataModel").getData().DealerList;
+			var dealerData = sap.ui.getCore().getModel("BusinessDataModel").getData();
 			console.log("dealerData", dealerData);
 			if (dealerData._TCIZoneAdmin == "ZoneAdmin") {
 				console.log("dealerData._TCIZoneAdmin", dealerData._TCIZoneAdmin);
