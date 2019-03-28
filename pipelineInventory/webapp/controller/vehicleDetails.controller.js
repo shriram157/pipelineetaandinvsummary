@@ -7,7 +7,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (BaseController, History, JSONModel, ResourceModel, MessageBox) {
 	"use strict";
-	var _thatVD,sSelectedLocale,Division;
+	var _thatVD, sSelectedLocale, Division;
 	return BaseController.extend("pipelineInventory.controller.vehicleDetails", {
 		onInit: function () {
 			_thatVD = this;
@@ -67,7 +67,6 @@ sap.ui.define([
 					currentImageSource.setProperty("src", "images/Lexus.png");
 				}
 			}
-			
 
 			// this.getView().setModel(sap.ui.getCore().getModel("SelectJSONModel"), "SelectJSONModel");
 			_thatVD.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatVD._oVehicleDetailsRoute, _thatVD);
@@ -141,11 +140,15 @@ sap.ui.define([
 							type: "GET",
 							success: function (oRowData) {
 								console.log("CustomerData", oRowData);
-								oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5,10)+"-"+oRowData.d.KUNNR.split("-")[1]
+								oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1]
 								_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 								_thatVD.oVehicleDetailsJSON.updateBindings(true);
 								/*Defect Number 9937 solution start*/
 								_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Comments = oRowData.d.Comments;
+								_thatVD.getView().byId("apxVal").setSelectedKey(oRowData.d.NewAPX);
+								_thatVD.getView().byId("accessoryVal").setSelectedKey(oRowData.d.AccessoriesInstalled);
+								_thatVD.getView().byId("DNCVal").setSelectedKey(oRowData.d.DNC);
+
 								/*Defect Number 9937 solution End*/
 							},
 							error: function (oError) {
@@ -240,10 +243,13 @@ sap.ui.define([
 										type: "GET",
 										success: function (oRowData) {
 											console.log("CustomerData", oRowData);
-											oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5,10)+"-"+oRowData.d.KUNNR.split("-")[1];
+											oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
 											_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 											/*Defect Number 9937 solution start*/
 											_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Comments = oRowData.d.Comments;
+											_thatVD.getView().byId("apxVal").setSelectedKey(oRowData.d.NewAPX);
+											_thatVD.getView().byId("accessoryVal").setSelectedKey(oRowData.d.AccessoriesInstalled);
+											_thatVD.getView().byId("DNCVal").setSelectedKey(oRowData.d.DNC);
 											/*Defect Number 9937 solution End*/
 											_thatVD.oVehicleDetailsJSON.updateBindings(true);
 										},
@@ -303,7 +309,7 @@ sap.ui.define([
 				type: "GET",
 				success: function (oRowData) {
 					console.log("CustomerData", oRowData);
-					oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5,10)+"-"+oRowData.d.KUNNR.split("-")[1]
+					oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1]
 					_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 					_thatVD.oVehicleDetailsJSON.updateBindings(true);
 				},
@@ -367,7 +373,7 @@ sap.ui.define([
 
 			var sUserInput = _thatVD.getView().byId("accessoryVal").getSelectedKey();
 			var sUserInput2 = _thatVD.getView().byId("DNCVal").getSelectedKey();
-			
+
 			var oInputControl = _thatVD.getView().byId("accessoryVal");
 			var oInputControl2 = _thatVD.getView().byId("DNCVal");
 			if (sUserInput && sUserInput2) {
@@ -409,7 +415,7 @@ sap.ui.define([
 				}
 			});
 		},
-		
+
 		//cross-navigation to sold order application
 		navToSoldOrer: function () {
 			var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
@@ -425,7 +431,7 @@ sap.ui.define([
 
 			var keys = "/" + modelyear + "/" + modelkey + "/" + serieskey + "/" + suffixkey + "/" + apxkey + "/" + colorkey + "/" + vtnn + "/" +
 				fromdate + "/" + todate + "/";
-			
+
 			window.location.href = "https://tci-qas-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html#/page2" + keys;
 			//https://qa-soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2
 			//https://tci-qas-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html#/page2/2018/YZ3DCT/SIE/BB/00/0070/1234/20181212/20181224
