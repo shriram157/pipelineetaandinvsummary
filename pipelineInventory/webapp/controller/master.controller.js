@@ -208,6 +208,10 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					_that.BusinessPartnerData.updateBindings(true);
 					_that.BusinessPartnerData.refresh(true);
+					if(_that.BusinessPartnerData.oData.SamlList.UserType[0] == "Dealer"){
+						_that.getView().byId("ID_DealearPicker").setSelectedItem(_that.getView().byId("ID_DealearPicker").getItems()[0]);
+						_that.applyFiltersBtn();
+					}
 				},
 				error: function (oError) {
 					sap.ui.core.BusyIndicator.hide();
