@@ -549,7 +549,7 @@ sap.ui.define([
 			];
 			seriesModel = _that.oGlobalJSONModel.getData();
 			console.log(selectedDDValues)
-			filteredData = "?$filter=VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType + "' and Dealer eq '" +
+			filteredData = "?$filter=Division eq '"+DivUser+"' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType + "' and Dealer eq '" +
 				SelectedDealer + "' and Model eq '" + _that.ID_model +
 				"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
 				"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
