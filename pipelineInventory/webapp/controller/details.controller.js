@@ -366,17 +366,17 @@ sap.ui.define([
 				_thatDT.checkedData = [];
 
 				var dealerData = sap.ui.getCore().getModel("BusinessDataModel").getData().DealerList;
-				if (dealerData._TCIZoneAdmin == "ZoneAdmin") {
-					console.log("dealerData._TCIZoneAdmin", dealerData._TCIZoneAdmin);
-					_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
-					_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
-				} else if (dealerData._TCIZoneAdmin == "ZoneONLY") {
-					_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
-					_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
-				} else {
-					_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
-					_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
-				}
+				// if (dealerData._TCIZoneAdmin == "ZoneAdmin") {
+				// 	console.log("dealerData._TCIZoneAdmin", dealerData._TCIZoneAdmin);
+				// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
+				// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
+				// } else if (dealerData._TCIZoneAdmin == "ZoneONLY") {
+				// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
+				// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+				// } else {
+				// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
+				// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+				// }
 				for (var l = 0; l < oVUID.getParameters().listItems.length; l++) {
 					oVUID.getParameters().listItems[l].getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItems[
 						l].getBindingContext("VehicleDetailsJSON").getPath()).__metadata = "";
@@ -401,22 +401,34 @@ sap.ui.define([
 
 				checkedItem = oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
 					.getBindingContext("VehicleDetailsJSON").getPath());
-				if (checkedItem.DropShip == true) {
-					_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
-				} else {
-					_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
-				}
-				if (checkedItem.AssignVehicle == true) {
-					_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
-				} else {
-					_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
-				}
+				// if (checkedItem.DropShip == true) {
+				// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
+				// } else {
+				// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+				// }
+				// if (checkedItem.AssignVehicle == true) {
+				// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
+				// } else {
+				// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
+				// }
+				// if (dealerData._TCIZoneAdmin == "ZoneAdmin") {
+				// 	console.log("dealerData._TCIZoneAdmin", dealerData._TCIZoneAdmin);
+				// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
+				// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
+				// } else if (dealerData._TCIZoneAdmin == "ZoneONLY") {
+				// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
+				// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+				// } else {
+				// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
+				// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+				// }
 				_thatDT.checkedData.push(oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
 					.getBindingContext("VehicleDetailsJSON").getPath()));
-			} else {
-				_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
-				_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
-			}
+			} 
+			// else {
+			// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+			// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
+			// }
 		},
 
 		navToDropShipVehicles: function () {

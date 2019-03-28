@@ -115,8 +115,8 @@ sap.ui.define([
 				_that.salesOffice = "1000";
 				_that.BusinessPartnerData.getData().DealerList = attributes;
 				_that.BusinessPartnerData.getData().SamlList = samlAttributes;
-				// _that.BusinessPartnerData.getData().DealerList._TCIZoneAdmin = "ZoneAdmin";
-				_that.BusinessPartnerData.getData().DealerList._TCIZoneAdmin = "ZoneONLY";
+				// _that.BusinessPartnerData.getData()._TCIZoneAdmin = "ZoneAdmin";
+				// _that.BusinessPartnerData.getData()._TCIZoneAdmin = "ZoneONLY";
 				_that.BusinessPartnerData.updateBindings(true);
 				_that.BusinessPartnerData.refresh(true);
 
