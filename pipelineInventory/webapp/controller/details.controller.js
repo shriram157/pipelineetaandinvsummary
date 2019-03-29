@@ -91,7 +91,7 @@ sap.ui.define([
 			_thatDT.oTable.removeSelections();
 			var dealerData = sap.ui.getCore().getModel("BusinessDataModel").getData();
 			console.log("dealerData", dealerData);
-			if (dealerData._TCIZoneAdmin == "ZoneAdmin") {
+			if (dealerData._TCIZoneAdmin == "AdminUser") {
 				console.log("dealerData._TCIZoneAdmin", dealerData._TCIZoneAdmin);
 				_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
 				_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);

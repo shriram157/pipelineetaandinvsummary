@@ -55,7 +55,7 @@
 								<Text text="{i18n>Colour}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>DropShipStatus}"/>
+								<Text text="{i18n>AssignVehicleStatus}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="{i18n>ErrorMessage}"/>

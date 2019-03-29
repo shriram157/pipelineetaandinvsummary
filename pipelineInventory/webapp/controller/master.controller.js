@@ -135,8 +135,8 @@ sap.ui.define([
 				success: function (scopesData) {
 					console.log("currentScopesForUser", scopesData);
 					scopesData = scopesData.loggedUserType[0];
-					if (scopesData == "TCI_Zone_Admin") {
-						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "ZoneAdmin";
+					if (scopesData == "TCI_Zone_Admin" || scopesData == "TCI_User") {
+						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "AdminUser";
 					} else if (scopesData == "TCI_Zone_User") {
 						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "ZoneONLY";
 					}
