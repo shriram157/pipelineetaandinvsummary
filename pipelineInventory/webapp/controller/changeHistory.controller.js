@@ -6,7 +6,7 @@ sap.ui.define([
 	"sap/ui/core/routing/History"
 ], function (BaseController, JSONModel, ResourceModel, History) {
 	"use strict";
-	var _thatCH, SelectedDealerCH, sSelectedLocale,Division;
+	var _thatCH, SelectedDealerCH, sSelectedLocale,Division,DivUser;
 	return BaseController.extend("pipelineInventory.controller.changeHistory", {
 
 		onInit: function () {
@@ -68,9 +68,11 @@ sap.ui.define([
 				var currentImageSource;
 				if (Division == '10') // set the toyoto logo
 				{
+					DivUser = "TOY";
 					currentImageSource = this.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
 				} else { // set the lexus logo
+					DivUser = "LEX";
 					currentImageSource = this.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/Lexus.png");
 				}
@@ -89,7 +91,7 @@ sap.ui.define([
 				_thatCH.Dealer = oEvent.getParameters().arguments.SelectedDealer;
 				_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
 				//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '2400042193'&$format=json
-				var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '" + _thatCH.Dealer +
+				var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq ' "+DivUser+" ' and Dealer eq '" + _thatCH.Dealer +
 					"'&$format=json";
 				$.ajax({
 					dataType: "json",
@@ -128,7 +130,7 @@ sap.ui.define([
 			var SelectedDealer = oDealer.getParameters().selectedItem.getProperty("key");
 			_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
 			_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
-			var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '" + SelectedDealer +
+			var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq '"+DivUser+"' and Dealer eq '" + SelectedDealer +
 				"'&$format=json";
 			$.ajax({
 				dataType: "json",

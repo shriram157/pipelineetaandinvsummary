@@ -8,7 +8,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (BaseController, ResourceModel, JSONModel, Filter, History, MessageBox) {
 	"use strict";
-	var _thatDT, clicks, num, numpre, sSelectedLocale, Division;
+	var _thatDT, clicks, num, numpre, sSelectedLocale,Division,DivUser;
 	return BaseController.extend("pipelineInventory.controller.details", {
 		onInit: function () {
 			_thatDT = this;
@@ -65,9 +65,11 @@ sap.ui.define([
 				var currentImageSource;
 				if (Division == '10') // set the toyoto logo
 				{
+					DivUser = "TOY";
 					currentImageSource = this.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
 				} else { // set the lexus logo
+					DivUser = "LEX";
 					currentImageSource = this.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/Lexus.png");
 				}
@@ -111,7 +113,7 @@ sap.ui.define([
 				_thatDT.UserType = _thatDT.routedData.userType;
 				_thatDT.salesOffice = _thatDT.routedData.salesOffice;
 				//intcolor
-				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=VKBUR eq '" + _thatDT.salesOffice +
+				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq ' "+DivUser+" ' and VKBUR eq '" + _thatDT.salesOffice +
 					"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
 					"' and Model eq '" + _thatDT.routedData.Model + "' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and Modelyear eq '" +
 					_thatDT.routedData.ModelYear + "'and TCISeries eq '" +
@@ -482,7 +484,7 @@ sap.ui.define([
 		},
 
 		data: function () {
-			var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=MATRIX eq '" + _thatDT.routedData.MatrixVal +
+			var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '"+DivUser+"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
 				"' and Model eq '" + _thatDT.routedData.Model + "' and Modelyear eq '" + _thatDT.routedData.ModelYear + "'&$top=5&$skip='" +
 				Number(
 					num) + "'";
