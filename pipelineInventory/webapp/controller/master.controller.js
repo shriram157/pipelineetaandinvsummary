@@ -232,6 +232,8 @@ sap.ui.define([
 					_that.BusinessPartnerData.refresh(true);
 					if(_that.BusinessPartnerData.oData.SamlList.UserType[0] == "Dealer"){
 						_that.getView().byId("ID_DealearPicker").setSelectedItem(_that.getView().byId("ID_DealearPicker").getItems()[0]);
+						_that.userType = "DDU";
+					   	SelectedDealer = _that.BusinessPartnerData.getData().DealerList[0].BusinessPartnerKey;
 						_that.applyFiltersBtn();
 					}
 				},
