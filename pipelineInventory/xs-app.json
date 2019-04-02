@@ -9,7 +9,8 @@
 		"target": "$1",
 		"localDir": "webapp",
 		"scope": [
-			"$XSAPPNAME.Manage_Vehicles",
+			"$XSAPPNAME.Assign_Vehicles",
+			"$XSAPPNAME.Drop_Ship_Vehicles",
 			"$XSAPPNAME.Manage_Vehicle_Config_Details",
 			"$XSAPPNAME.Update_Vehicle_Details",
 			"$XSAPPNAME.View_Vehicle_Details",
@@ -20,7 +21,8 @@
 		"destination": "core-node-backend",
 		"csrfProtection": false,
 		"scope": [
-			"$XSAPPNAME.Manage_Vehicles",
+			"$XSAPPNAME.Assign_Vehicles",
+			"$XSAPPNAME.Drop_Ship_Vehicles",
 			"$XSAPPNAME.Manage_Vehicle_Config_Details",
 			"$XSAPPNAME.Update_Vehicle_Details",
 			"$XSAPPNAME.View_Vehicle_Details",
@@ -31,7 +33,8 @@
 		"destination": "core-node-backend",
 		"csrfProtection": false,
 		"scope": [
-			"$XSAPPNAME.Manage_Vehicles",
+			"$XSAPPNAME.Assign_Vehicles",
+			"$XSAPPNAME.Drop_Ship_Vehicles",
 			"$XSAPPNAME.Manage_Vehicle_Config_Details",
 			"$XSAPPNAME.Update_Vehicle_Details",
 			"$XSAPPNAME.View_Vehicle_Details",
