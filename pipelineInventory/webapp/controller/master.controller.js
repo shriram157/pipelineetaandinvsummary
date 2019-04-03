@@ -452,7 +452,8 @@ sap.ui.define([
 				_that.getView().byId("ID_APXValue").setSelectedKey("Please Select");
 				_that.getView().byId("id_ETADate").setValue();
 
-				var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
+				//var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
+				var SelectedDealerKey = oDealer.getParameters().selectedItem.getText();
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 					if (SelectedDealerKey == "Zone All") {

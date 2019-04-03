@@ -29,9 +29,9 @@
 						<f:content>
 							<Label text="{i18n>Dealer}" design="Bold" required="required"/>
 							<ComboBox id="ID_DealearPicker" showSecondaryValues="true" width="25em" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
-								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartnerName' } }">
+								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
 								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}"
-									text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}"/>
+									text="{BusinessDataModel>BusinessPartner}" additionalText = "{BusinessDataModel>BusinessPartnerName}"/>
 							</ComboBox>
 						</f:content>
 					</f:SimpleForm>
