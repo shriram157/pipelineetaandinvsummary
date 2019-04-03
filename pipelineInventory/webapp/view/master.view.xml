@@ -21,6 +21,7 @@
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
+				<ScrollContainer height='29rem' width="100%" vertical='true'>
 				<content>
 					<Label text="{i18n>PageTitle}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
 					<f:SimpleForm id="dealerformContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="1" adjustLabelSpan="true" emptySpanL="0"
@@ -617,6 +618,7 @@
 						</t:columns>
 					</t:Table>
 				</content>
+				</ScrollContainer>
 				<footer>
 					<OverflowToolbar></OverflowToolbar>
 				</footer>

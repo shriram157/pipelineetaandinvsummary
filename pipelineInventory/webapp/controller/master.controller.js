@@ -1044,7 +1044,7 @@ sap.ui.define([
 				obj_first.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
 			} else obj_first.Model = "";
 
-			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select") {
+			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select" && _that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "") {
 				obj_first.suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
 				var intcol = _that.getView().getModel("GlobalJSONModel").getProperty(_that.getView().byId("ID_marktgIntDesc").getSelectedItem().getBindingContext(
 					"GlobalJSONModel").sPath).int_c;
