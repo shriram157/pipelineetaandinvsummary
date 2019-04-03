@@ -21,6 +21,7 @@
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
+				<ScrollContainer height='29rem' width="100%" vertical='true'>
 				<content>
 					<Label text="{i18n>PageTitle}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
 					<f:SimpleForm id="dealerformContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="1" adjustLabelSpan="true" emptySpanL="0"
@@ -28,9 +29,9 @@
 						<f:content>
 							<Label text="{i18n>Dealer}" design="Bold" required="required"/>
 							<ComboBox id="ID_DealearPicker" showSecondaryValues="true" width="25em" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
-								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartnerName' } }">
+								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
 								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}"
-									text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}"/>
+									text="{BusinessDataModel>BusinessPartner}" additionalText = "{BusinessDataModel>BusinessPartnerName}"/>
 							</ComboBox>
 						</f:content>
 					</f:SimpleForm>
@@ -617,6 +618,7 @@
 						</t:columns>
 					</t:Table>
 				</content>
+				</ScrollContainer>
 				<footer>
 					<OverflowToolbar></OverflowToolbar>
 				</footer>
