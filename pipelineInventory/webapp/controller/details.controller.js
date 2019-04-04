@@ -314,6 +314,7 @@ sap.ui.define([
 			var Data = oNavEvent.getSource().getModel("VehicleDetailsJSON").getProperty(oNavEvent.getSource().getBindingContext(
 				"VehicleDetailsJSON").sPath);
 			Data.Suffix = Data.Suffix.replace("/", "%2F");
+			Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("/", "%2F");
 			Data.__metadata = "";
 			_thatDT.getRouter().navTo("vehicleDetails", {
 				VCData: JSON.stringify(Data)
