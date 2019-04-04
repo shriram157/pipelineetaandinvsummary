@@ -121,6 +121,7 @@ sap.ui.define([
 				if (oEvent.getParameters().name == "vehicleDetails2") {
 					if (oEvent.getParameter("arguments").VCData2 != undefined) {
 						var Data = JSON.parse(oEvent.getParameter("arguments").VCData2);
+						Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
 						Data.NewSuffix = Data.NewSuffix.replace("%2F", "/");
 						Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
 
@@ -203,6 +204,7 @@ sap.ui.define([
 				} else {
 					if (oEvent.getParameter("arguments").VCData != undefined) {
 						var Data = JSON.parse(oEvent.getParameter("arguments").VCData);
+						Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
 						Data.Suffix = Data.Suffix.replace("%2F", "/");
 						// Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
 						if (_thatVD.oVehicleDetailsJSON.getData().results.length > 0) {
