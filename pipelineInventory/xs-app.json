@@ -5,6 +5,19 @@
 		"logoutEndpoint": "/do/logout"
 	},
 	"routes": [{
+		"source": "^/pipelineetaandinvsummary/index.html$",
+		"target": "index.html",
+		"localDir": "webapp",
+		"cacheControl": "no-cache, no-store, must-revalidate",
+		"scope": [
+			"$XSAPPNAME.Assign_Vehicles",
+			"$XSAPPNAME.Drop_Ship_Vehicles",
+			"$XSAPPNAME.Manage_Vehicle_Config_Details",
+			"$XSAPPNAME.Update_Vehicle_Details",
+			"$XSAPPNAME.View_Vehicle_Details",
+			"$XSAPPNAME.View_Vehicle_Summary"
+		]
+	}, {
 		"source": "^/pipelineetaandinvsummary/(.*)$",
 		"target": "$1",
 		"localDir": "webapp",
