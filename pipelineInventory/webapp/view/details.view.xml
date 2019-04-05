@@ -78,7 +78,7 @@
 					<!--	<Text id="invFilterLabel"/>-->
 					<!--	<Button class="closeFilterNotif" text="X" press="closeNotifBar"/>-->
 					<!--</l:VerticalLayout>-->
-					<ScrollContainer height='20rem' width="100%" vertical='true'>
+					<ScrollContainer height='65%' width="100%" vertical='true'>
 						<Table items="{VehicleDetailsJSON>/results}" width="97%" class="sapUiResponsiveMargin" mode="MultiSelect" id="Tab_vehicleDetails"
 							selectionChange="vehicleSelect" growing="true" growingThreshold="25" growingScrollToLoad="false">
 							<!--growing="true" growingThreshold="2" growingScrollToLoad="false"-->
