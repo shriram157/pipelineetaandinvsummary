@@ -27,6 +27,7 @@
 					</ToolbarSpacer>
 					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
+				<ScrollContainer height='90%' width="100%" vertical='true'>
 				<content>
 					<Label text="{i18n>Dropship}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
 					<OverflowToolbar>
@@ -99,6 +100,7 @@
 						</items>
 					</Table>
 				</content>
+					</ScrollContainer>
 				<footer>
 					<Toolbar>
 						<!--<ToolbarSpacer/>-->
