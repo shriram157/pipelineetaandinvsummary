@@ -22,602 +22,614 @@
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
 				<ScrollContainer height='90%' width="100%" vertical='true'>
-				<content>
-					<Label text="{i18n>PageTitle}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
-					<f:SimpleForm id="dealerformContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="1" adjustLabelSpan="true" emptySpanL="0"
-						emptySpanM="3" columnsL="3" columnsM="3" class="styleForms">
-						<f:content>
-							<Label text="{i18n>Dealer}" design="Bold" required="required"/>
-							<ComboBox id="ID_DealearPicker" showSecondaryValues="true" width="25em" filterSecondaryValues="true" value="" selectedKey="" selectionChange="onDealerChange"
-								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
-								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}"
-									text="{BusinessDataModel>BusinessPartner}" additionalText = "{BusinessDataModel>BusinessPartnerName}"/>
-							</ComboBox>
-						</f:content>
-					</f:SimpleForm>
-					<VBox class="sapUiSmallMargin stylePosition">
-						<f:SimpleForm id="formContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false" emptySpanL="0"
-							emptySpanM="0" columnsL="2" columnsM="2" class="styleForms">
+					<content>
+						<Label text="{i18n>PageTitle}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
+						<f:SimpleForm id="dealerformContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="1" adjustLabelSpan="true" emptySpanL="0"
+							emptySpanM="3" columnsL="3" columnsM="3" class="styleForms">
 							<f:content>
-								<core:Title text=""/>
-								<Label text="{i18n>ModelYear}"/>
-								<ComboBox id="ID_modelYearPicker" selectionChange="onModelYearChange" change="onModelYearInput" showSecondaryValues="true"
-									filterSecondaryValues="true" value="" selectedKey="" items="{ path: 'ModelYearModel>/ModelYearList', sorter: { path: 'ModelYearList' } }">
-									<core:ListItem key="{ModelYearModel>ModelYear}" text="{ModelYearModel>ModelYear}"/>
-								</ComboBox>
-								<Label text="{i18n>Series}"/>
-								<Select id="ID_seriesDesc" forceSelection="true" change="onSeriesSelectionChange" items="{GlobalJSONModel>/seriesData}">
-									<core:Item key="{GlobalJSONModel>ModelSeriesNo}" text="{GlobalJSONModel>TCISeriesDescriptionEN}"/>
-								</Select>
-								<Label text="{i18n>Model}"/>
-								<Select id="ID_modelDesc" forceSelection="true" items="{GlobalJSONModel>/modelData}" change="onModelSelectionChange">
-									<core:Item key="{GlobalJSONModel>Model}" text="{GlobalJSONModel>Model} - {GlobalJSONModel>ENModelDesc}"/>
-								</Select>
-								<Label text="{i18n>Suffix}"/>
-								<Select id="ID_marktgIntDesc" forceSelection="true" items="{GlobalJSONModel>/suffixData}" change="onSuffixChange">
-									<core:Item key="{GlobalJSONModel>Suffix}"
-										text="{GlobalJSONModel>Suffix} - {GlobalJSONModel>SuffixDescriptionEN} / {GlobalJSONModel>mrktg_int_desc_en}"/>
-									<!--/ {GlobalJSONModel>MarktgIntDescEN}-->
-								</Select>
-								<core:Title text=""/>
-								<Label text="{i18n>Colour}"/>
-								<Select id="ID_ExteriorColorCode" forceSelection="true" items="{GlobalJSONModel>/colorData}" change="onColorCodeChange">
-									<core:Item key="{GlobalJSONModel>ExteriorColorCode}"
-										text="{GlobalJSONModel>ExteriorColorCode} - {GlobalJSONModel>MarketingDescriptionEXTColorEN}"/>
-								</Select>
-								<Label text="{i18n>APX}"/>
-								<Select id="ID_APXValue" forceSelection="true" items="{GlobalJSONModel>/APXCollection}">
-									<core:Item key="{GlobalJSONModel>APX}" text="{GlobalJSONModel>APX}"/>
-								</Select>
-								<Label text="{i18n>ETA}"/>
-								<DatePicker id="id_ETADate" value="" valueFormat="yyyy-MM-dd" displayFormat="dd-MM-yyyy" change="handleETAChange"
-									class="sapUiSmallMarginBottom">
+								<Label text="{i18n>Dealer}" design="Bold" required="required">
 									<layoutData>
-										<l:GridData span="XL2 L4 M4 S4"/>
+										<l:GridData span="XL2 L2 M2 S6"/>
 									</layoutData>
-								</DatePicker>
-								<Label text=""/>
+								</Label>
+								<ComboBox id="ID_DealearPicker" showSecondaryValues="true" width="25em" filterSecondaryValues="true" value="" selectedKey=""
+									selectionChange="onDealerChange" items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
+									<core:ListItem key="{BusinessDataModel>BusinessPartnerType}" text="{BusinessDataModel>BusinessPartner}"
+										additionalText="{BusinessDataModel>BusinessPartnerName}"/>
+									<layoutData>
+										<l:GridData span="XL4 L4 M4 S6"/>
+									</layoutData>
+								</ComboBox>
+								<Input value="" id="id_BusinessPartnerName" editable="false">
+									<layoutData>
+										<l:GridData span="XL4 L3 M3 S6"/>
+									</layoutData>
+								</Input>
 							</f:content>
 						</f:SimpleForm>
-						<Button text="{i18n>ApplyFilters}" type="Default" class="styleBtnPositioned" press="applyFiltersBtn"/>
-					</VBox>
-					<t:Table id="tableMultiHeader" selectionMode="None" rows="{GlobalJSONModel>/ETAResults}" visibleRowCount="6" class="styleMultiHeaderTable"
-						cellClick="onTable1Press">
-						<t:extension>
-							<Toolbar>
-								<Title id="title0" text="{i18n>PipelineETASummary}"/>
-							</Toolbar>
-						</t:extension>
-						<t:columns>
-							<!--NO Column Header-->
-							<t:Column width="10rem">
-								<t:multiLabels>
-									<Label text="" textAlign="Center"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Valuefield}" wrapping="true"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels id="multiheaderColumn">
-									<Label text="Stock" textAlign="Center" width="100%"/>
-									<Label text="Usage Type" textAlign="Center" width="100%"/>
-									<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits}" textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Ttlunits}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Ttlstocks}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>OpenStock} " tooltip="{i18n>OpenStock} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Openstock}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>DNCStock} " tooltip="{i18n>DNCStock} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Dncstock}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>BStock} " tooltip="{i18n>BStock} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Bstock}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>DNCDemoLoaner} " tooltip="{i18n>DNCDemoLoaner} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>DncdemoLoaner}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-						<t:Column>
-								<t:multiLabels>
-									<Label text="Retail" textAlign="Center" width="100%"/>
+						<VBox class="sapUiSmallMargin stylePosition">
+							<f:SimpleForm id="formContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false" emptySpanL="0"
+								emptySpanM="0" columnsL="2" columnsM="2" class="styleForms">
+								<f:content>
+									<core:Title text=""/>
+									<Label text="{i18n>ModelYear}"/>
+									<ComboBox id="ID_modelYearPicker" selectionChange="onModelYearChange" change="onModelYearInput" showSecondaryValues="true"
+										filterSecondaryValues="true" value="" selectedKey="" items="{ path: 'ModelYearModel>/ModelYearList', sorter: { path: 'ModelYearList' } }">
+										<core:ListItem key="{ModelYearModel>ModelYear}" text="{ModelYearModel>ModelYear}"/>
+									</ComboBox>
+									<Label text="{i18n>Series}"/>
+									<Select id="ID_seriesDesc" forceSelection="true" change="onSeriesSelectionChange" items="{GlobalJSONModel>/seriesData}">
+										<core:Item key="{GlobalJSONModel>ModelSeriesNo}" text="{GlobalJSONModel>TCISeriesDescriptionEN}"/>
+									</Select>
+									<Label text="{i18n>Model}"/>
+									<Select id="ID_modelDesc" forceSelection="true" items="{GlobalJSONModel>/modelData}" change="onModelSelectionChange">
+										<core:Item key="{GlobalJSONModel>Model}" text="{GlobalJSONModel>Model} - {GlobalJSONModel>ENModelDesc}"/>
+									</Select>
+									<Label text="{i18n>Suffix}"/>
+									<Select id="ID_marktgIntDesc" forceSelection="true" items="{GlobalJSONModel>/suffixData}" change="onSuffixChange">
+										<core:Item key="{GlobalJSONModel>Suffix}"
+											text="{GlobalJSONModel>Suffix} - {GlobalJSONModel>SuffixDescriptionEN} / {GlobalJSONModel>mrktg_int_desc_en}"/>
+										<!--/ {GlobalJSONModel>MarktgIntDescEN}-->
+									</Select>
+									<core:Title text=""/>
+									<Label text="{i18n>Colour}"/>
+									<Select id="ID_ExteriorColorCode" forceSelection="true" items="{GlobalJSONModel>/colorData}" change="onColorCodeChange">
+										<core:Item key="{GlobalJSONModel>ExteriorColorCode}"
+											text="{GlobalJSONModel>ExteriorColorCode} - {GlobalJSONModel>MarketingDescriptionEXTColorEN}"/>
+									</Select>
+									<Label text="{i18n>APX}"/>
+									<Select id="ID_APXValue" forceSelection="true" items="{GlobalJSONModel>/APXCollection}">
+										<core:Item key="{GlobalJSONModel>APX}" text="{GlobalJSONModel>APX}"/>
+									</Select>
+									<Label text="{i18n>ETA}"/>
+									<DatePicker id="id_ETADate" value="" valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd" change="handleETAChange"
+										class="sapUiSmallMarginBottom">
+										<layoutData>
+											<l:GridData span="XL2 L4 M4 S4"/>
+										</layoutData>
+									</DatePicker>
 									<Label text=""/>
-									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" width="100%" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Retail}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units" textAlign="Center" width="100%"/>
-									<Label text="Fleet" textAlign="Center" width="100%"/>
-									<Label text="{i18n>TTLFleet} " tooltip="{i18n>TTLFleet} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Ttlfleet}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="" textAlign="Center"/>
-									<Label text="{i18n>DealerElite} " tooltip="{i18n>DealerElite} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Dealerelite}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center" width="100%"/>
-									<Label text="{i18n>DealerRAC} " tooltip="{i18n>DealerRAC} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Dealerrac}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center"/>
-									<Label text="{i18n>Mobility} " tooltip="{i18n>Mobility} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Mobility}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units" wrapping="true"/>
-									<Label text="Fleet" textAlign="Center"/>
-									<Label text="{i18n>NationalElite} " tooltip="{i18n>NationalElite} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Nationalelite}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center"/>
-									<Label text="{i18n>NationalRAC} " tooltip="{i18n>NationalRAC} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Nationalrac}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<!--Blank Column-->
-							<t:Column id="blankBG" class="blankBG">
-								<t:multiLabels class="blankBG">
-									<Label text="" class="blankBG"/>
-								</t:multiLabels>
-								<t:template class="blankBG">
-									<Text text="" class="blankBG"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="References" textAlign="Center" width="100%"/>
-									<Label text=""/>
-									<Label text="Holds" tooltip="Holds" textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Holds}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="References"/>
-									<Label text=""/>
-									<Label text="Drop Ship" tooltip="Drop Ship" textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Dropship}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-						</t:columns>
-					</t:Table>
-					<!--Second Table-->
-					<t:Table id="tableMultiHeader2" selectionMode="None" rows="{GlobalJSONModel>/InventSumResults}" visibleRowCount="5"
-						class="styleMultiHeaderTable" cellClick="onTable2Press">
-						<t:extension>
-							<Toolbar>
-								<Title id="title" text="{i18n>InventorySummary}"/>
-							</Toolbar>
-						</t:extension>
-						<t:columns>
-							<!--NO Column Header-->
-							<t:Column width="10rem">
-								<t:multiLabels>
-									<Label text="" textAlign="Center"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Valuefield}" textAlign="Center" wrapping="true"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels id="multiheaderColumn">
-									<Label text="Stock" textAlign="Center" width="100%"/>
-									<Label text="Usage Type" textAlign="Center" width="100%"/>
-									<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Ttlunits}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Ttlstocks}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>OpenStock} " tooltip="{i18n>OpenStock} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Openstock}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>DNCStock} " tooltip="{i18n>DNCStock} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Dncstock}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>BStock} " tooltip="{i18n>BStock} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Bstock}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>DNCDemoLoaner} " tooltip="{i18n>DNCDemoLoaner} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>DncdemoLoaner}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels sortProperty="Retail">
-									<Label text="Retail" textAlign="Center" width="100%"/>
-									<Label text=""/>
-									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" width="100%" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Retail}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units" textAlign="Center" width="100%"/>
-									<Label text="Fleet" textAlign="Center" width="100%"/>
-									<Label text="{i18n>TTLFleet} " tooltip="{i18n>TTLFleet} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Ttlfleet}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center"/>
-									<Label text="{i18n>DealerElite} " tooltip="{i18n>DealerElite} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Dealerelite}" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center" width="100%"/>
-									<Label text="{i18n>DealerRAC} " tooltip="{i18n>DealerRAC} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Dealerrac}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center"/>
-									<Label text="{i18n>Mobility} " tooltip="{i18n>Mobility} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Mobility}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units" wrapping="true"/>
-									<Label text="Fleet" textAlign="Center"/>
-									<Label text="{i18n>NationalElite} " tooltip="{i18n>NationalElite} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Nationalelite}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center"/>
-									<Label text="{i18n>NationalRAC} " tooltip="{i18n>NationalRAC} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Nationalrac}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<!--Blank Column-->
-							<t:Column id="blankBG2">
-								<t:multiLabels>
-									<Label text="" class="blankBG"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="" class="blankBG"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="References" textAlign="Center" width="100%"/>
-									<Label text=""/>
-									<Label text="Holds" tooltip="Holds" textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Holds}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="References"/>
-									<Label text=""/>
-									<Label text="Drop Ship" tooltip="Drop Ship" textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Dropship}" textAlign="Center" class="TabFontStyle"/>
-								</t:template>
-							</t:Column>
-						</t:columns>
-					</t:Table>
-					<!--Third Table-->
-					<t:Table id="tableMultiHeader3" selectionMode="None" rows="{GlobalJSONModel>/DeliveryResults}" visibleRowCount="6"
-						class="styleMultiHeaderTable" cellClick="onTable3Press">
-						<t:extension>
-							<Toolbar>
-								<Title text="{i18n>DeliverySummary}"/>
-							</Toolbar>
-						</t:extension>
-						<t:columns>
-							<!--NO Column Header-->
-							<t:Column width="10rem">
-								<t:multiLabels>
-									<Label text="" textAlign="Center"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Valuefield}" textAlign="Center" wrapping="true" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels id="multiheaderColumn">
-									<Label text="Stock" textAlign="Center" width="100%"/>
-									<Label text="Usage Type" textAlign="Center" width="100%"/>
-									<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Ttlunits}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Ttlstocks}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>OpenStock} " tooltip="{i18n>OpenStock} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Openstock}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>DNCStock} " tooltip="{i18n>DNCStock} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Dncstock}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>BStock} " tooltip="{i18n>BStock} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Bstock}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Stock"/>
-									<Label text="Usage Type" textAlign="Center"/>
-									<Label text="{i18n>DNCDemoLoaner} " tooltip="{i18n>DNCDemoLoaner} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>DncdemoLoaner}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels sortProperty="Retail">
-									<Label text="Retail" textAlign="Center" width="100%"/>
-									<Label text="" textAlign="Center" width="100%"/>
-									<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" width="100%" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Retail}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units" textAlign="Center" width="100%"/>
-									<Label text="Fleet" textAlign="Center" width="100%"/>
-									<Label text="{i18n>TTLFleet} " tooltip="{i18n>TTLFleet} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Ttlfleet}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center"/>
-									<Label text="{i18n>DealerElite} " tooltip="{i18n>DealerElite} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Dealerelite}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center" width="100%"/>
-									<Label text="{i18n>DealerRAC} " tooltip="{i18n>DealerRAC} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Dealerrac}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center"/>
-									<Label text="{i18n>Mobility} " tooltip="{i18n>Mobility} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Mobility}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units" wrapping="true"/>
-									<Label text="Fleet" textAlign="Center"/>
-									<Label text="{i18n>NationalElite} " tooltip="{i18n>NationalElite} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Nationalelite}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="Priority Units"/>
-									<Label text="Fleet" textAlign="Center"/>
-									<Label text="{i18n>NationalRAC} " tooltip="{i18n>NationalRAC} " textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Nationalrac}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<!--Blank Column-->
-							<t:Column id="blankBG3">
-								<t:multiLabels>
-									<Label text="" class="blankBG"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="" class="blankBG"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="References" textAlign="Center" width="100%"/>
-									<Label text=""/>
-									<Label text="Holds" tooltip="Holds" textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Holds}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-							<t:Column>
-								<t:multiLabels>
-									<Label text="References"/>
-									<Label text=""/>
-									<Label text="Drop Ship" tooltip="Drop Ship" textAlign="Center" wrapping="true"/>
-								</t:multiLabels>
-								<t:template>
-									<Text text="{GlobalJSONModel>Dropship}" textAlign="Center" class="TabFontStyle" width="100%"/>
-								</t:template>
-							</t:Column>
-						</t:columns>
-					</t:Table>
-				</content>
+								</f:content>
+							</f:SimpleForm>
+							<Button text="{i18n>ApplyFilters}" type="Default" class="styleBtnPositioned" press="applyFiltersBtn"/>
+						</VBox>
+						<t:Table id="tableMultiHeader" selectionMode="None" rows="{GlobalJSONModel>/ETAResults}" visibleRowCount="6" class="styleMultiHeaderTable"
+							cellClick="onTable1Press">
+							<t:extension>
+								<Toolbar>
+									<Title id="title0" text="{i18n>PipelineETASummary}"/>
+								</Toolbar>
+							</t:extension>
+							<t:columns>
+								<!--NO Column Header-->
+								<t:Column width="10rem">
+									<t:multiLabels>
+										<Label text="" textAlign="Center"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Valuefield}" wrapping="true"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels id="multiheaderColumn">
+										<Label text="Stock" textAlign="Center" width="100%"/>
+										<Label text="Usage Type" textAlign="Center" width="100%"/>
+										<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits}" textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Ttlunits}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Ttlstocks}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>OpenStock} " tooltip="{i18n>OpenStock} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Openstock}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>DNCStock} " tooltip="{i18n>DNCStock} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Dncstock}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>BStock} " tooltip="{i18n>BStock} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Bstock}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>DNCDemoLoaner} " tooltip="{i18n>DNCDemoLoaner} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>DncdemoLoaner}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Retail" textAlign="Center" width="100%"/>
+										<Label text=""/>
+										<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" width="100%" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Retail}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units" textAlign="Center" width="100%"/>
+										<Label text="Fleet" textAlign="Center" width="100%"/>
+										<Label text="{i18n>TTLFleet} " tooltip="{i18n>TTLFleet} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Ttlfleet}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units"/>
+										<Label text="" textAlign="Center"/>
+										<Label text="{i18n>DealerElite} " tooltip="{i18n>DealerElite} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Dealerelite}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units"/>
+										<Label text="Fleet" textAlign="Center" width="100%"/>
+										<Label text="{i18n>DealerRAC} " tooltip="{i18n>DealerRAC} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Dealerrac}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units"/>
+										<Label text="Fleet" textAlign="Center"/>
+										<Label text="{i18n>Mobility} " tooltip="{i18n>Mobility} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Mobility}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units" wrapping="true"/>
+										<Label text="Fleet" textAlign="Center"/>
+										<Label text="{i18n>NationalElite} " tooltip="{i18n>NationalElite} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Nationalelite}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units"/>
+										<Label text="Fleet" textAlign="Center"/>
+										<Label text="{i18n>NationalRAC} " tooltip="{i18n>NationalRAC} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Nationalrac}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<!--Blank Column-->
+								<t:Column id="blankBG" class="blankBG">
+									<t:multiLabels class="blankBG">
+										<Label text="" class="blankBG"/>
+									</t:multiLabels>
+									<t:template class="blankBG">
+										<Text text="" class="blankBG"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="References" textAlign="Center" width="100%"/>
+										<Label text=""/>
+										<Label text="Holds" tooltip="Holds" textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Holds}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="References"/>
+										<Label text=""/>
+										<Label text="Drop Ship" tooltip="Drop Ship" textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Dropship}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+							</t:columns>
+						</t:Table>
+						<!--Second Table-->
+						<t:Table id="tableMultiHeader2" selectionMode="None" rows="{GlobalJSONModel>/InventSumResults}" visibleRowCount="5"
+							class="styleMultiHeaderTable" cellClick="onTable2Press">
+							<t:extension>
+								<Toolbar>
+									<Title id="title" text="{i18n>InventorySummary}"/>
+								</Toolbar>
+							</t:extension>
+							<t:columns>
+								<!--NO Column Header-->
+								<t:Column width="10rem">
+									<t:multiLabels>
+										<Label text="" textAlign="Center"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Valuefield}" textAlign="Center" wrapping="true"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels id="multiheaderColumn">
+										<Label text="Stock" textAlign="Center" width="100%"/>
+										<Label text="Usage Type" textAlign="Center" width="100%"/>
+										<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Ttlunits}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Ttlstocks}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>OpenStock} " tooltip="{i18n>OpenStock} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Openstock}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>DNCStock} " tooltip="{i18n>DNCStock} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Dncstock}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>BStock} " tooltip="{i18n>BStock} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Bstock}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>DNCDemoLoaner} " tooltip="{i18n>DNCDemoLoaner} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>DncdemoLoaner}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels sortProperty="Retail">
+										<Label text="Retail" textAlign="Center" width="100%"/>
+										<Label text=""/>
+										<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" width="100%" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Retail}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units" textAlign="Center" width="100%"/>
+										<Label text="Fleet" textAlign="Center" width="100%"/>
+										<Label text="{i18n>TTLFleet} " tooltip="{i18n>TTLFleet} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Ttlfleet}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units"/>
+										<Label text="Fleet" textAlign="Center"/>
+										<Label text="{i18n>DealerElite} " tooltip="{i18n>DealerElite} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Dealerelite}" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units"/>
+										<Label text="Fleet" textAlign="Center" width="100%"/>
+										<Label text="{i18n>DealerRAC} " tooltip="{i18n>DealerRAC} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Dealerrac}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units"/>
+										<Label text="Fleet" textAlign="Center"/>
+										<Label text="{i18n>Mobility} " tooltip="{i18n>Mobility} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Mobility}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units" wrapping="true"/>
+										<Label text="Fleet" textAlign="Center"/>
+										<Label text="{i18n>NationalElite} " tooltip="{i18n>NationalElite} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Nationalelite}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units"/>
+										<Label text="Fleet" textAlign="Center"/>
+										<Label text="{i18n>NationalRAC} " tooltip="{i18n>NationalRAC} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Nationalrac}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<!--Blank Column-->
+								<t:Column id="blankBG2">
+									<t:multiLabels>
+										<Label text="" class="blankBG"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="" class="blankBG"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="References" textAlign="Center" width="100%"/>
+										<Label text=""/>
+										<Label text="Holds" tooltip="Holds" textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Holds}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="References"/>
+										<Label text=""/>
+										<Label text="Drop Ship" tooltip="Drop Ship" textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Dropship}" textAlign="Center" class="TabFontStyle"/>
+									</t:template>
+								</t:Column>
+							</t:columns>
+						</t:Table>
+						<!--Third Table-->
+						<t:Table id="tableMultiHeader3" selectionMode="None" rows="{GlobalJSONModel>/DeliveryResults}" visibleRowCount="6"
+							class="styleMultiHeaderTable" cellClick="onTable3Press">
+							<t:extension>
+								<Toolbar>
+									<Title text="{i18n>DeliverySummary}"/>
+								</Toolbar>
+							</t:extension>
+							<t:columns>
+								<!--NO Column Header-->
+								<t:Column width="10rem">
+									<t:multiLabels>
+										<Label text="" textAlign="Center"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Valuefield}" textAlign="Center" wrapping="true" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels id="multiheaderColumn">
+										<Label text="Stock" textAlign="Center" width="100%"/>
+										<Label text="Usage Type" textAlign="Center" width="100%"/>
+										<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Ttlunits}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Ttlstocks}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>OpenStock} " tooltip="{i18n>OpenStock} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Openstock}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>DNCStock} " tooltip="{i18n>DNCStock} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Dncstock}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>BStock} " tooltip="{i18n>BStock} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Bstock}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Stock"/>
+										<Label text="Usage Type" textAlign="Center"/>
+										<Label text="{i18n>DNCDemoLoaner} " tooltip="{i18n>DNCDemoLoaner} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>DncdemoLoaner}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels sortProperty="Retail">
+										<Label text="Retail" textAlign="Center" width="100%"/>
+										<Label text="" textAlign="Center" width="100%"/>
+										<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" width="100%" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Retail}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units" textAlign="Center" width="100%"/>
+										<Label text="Fleet" textAlign="Center" width="100%"/>
+										<Label text="{i18n>TTLFleet} " tooltip="{i18n>TTLFleet} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Ttlfleet}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units"/>
+										<Label text="Fleet" textAlign="Center"/>
+										<Label text="{i18n>DealerElite} " tooltip="{i18n>DealerElite} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Dealerelite}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units"/>
+										<Label text="Fleet" textAlign="Center" width="100%"/>
+										<Label text="{i18n>DealerRAC} " tooltip="{i18n>DealerRAC} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Dealerrac}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units"/>
+										<Label text="Fleet" textAlign="Center"/>
+										<Label text="{i18n>Mobility} " tooltip="{i18n>Mobility} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Mobility}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units" wrapping="true"/>
+										<Label text="Fleet" textAlign="Center"/>
+										<Label text="{i18n>NationalElite} " tooltip="{i18n>NationalElite} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Nationalelite}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="Priority Units"/>
+										<Label text="Fleet" textAlign="Center"/>
+										<Label text="{i18n>NationalRAC} " tooltip="{i18n>NationalRAC} " textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Nationalrac}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<!--Blank Column-->
+								<t:Column id="blankBG3">
+									<t:multiLabels>
+										<Label text="" class="blankBG"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="" class="blankBG"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="References" textAlign="Center" width="100%"/>
+										<Label text=""/>
+										<Label text="Holds" tooltip="Holds" textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Holds}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<t:multiLabels>
+										<Label text="References"/>
+										<Label text=""/>
+										<Label text="Drop Ship" tooltip="Drop Ship" textAlign="Center" wrapping="true"/>
+									</t:multiLabels>
+									<t:template>
+										<Text text="{GlobalJSONModel>Dropship}" textAlign="Center" class="TabFontStyle" width="100%"/>
+									</t:template>
+								</t:Column>
+							</t:columns>
+						</t:Table>
+					</content>
 				</ScrollContainer>
 				<footer>
 					<OverflowToolbar></OverflowToolbar>

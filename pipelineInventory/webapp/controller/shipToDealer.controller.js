@@ -87,6 +87,12 @@ sap.ui.define([
 				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
 				_thatSD.oDropShipDataModel.getData().results = [];
 				for (var n = 0; n < VUIdata.length; n++) {
+					
+					VUIdata[n].SUFFIX_DESC_FR = VUIdata[n].SUFFIX_DESC_FR.replace("%2F","/");
+					VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F","/");
+					VUIdata[n].SERIES_DESC_EN = VUIdata[n].SERIES_DESC_EN.replace("%2F","/");
+					VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F","/");
+					VUIdata[n].SERIES_DESC_FR = VUIdata[n].SERIES_DESC_FR.replace("%2F","/");
 					if (VUIdata[n].DropShip !== false) {
 						_thatSD.oDropShipDataModel.getData().results.push(VUIdata[n]);
 						_thatSD.oDropShipDataModel.updateBindings(true);

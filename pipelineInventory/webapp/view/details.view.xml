@@ -33,6 +33,14 @@
 						<!--<f:SimpleForm width="100%" editable="true" layout="ResponsiveGridLayout">-->
 						<f:content>
 							<HBox>
+								<Label text="{i18n>OrderNumber}" class="sapUiSmallMargin"/>
+								<Input type="Text" liveChange="onWildCardSearch" id="ID_OrderNoVal">
+									<layoutData>
+										<l:GridData span="L2 M12 S12"/>
+									</layoutData>
+								</Input>
+							</HBox>
+							<HBox>
 								<Label text="{i18n>VTN}" class="sapUiSmallMargin"/>
 								<Input type="Text" liveChange="onVTNChange" id="ID_VTNVal">
 									<layoutData>
@@ -48,14 +56,7 @@
 									</layoutData>
 								</Input>
 							</HBox>
-							<HBox>
-								<Label text="{i18n>OrderNumber}" class="sapUiSmallMargin"/>
-								<Input type="Text" liveChange="onWildCardSearch" id="ID_OrderNoVal">
-									<layoutData>
-										<l:GridData span="L2 M12 S12"/>
-									</layoutData>
-								</Input>
-							</HBox>
+							
 							<HBox>
 								<Label text="" class="sapUiSmallMargin"/>
 								<!--<Button text="{i18n>ApplyFilters}" type="Default" press="onApplyFilterBtn">

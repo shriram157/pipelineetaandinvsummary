@@ -315,6 +315,10 @@ sap.ui.define([
 				"VehicleDetailsJSON").sPath);
 			Data.Suffix = Data.Suffix.replace("/", "%2F");
 			Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("/", "%2F");
+			Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("/", "%2F");
+			Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("/", "%2F");
+			Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("/", "%2F");
+			Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("/", "%2F");
 			Data.__metadata = "";
 			_thatDT.getRouter().navTo("vehicleDetails", {
 				VCData: JSON.stringify(Data)
@@ -398,11 +402,25 @@ sap.ui.define([
 
 		navToDropShipVehicles: function () {
 			sap.ui.core.BusyIndicator.hide();
+			for(var i=0; i < _thatDT.checkedData.length; i++){
+				_thatDT.checkedData[i].SUFFIX_DESC_FR = _thatDT.checkedData[i].SUFFIX_DESC_FR.replace("/","%2F");
+				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/","%2F");
+				_thatDT.checkedData[i].SERIES_DESC_EN = _thatDT.checkedData[i].SERIES_DESC_EN.replace("/","%2F");
+				_thatDT.checkedData[i].SUFFIX_DESC_EN = _thatDT.checkedData[i].SUFFIX_DESC_EN.replace("/","%2F");
+				_thatDT.checkedData[i].SERIES_DESC_FR = _thatDT.checkedData[i].SERIES_DESC_FR.replace("/","%2F");
+			}
 			_thatDT.getRouter().navTo("shipToDealer", {
 				vehicleData: JSON.stringify(_thatDT.checkedData)
 			});
 		},
 		navToAssignVehicles: function () {
+			for(var i=0; i < _thatDT.checkedData.length; i++){
+				_thatDT.checkedData[i].SUFFIX_DESC_FR = _thatDT.checkedData[i].SUFFIX_DESC_FR.replace("/","%2F");
+				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/","%2F");
+				_thatDT.checkedData[i].SERIES_DESC_EN = _thatDT.checkedData[i].SERIES_DESC_EN.replace("/","%2F");
+				_thatDT.checkedData[i].SUFFIX_DESC_EN = _thatDT.checkedData[i].SUFFIX_DESC_EN.replace("/","%2F");
+				_thatDT.checkedData[i].SERIES_DESC_FR = _thatDT.checkedData[i].SERIES_DESC_FR.replace("/","%2F");
+			}
 			_thatDT.getRouter().navTo("assignVehicles", {
 				vehicleData: JSON.stringify(_thatDT.checkedData)
 			});

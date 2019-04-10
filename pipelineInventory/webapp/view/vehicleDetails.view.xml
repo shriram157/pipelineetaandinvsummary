@@ -27,6 +27,7 @@
 					</ToolbarSpacer>
 					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="NavigateBack"/>
 				</tnt:ToolHeader>
+				<ScrollContainer height='90%' width="100%" vertical='true'>
 				<content>
 					<VBox class="sapUiSmallMargin">
 						<f:SimpleForm class="formDetails" id="ID_VLForm" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false"
@@ -123,6 +124,7 @@
 						<!--<Button text="{i18n>Back}" type="Default" press="NavigateBack"/>-->
 					</OverflowToolbar>
 				</content>
+				</ScrollContainer>
 				<footer>
 					<Toolbar>
 						<!--<ToolbarSpacer/>-->

@@ -27,6 +27,7 @@
 					</ToolbarSpacer>
 					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="NavigateBack"/>
 				</tnt:ToolHeader>
+				<ScrollContainer height='90%' width="100%" vertical='true'>
 				<content>
 					<VBox class="sapUiSmallMargin">
 						<f:SimpleForm class="formDetails" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false" emptySpanL="0"
@@ -42,10 +43,12 @@
 								<Label text="{i18n>Suffix}"/>
 								<Text
 									text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN} / {VehicleDetailsJSON>/selectedVehicleData/0/INTCOL_DESC_EN}"/>
-								<Label text="{i18n>APX}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>
+								
 								<Label text="{i18n>Colour}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ExteriorColorCode} {VehicleDetailsJSON>/selectedVehicleData/0/EXTCOL_DESC_EN}"/>
+								<Label text="{i18n>APX}"/>
+								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>
+								
 								<Label text="{i18n>OrderType}"/>
 								<!--{VehicleDetailsJSON>/selectedVehicleData/0/ZZORDERTYPE} removed from order type (defect number 10426)-->
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ORDERTYPE_DESC_EN}"/>
@@ -76,7 +79,10 @@
 									<!--/ {GlobalJSONModel>MarktgIntDescEN}-->
 								</Select>
 								<Label text="{i18n>NewAPX}" required="true"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}" id="APXrequired"/>
+								<Select forceSelection="false" selectedKey="" id="APXrequired" items="{ path: 'VehicleDetailsJSON>/selectedVehicleData/0/newAPXValues'}">
+									<core:Item key="{VehicleDetailsJSON>zzapx}" text="{VehicleDetailsJSON>zzapx}"/>
+								</Select>
+								<!--<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}" id="APXrequired"/>-->
 								<Label text="{i18n>NewColour}" required="true"/>
 								<Select id="ID_ExteriorColorSelect" forceSelection="true" items="{VehicleDetailsJSON>/colorData}">
 									<core:Item key="{VehicleDetailsJSON>ExteriorColorCode}"
@@ -105,6 +111,7 @@
 						<Button text="{i18n>Request}" type="Default" press="_DataValidate"/>
 					</OverflowToolbar>
 				</content>
+				</ScrollContainer>
 				<footer>
 					<Toolbar>
 						<!--<ToolbarSpacer/>-->

@@ -183,42 +183,42 @@ sap.ui.define([
 						});
 					} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
 						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Zone Pacific",
+							BusinessPartner: "Pacific Zone",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
 						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Zone Prairie",
+							BusinessPartner: "Prairie Zone",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
 						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Zone Central",
+							BusinessPartner: "Central Zone",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
 						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Zone Atlantic",
+							BusinessPartner: "Atlantic Zone",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
 						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Zone Quebec",
+							BusinessPartner: "Quebec Zone",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
 						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Zone Lexus",
+							BusinessPartner: "Lexus Zone",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
@@ -232,6 +232,7 @@ sap.ui.define([
 					_that.BusinessPartnerData.refresh(true);
 					if(_that.BusinessPartnerData.oData.SamlList.UserType[0] == "Dealer"){
 						_that.getView().byId("ID_DealearPicker").setSelectedItem(_that.getView().byId("ID_DealearPicker").getItems()[0]);
+						_that.getView().byId("id_BusinessPartnerName").setValue(_that.getView().byId("ID_DealearPicker").getItems()[0].getAdditionalText());
 						_that.userType = "DDU";
 					   	SelectedDealer = _that.BusinessPartnerData.getData().DealerList[0].BusinessPartnerKey;
 					   	_that.intcolor = "";
@@ -418,8 +419,10 @@ sap.ui.define([
 				_that.intcolor = selectedDDValues[selectedDDValues.length - 1];
 				if (selectedDDValues[0] != "") {
 					_that.getView().byId("ID_DealearPicker").setSelectedKey(selectedDDValues[0]);
+					_that.getView().byId("id_BusinessPartnerName").setValue(selectedDDValues[selectedDDValues.length - 3].getAdditionalText());
 				} else if (selectedDDValues[selectedDDValues.length - 3] != "") {
 					_that.getView().byId("ID_DealearPicker").setSelectedItem(selectedDDValues[selectedDDValues.length - 3]);
+					_that.getView().byId("id_BusinessPartnerName").setValue(selectedDDValues[selectedDDValues.length - 3].getAdditionalText());
 				}
 				for (var i = 0; i < selectedDDValues.length; i++) {
 					if (selectedDDValues[i] != "") {
@@ -463,10 +466,12 @@ sap.ui.define([
 				_that.getView().byId("ID_ExteriorColorCode").setSelectedKey("Please Select");
 				_that.getView().byId("ID_APXValue").setSelectedKey("Please Select");
 				_that.getView().byId("id_ETADate").setValue();
-
+				
+				_that.getView().byId("id_BusinessPartnerName").setValue(oDealer.getParameters().selectedItem.getAdditionalText());
 				//var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
 				var SelectedDealerKey = oDealer.getParameters().selectedItem.getText();
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
+		
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 					if (SelectedDealerKey == "Zone All") {
 						_that.userType = "ZZA";
@@ -480,22 +485,22 @@ sap.ui.define([
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
 					if (SelectedDealerKey == "National All") {
 						_that.userType = "NNA";
-					} else if (SelectedDealerKey == "Zone Pacific") {
+					} else if (SelectedDealerKey == "Pacific Zone") {
 						_that.salesOffice = "1000";
 						_that.userType = "NZA";
-					} else if (SelectedDealerKey == "Zone Prairie") {
+					} else if (SelectedDealerKey == "Prairie Zone") {
 						_that.salesOffice = "2000";
 						_that.userType = "NZA";
-					} else if (SelectedDealerKey == "Zone Central") {
+					} else if (SelectedDealerKey == "Central Zone") {
 						_that.salesOffice = "3000";
 						_that.userType = "NZA";
-					} else if (SelectedDealerKey == "Zone Atlantic") {
+					} else if (SelectedDealerKey == "Atlantic Zone") {
 						_that.salesOffice = "5000";
 						_that.userType = "NZA";
-					} else if (SelectedDealerKey == "Zone Quebec") {
+					} else if (SelectedDealerKey == "Quebec Zone") {
 						_that.salesOffice = "4000";
 						_that.userType = "NZA";
-					} else if (SelectedDealerKey == "Zone Lexus") {
+					} else if (SelectedDealerKey == "Lexus Zone") {
 						_that.salesOffice = "9000";
 						_that.userType = "NZA";
 					} else if (SelectedDealerType == "Z004") {
@@ -513,6 +518,8 @@ sap.ui.define([
 						SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
 					}
 				}
+			}else{
+				_that.getView().byId("id_BusinessPartnerName").setValue(oDealer.getParameters().selectedItem.getAdditionalText());
 			}
 		},
 
