@@ -355,6 +355,12 @@ sap.ui.define([
 		NavToOrderChange: function () {
 			var obj = _thatVD.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatVD);
+			obj.newAPXValues = [];
+			for(var m = 0; m <_thatVD.oVehicleDetailsJSON.getData().APXData.length;m++){
+				obj.newAPXValues.push(_thatVD.oVehicleDetailsJSON.getData().APXData[m]);
+				obj.newAPXValues[m].__metadata = "";
+			}
+			
 			if (obj.NewSuffix != undefined) {
 				obj.NewSuffix = obj.NewSuffix.replace("/", "%2F");
 			}
