@@ -405,13 +405,15 @@ sap.ui.define([
 				_that.oGlobalJSONModel.updateBindings(true);
 				_that.userType = selectedDDValues[selectedDDValues.length - 2];
 				_that.intcolor = selectedDDValues[selectedDDValues.length - 1];
-				if (selectedDDValues[0] != "") {
+				_that.getView().byId("ID_DealearPicker").setSelectedItem(selectedDDValues[selectedDDValues.length - 3]);
+				_that.getView().byId("id_BusinessPartnerName").setValue(selectedDDValues[selectedDDValues.length - 3].getAdditionalText());
+				/*if (selectedDDValues[0] != "") {
 					_that.getView().byId("ID_DealearPicker").setSelectedKey(selectedDDValues[0]);
 					_that.getView().byId("id_BusinessPartnerName").setValue(selectedDDValues[selectedDDValues.length - 3].getAdditionalText());
 				} else if (selectedDDValues[selectedDDValues.length - 3] != "") {
 					_that.getView().byId("ID_DealearPicker").setSelectedItem(selectedDDValues[selectedDDValues.length - 3]);
 					_that.getView().byId("id_BusinessPartnerName").setValue(selectedDDValues[selectedDDValues.length - 3].getAdditionalText());
-				}
+				}*/
 				for (var i = 0; i < selectedDDValues.length; i++) {
 					if (selectedDDValues[i] != "") {
 						switch (i) {
