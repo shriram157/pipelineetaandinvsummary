@@ -224,6 +224,15 @@ sap.ui.define([
 				}
 			}
 		},
+		formatDate: function (oDate) {
+			if (oDate != "" && oDate != undefined) {
+				var Year = oDate.substring(0, 4);
+				var Month = oDate.substring(4, 6);
+				var Day = oDate.substring(6, 8);
+				var date = Year + "-" + Month + "-" + Day;
+				return date;
+			}
+		},
 		onExit: function () {
 			_thatAV.oAssignVehiclesModel.setData();
 			_thatAV.oAssignVehiclesModel.updateBindings(true);

@@ -4,9 +4,9 @@ sap.ui.define([
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/resource/ResourceModel',
 	"sap/ui/core/routing/History"
-], function (BaseController, JSONModel, ResourceModel,History) {
+], function (BaseController, JSONModel, ResourceModel, History) {
 	"use strict";
-	var _thatSD, SelectedDealerS,sSelectedLocale,Division;
+	var _thatSD, SelectedDealerS, sSelectedLocale, Division;
 	return BaseController.extend("pipelineInventory.controller.shipToDealer", {
 
 		onInit: function () {
@@ -61,7 +61,7 @@ sap.ui.define([
 				enableResubmitBtn: false
 			});
 			_thatSD.getView().setModel(_thatSD._oViewModel, "LocalModel");
-			
+
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -87,12 +87,12 @@ sap.ui.define([
 				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
 				_thatSD.oDropShipDataModel.getData().results = [];
 				for (var n = 0; n < VUIdata.length; n++) {
-					
-					VUIdata[n].SUFFIX_DESC_FR = VUIdata[n].SUFFIX_DESC_FR.replace("%2F","/");
-					VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F","/");
-					VUIdata[n].SERIES_DESC_EN = VUIdata[n].SERIES_DESC_EN.replace("%2F","/");
-					VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F","/");
-					VUIdata[n].SERIES_DESC_FR = VUIdata[n].SERIES_DESC_FR.replace("%2F","/");
+
+					VUIdata[n].SUFFIX_DESC_FR = VUIdata[n].SUFFIX_DESC_FR.replace("%2F", "/");
+					VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F", "/");
+					VUIdata[n].SERIES_DESC_EN = VUIdata[n].SERIES_DESC_EN.replace("%2F", "/");
+					VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F", "/");
+					VUIdata[n].SERIES_DESC_FR = VUIdata[n].SERIES_DESC_FR.replace("%2F", "/");
 					if (VUIdata[n].DropShip !== false) {
 						_thatSD.oDropShipDataModel.getData().results.push(VUIdata[n]);
 						_thatSD.oDropShipDataModel.updateBindings(true);
@@ -116,7 +116,7 @@ sap.ui.define([
 			} else {
 				_thatSD._oViewModel.setProperty("/enableResubmitBtn", false);
 			}
-			if(oDealer.getParameters().selectedItem.getText().split("-")[2] == "Zone All"){
+			if (oDealer.getParameters().selectedItem.getText().split("-")[2] == "Zone All") {
 				SelectedDealerKey = "-";
 			}
 			for (var d = 0; d < _thatSD.getView().getModel("BusinessDataModel").getData().DealerList.length; d++) {
@@ -133,7 +133,7 @@ sap.ui.define([
 			var DataModel = _thatSD.getOwnerComponent().getModel("DataModel");
 			// var oModel = new sap.ui.model.odata.v2.ODataModel(_thatSD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
 			DataModel.setUseBatch(false);
-			
+
 			if (_thatSD.oJSON.length > 0) {
 				for (var i = 0; i < _thatSD.oJSON.length; i++) {
 					this.dropshipData(DataModel, _thatSD.oJSON[i]);
@@ -151,7 +151,7 @@ sap.ui.define([
 			Obj.Suffix = jsonData.Suffix;
 			Obj.ExteriorColorCode = jsonData.ExteriorColorCode;
 			Obj.INTCOL = jsonData.INTCOL;
-			
+
 			this._oToken = model.getHeaders()['x-csrf-token'];
 			$.ajaxSetup({
 				headers: {
@@ -168,12 +168,12 @@ sap.ui.define([
 						var data = _thatSD.oDropShipDataModel.getData().results;
 						for (var i = 0; i < data.length; i++) {
 							for (var j = 0; j < _thatSD.responseData.length; j++) {
-							if (_thatSD.responseData[j].VHCLE == data[i].VHCLE) {
-								data[i].Error = _thatSD.responseData[j].Error;
-								data[i].Status = _thatSD.responseData[j].Status;
-							}
-							_thatSD.oDropShipDataModel.updateBindings(true);
-							_thatSD.oDropShipDataModel.refresh(true);
+								if (_thatSD.responseData[j].VHCLE == data[i].VHCLE) {
+									data[i].Error = _thatSD.responseData[j].Error;
+									data[i].Status = _thatSD.responseData[j].Status;
+								}
+								_thatSD.oDropShipDataModel.updateBindings(true);
+								_thatSD.oDropShipDataModel.refresh(true);
 							}
 						}
 						_thatSD.getRouter().navTo("shipToDealerResponse", {
@@ -202,18 +202,26 @@ sap.ui.define([
 				_thatSD.getRouter().navTo("changeHistory", {
 					SelectedDealer: SelectedDealerS
 				});
-			}else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("Back")) {
+			} else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();
 				var sPreviousHash = oHistory.getPreviousHash();
 				if (sPreviousHash !== undefined) {
 					window.history.go(-1);
-				}else{
-						var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatSD);
-						oRouter.navTo("details");
-				} 
+				} else {
+					var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatSD);
+					oRouter.navTo("details");
+				}
 			}
 		},
-
+		formatDate: function (oDate) {
+			if (oDate != "" && oDate != undefined) {
+				var Year = oDate.substring(0, 4);
+				var Month = oDate.substring(4, 6);
+				var Day = oDate.substring(6, 8);
+				var date = Year + "-" + Month + "-" + Day;
+				return date;
+			}
+		},
 		onExit: function () {
 			_thatSD.oDropShipDataModel.setData();
 			_thatSD.oDropShipDataModel.updateBindings(true);
