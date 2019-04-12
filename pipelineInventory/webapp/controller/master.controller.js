@@ -8,7 +8,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (Controller, JSONModel, ResourceModel, BaseController, MessageBox) {
 	"use strict";
-	
+
 	var Division, DivUser, _that, filteredData, SelectedDealer, seriesdata = [],
 		sSelectedLocale;
 	return BaseController.extend("pipelineInventory.controller.master", {
@@ -83,9 +83,9 @@ sap.ui.define([
 
 				var attributes = [{
 					"Attribute": "",
-					"BusinessPartner": "Zone All",
+					"BusinessPartner": "-",
 					"BusinessPartnerKey": "",
-					"BusinessPartnerName": "",
+					"BusinessPartnerName": "Zone All",
 					"BusinessPartnerType": "",
 					"Division": "",
 					"SearchTerm2": ""
@@ -153,9 +153,9 @@ sap.ui.define([
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 						_that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
 						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Zone All",
+							BusinessPartner: "-",
 							BusinessPartnerKey: "",
-							BusinessPartnerName: "",
+							BusinessPartnerName: "Zone All",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
@@ -208,12 +208,12 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					_that.BusinessPartnerData.updateBindings(true);
 					_that.BusinessPartnerData.refresh(true);
-					if(_that.BusinessPartnerData.oData.SamlList.UserType[0] == "Dealer"){
+					if (_that.BusinessPartnerData.oData.SamlList.UserType[0] == "Dealer") {
 						_that.getView().byId("ID_DealearPicker").setSelectedItem(_that.getView().byId("ID_DealearPicker").getItems()[0]);
 						_that.getView().byId("id_BusinessPartnerName").setValue(_that.getView().byId("ID_DealearPicker").getItems()[0].getAdditionalText());
 						_that.userType = "DDU";
-					   	SelectedDealer = _that.BusinessPartnerData.getData().DealerList[0].BusinessPartnerKey;
-					   	_that.intcolor = "";
+						SelectedDealer = _that.BusinessPartnerData.getData().DealerList[0].BusinessPartnerKey;
+						_that.intcolor = "";
 						_that.applyFiltersBtn();
 					}
 				},
@@ -456,12 +456,14 @@ sap.ui.define([
 				_that.getView().byId("ID_ExteriorColorCode").setSelectedKey("Please Select");
 				_that.getView().byId("ID_APXValue").setSelectedKey("Please Select");
 				_that.getView().byId("id_ETADate").setValue();
-				
+
 				_that.getView().byId("id_BusinessPartnerName").setValue(oDealer.getParameters().selectedItem.getAdditionalText());
 				//var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
 				var SelectedDealerKey = oDealer.getParameters().selectedItem.getText();
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
-		
+				if (SelectedDealerKey == "-") {
+					SelectedDealerKey = "Zone All"
+				}
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 					if (SelectedDealerKey == "Zone All") {
 						_that.userType = "ZZA";
@@ -508,7 +510,7 @@ sap.ui.define([
 						SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
 					}
 				}
-			}else{
+			} else {
 				_that.getView().byId("id_BusinessPartnerName").setValue(oDealer.getParameters().selectedItem.getAdditionalText());
 			}
 		},
@@ -562,7 +564,8 @@ sap.ui.define([
 			];
 			seriesModel = _that.oGlobalJSONModel.getData();
 			console.log(selectedDDValues)
-			filteredData = "?$filter=Division eq '"+DivUser+"' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType + "' and Dealer eq '" +
+			filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType +
+				"' and Dealer eq '" +
 				SelectedDealer + "' and Model eq '" + _that.ID_model +
 				"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
 				"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
@@ -806,11 +809,11 @@ sap.ui.define([
 							"Model": "Please Select",
 							"ENModelDesc": ""
 						});
-					
+
 					} else {
 						sap.ui.core.BusyIndicator.hide();
 					}
-						_that.oGlobalJSONModel.updateBindings(true);
+					_that.oGlobalJSONModel.updateBindings(true);
 				},
 				error: function (oError) {
 					sap.ui.core.BusyIndicator.hide();
@@ -1054,7 +1057,8 @@ sap.ui.define([
 				obj_first.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
 			} else obj_first.Model = "";
 
-			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select" && _that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "") {
+			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select" && _that.getView().byId("ID_marktgIntDesc").getSelectedKey() !=
+				"") {
 				obj_first.suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
 				var intcol = _that.getView().getModel("GlobalJSONModel").getProperty(_that.getView().byId("ID_marktgIntDesc").getSelectedItem().getBindingContext(
 					"GlobalJSONModel").sPath).int_c;

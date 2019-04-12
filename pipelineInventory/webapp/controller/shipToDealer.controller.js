@@ -116,6 +116,9 @@ sap.ui.define([
 			} else {
 				_thatSD._oViewModel.setProperty("/enableResubmitBtn", false);
 			}
+			if(oDealer.getParameters().selectedItem.getText().split("-")[2] == "Zone All"){
+				SelectedDealerKey = "-";
+			}
 			for (var d = 0; d < _thatSD.getView().getModel("BusinessDataModel").getData().DealerList.length; d++) {
 				if (SelectedDealerKey == _thatSD.getView().getModel("BusinessDataModel").getData().DealerList[d].BusinessPartner) {
 					SelectedDealerS = _thatSD.getView().getModel("BusinessDataModel").getData().DealerList[d].BusinessPartnerKey;
