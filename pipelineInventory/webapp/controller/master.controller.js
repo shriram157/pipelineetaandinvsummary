@@ -83,9 +83,9 @@ sap.ui.define([
 
 				var attributes = [{
 					"Attribute": "",
-					"BusinessPartner": "Zone All",
+					"BusinessPartner": "-",
 					"BusinessPartnerKey": "",
-					"BusinessPartnerName": "",
+					"BusinessPartnerName": "Zone All",
 					"BusinessPartnerType": "",
 					"Division": "",
 					"SearchTerm2": ""
@@ -174,9 +174,9 @@ sap.ui.define([
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 						_that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
 						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Zone All",
+							BusinessPartner: "-",
 							BusinessPartnerKey: "",
-							BusinessPartnerName: "",
+							BusinessPartnerName: "Zone All",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
@@ -423,13 +423,15 @@ sap.ui.define([
 				_that.oGlobalJSONModel.updateBindings(true);
 				_that.userType = selectedDDValues[selectedDDValues.length - 2];
 				_that.intcolor = selectedDDValues[selectedDDValues.length - 1];
-				if (selectedDDValues[0] != "") {
+				_that.getView().byId("ID_DealearPicker").setSelectedItem(selectedDDValues[selectedDDValues.length - 3]);
+				_that.getView().byId("id_BusinessPartnerName").setValue(selectedDDValues[selectedDDValues.length - 3].getAdditionalText());
+				/*if (selectedDDValues[0] != "") {
 					_that.getView().byId("ID_DealearPicker").setSelectedKey(selectedDDValues[0]);
 					_that.getView().byId("id_BusinessPartnerName").setValue(selectedDDValues[selectedDDValues.length - 3].getAdditionalText());
 				} else if (selectedDDValues[selectedDDValues.length - 3] != "") {
 					_that.getView().byId("ID_DealearPicker").setSelectedItem(selectedDDValues[selectedDDValues.length - 3]);
 					_that.getView().byId("id_BusinessPartnerName").setValue(selectedDDValues[selectedDDValues.length - 3].getAdditionalText());
-				}
+				}*/
 				for (var i = 0; i < selectedDDValues.length; i++) {
 					if (selectedDDValues[i] != "") {
 						switch (i) {
@@ -477,7 +479,6 @@ sap.ui.define([
 				//var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
 				var SelectedDealerKey = oDealer.getParameters().selectedItem.getText();
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
-
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 					if (SelectedDealerKey == "Zone All") {
 						_that.userType = "ZZA";

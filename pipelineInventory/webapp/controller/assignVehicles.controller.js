@@ -122,6 +122,9 @@ sap.ui.define([
 			} else {
 				_thatAV._oViewModel.setProperty("/enableResubmitBtn", false);
 			}
+			if(oDealer.getParameters().selectedItem.getText().split("-")[2] == "Zone All"){
+				SelectedDealerKey = "-";
+			}
 			for (var d = 0; d < _thatAV.getView().getModel("BusinessDataModel").getData().DealerList.length; d++) {
 				if (SelectedDealerKey == _thatAV.getView().getModel("BusinessDataModel").getData().DealerList[d].BusinessPartner) {
 					SelectedDealerA = _thatAV.getView().getModel("BusinessDataModel").getData().DealerList[d].BusinessPartnerKey;
@@ -219,6 +222,15 @@ sap.ui.define([
 						var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatAV);
 						oRouter.navTo("details");
 				}
+			}
+		},
+		formatDate: function (oDate) {
+			if (oDate != "" && oDate != undefined) {
+				var Year = oDate.substring(0, 4);
+				var Month = oDate.substring(4, 6);
+				var Day = oDate.substring(6, 8);
+				var date = Year + "-" + Month + "-" + Day;
+				return date;
 			}
 		},
 		onExit: function () {
