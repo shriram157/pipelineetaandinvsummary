@@ -119,7 +119,6 @@ sap.ui.define([
 				// _that.BusinessPartnerData.getData()._TCIZoneAdmin = "ZoneONLY";
 				_that.BusinessPartnerData.updateBindings(true);
 				_that.BusinessPartnerData.refresh(true);
-
 			} else {
 				//Cloud Deployment
 				this.sPrefix = "";
