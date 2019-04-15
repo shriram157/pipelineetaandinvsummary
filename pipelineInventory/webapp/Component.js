@@ -49,7 +49,7 @@ sap.ui.define([
 					callbackFunc(oData);
 				},
 				error: function (response) {
-					callbackFunc(oData);
+					callbackFunc(response);
 				}
 			});
 		},
