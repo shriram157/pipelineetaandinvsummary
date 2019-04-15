@@ -42,7 +42,7 @@ sap.ui.define([
 		loadConfiguration: function (callbackFunc) {
 			var that = this;
 			$.ajax({
-				url: "/node/env/configuration",
+				url: "/node/userDetails/configuration",
 				type: "GET",
 				dataType: "json",
 				success: function (oData, a, b) {
