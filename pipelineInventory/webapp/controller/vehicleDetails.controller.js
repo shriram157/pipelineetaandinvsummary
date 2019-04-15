@@ -218,13 +218,18 @@ sap.ui.define([
 						if (_thatVD.oVehicleDetailsJSON.getData().results.length > 0) {
 							for (var i = 0; i < _thatVD.oVehicleDetailsJSON.getData().results.length; i++) {
 								if (_thatVD.oVehicleDetailsJSON.getData().results[i].VHCLE == Data.VHCLE) {
-									
-									_thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN.replace("%2F", "/");
-									
+
+									_thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN
+										.replace("%2F", "/");
+
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData = [];
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData = [];
 									_thatVD.oVehicleDetailsJSON.getData().DNCData = [];
@@ -356,11 +361,11 @@ sap.ui.define([
 			var obj = _thatVD.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatVD);
 			obj.newAPXValues = [];
-			for(var m = 0; m <_thatVD.oVehicleDetailsJSON.getData().APXData.length;m++){
+			for (var m = 0; m < _thatVD.oVehicleDetailsJSON.getData().APXData.length; m++) {
 				obj.newAPXValues.push(_thatVD.oVehicleDetailsJSON.getData().APXData[m]);
 				obj.newAPXValues[m].__metadata = "";
 			}
-			
+
 			if (obj.NewSuffix != undefined) {
 				obj.NewSuffix = obj.NewSuffix.replace("/", "%2F");
 			}
@@ -471,10 +476,26 @@ sap.ui.define([
 				fromdate + "/" + todate + "/";
 
 			// window.location.href = "https://qas-soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2" + keys;
-			window.location.href = "https://tci-qas-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html?Division=10&Language=en#/page2" + keys;
+			window.location.href ="https://tci-qas-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html?Division=10&Language=en#/page2" + keys;
 			//https://qa-soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2
 			//https://tci-qas-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html#/page2/2018/YZ3DCT/SIE/BB/00/0070/1234/20181212/20181224
 		},
+
+		// showDraftItemInfo: function (oEvent) {
+		// 	var vModel = this.getModel();
+		// 	// get the view model
+
+		// 	var root = vModel.getProperty('/appLinkes/PARTS_AVAILIBILITY');
+		// 	var lang = vModel.getProperty('/userProfile/language');
+		// 	var div = vModel.getProperty('/userProfile/division');
+
+		// 	var partsNumber = oEvent.getSource().getBindingContext('orderModel').getProperty('partNumber');
+
+		// 	var url = root + "index.html?partNumber=" + partsNumber + "&Division=" + div + "&Language=" + lang;
+		// 	var win = window.open(url, 'PartsAvailibility');
+		// 	win.focus();
+		// },
+
 		onExit: function () {
 			this.destroy();
 		}
