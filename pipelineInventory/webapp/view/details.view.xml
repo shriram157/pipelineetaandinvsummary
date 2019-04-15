@@ -77,7 +77,7 @@
 					<!--	<Button class="closeFilterNotif" text="X" press="closeNotifBar"/>-->
 					<!--</l:VerticalLayout>-->
 					<ScrollContainer height='65%' width="100%" vertical='true'>
-						<Table items="{VehicleDetailsJSON>/results}" width="97%" class="sapUiResponsiveMargin" mode="MultiSelect" id="Tab_vehicleDetails"
+						<Table items="{VehicleDetailsJSON>/results}" width="97%" class="sapUiResponsiveMargin headerFixClass" mode="MultiSelect" id="Tab_vehicleDetails"
 							selectionChange="vehicleSelect" growing="true" growingThreshold="25" growingScrollToLoad="false">
 							<!--growing="true" growingThreshold="2" growingScrollToLoad="false"-->
 							<columns>
