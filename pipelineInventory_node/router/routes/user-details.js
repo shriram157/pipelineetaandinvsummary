@@ -67,7 +67,7 @@ module.exports = function (appContext) {
 		if (userType === "Dealer") {
 			dealerCode = userAttributes.DealerCode[0];
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json&$filter=SearchTerm2 eq '" +
-				dealerCode + "'&$expand=to_Customer";
+				dealerCode + "'&$expand=to_Customerand zstatus ne 'X'";
 		}
 
 		// Zone user
@@ -92,14 +92,14 @@ module.exports = function (appContext) {
 
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
 				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
-				"&$orderby=BusinessPartner asc";
+				"and zstatus ne 'X' &$orderby=BusinessPartner asc";
 		}
 
 		// National user (TCI user)
 		else {
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
 				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
-				"&$orderby=BusinessPartner asc";
+				"and zstatus ne 'X' &$orderby=BusinessPartner asc";
 		}
 
 		tracer.debug("BP URL: %s", bpReqUrl);
