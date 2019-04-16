@@ -180,3 +180,8 @@
 .filterNotification .sapMText {
 	color:#fff;
 }
+.headerFixClass .sapMListTbl th {
+    position: sticky;
+    z-index: 9;
+    top: 0;
+}

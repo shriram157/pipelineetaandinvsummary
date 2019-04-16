@@ -479,6 +479,9 @@ sap.ui.define([
 				//var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
 				var SelectedDealerKey = oDealer.getParameters().selectedItem.getText();
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
+				if(SelectedDealerKey == "-"){
+					SelectedDealerKey = "Zone All"
+				}
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 					if (SelectedDealerKey == "Zone All") {
 						_that.userType = "ZZA";
