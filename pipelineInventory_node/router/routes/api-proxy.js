@@ -85,17 +85,17 @@ module.exports = function (appContext) {
 		});
 	});
 	
-	router.get('/configuration', (req, res) => {
-		// Get UPS name from env var UPS_NAME
-		var apimServiceName = process.env.UPS_NAME;
-		let options = {};
-		options = Object.assign(options, xsenv.getServices({
-			api: {
-				name: apimServiceName
-			}
-		}));
-		res.json(options);
-	});
+	// router.get('/configuration', (req, res) => {
+	// 	// Get UPS name from env var UPS_NAME
+	// 	var apimServiceName = process.env.UPS_NAME;
+	// 	let options = {};
+	// 	options = Object.assign(options, xsenv.getServices({
+	// 		api: {
+	// 			name: apimServiceName
+	// 		}
+	// 	}));
+	// 	res.json(options);
+	// });
 
 	return router;
 };

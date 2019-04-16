@@ -26,32 +26,33 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
-			this.loadConfiguration(function(configurationData){
-				var appLinkes = {};
-				appLinkes.loaded = true;
-				if (!!configurationData && !!configurationData.api.APPLINKS ){
-					console.log("appLinkes",appLinkes);
-					// appLinkes.PARTS_AVAILIBILITY = configurationData.api.APPLINKS.PARTS_AVAILIBILITY;
-					// appMode.setProperty("/appLinkes", appLinkes);
-				}
-				if (that.isAppModelLoaded() ){
-					sap.ui.core.BusyIndicator.hide();
-				}				
-			});
-		},
-		loadConfiguration: function (callbackFunc) {
-			var that = this;
-			$.ajax({
-				url: "/node/userDetails/configuration",
-				type: "GET",
-				dataType: "json",
-				success: function (oData, a, b) {
-					callbackFunc(oData);
-				},
-				error: function (response) {
-					callbackFunc(response);
-				}
-			});
-		},
+			// this.loadConfiguration(function(configurationData){
+			// 	var appLinkes = {};
+			// 	appLinkes.loaded = true;
+			// 	if (!!configurationData && !!configurationData.api.APPLINKS ){
+			// 		console.log("appLinkes",appLinkes);
+			// 		// appLinkes.PARTS_AVAILIBILITY = configurationData.api.APPLINKS.PARTS_AVAILIBILITY;
+			// 		// appMode.setProperty("/appLinkes", appLinkes);
+			// 	}
+			// 	if (that.isAppModelLoaded() ){
+			// 		sap.ui.core.BusyIndicator.hide();
+			// 	}				
+			// });
+		}
+		// ,
+		// loadConfiguration: function (callbackFunc) {
+		// 	var that = this;
+		// 	$.ajax({
+		// 		url: "/node/userDetails/configuration",
+		// 		type: "GET",
+		// 		dataType: "json",
+		// 		success: function (oData, a, b) {
+		// 			callbackFunc(oData);
+		// 		},
+		// 		error: function (response) {
+		// 			callbackFunc(response);
+		// 		}
+		// 	});
+		// },
 	});
 });
