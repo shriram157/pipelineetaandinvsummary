@@ -82,7 +82,7 @@
 									<DatePicker id="id_ETADate" value="" valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd" change="handleETAChange"
 										class="sapUiSmallMarginBottom">
 										<layoutData>
-											<l:GridData span="XL2 L4 M4 S4"/>
+											<l:GridData span="XL2 L8 M4 S4"/>
 										</layoutData>
 									</DatePicker>
 									<Label text=""/>
@@ -250,10 +250,10 @@
 									<t:multiLabels>
 										<Label text="References" textAlign="Center" width="100%"/>
 										<Label text=""/>
-										<Label text="Holds" tooltip="Holds" textAlign="Center" wrapping="true"/>
+										<Label text="Holds" tooltip="Holds" textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
-										<Text text="{GlobalJSONModel>Holds}" textAlign="Center" class="TabFontStyle"/>
+										<Text text="{GlobalJSONModel>Holds}" textAlign="Center" class="TabFontStyle" width="100%"/>
 									</t:template>
 								</t:Column>
 								<t:Column>
@@ -429,10 +429,10 @@
 									<t:multiLabels>
 										<Label text="References" textAlign="Center" width="100%"/>
 										<Label text=""/>
-										<Label text="Holds" tooltip="Holds" textAlign="Center" wrapping="true"/>
+										<Label text="Holds" tooltip="Holds" textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
-										<Text text="{GlobalJSONModel>Holds}" textAlign="Center" class="TabFontStyle"/>
+										<Text text="{GlobalJSONModel>Holds}" textAlign="Center" class="TabFontStyle" width="100%"/>
 									</t:template>
 								</t:Column>
 								<t:Column>
@@ -608,7 +608,7 @@
 									<t:multiLabels>
 										<Label text="References" textAlign="Center" width="100%"/>
 										<Label text=""/>
-										<Label text="Holds" tooltip="Holds" textAlign="Center" wrapping="true"/>
+										<Label text="Holds" tooltip="Holds" textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
 										<Text text="{GlobalJSONModel>Holds}" textAlign="Center" class="TabFontStyle" width="100%"/>
