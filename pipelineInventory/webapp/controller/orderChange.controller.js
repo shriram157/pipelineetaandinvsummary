@@ -88,11 +88,11 @@ sap.ui.define([
 					Data.NewSuffix = Data.NewSuffix.replace("%2F", "/");
 					Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
 					
-					Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
-					Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
-					Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
-					Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
-					Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("%2F", "/");
+					// Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
+					// Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
+					// Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
+					// Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
+					// Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("%2F", "/");
 					
 					_thatOC.oVehicleDetailsJSON = new sap.ui.model.json.JSONModel();
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData = [];
