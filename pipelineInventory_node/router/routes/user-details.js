@@ -67,7 +67,7 @@ module.exports = function (appContext) {
 		if (userType === "Dealer") {
 			dealerCode = userAttributes.DealerCode[0];
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json&$filter=SearchTerm2 eq '" +
-				dealerCode + "'&$expand=to_Customerand zstatus ne 'X'";
+				dealerCode + "'&$expand=to_Customer and zstatus ne 'X'";
 		}
 
 		// Zone user
