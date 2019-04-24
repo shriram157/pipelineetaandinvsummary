@@ -24,7 +24,6 @@
 					</ToolbarSpacer>
 					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
-				<ScrollContainer height='90%' width="100%" vertical='true'>
 				<content>
 					<Label text="{i18n>ConfigurationChangeHistory}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
 					<OverflowToolbar>
@@ -41,7 +40,8 @@
 					</f:SimpleForm>
 						<Button text="{i18n>Submit}" type="Accept" enabled="{LocalModel>/enablesubmitBtn}"/>
 					</OverflowToolbar>
-					<Table items="{ChangeHistoryModel>/results}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="5"
+					<ScrollContainer height='70%' width="100%" vertical='true'>
+					<Table items="{ChangeHistoryModel>/results}" width="auto" class="sapUiResponsiveMargin headerFixClass" growing="true" growingThreshold="5"
 						growingScrollToLoad="false">
 						<!--<headerToolbar>-->
 						<!--	<Toolbar>-->
@@ -113,8 +113,8 @@
 							</ColumnListItem>
 						</items>
 					</Table>
+					</ScrollContainer>
 				</content>
-				</ScrollContainer>
 				<footer>
 					<OverflowToolbar></OverflowToolbar>
 				</footer>
