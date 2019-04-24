@@ -24,7 +24,6 @@
 					</ToolbarSpacer>
 					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
-					<ScrollContainer height='90%' width="100%" vertical='true'>
 				<content>
 					<Label text="{i18n>VehicleAssignment}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
 					<OverflowToolbar>
@@ -39,7 +38,8 @@
 						<ToolbarSpacer/>
 						<Button text="{i18n>Submit}" type="Accept" enabled="{LocalModel>/enableResubmitBtn}" press="onSubmitChanges"/>
 					</OverflowToolbar>
-					<Table items="{AssignVehiclesModel>/results}" width="auto" class="sapUiResponsiveMargin">
+					<ScrollContainer height='70%' width="100%" vertical='true'>
+					<Table items="{AssignVehiclesModel>/results}" width="auto" class="sapUiResponsiveMargin headerFixClass">
 						<headerToolbar>
 							<Toolbar>
 								<MessageStrip text="{i18n>Disclaimer}" type="Information" showIcon="true"></MessageStrip>
@@ -95,8 +95,8 @@
 							</ColumnListItem>
 						</items>
 					</Table>
-				</content>
 					</ScrollContainer>
+				</content>
 				<footer>
 					<OverflowToolbar></OverflowToolbar>
 				</footer>

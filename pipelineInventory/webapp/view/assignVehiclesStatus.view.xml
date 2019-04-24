@@ -25,7 +25,8 @@
 				</tnt:ToolHeader>
 				<content>
 					<Label text="{i18n>VehicleAssignmentStatus}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
-					<Table items="{AssignVStatusModel>/responseResults}" width="auto" class="sapUiResponsiveMargin" growing="true" growingThreshold="7" growingScrollToLoad="false">
+				<ScrollContainer height='70%' width="100%" vertical='true'>
+					<Table items="{AssignVStatusModel>/responseResults}" width="auto" class="sapUiResponsiveMargin headerFixClass" growing="true" growingThreshold="7" growingScrollToLoad="false">
 						<columns>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 								<Text text="{i18n>OrderNumber}"/>
@@ -75,6 +76,7 @@
 							</ColumnListItem>
 						</items>
 					</Table>
+					</ScrollContainer>
 				</content>
 				<footer>
 					<OverflowToolbar></OverflowToolbar>

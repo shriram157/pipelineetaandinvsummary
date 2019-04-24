@@ -173,14 +173,15 @@ sap.ui.define([
 						_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[1] = {
 							"AccessoryInstalled": "No"
 						};
-
-						_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
+						/*Defect Number 12306 solution start*/
+						/*_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
 							"DNCVehicle": ""
-						};
-						_thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
+						};*/
+						/*Defect Number 12306 solution start*/
+						_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
 							"DNCVehicle": "DNC Vehicle"
 						};
-						_thatVD.oVehicleDetailsJSON.getData().DNCData[2] = {
+						_thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
 							"DNCVehicle": "DNC Demo / Loaner Vehicle"
 						};
 						_thatVD.oVehicleDetailsJSON.updateBindings(true);
@@ -243,14 +244,15 @@ sap.ui.define([
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[1] = {
 										"AccessoryInstalled": "No"
 									};
-
-									_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
+									/*Defect Number 12306 solution start*/
+									/*_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
 										"DNCVehicle": ""
-									};
-									_thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
+									};*/
+									/*Defect Number 12306 solution start*/
+									_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
 										"DNCVehicle": "DNC Vehicle"
 									};
-									_thatVD.oVehicleDetailsJSON.getData().DNCData[2] = {
+									_thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
 										"DNCVehicle": "DNC Demo / Loaner Vehicle"
 									};
 

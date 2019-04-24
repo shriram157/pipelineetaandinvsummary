@@ -25,89 +25,87 @@
 					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="NavigateBack"/>
 				</tnt:ToolHeader>
 				<ScrollContainer height='90%' width="100%" vertical='true'>
-				<content>
-					<VBox class="sapUiSmallMargin">
-						<f:SimpleForm class="formDetails" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false" emptySpanL="0"
-							emptySpanM="0" columnsL="2" columnsM="2">
-							<f:content>
-								<core:Title text="{i18n>CurrentVehicleConfig}"/>
-								<Label text="{i18n>ModelYear}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Modelyear}"/>
-								<Label text="{i18n>Series}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries} {VehicleDetailsJSON>/selectedVehicleData/0/SERIES_DESC_EN}"/>
-								<Label text="{i18n>Model}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Model} {VehicleDetailsJSON>/selectedVehicleData/0/MODEL_DESC_EN}"/>
-								<Label text="{i18n>Suffix}"/>
-								<Text
-									text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN} / {VehicleDetailsJSON>/selectedVehicleData/0/INTCOL_DESC_EN}"/>
-								
-								<Label text="{i18n>Colour}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ExteriorColorCode} {VehicleDetailsJSON>/selectedVehicleData/0/EXTCOL_DESC_EN}"/>
-								<Label text="{i18n>APX}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>
-								
-								<Label text="{i18n>OrderType}"/>
-								<!--{VehicleDetailsJSON>/selectedVehicleData/0/ZZORDERTYPE} removed from order type (defect number 10426)-->
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ORDERTYPE_DESC_EN}"/>
-								<Label text="{i18n>Status}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZMMSTA}"/>
-								<Label text="{i18n>ETA}"/>
-								<Text
-									text="From {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} To {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
-								<!--<Label text="{i18n>ETATo}"/>-->
-								<!--<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ETATo}"/>-->
-								<Label text="{i18n>VTN}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZVTN}"/>
-								<core:Title text="{i18n>NewVehicleConfig}"/>
-								<Label text="{i18n>ModelYear}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Modelyear}"/>
-								<Label text="{i18n>Series}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries} {VehicleDetailsJSON>/selectedVehicleData/0/SERIES_DESC_EN}"/>
-								<Label text="{i18n>NewModel}" required="true"/>
-								<Select id="ID_modelSelect" forceSelection="true" items="{VehicleDetailsJSON>/modelData}" change="onModelSelectionChange">
-									<core:Item key="{VehicleDetailsJSON>Model}" text="{VehicleDetailsJSON>Model} - {VehicleDetailsJSON>ENModelDesc}"/>
-								</Select>
-								<!--<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewModel}"/>-->
-								<Label text="{i18n>NewSuffix}" required="true"/>
-								<!--<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewSuffix}"/>-->
-								<Select id="ID_suffixSelect" forceSelection="true" items="{VehicleDetailsJSON>/suffixData}" change="onSuffixChange">
-									<core:Item key="{VehicleDetailsJSON>Suffix}"
-										text="{VehicleDetailsJSON>Suffix} - {VehicleDetailsJSON>SuffixDescriptionEN} / {VehicleDetailsJSON>mrktg_int_desc_en}"/>
-									<!--/ {GlobalJSONModel>MarktgIntDescEN}-->
-								</Select>
-								<Label text="{i18n>NewAPX}" required="true"/>
-								<Select forceSelection="false" selectedKey="" id="APXrequired" items="{ path: 'VehicleDetailsJSON>/selectedVehicleData/0/newAPXValues'}">
-									<core:Item key="{VehicleDetailsJSON>zzapx}" text="{VehicleDetailsJSON>zzapx}"/>
-								</Select>
-								<!--<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}" id="APXrequired"/>-->
-								<Label text="{i18n>NewColour}" required="true"/>
-								<Select id="ID_ExteriorColorSelect" forceSelection="true" items="{VehicleDetailsJSON>/colorData}">
-									<core:Item key="{VehicleDetailsJSON>ExteriorColorCode}"
-										text="{VehicleDetailsJSON>ExteriorColorCode} - {VehicleDetailsJSON>MarketingDescriptionEXTColorEN}"/>
-								</Select>
-								<!--<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewColour}"/>-->
-								<Label text="{i18n>DateTime}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/CurrentDate}"/>
-								<Label text="{i18n>Status}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Status}"/>
-							</f:content>
-						</f:SimpleForm>
-					</VBox>
-					<VBox>
-						<f:SimpleForm class="formDetails guideLines" editable="false" layout="ResponsiveGridLayout">
-							<f:content>
-								<core:Title text="{i18n>Guidelines}"/>
-								<Text class="newLine" text="{i18n>Guideline1}"/>
-								<Text class="newLine" text="{i18n>Guideline2}"/>
-							</f:content>
-						</f:SimpleForm>
-					</VBox>
-					<OverflowToolbar>
-						<ToolbarSpacer/>
-						<Button text="{i18n>Cancel}" type="Default" press="NavigateBack"/>
-						<Button text="{i18n>Request}" type="Default" press="_DataValidate"/>
-					</OverflowToolbar>
-				</content>
+					<content>
+						<VBox class="sapUiSmallMargin">
+							<f:SimpleForm class="formDetails" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false" emptySpanL="0"
+								emptySpanM="0" columnsL="2" columnsM="2">
+								<f:content>
+									<core:Title text="{i18n>CurrentVehicleConfig}"/>
+									<Label text="{i18n>ModelYear}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Modelyear}"/>
+									<Label text="{i18n>Series}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries} {VehicleDetailsJSON>/selectedVehicleData/0/SERIES_DESC_EN}"/>
+									<Label text="{i18n>Model}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Model} {VehicleDetailsJSON>/selectedVehicleData/0/MODEL_DESC_EN}"/>
+									<Label text="{i18n>Suffix}"/>
+									<Text
+										text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN} / {VehicleDetailsJSON>/selectedVehicleData/0/INTCOL_DESC_EN}"/>
+									<Label text="{i18n>Colour}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ExteriorColorCode} {VehicleDetailsJSON>/selectedVehicleData/0/EXTCOL_DESC_EN}"/>
+									<Label text="{i18n>APX}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>
+									<Label text="{i18n>OrderType}"/>
+									<!--{VehicleDetailsJSON>/selectedVehicleData/0/ZZORDERTYPE} removed from order type (defect number 10426)-->
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ORDERTYPE_DESC_EN}"/>
+									<Label text="{i18n>Status}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZMMSTA}"/>
+									<Label text="{i18n>ETA}"/>
+									<Text
+										text="From {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} To {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
+									<!--<Label text="{i18n>ETATo}"/>-->
+									<!--<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ETATo}"/>-->
+									<Label text="{i18n>VTN}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZVTN}"/>
+									<core:Title text="{i18n>NewVehicleConfig}"/>
+									<Label text="{i18n>ModelYear}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Modelyear}"/>
+									<Label text="{i18n>Series}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries} {VehicleDetailsJSON>/selectedVehicleData/0/SERIES_DESC_EN}"/>
+									<Label text="{i18n>NewModel}" required="true"/>
+									<Select id="ID_modelSelect" forceSelection="true" items="{VehicleDetailsJSON>/modelData}" change="onModelSelectionChange">
+										<core:Item key="{VehicleDetailsJSON>Model}" text="{VehicleDetailsJSON>Model} - {VehicleDetailsJSON>ENModelDesc}"/>
+									</Select>
+									<!--<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewModel}"/>-->
+									<Label text="{i18n>NewSuffix}" required="true"/>
+									<!--<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewSuffix}"/>-->
+									<Select id="ID_suffixSelect" forceSelection="true" items="{VehicleDetailsJSON>/suffixData}" change="onSuffixChange">
+										<core:Item key="{VehicleDetailsJSON>Suffix}"
+											text="{VehicleDetailsJSON>Suffix} - {VehicleDetailsJSON>SuffixDescriptionEN} / {VehicleDetailsJSON>mrktg_int_desc_en}"/>
+										<!--/ {GlobalJSONModel>MarktgIntDescEN}-->
+									</Select>
+									<!--<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}" id="APXrequired"/>-->
+									<Label text="{i18n>NewColour}" required="true"/>
+									<Select id="ID_ExteriorColorSelect" forceSelection="true" items="{VehicleDetailsJSON>/colorData}">
+										<core:Item key="{VehicleDetailsJSON>ExteriorColorCode}"
+											text="{VehicleDetailsJSON>ExteriorColorCode} - {VehicleDetailsJSON>MarketingDescriptionEXTColorEN}"/>
+									</Select>
+									<!--<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewColour}"/>-->
+									<Label text="{i18n>NewAPX}" required="true"/>
+									<Select forceSelection="false" selectedKey="" id="APXrequired" items="{ path: 'VehicleDetailsJSON>/selectedVehicleData/0/newAPXValues'}">
+										<core:Item key="{VehicleDetailsJSON>zzapx}" text="{VehicleDetailsJSON>zzapx}"/>
+									</Select>
+									<Label text="{i18n>DateTime}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/CurrentDate}"/>
+									<Label text="{i18n>Status}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Status}"/>
+								</f:content>
+							</f:SimpleForm>
+						</VBox>
+						<VBox>
+							<f:SimpleForm class="formDetails guideLines" editable="false" layout="ResponsiveGridLayout">
+								<f:content>
+									<core:Title text="{i18n>Guidelines}"/>
+									<Text class="newLine" text="{i18n>Guideline1}"/>
+									<Text class="newLine" text="{i18n>Guideline2}"/>
+								</f:content>
+							</f:SimpleForm>
+						</VBox>
+						<OverflowToolbar>
+							<ToolbarSpacer/>
+							<Button text="{i18n>Cancel}" type="Default" press="NavigateBack"/>
+							<Button text="{i18n>Request}" type="Default" press="_DataValidate"/>
+						</OverflowToolbar>
+					</content>
 				</ScrollContainer>
 				<footer>
 					<Toolbar>
