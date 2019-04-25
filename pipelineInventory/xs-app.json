@@ -53,5 +53,17 @@
 			"$XSAPPNAME.View_Vehicle_Details",
 			"$XSAPPNAME.View_Vehicle_Summary"
 		]
+	}, {
+		"source": "^/app-config$",
+		"destination": "core-node-backend",
+		"csrfProtection": false,
+		"scope": [
+			"$XSAPPNAME.Assign_Vehicles",
+			"$XSAPPNAME.Drop_Ship_Vehicles",
+			"$XSAPPNAME.Manage_Vehicle_Config_Details",
+			"$XSAPPNAME.Update_Vehicle_Details",
+			"$XSAPPNAME.View_Vehicle_Details",
+			"$XSAPPNAME.View_Vehicle_Summary"
+		]
 	}]
 }
