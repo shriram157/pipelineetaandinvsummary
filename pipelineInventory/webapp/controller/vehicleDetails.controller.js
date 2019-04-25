@@ -179,7 +179,7 @@ sap.ui.define([
 						};*/
 						/*Defect Number 12306 solution start*/
 						_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
-							"DNCVehicle": "DNC Vehicle"
+							"DNCVehicle": "DNC Stock"
 						};
 						_thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
 							"DNCVehicle": "DNC Demo / Loaner Vehicle"
@@ -250,7 +250,7 @@ sap.ui.define([
 									};*/
 									/*Defect Number 12306 solution start*/
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
-										"DNCVehicle": "DNC Vehicle"
+										"DNCVehicle": "DNC Stock"
 									};
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
 										"DNCVehicle": "DNC Demo / Loaner Vehicle"
