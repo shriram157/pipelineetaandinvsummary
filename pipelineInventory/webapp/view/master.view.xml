@@ -79,7 +79,7 @@
 										<core:Item key="{GlobalJSONModel>APX}" text="{GlobalJSONModel>APX}"/>
 									</Select>
 									<Label text="{i18n>ETA}"/>
-									<DatePicker id="id_ETADate" value="" valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd" change="handleETAChange"
+									<DatePicker id="id_ETADate" value="" valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd" placeholder="yyyy-mm-dd" change="handleETAChange"
 										class="sapUiSmallMarginBottom">
 										<layoutData>
 											<l:GridData span="XL8 L8 M10 S10"/>

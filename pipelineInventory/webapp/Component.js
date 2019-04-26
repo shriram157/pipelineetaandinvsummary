@@ -30,10 +30,10 @@ sap.ui.define([
 			sap.ui.getCore().setModel(configDataModel,"configDataModel");
 			
 			//START: comment before deploying
-			var configData ={"soldOrderAppUrl":"https://tci-dev-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html"};
-			configDataModel.setData(configData);
-			configDataModel.updateBindings(true);
-			console.log("configDataModel",sap.ui.getCore().getModel("configDataModel"));
+			// var configData ={"soldOrderAppUrl":"https://tci-dev-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html"};
+			// configDataModel.setData(configData);
+			// configDataModel.updateBindings(true);
+			// console.log("configDataModel",sap.ui.getCore().getModel("configDataModel"));
 			//END: comment before deploying
 			
 			$.ajax({

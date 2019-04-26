@@ -152,7 +152,7 @@ sap.ui.define([
 							type: "GET",
 							success: function (oRowData) {
 								console.log("CustomerData", oRowData);
-								oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1]
+								oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
 								_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 								_thatVD.oVehicleDetailsJSON.updateBindings(true);
 								/*Defect Number 9937 solution start*/
@@ -245,6 +245,7 @@ sap.ui.define([
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData.push(_thatVD.oVehicleDetailsJSON.getData().results[i]);
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].AccessoriesInstalled = "";
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNCVehicle = "";
+									_thatVD.oVehicleDetailsJSON.getData().AccessInstl_flag = Data.AccessInstl_flag;
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[0] = {
 										"AccessoryInstalled": "Yes"
 									};
@@ -428,14 +429,24 @@ sap.ui.define([
 
 			var oInputControl = _thatVD.getView().byId("accessoryVal");
 			var oInputControl2 = _thatVD.getView().byId("DNCVal");
-			if (sUserInput && sUserInput2) {
-				oInputControl.setValueState(sap.ui.core.ValueState.Success);
-				oInputControl2.setValueState(sap.ui.core.ValueState.Success);
-				_thatVD.postVehicleUpdates(oPost);
-			} else {
-				oInputControl.setValueState(sap.ui.core.ValueState.Error);
-				oInputControl2.setValueState(sap.ui.core.ValueState.Error);
+			if (oInputControl.getVisible()) {
+				if (sUserInput && sUserInput2) {
+					oInputControl.setValueState(sap.ui.core.ValueState.Success);
+					oInputControl2.setValueState(sap.ui.core.ValueState.Success);
+					_thatVD.postVehicleUpdates(oPost);
+				} else {
+					oInputControl.setValueState(sap.ui.core.ValueState.Error);
+					oInputControl2.setValueState(sap.ui.core.ValueState.Error);
+				}
+			}else{
+				if (sUserInput2) {
+					oInputControl2.setValueState(sap.ui.core.ValueState.Success);
+					_thatVD.postVehicleUpdates(oPost);
+				} else {
+					oInputControl2.setValueState(sap.ui.core.ValueState.Error);
+				}
 			}
+
 		},
 
 		postVehicleUpdates: function (oPost) {

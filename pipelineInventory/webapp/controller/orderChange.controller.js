@@ -6,7 +6,7 @@ sap.ui.define([
 	'sap/ui/model/resource/ResourceModel',
 ], function (BaseController, History, JSONModel, ResourceModel) {
 	"use strict";
-	var _thatOC,sSelectedLocale,Division;
+	var _thatOC, sSelectedLocale, Division;
 	return BaseController.extend("pipelineInventory.controller.orderChange", {
 
 		onInit: function () {
@@ -59,7 +59,7 @@ sap.ui.define([
 				delay: 0
 			});
 			_thatOC.getView().setModel(_oViewModel, "LocalOCModel");
-			
+
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -87,13 +87,13 @@ sap.ui.define([
 					var Data = JSON.parse(oEvent.getParameter("arguments").Data2);
 					Data.NewSuffix = Data.NewSuffix.replace("%2F", "/");
 					Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
-					
+
 					// Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
 					// Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
 					// Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
 					// Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
 					// Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("%2F", "/");
-					
+
 					_thatOC.oVehicleDetailsJSON = new sap.ui.model.json.JSONModel();
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData = [];
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData.push(Data);
@@ -104,15 +104,20 @@ sap.ui.define([
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].ExteriorColorCode = Data.OldColor;
 
 					_thatOC.oVehicleDetailsJSON.updateBindings(true);
-					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewModel = "";
-					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewSuffix = "";
-					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewAPX = "";
+					_thatOC.byId("ID_modelSelect").setSelectedKey(Data.NewModel.split("-")[0]);
+					_thatOC.onModelSelectionChange(_thatOC.byId("ID_modelSelect"), Data);
+					//_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewModel = "";
+					//_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewSuffix = "";
+					//_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewAPX = "";
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Status = "";
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewColour = "";
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Guidelines = "";
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].CurrentDate = _thatOC.curDate;
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].newAPXValues = [];
+					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].newAPXValues.push({"zzapx":Data.NewAPX});
 					_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					_thatOC.oVehicleDetailsJSON.refresh(true);
+
 					_thatOC.getModelData(_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].TCISeries, _thatOC.oVehicleDetailsJSON.getData()
 						.selectedVehicleData[0].Modelyear);
 					_thatOC.getView().setModel(_thatOC.oVehicleDetailsJSON, "VehicleDetailsJSON");
@@ -134,7 +139,7 @@ sap.ui.define([
 					Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
 					Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
 					Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("%2F", "/");
-					
+
 					_thatOC.oVehicleDetailsJSON = new sap.ui.model.json.JSONModel();
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData = [];
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData.push(Data);
@@ -199,11 +204,15 @@ sap.ui.define([
 			});
 		},
 
-		onModelSelectionChange: function (oModel) {
+		onModelSelectionChange: function (oModel, oSuffixValue) {
 			_thatOC.temp = [];
 			_thatOC.temp1 = [];
 			_thatOC.Modelyear = _thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Modelyear;
-			_thatOC.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
+			if (oSuffixValue == undefined) {
+				_thatOC.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
+			} else {
+				_thatOC.Model = oModel.getSelectedKey();
+			}
 			_thatOC.oVehicleDetailsJSON.getData().suffixData = [];
 			/*$.ajax({
 				dataType: "json",
@@ -261,7 +270,8 @@ sap.ui.define([
 				},*/
 			$.ajax({
 				dataType: "json",
-				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _thatOC.Model + "' and Modelyear eq '" +
+				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _thatOC.Model +
+					"' and Modelyear eq '" +
 					_thatOC.Modelyear + "'",
 				type: "GET",
 				success: function (oData) {
@@ -285,19 +295,31 @@ sap.ui.define([
 				},
 				error: function (oError) {
 					sap.ui.core.BusyIndicator.hide();
+				},
+				complete: function () {
+					if (oSuffixValue != undefined) {
+						_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.NewSuffix.split("-")[0]);
+						_thatOC.onSuffixChange(_thatOC.byId("ID_suffixSelect"), oSuffixValue)
+					}
 				}
 			});
 		},
-		onSuffixChange: function (oSuffixVal) {
+		onSuffixChange: function (oSuffixVal, ColorVal) {
 			sap.ui.core.BusyIndicator.show();
 			var Modelyear = _thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Modelyear;
-			var Suffix = oSuffixVal.getParameters("selectedItem").selectedItem.getKey();
+			var Suffix;
+			if (ColorVal == undefined) {
+				Suffix = oSuffixVal.getParameters("selectedItem").selectedItem.getKey();
+			} else {
+				Suffix = oSuffixVal.getSelectedKey();
+			}
+
 			var Model = _thatOC.getView().byId("ID_modelSelect").getSelectedKey();
 			var series = _thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].TCISeries;
 
 			_thatOC.oVehicleDetailsJSON.getData().colorData = [];
 			$.ajax({
-				
+
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_exterior_trim?$filter=ModelYear eq '" + Modelyear +
 					"' and Model eq '" + Model + "' and Suffix eq '" + Suffix + "' and TCISeries eq '" + series + "'",
@@ -322,6 +344,11 @@ sap.ui.define([
 				},
 				error: function (oError) {
 					sap.ui.core.BusyIndicator.hide();
+				},
+				complete: function () {
+					if (ColorVal != undefined) {
+						_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal.NewColor.split("-")[0]);
+					}
 				}
 			});
 		},
