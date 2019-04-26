@@ -70,8 +70,8 @@
 								<Text text="{VehicleDetailsJSON>/selectedCustomerData/PLANTDESC}"/>
 								<Label text="{i18n>HoldVehicle}"/>
 								<Text text="Yes"/>
-								<Label text="{i18n>AccessoriesInstalled}" required="false"/>
-								<Select forceSelection="false" selectedKey="" id="accessoryVal" items="{ path: 'VehicleDetailsJSON>/AcceessoryData'}">
+								<Label text="{i18n>AccessoriesInstalled}" required="false" visible = "{VehicleDetailsJSON>/AccessInstl_flag}"/>
+								<Select forceSelection="false" selectedKey="" id="accessoryVal" items="{ path: 'VehicleDetailsJSON>/AcceessoryData'}" visible = "{VehicleDetailsJSON>/AccessInstl_flag}">
 									<core:Item key="{VehicleDetailsJSON>AccessoryInstalled}" text="{VehicleDetailsJSON>AccessoryInstalled}"/>
 								</Select>
 								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/AccessoriesInstalled}"/>-->

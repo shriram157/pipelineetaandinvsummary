@@ -238,6 +238,7 @@ sap.ui.define([
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData.push(_thatVD.oVehicleDetailsJSON.getData().results[i]);
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].AccessoriesInstalled = "";
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNCVehicle = "";
+									_thatVD.oVehicleDetailsJSON.getData().AccessInstl_flag = Data.AccessInstl_flag;
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[0] = {
 										"AccessoryInstalled": "Yes"
 									};
@@ -421,14 +422,24 @@ sap.ui.define([
 
 			var oInputControl = _thatVD.getView().byId("accessoryVal");
 			var oInputControl2 = _thatVD.getView().byId("DNCVal");
-			if (sUserInput && sUserInput2) {
-				oInputControl.setValueState(sap.ui.core.ValueState.Success);
-				oInputControl2.setValueState(sap.ui.core.ValueState.Success);
-				_thatVD.postVehicleUpdates(oPost);
-			} else {
-				oInputControl.setValueState(sap.ui.core.ValueState.Error);
-				oInputControl2.setValueState(sap.ui.core.ValueState.Error);
+			if (oInputControl.getVisible()) {
+				if (sUserInput && sUserInput2) {
+					oInputControl.setValueState(sap.ui.core.ValueState.Success);
+					oInputControl2.setValueState(sap.ui.core.ValueState.Success);
+					_thatVD.postVehicleUpdates(oPost);
+				} else {
+					oInputControl.setValueState(sap.ui.core.ValueState.Error);
+					oInputControl2.setValueState(sap.ui.core.ValueState.Error);
+				}
+			}else{
+				if (sUserInput2) {
+					oInputControl2.setValueState(sap.ui.core.ValueState.Success);
+					_thatVD.postVehicleUpdates(oPost);
+				} else {
+					oInputControl2.setValueState(sap.ui.core.ValueState.Error);
+				}
 			}
+
 		},
 
 		postVehicleUpdates: function (oPost) {
@@ -478,7 +489,8 @@ sap.ui.define([
 				fromdate + "/" + todate + "/";
 
 			// window.location.href = "https://qas-soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2" + keys;
-			window.location.href ="https://tci-qas-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html?Division=10&Language=en#/page2" + keys;
+			window.location.href =
+				"https://tci-qas-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html?Division=10&Language=en#/page2" + keys;
 			//https://qa-soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2
 			//https://tci-qas-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html#/page2/2018/YZ3DCT/SIE/BB/00/0070/1234/20181212/20181224
 		},
