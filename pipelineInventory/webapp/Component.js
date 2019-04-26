@@ -26,6 +26,29 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+			var configDataModel = new sap.ui.model.json.JSONModel();
+			sap.ui.getCore().setModel(configDataModel,"configDataModel");
+			
+			//START: comment before deploying
+			var configData ={"soldOrderAppUrl":"https://tci-dev-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html"};
+			configDataModel.setData(configData);
+			configDataModel.updateBindings(true);
+			console.log("configDataModel",sap.ui.getCore().getModel("configDataModel"));
+			//END: comment before deploying
+			
+			$.ajax({
+				dataType: "json",
+				url: "/app-config",
+				type: "GET",
+				success: function (configData) {
+					console.log("configData",configData);
+					configDataModel.setData(configData);
+					configDataModel.updateBindings(true);
+				},
+				error: function (oError) {
+					console.log("oError",oError);
+				}
+			});
 			// this.loadConfiguration(function(configurationData){
 			// 	var appLinkes = {};
 			// 	appLinkes.loaded = true;

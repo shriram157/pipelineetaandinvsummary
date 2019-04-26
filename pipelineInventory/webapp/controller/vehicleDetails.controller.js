@@ -477,8 +477,13 @@ sap.ui.define([
 			var keys = "/" + modelyear + "/" + modelkey + "/" + serieskey + "/" + suffixkey + "/" + apxkey + "/" + colorkey + "/" + vtnn + "/" +
 				fromdate + "/" + todate + "/";
 
+			var soldOrderAppUrl = sap.ui.getCore().getModel("configDataModel").getData().soldOrderAppUrl;
 			// window.location.href = "https://qas-soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2" + keys;
-			window.location.href ="https://tci-qas-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html?Division=10&Language=en#/page2" + keys;
+			// window.location.href = soldOrderAppUrl + "?Division="++"&Language="++"#/page2" + keys;
+			var url = soldOrderAppUrl + "?&Division=" + Division + "&Language=" + sSelectedLocale+"#/page2" + keys;
+			window.location.href = url;
+			// win.focus();
+
 			//https://qa-soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2
 			//https://tci-qas-soldorderandpp.cfapps.us10.hana.ondemand.com/soldorderandpp/index.html#/page2/2018/YZ3DCT/SIE/BB/00/0070/1234/20181212/20181224
 		},
