@@ -50,7 +50,8 @@ sap.ui.define([
 			_thatVD.nodeJsUrl = this.sPrefix + "/node";
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
-				delay: 0
+				delay: 0,
+				soldOrderEnabled: false
 			});
 			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
 			/*Logic for logo change depending upon Toyota and Lexus user*/
@@ -101,6 +102,12 @@ sap.ui.define([
 				bundleUrl: "i18n/i18n.properties"
 			});
 			_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
+
+			if (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] == "Dealer") {
+				this.getModel("LocalVDModel").setProperty("/soldOrderEnabled", true);
+			} else {
+				this.getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
+			}
 
 			if (window.location.search == "?language=fr") {
 				_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
@@ -480,7 +487,7 @@ sap.ui.define([
 			var soldOrderAppUrl = sap.ui.getCore().getModel("configDataModel").getData().soldOrderAppUrl;
 			// window.location.href = "https://qas-soldorder.cfapps.us10.hana.ondemand.com/soldOrder/index.html#/page2" + keys;
 			// window.location.href = soldOrderAppUrl + "?Division="++"&Language="++"#/page2" + keys;
-			var url = soldOrderAppUrl + "?&Division=" + Division + "&Language=" + sSelectedLocale+"#/page2" + keys;
+			var url = soldOrderAppUrl + "?&Division=" + Division + "&Language=" + sSelectedLocale + "#/page2" + keys;
 			window.location.href = url;
 			// win.focus();
 

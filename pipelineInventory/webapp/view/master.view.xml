@@ -34,10 +34,10 @@
 									<core:ListItem key="{BusinessDataModel>BusinessPartnerType}" text="{BusinessDataModel>BusinessPartner}"
 										additionalText="{BusinessDataModel>BusinessPartnerName}"/>
 									<layoutData>
-										<l:GridData span="XL4 L4 M4 S6"/>
+										<l:GridData span="XL4 L3 M4 S6"/>
 									</layoutData>
 								</ComboBox>
-								<Input value="" id="id_BusinessPartnerName" editable="false">
+								<Input value="" id="id_BusinessPartnerName" editable="false" class="noStyleInput">
 									<layoutData>
 										<l:GridData span="XL4 L3 M3 S6"/>
 									</layoutData>
