@@ -181,22 +181,22 @@ sap.ui.define([
 							SearchTerm2: ""
 						});
 					} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "National All",
+											_that.BusinessPartnerData.getData().DealerList.unshift({
+							BusinessPartner: "-",
 							BusinessPartnerKey: "",
-							BusinessPartnerName: "",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Pacific Zone",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "",
+							BusinessPartnerName: "National All",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "Prairie Zone",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+							_that.BusinessPartnerData.getData().DealerList.unshift({
+							BusinessPartner: "Pacific Zone",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
@@ -210,14 +210,14 @@ sap.ui.define([
 							SearchTerm2: ""
 						});
 						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Atlantic Zone",
+							BusinessPartner: "Quebec Zone",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
 						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Quebec Zone",
+							BusinessPartner: "Atlantic Zone",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "",
 							BusinessPartnerType: "",
@@ -479,8 +479,11 @@ sap.ui.define([
 				//var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
 				var SelectedDealerKey = oDealer.getParameters().selectedItem.getText();
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
-				if(SelectedDealerKey == "-"){
-					SelectedDealerKey = "Zone All"
+				if(oDealer.getParameters().selectedItem.getAdditionalText() == "National All"){
+					SelectedDealerKey = "National All";
+				}
+				if(oDealer.getParameters().selectedItem.getAdditionalText() == "Zone All"){
+					SelectedDealerKey = "Zone All";
 				}
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 					if (SelectedDealerKey == "Zone All") {
