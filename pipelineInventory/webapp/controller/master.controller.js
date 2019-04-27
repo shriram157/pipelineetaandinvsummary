@@ -1067,6 +1067,9 @@ sap.ui.define([
 		getObjectData: function (obj_first) {
 			obj_first.Dealer = SelectedDealer;
 			obj_first.userType = _that.userType;
+			if(_that.salesOffice ==undefined){
+				_that.salesOffice ="";
+			}
 			obj_first.salesOffice = _that.salesOffice;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 
