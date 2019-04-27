@@ -581,7 +581,10 @@ sap.ui.define([
 				_that.userType, _that.intcolor
 			];
 			seriesModel = _that.oGlobalJSONModel.getData();
-			console.log(selectedDDValues)
+			console.log(selectedDDValues);
+			if(_that.salesOffice == undefined){
+				_that.salesOffice = "";
+			}
 			filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType +
 				"' and Dealer eq '" +
 				SelectedDealer + "' and Model eq '" + _that.ID_model +

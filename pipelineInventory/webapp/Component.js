@@ -49,6 +49,7 @@ sap.ui.define([
 					console.log("oError",oError);
 				}
 			});
+			
 			// this.loadConfiguration(function(configurationData){
 			// 	var appLinkes = {};
 			// 	appLinkes.loaded = true;
