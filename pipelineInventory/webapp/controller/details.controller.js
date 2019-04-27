@@ -100,7 +100,7 @@ sap.ui.define([
 				_thatDT.UserType = _thatDT.routedData.userType;
 				_thatDT.salesOffice = _thatDT.routedData.salesOffice;
 				//intcolor
-				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq ' "+DivUser+" ' and VKBUR eq '" + _thatDT.salesOffice +
+				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '"+DivUser+"' and VKBUR eq '" + _thatDT.salesOffice +
 					"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
 					"' and Model eq '" + _thatDT.routedData.Model + "' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and Modelyear eq '" +
 					_thatDT.routedData.ModelYear + "'and TCISeries eq '" +
