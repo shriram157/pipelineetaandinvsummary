@@ -104,9 +104,9 @@ sap.ui.define([
 			_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
 
 			if (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] == "Dealer") {
-				this.getModel("LocalVDModel").setProperty("/soldOrderEnabled", true);
+				this.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", true);
 			} else {
-				this.getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
+				this.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
 			}
 
 			if (window.location.search == "?language=fr") {
