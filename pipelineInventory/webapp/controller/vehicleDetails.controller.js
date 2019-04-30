@@ -258,13 +258,21 @@ sap.ui.define([
 										"DNCVehicle": ""
 									};*/
 									/*Defect Number 12306 solution start*/
+
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
 										"DNCVehicle": "DNC Stock"
 									};
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
 										"DNCVehicle": "DNC Demo / Loaner Vehicle"
 									};
-
+									/*Defect Number 12615 solution start*/
+									_thatVD.oVehicleDetailsJSON.getData().DNCData[2] = {
+										"DNCVehicle": "Remove DNC Stock"
+									};
+									_thatVD.oVehicleDetailsJSON.getData().DNCData[3] = {
+										"DNCVehicle": "Remove DNC Demo / Loaner Vehicle"
+									};
+									/*Defect Number 12615 solution end*/
 									_thatVD.oVehicleDetailsJSON.updateBindings();
 
 									var _OrderNumber = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].VHCLE;
@@ -439,7 +447,7 @@ sap.ui.define([
 					oInputControl.setValueState(sap.ui.core.ValueState.Error);
 					oInputControl2.setValueState(sap.ui.core.ValueState.Error);
 				}
-			}else{
+			} else {
 				if (sUserInput2) {
 					oInputControl2.setValueState(sap.ui.core.ValueState.Success);
 					_thatVD.postVehicleUpdates(oPost);

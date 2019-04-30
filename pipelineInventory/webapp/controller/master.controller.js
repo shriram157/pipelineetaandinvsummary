@@ -181,52 +181,52 @@ sap.ui.define([
 							SearchTerm2: ""
 						});
 					} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
-											_that.BusinessPartnerData.getData().DealerList.unshift({
+						_that.BusinessPartnerData.getData().DealerList.unshift({
+							BusinessPartner: "-",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "Lexus Zone",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+						_that.BusinessPartnerData.getData().DealerList.unshift({
+							BusinessPartner: "-",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "Atlantic Zone",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+						_that.BusinessPartnerData.getData().DealerList.unshift({
+							BusinessPartner: "-",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "Quebec Zone",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+						_that.BusinessPartnerData.getData().DealerList.unshift({
+							BusinessPartner: "-",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "Central Zone",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+						_that.BusinessPartnerData.getData().DealerList.unshift({
+							BusinessPartner: "-",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "Pacific Zone",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+						_that.BusinessPartnerData.getData().DealerList.unshift({
+							BusinessPartner: "-",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "Prairie Zone",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "National All",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Prairie Zone",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
-							_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Pacific Zone",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Central Zone",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Quebec Zone",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Atlantic Zone",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "Lexus Zone",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
@@ -480,10 +480,22 @@ sap.ui.define([
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
 				if(oDealer.getParameters().selectedItem.getAdditionalText() == "National All"){
 					SelectedDealerKey = "National All";
-				}
-				if(oDealer.getParameters().selectedItem.getAdditionalText() == "Zone All"){
+				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Zone All"){
 					SelectedDealerKey = "Zone All";
+				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Lexus Zone"){
+					SelectedDealerKey = "Lexus Zone";
+				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Atlantic Zone"){
+					SelectedDealerKey = "Atlantic Zone";
+				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Quebec Zone"){
+					SelectedDealerKey = "Quebec Zone";
+				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Central Zone"){
+					SelectedDealerKey = "Central Zone";
+				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Pacific Zone"){
+					SelectedDealerKey = "Pacific Zone";
+				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Prairie Zone"){
+					SelectedDealerKey = "Prairie Zone";
 				}
+			
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 					if (SelectedDealerKey == "Zone All") {
 						_that.userType = "ZZA";
