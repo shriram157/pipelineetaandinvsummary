@@ -1,0 +1,11 @@
+_schema-version: "3.1"
+ID: pipelineInventory.dev
+extends: pipelineInventory
+
+modules:
+ - name: pipelineInventory_node
+   parameters:
+      host: tci-dev-pipelineetaandinvsummary-node
+ - name: pipelineInventory
+   parameters:
+      host: tci-dev-pipelineetaandinvsummary
