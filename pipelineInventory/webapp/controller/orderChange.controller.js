@@ -56,9 +56,10 @@ sap.ui.define([
 
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
-				delay: 0
+				delay: 0,
+				dropdownEnabled :false
 			});
-			_thatOC.getView().setModel(_oViewModel, "LocalOCModel");
+			_thatOC.getView().setModel(_oViewModel, "LocalOCModel"); 
 
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
@@ -78,10 +79,33 @@ sap.ui.define([
 			_thatOC.getView().setModel(sap.ui.getCore().getModel("VehicleDetailsJSON"), "VehicleDetailsJSON");
 			_thatOC.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatOC._oOrderChangeRoute, _thatOC);
 		},
+		
+		getOrderFlag: function (_OrderNumber) {
+			var url = _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('" + _OrderNumber + "')";
+			$.ajax({
+				dataType: "json",
+				url: url,
+				type: "GET",
+				success: function (oRowData) {
+					debugger;
+					_thatOC.Order_ChangeFlag = oRowData.d.Order_ChangeFlag;
+					if (_thatOC.Order_ChangeFlag == "X") {
+						_thatOC.getView().getModel("LocalOCModel").setProperty("/dropdownEnabled", true);
+					} else {
+						_thatOC.getView().getModel("LocalOCModel").setProperty("/dropdownEnabled", false);
+					}
+				},
+				error: function (oError) {
+					sap.ui.core.BusyIndicator.hide();
+					_thatOC.errorFlag = true;
+				}
+			});
+		},
 
 		_oOrderChangeRoute: function (oEvent) {
 			_thatOC.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
+			
 			if (oEvent.getParameters().name == "orderChange2") {
 				if (oEvent.getParameter("arguments").Data2 != undefined) {
 					var Data = JSON.parse(oEvent.getParameter("arguments").Data2);
@@ -437,6 +461,7 @@ sap.ui.define([
 			OrderChangeModel.setUseBatch(false);
 			OrderChangeModel.create("/OrderChangeSet", Obj, {
 				success: $.proxy(function (oResponse) {
+					debugger;
 					console.log(oResponse);
 					if (oResponse.Error != "") {
 						sap.m.MessageBox.error(oResponse.Error);

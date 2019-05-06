@@ -61,29 +61,26 @@
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Modelyear}"/>
 									<Label text="{i18n>Series}"/>
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries} {VehicleDetailsJSON>/selectedVehicleData/0/SERIES_DESC_EN}"/>
+									
 									<Label text="{i18n>NewModel}" required="true"/>
-									<Select id="ID_modelSelect" forceSelection="true" items="{VehicleDetailsJSON>/modelData}" change="onModelSelectionChange">
+									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_modelSelect" forceSelection="true" items="{VehicleDetailsJSON>/modelData}" change="onModelSelectionChange">
 										<core:Item key="{VehicleDetailsJSON>Model}" text="{VehicleDetailsJSON>Model} - {VehicleDetailsJSON>ENModelDesc}"/>
 									</Select>
-									<!--<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewModel}"/>-->
 									<Label text="{i18n>NewSuffix}" required="true"/>
-									<!--<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewSuffix}"/>-->
-									<Select id="ID_suffixSelect" forceSelection="true" items="{VehicleDetailsJSON>/suffixData}" change="onSuffixChange">
+									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_suffixSelect" forceSelection="true" items="{VehicleDetailsJSON>/suffixData}" change="onSuffixChange">
 										<core:Item key="{VehicleDetailsJSON>Suffix}"
 											text="{VehicleDetailsJSON>Suffix} - {VehicleDetailsJSON>SuffixDescriptionEN} / {VehicleDetailsJSON>mrktg_int_desc_en}"/>
-										<!--/ {GlobalJSONModel>MarktgIntDescEN}-->
 									</Select>
-									<!--<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}" id="APXrequired"/>-->
 									<Label text="{i18n>NewColour}" required="true"/>
-									<Select id="ID_ExteriorColorSelect" forceSelection="true" items="{VehicleDetailsJSON>/colorData}">
+									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_ExteriorColorSelect" forceSelection="true" items="{VehicleDetailsJSON>/colorData}">
 										<core:Item key="{VehicleDetailsJSON>ExteriorColorCode}"
 											text="{VehicleDetailsJSON>ExteriorColorCode} - {VehicleDetailsJSON>MarketingDescriptionEXTColorEN}"/>
 									</Select>
-									<!--<Input type="Text" value="{VehicleDetailsJSON>/selectedVehicleData/0/NewColour}"/>-->
 									<Label text="{i18n>NewAPX}" required="true"/>
-									<Select forceSelection="false" selectedKey="" id="APXrequired" items="{ path: 'VehicleDetailsJSON>/selectedVehicleData/0/newAPXValues'}">
+									<Select enabled="{LocalOCModel>/dropdownEnabled}" forceSelection="false" selectedKey="" id="APXrequired" items="{ path: 'VehicleDetailsJSON>/selectedVehicleData/0/newAPXValues'}">
 										<core:Item key="{VehicleDetailsJSON>zzapx}" text="{VehicleDetailsJSON>zzapx}"/>
 									</Select>
+									
 									<Label text="{i18n>DateTime}"/>
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/CurrentDate}"/>
 									<Label text="{i18n>Status}"/>
@@ -103,7 +100,7 @@
 						<OverflowToolbar>
 							<ToolbarSpacer/>
 							<Button text="{i18n>Cancel}" type="Default" press="NavigateBack"/>
-							<Button text="{i18n>Request}" type="Default" press="_DataValidate"/>
+							<Button text="{i18n>Request}" type="Default" press="_DataValidate" enabled="{LocalOCModel>/dropdownEnabled}"/>
 						</OverflowToolbar>
 					</content>
 				</ScrollContainer>

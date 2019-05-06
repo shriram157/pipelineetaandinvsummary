@@ -51,7 +51,8 @@ sap.ui.define([
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
 				delay: 0,
-				soldOrderEnabled: false
+				soldOrderEnabled: false,
+				APXEnabled: false
 			});
 			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
 			/*Logic for logo change depending upon Toyota and Lexus user*/
@@ -153,6 +154,12 @@ sap.ui.define([
 							type: "GET",
 							success: function (oRowData) {
 								console.log("CustomerData", oRowData);
+								_thatVD.APX_ChangeFlag = oRowData.d.APX_ChangeFlag;
+								if (_thatVD.APX_ChangeFlag == "X") {
+									_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", true);
+								} else {
+									_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", false);
+								}
 								oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
 								_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 								_thatVD.oVehicleDetailsJSON.updateBindings(true);
@@ -196,6 +203,7 @@ sap.ui.define([
 						_thatVD.oVehicleDetailsJSON.refresh(true);
 						_thatVD.getView().setModel(_thatVD.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
+						debugger;
 						$.ajax({
 							dataType: "json",
 							url: _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + data.Modelyear +
@@ -283,6 +291,12 @@ sap.ui.define([
 										url: url,
 										type: "GET",
 										success: function (oRowData) {
+											_thatVD.APX_ChangeFlag = oRowData.d.APX_ChangeFlag;
+											if (_thatVD.APX_ChangeFlag == "X") {
+												_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", true);
+											} else {
+												_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", false);
+											}
 											console.log("CustomerData", oRowData);
 											oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
 											_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
@@ -300,7 +314,7 @@ sap.ui.define([
 										}
 									});
 									var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
-
+									debugger;
 									$.ajax({
 										dataType: "json",
 										url: _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + data.Modelyear +
@@ -349,6 +363,13 @@ sap.ui.define([
 				url: url,
 				type: "GET",
 				success: function (oRowData) {
+					debugger;
+					_thatVD.APX_ChangeFlag = oRowData.d.APX_ChangeFlag;
+					if (_thatVD.APX_ChangeFlag == "X") {
+						_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", true);
+					} else {
+						_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", false);
+					}
 					console.log("CustomerData", oRowData);
 					oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1]
 					_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
@@ -473,6 +494,7 @@ sap.ui.define([
 			oModel.setUseBatch(false);
 			oModel.create("/VehicleDetailsSet", Obj, {
 				success: $.proxy(function (oResponse) {
+					debugger;
 					console.log(oResponse);
 					if (oResponse.Error != "") {
 						sap.m.MessageBox.error(oResponse.Error);

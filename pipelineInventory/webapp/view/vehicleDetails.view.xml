@@ -43,7 +43,7 @@
 								<Label text="{i18n>Colour}"/>
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ExteriorColorCode} {VehicleDetailsJSON>/selectedVehicleData/0/EXTCOL_DESC_EN}"/>
 								<Label text="{i18n>APX}"/>
-								<Select forceSelection="false" selectedKey="" id="apxVal" change="onAPXChange" items="{ path: 'VehicleDetailsJSON>/APXData'}">
+								<Select enabled="{LocalVDModel>/APXEnabled}" forceSelection="false" selectedKey="" id="apxVal" change="onAPXChange" items="{ path: 'VehicleDetailsJSON>/APXData'}">
 									<core:Item key="{VehicleDetailsJSON>zzapx}" text="{VehicleDetailsJSON>zzapx}"/>
 								</Select>
 								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>-->
