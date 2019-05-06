@@ -81,7 +81,7 @@ sap.ui.define([
 		},
 		
 		getOrderFlag: function (_OrderNumber) {
-			var url = _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('" + _OrderNumber + "')";
+			var url = _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/OrderChangeSet('" + _OrderNumber + "')";
 			$.ajax({
 				dataType: "json",
 				url: url,
@@ -111,17 +111,12 @@ sap.ui.define([
 					var Data = JSON.parse(oEvent.getParameter("arguments").Data2);
 					Data.NewSuffix = Data.NewSuffix.replace("%2F", "/");
 					Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
-
-					// Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
-					// Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
-					// Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
-					// Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
-					// Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("%2F", "/");
-
+					
 					_thatOC.oVehicleDetailsJSON = new sap.ui.model.json.JSONModel();
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData = [];
+					console.log("Data",Data);
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData.push(Data);
-
+					_thatOC.getOrderFlag(Data.VHCLE);
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Model = Data.OldModel;
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Suffix = Data.OldSuffix;
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].APX = Data.OldAPX;
@@ -167,6 +162,8 @@ sap.ui.define([
 					_thatOC.oVehicleDetailsJSON = new sap.ui.model.json.JSONModel();
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData = [];
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData.push(Data);
+					console.log("Data",Data);
+					_thatOC.getOrderFlag(Data.VHCLE);
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewModel = "";
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewSuffix = "";
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewAPX = "";
