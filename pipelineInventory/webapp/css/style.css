@@ -1,4 +1,6 @@
 /* Enter your custom styles here */
+
+
 /*======================= Start custom fonts and custom color on header style ==========================*/
 
 @import url('https://fonts.googleapis.com/css?family=Raleway');
@@ -32,22 +34,26 @@
 
 
 /* Customized CSS by Aarti Dhamat */
+
 .stylePageSection {
-	background: #fff !important;
+    background: #fff !important;
 }
 
+
 /*Form Css*/
+
 .stylePosition {
     background: #F1F1F1;
-	position: relative;
+    position: relative;
 }
 
 .styleBtnPositioned {
-	position: absolute;
-	right: 1rem;
-	bottom:1rem;
-	width: auto !important;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: auto !important;
 }
+
 .styleForms {
     background: transparent;
     width: 90%;
@@ -58,23 +64,37 @@
     line-height: 0rem;
 }
 
+
 /*.styleHLayout .sapUiHLayoutChildWrapper:nth-child(1),*/
+
+
 /*.styleHLayout .sapUiHLayoutChildWrapper:nth-child(2),*/
+
+
 /*.styleHLayout .sapUiHLayoutChildWrapper:nth-child(3) {*/
+
+
 /*    width: 40%;*/
+
+
 /*}*/
 
+
 /*.styleHLayout .sapMHBox .sapMFlexItem:nth-child(2) {*/
+
+
 /*    width: 100%;*/
+
+
 /*}*/
 
 .styleRightAlign {
     float: right;
     clear: right;
 }
-.styleFontSize {
 
-    font-size: 18px;	
+.styleFontSize {
+    font-size: 18px;
 }
 
 .styleFontSizeSmall {}
@@ -96,54 +116,107 @@
     margin: 0 auto;
 }
 
+
 /*For Grid Tables*/
 
-.ETAMaster .sapUiTableColHdrTr td:nth-child(2){
-	background:#91C8FF;
+.ETAMaster .sapUiTableColHdrTr td {
+    border-right: 1px solid #000 !important;
+    border-bottom: 1px solid #000 !important;
 }
-.ETAMaster .sapUiTableColHdrTr td:nth-child(8){
-	background:#ffff0085 ;	
+
+.ETAMaster .sapUiTableColHdrTr td:nth-child(1) {
+    background: #9BC1E7;
+    border-bottom: none !important;
+    border-right: 1px solid #000;
 }
-.ETAMaster .sapUiTableColHdrTr td:nth-child(16){
-	background:mediumseagreen ;	
+
+.ETAMaster .sapUiTableColHdrTr td:nth-child(2),
+.ETAMaster .sapUiTableColHdrTr td:nth-child(3),
+.ETAMaster .sapUiTableColHdrTr td:nth-child(4),
+.ETAMaster .sapUiTableColHdrTr td:nth-child(5),
+.ETAMaster .sapUiTableColHdrTr td:nth-child(6),
+.ETAMaster .sapUiTableColHdrTr td:nth-child(7) {
+    background: #BED6EE;
 }
+
+.ETAMaster .sapUiTableColHdrTr td:nth-child(8),
+.ETAMaster .sapUiTableColHdrTr td:nth-child(9),
+.ETAMaster .sapUiTableColHdrTr td:nth-child(10),
+.ETAMaster .sapUiTableColHdrTr td:nth-child(11),
+.ETAMaster .sapUiTableColHdrTr td:nth-child(12),
+.ETAMaster .sapUiTableColHdrTr td:nth-child(13),
+.ETAMaster .sapUiTableColHdrTr td:nth-child(14) {
+    background: #E0EEF9;
+}
+
+.ETAMaster .sapUiTableColHdrTr td:nth-child(15) {
+    background: #FFF;
+    border-bottom: none !important;
+    border-right: 1px solid #000;
+}
+
+.ETAMaster .sapUiTableColHdrTr td:nth-child(16),
+.ETAMaster .sapUiTableColHdrTr td:nth-child(17) {
+    background: #FEFEFE;
+}
+
+.ETAMaster .sapUiTableTr>td:nth-child(15) {
+    background: #FFF;
+    border-bottom: none;
+}
+
 .ETAMaster .sapUiTableCtrl tr:nth-child(odd) {
     background: #fff;
 }
+
 .ETAMaster .sapUiTableCtrl tr:nth-child(even) {
     background: #8080807d;
 }
 
-.guideLines{ width:100% !important;}
+.guideLines {
+    width: 100% !important;
+}
+
 .guideLines .sapUiRespGridBreak.sapUiRespGridSpanL6.sapUiRespGridSpanM6.sapUiRespGridSpanS12.sapUiRespGridSpanXL6 {
     width: 100%;
 }
+
 .guideLines .sapUiRGLContainerCont {
     padding: 1rem;
 }
-.newLine{
-	display:block;
-	width: 100% !important;;
+
+.newLine {
+    display: block;
+    width: 100% !important;
+    ;
 }
 
+
 /*#blankBG, #blankBG>div, .blankBG {*/
+
+
 /*	background: #fff !important;*/
+
+
 /*	border: none !important;*/
+
+
 /*}*/
 
 .TabFontStyle {
-	color:blue;
-	text-decoration: underline;
-	cursor:pointer;
-	width:100%;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    width: 100%;
 }
+
 
 /* CSS for filter notification */
 
 .filterNotification {
     background: #3d4954;
     display: block;
-    margin: 0 0.2rem 0 2rem  !important;
+    margin: 0 0.2rem 0 2rem !important;
     overflow: hidden;
 }
 
@@ -176,16 +249,20 @@
     /*padding: 0.5rem;*/
     margin-left: 0;
 }
+
+
 /*Remove all styling from input*/
+
 .noStyleInput .sapMInputBaseReadonlyInner .sapMInputBaseInner {
-	border: none;
+    border: none;
     background: #fff;
     padding: 0;
 }
 
 .filterNotification .sapMText {
-	color:#fff;
+    color: #fff;
 }
+
 .headerFixClass .sapMListTbl th {
     position: sticky;
     z-index: 9;
