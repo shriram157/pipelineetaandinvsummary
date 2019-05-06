@@ -8,7 +8,6 @@ modules:
    type: nodejs
    path: pipelineInventory_node
    parameters:
-      host: tci-dev-pipelineetaandinvsummary-node
       disk-quota: 512M
       memory: 256M
    properties:
@@ -31,13 +30,13 @@ modules:
    type: html5
    path: pipelineInventory
    parameters:
-      host: tci-dev-pipelineetaandinvsummary
       disk-quota: 512M
       memory: 256M
    properties:
       XS_APP_LOG_LEVEL: info
    build-parameters:
       builder: grunt
+      build-result: dist
    requires:
     - name: application-logs_pipelineInventory
     - name: uaa_pipelineInventory
