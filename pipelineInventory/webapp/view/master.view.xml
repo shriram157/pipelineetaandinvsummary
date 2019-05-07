@@ -111,7 +111,7 @@
 									<t:multiLabels id="multiheaderColumn">
 										<Label text="Stock" textAlign="Center" width="100%"/>
 										<Label text="Usage Type" textAlign="Center" width="100%"/>
-										<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits}" textAlign="Center" wrapping="true" width="100%"/>
+										<Label text="{i18n>TTLUnits}" tooltip="{i18n>TTLUnits}" textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
 										<Text text="{GlobalJSONModel>Ttlunits}" textAlign="Center" class="TabFontStyle"/>
@@ -260,7 +260,7 @@
 									<t:multiLabels>
 										<Label text="References"/>
 										<Label text=""/>
-										<Label text="Drop Ship" tooltip="Drop Ship" textAlign="Center" wrapping="true" width="100%"/>
+										<Label text="{i18n>Dropship}" tooltip="{i18n>Dropship}" textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
 										<Text text="{GlobalJSONModel>Dropship}" textAlign="Center" class="TabFontStyle"/>
@@ -400,7 +400,7 @@
 									<t:multiLabels>
 										<Label text="Priority Units" wrapping="true"/>
 										<Label text="Fleet" textAlign="Center" width="100%"/>
-										<Label text="{i18n>NationalElite} " tooltip="{i18n>NationalElite} " textAlign="Center" wrapping="true" width="100%"/>
+										<Label text="{i18n>NationalElite} " tooltip="{i18n>NationalElite}" textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
 										<Text text="{GlobalJSONModel>Nationalelite}" textAlign="Center" class="TabFontStyle"/>

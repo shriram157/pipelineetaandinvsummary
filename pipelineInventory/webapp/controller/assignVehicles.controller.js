@@ -10,6 +10,16 @@ sap.ui.define([
 	return BaseController.extend("pipelineInventory.controller.assignVehicles", {
 		onInit: function () {
 			_thatAV = this;
+
+			var sLocation = window.location.host;
+			var sLocation_conf = sLocation.search("webide");
+
+			if (sLocation_conf == 0) {
+				this.sPrefix = "/pipelineInventory-dest";
+			} else {
+				this.sPrefix = "";
+			}
+			_thatAV.nodeJsUrl = this.sPrefix + "/node";
 			_thatAV.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
@@ -36,30 +46,7 @@ sap.ui.define([
 				this.getView().setModel(_thatAV.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
 			}
-
-			var sLocation = window.location.host;
-			var sLocation_conf = sLocation.search("webide");
-
-			if (sLocation_conf == 0) {
-				this.sPrefix = "/pipelineInventory-dest";
-			} else {
-				this.sPrefix = "";
-			}
-			_thatAV.nodeJsUrl = this.sPrefix + "/node";
-
-			// _thatAV.oDealerDataModel = new JSONModel();
-			_thatAV.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
-
-			_thatAV.oAssignVehiclesModel = new JSONModel();
-			_thatAV.getView().setModel(_thatAV.oAssignVehiclesModel, "AssignVehiclesModel");
-			sap.ui.getCore().getModel(_thatAV.oAssignVehiclesModel, "AssignVehiclesModel");
-
-			_thatAV._oViewModel = new sap.ui.model.json.JSONModel({
-				busy: false,
-				delay: 0,
-				enableResubmitBtn: false
-			});
-			_thatAV.getView().setModel(_thatAV._oViewModel, "LocalModel");
+			
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -75,18 +62,76 @@ sap.ui.define([
 				}
 			}
 
+			// _thatAV.oDealerDataModel = new JSONModel();
+			_thatAV.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
+
+			_thatAV.oAssignVehiclesModel = new JSONModel();
+			_thatAV.getView().setModel(_thatAV.oAssignVehiclesModel, "AssignVehiclesModel");
+			sap.ui.getCore().getModel(_thatAV.oAssignVehiclesModel, "AssignVehiclesModel");
+
+			_thatAV._oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0,
+				enableResubmitBtn: false
+			});
+			_thatAV.getView().setModel(_thatAV._oViewModel, "LocalModel");
+			
+
 			_thatAV.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatAV._oAssignVehicleRoute, _thatAV);
 		},
 
 		_oAssignVehicleRoute: function (oEvent) {
-			// window.onhashchange = function () {
-			// 	if (window.innerDocClick != false) {
-			// 		//Your own in-page mechanism triggered the hash change
-			// 	} else {
-			// 		//Browser back button was clicked
-			// 		_thatAV.getView().setBusy(false);
-			// 	}
-			// };
+			var sLocation = window.location.host;
+			var sLocation_conf = sLocation.search("webide");
+
+			if (sLocation_conf == 0) {
+				this.sPrefix = "/pipelineInventory-dest";
+			} else {
+				this.sPrefix = "";
+			}
+			_thatAV.nodeJsUrl = this.sPrefix + "/node";
+			_thatAV.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				bundleUrl: "i18n/i18n.properties"
+			});
+			_thatAV.getView().setModel(_thatAV.oI18nModel, "i18n");
+
+			var isLocaleSent = window.location.search.match(/language=([^&]*)/i);
+			if (isLocaleSent) {
+				sSelectedLocale = window.location.search.match(/language=([^&]*)/i)[1];
+			} else {
+				sSelectedLocale = "EN"; // default is english 
+			}
+			if (sSelectedLocale == "fr") {
+				_thatAV.oI18nModel = new sap.ui.model.resource.ResourceModel({
+					bundleUrl: "i18n/i18n.properties",
+					bundleLocale: ("fr")
+				});
+				this.getView().setModel(_thatAV.oI18nModel, "i18n");
+				this.sCurrentLocale = 'FR';
+			} else {
+				_thatAV.oI18nModel = new sap.ui.model.resource.ResourceModel({
+					bundleUrl: "i18n/i18n.properties",
+					bundleLocale: ("en")
+				});
+				this.getView().setModel(_thatAV.oI18nModel, "i18n");
+				this.sCurrentLocale = 'EN';
+			}
+			
+			/*Logic for logo change depending upon Toyota and Lexus user*/
+			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+			if (isDivisionSent) {
+				Division = window.location.search.match(/Division=([^&]*)/i)[1];
+				var currentImageSource;
+				if (Division == '10') // set the toyoto logo
+				{
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
+				} else { // set the lexus logo
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/Lexus.png");
+				}
+			}
+			
 			_thatAV.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
 			if (oEvent.getParameters().arguments.vehicleData != undefined) {

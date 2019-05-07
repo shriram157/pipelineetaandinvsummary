@@ -66,6 +66,52 @@ sap.ui.define([
 			_thatSDR.getView().setBusy(false);
 			_thatSDR.oDropResponseModel = new sap.ui.model.json.JSONModel();
 			_thatSDR.getView().setModel(_thatSDR.oDropResponseModel, "DropResponseModel");
+			_thatSDR.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				bundleUrl: "i18n/i18n.properties"
+			});
+			_thatSDR.getView().setModel(_thatSDR.oI18nModel, "i18n");
+
+			var isLocaleSent = window.location.search.match(/language=([^&]*)/i);
+			if (isLocaleSent) {
+				sSelectedLocale = window.location.search.match(/language=([^&]*)/i)[1];
+			} else {
+				sSelectedLocale = "EN"; // default is english 
+			}
+			if (sSelectedLocale == "fr") {
+				_thatSDR.oI18nModel = new sap.ui.model.resource.ResourceModel({
+					bundleUrl: "i18n/i18n.properties",
+					bundleLocale: ("fr")
+				});
+				this.getView().setModel(_thatSDR.oI18nModel, "i18n");
+				this.sCurrentLocale = 'FR';
+			} else {
+				_thatSDR.oI18nModel = new sap.ui.model.resource.ResourceModel({
+					bundleUrl: "i18n/i18n.properties",
+					bundleLocale: ("en")
+				});
+				this.getView().setModel(_thatSDR.oI18nModel, "i18n");
+				this.sCurrentLocale = 'EN';
+			}
+
+			var _oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0
+			});
+			_thatSDR.getView().setModel(_oViewModel, "LocalSDRModel");
+			/*Logic for logo change depending upon Toyota and Lexus user*/
+			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+			if (isDivisionSent) {
+				Division = window.location.search.match(/Division=([^&]*)/i)[1];
+				var currentImageSource;
+				if (Division == '10') // set the toyoto logo
+				{
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
+				} else { // set the lexus logo
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/Lexus.png");
+				}
+			}
 
 			if (oEvt.getParameters().arguments.data != undefined) {
 				var VUIdata = JSON.parse(oEvt.getParameters().arguments.data);

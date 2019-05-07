@@ -105,22 +105,79 @@ sap.ui.define([
 			} else {
 				this.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
 			}
+			_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				bundleUrl: "i18n/i18n.properties"
+			});
+			_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
 
-			if (window.location.search == "?language=fr") {
+			var isLocaleSent = window.location.search.match(/language=([^&]*)/i);
+			if (isLocaleSent) {
+				sSelectedLocale = window.location.search.match(/language=([^&]*)/i)[1];
+			} else {
+				sSelectedLocale = "EN"; // default is english 
+			}
+			if (sSelectedLocale == "fr") {
 				_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
 				});
-				_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
-				_thatVD.sCurrentLocale = 'FR';
+				this.getView().setModel(_thatVD.oI18nModel, "i18n");
+				this.sCurrentLocale = 'FR';
 			} else {
 				_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
 				});
-				_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
-				_thatVD.sCurrentLocale = 'EN';
+				this.getView().setModel(_thatVD.oI18nModel, "i18n");
+				this.sCurrentLocale = 'EN';
 			}
+
+			var sLocation = window.location.host;
+			var sLocation_conf = sLocation.search("webide");
+
+			if (sLocation_conf == 0) {
+				this.sPrefix = "/pipelineInventory-dest";
+			} else {
+				this.sPrefix = "";
+			}
+			_thatVD.nodeJsUrl = this.sPrefix + "/node";
+			var _oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0,
+				soldOrderEnabled: false,
+				APXEnabled: false
+			});
+			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
+			/*Logic for logo change depending upon Toyota and Lexus user*/
+			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+			if (isDivisionSent) {
+				Division = window.location.search.match(/Division=([^&]*)/i)[1];
+				var currentImageSource;
+				if (Division == '10') // set the toyoto logo
+				{
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
+				} else { // set the lexus logo
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/Lexus.png");
+				}
+			}
+
+			// if (window.location.search == "?language=fr") {
+			// 	_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
+			// 		bundleUrl: "i18n/i18n.properties",
+			// 		bundleLocale: ("fr")
+			// 	});
+			// 	_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
+			// 	_thatVD.sCurrentLocale = 'FR';
+			// } else {
+			// 	_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
+			// 		bundleUrl: "i18n/i18n.properties",
+			// 		bundleLocale: ("en")
+			// 	});
+			// 	_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
+			// 	_thatVD.sCurrentLocale = 'EN';
+			// }
 			if (oEvent.getParameters().name != "orderChange") {
 				if (oEvent.getParameters().name == "vehicleDetails2") {
 					if (oEvent.getParameter("arguments").VCData2 != undefined) {

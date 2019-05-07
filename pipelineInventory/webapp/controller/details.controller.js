@@ -49,15 +49,6 @@ sap.ui.define([
 				_thatDT.sPrefix = "";
 			}
 			_thatDT.nodeJsUrl = _thatDT.sPrefix + "/node";
-
-			_thatDT.oTable = _thatDT.getView().byId("Tab_vehicleDetails");
-			_thatDT.oTable.removeSelections();
-			_thatDT._oViewModel = new sap.ui.model.json.JSONModel({
-				busy: false,
-				delay: 0,
-				enableDropShipBtn: false,
-				enableAssignVehicleBtn: false
-			});
 			/*Logic for logo change depending upon Toyota and Lexus users*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -74,6 +65,16 @@ sap.ui.define([
 					currentImageSource.setProperty("src", "images/Lexus.png");
 				}
 			}
+
+			_thatDT.oTable = _thatDT.getView().byId("Tab_vehicleDetails");
+			_thatDT.oTable.removeSelections();
+			_thatDT._oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0,
+				enableDropShipBtn: false,
+				enableAssignVehicleBtn: false
+			});
+			
 			_thatDT.getView().setModel(_thatDT._oViewModel, "DetailsLocalModel");
 			_thatDT.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatDT._oDetailsRoute, _thatDT);
 
@@ -88,6 +89,58 @@ sap.ui.define([
 			_thatDT.oVehicleDetailsJSON.setData();
 			_thatDT.oTable.setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
 			_thatDT.oVehicleDetailsJSON.updateBindings(true);
+			_thatDT.oI18nModel = new sap.ui.model.resource.ResourceModel({
+				bundleUrl: "i18n/i18n.properties"
+			});
+			_thatDT.getView().setModel(_thatDT.oI18nModel, "i18n");
+
+			var isLocaleSent = window.location.search.match(/language=([^&]*)/i);
+			if (isLocaleSent) {
+				sSelectedLocale = window.location.search.match(/language=([^&]*)/i)[1];
+			} else {
+				sSelectedLocale = "EN"; // default is english 
+			}
+			if (sSelectedLocale == "fr") {
+				_thatDT.oI18nModel = new sap.ui.model.resource.ResourceModel({
+					bundleUrl: "i18n/i18n.properties",
+					bundleLocale: ("fr")
+				});
+				this.getView().setModel(_thatDT.oI18nModel, "i18n");
+				this.sCurrentLocale = 'FR';
+			} else {
+				_thatDT.oI18nModel = new sap.ui.model.resource.ResourceModel({
+					bundleUrl: "i18n/i18n.properties",
+					bundleLocale: ("en")
+				});
+				this.getView().setModel(_thatDT.oI18nModel, "i18n");
+				this.sCurrentLocale = 'EN';
+			}
+
+			var sLocation = window.location.host;
+			var sLocation_conf = sLocation.search("webide");
+
+			if (sLocation_conf == 0) {
+				_thatDT.sPrefix = "/pipelineInventory-dest";
+			} else {
+				_thatDT.sPrefix = "";
+			}
+			_thatDT.nodeJsUrl = _thatDT.sPrefix + "/node";
+			/*Logic for logo change depending upon Toyota and Lexus users*/
+			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+			if (isDivisionSent) {
+				Division = window.location.search.match(/Division=([^&]*)/i)[1];
+				var currentImageSource;
+				if (Division == '10') // set the toyoto logo
+				{
+					DivUser = "TOY";
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
+				} else { // set the lexus logo
+					DivUser = "LEX";
+					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource.setProperty("src", "images/Lexus.png");
+				}
+			}
 
 			_thatDT.oTable = _thatDT.getView().byId("Tab_vehicleDetails");
 			_thatDT.oTable.removeSelections();
