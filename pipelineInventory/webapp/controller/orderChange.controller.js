@@ -194,6 +194,9 @@ sap.ui.define([
 					_thatOC.byId("APXrequired").setSelectedKey(Data.NewAPX.split("-")[0]);
 					_thatOC.byId("ID_suffixSelect").setSelectedKey(Data.NewSuffix.split("-")[0]);
 					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(Data.NewColor.split("-")[0]);
+					
+					_thatOC.onModelSelectionChange(_thatOC.byId("ID_modelSelect"), Data.NewSuffix.split("-")[0]);
+					_thatOC.onSuffixChange(_thatOC.byId("ID_suffixSelect"), Data.NewColor.split("-")[0]);
 
 					_thatOC.onModelSelectionChange(_thatOC.byId("ID_modelSelect"), Data);
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Status = "";
@@ -236,10 +239,13 @@ sap.ui.define([
 					console.log("Data", Data);
 					_thatOC.getOrderFlag(Data.VHCLE);
 
-					_thatOC.byId("ID_modelSelect").setSelectedKey(Data.Model.split("-")[0]);
-					_thatOC.byId("APXrequired").setSelectedKey(Data.APX.split("-")[0]);
-					_thatOC.byId("ID_suffixSelect").setSelectedKey(Data.Suffix.split("-")[0]);
-					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(Data.ExteriorColorCode.split("-")[0]);
+					_thatOC.byId("ID_modelSelect").setSelectedKey(Data.Model);
+					_thatOC.byId("ID_suffixSelect").setSelectedKey(Data.Suffix);
+					_thatOC.byId("APXrequired").setSelectedKey(Data.APX);
+					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(Data.ExteriorColorCode);
+					
+					_thatOC.onModelSelectionChange(_thatOC.byId("ID_modelSelect"), Data.Suffix);
+					_thatOC.onSuffixChange(_thatOC.byId("ID_suffixSelect"), Data.ExteriorColorCode);
 
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewModel = "";
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewSuffix = "";
@@ -287,10 +293,10 @@ sap.ui.define([
 							b = 0;
 						}
 						sap.ui.core.BusyIndicator.hide();
-						_thatOC.oVehicleDetailsJSON.getData().modelData.unshift({
-							"Model": "",
-							"ENModelDesc": ""
-						});
+						// _thatOC.oVehicleDetailsJSON.getData().modelData.unshift({
+						// 	"Model": "",
+						// 	"ENModelDesc": ""
+						// });
 						_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					} else {
 						sap.ui.core.BusyIndicator.hide();
@@ -322,16 +328,16 @@ sap.ui.define([
 					if (oData.d.results.length > 0) {
 						_thatOC.oVehicleDetailsJSON.getData().suffixData = oData.d.results;
 						sap.ui.core.BusyIndicator.hide();
-						_thatOC.oVehicleDetailsJSON.getData().suffixData.unshift({
-							"Model": "",
-							"Modelyear": "",
-							"Suffix": "",
-							"int_c": "",
-							"SuffixDescriptionEN": "",
-							"SuffixDescriptionFR": "",
-							"mrktg_int_desc_en": "",
-							"mrktg_int_desc_fr": ""
-						});
+						// _thatOC.oVehicleDetailsJSON.getData().suffixData.unshift({
+						// 	"Model": "",
+						// 	"Modelyear": "",
+						// 	"Suffix": "",
+						// 	"int_c": "",
+						// 	"SuffixDescriptionEN": "",
+						// 	"SuffixDescriptionFR": "",
+						// 	"mrktg_int_desc_en": "",
+						// 	"mrktg_int_desc_fr": ""
+						// });
 						_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					} else {
 						sap.ui.core.BusyIndicator.hide();
@@ -341,8 +347,13 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 				},
 				complete: function () {
-					if (oSuffixValue != undefined) {
+					if (oSuffixValue != undefined || oSuffixValue !="" ) {
+						if(!oSuffixValue.NewSuffix){
+							_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.Suffix);
+						}
+						else{
 						_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.NewSuffix.split("-")[0]);
+						}
 						_thatOC.onSuffixChange(_thatOC.byId("ID_suffixSelect"), oSuffixValue)
 					}
 				}
@@ -377,10 +388,10 @@ sap.ui.define([
 							});
 						});
 
-						_thatOC.oVehicleDetailsJSON.getData().colorData.unshift({
-							"ExteriorColorCode": "",
-							"MarketingDescriptionEXTColorEN": ""
-						});
+						// _thatOC.oVehicleDetailsJSON.getData().colorData.unshift({
+						// 	"ExteriorColorCode": "",
+						// 	"MarketingDescriptionEXTColorEN": ""
+						// });
 						_thatOC.oVehicleDetailsJSON.updateBindings(true);
 						sap.ui.core.BusyIndicator.hide();
 					} else {
