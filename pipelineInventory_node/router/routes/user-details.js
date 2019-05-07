@@ -10,6 +10,12 @@ module.exports = function (appContext) {
 
 	var router = express.Router();
 
+	var mockUserMode = false;
+	if (process.env.MOCK_USER_MODE === "true" || process.env.MOCK_USER_MODE === "TRUE") {
+		mockUserMode = true;
+	}
+	var mockUserOrigin = process.env.MOCK_USER_ORIGIN;
+
 	// Get UPS name from env var UPS_NAME
 	var apimServiceName = process.env.UPS_NAME;
 	var options = {};
@@ -40,12 +46,13 @@ module.exports = function (appContext) {
 		tracer.debug("User attributes from JWT: %s", JSON.stringify(userAttributes));
 
 		// If there is no user type, it is most probably a call from Neo, in which case we can fake the data as TCI user
-		if (!userAttributes.UserType) {
+		if (mockUserMode && mockUserOrigin === req.authInfo.origin) {
 			userAttributes = {
 				Language: ["English"],
 				UserType: ["National"]
 			};
-			tracer.debug("JWT likely refers to a development user from Neo, switch to mock user attributes: %s", JSON.stringify(userAttributes));
+			tracer.debug("Mock user mode is enabled and JWT is from origin %s, switch to mock user attributes: %s", req.authInfo.origin, JSON.stringify(
+				userAttributes));
 		}
 
 		var resBody = {
@@ -186,26 +193,29 @@ module.exports = function (appContext) {
 						logger.error("The Data is sent without Attribute value for the BP: %s", bpResults[i].BusinessPartner);
 					}
 
-					// if (toCustomerAttr1 === "01") {
-					// 	bpAttributes.Division = "10"; //TOY
-					// 	bpAttributes.Attribute = "01";
-					// } else if (toCustomerAttr1 === "02") {
-					// 	bpAttributes.Division = "20"; //LEX
-					// 	bpAttributes.Attribute = "02";
-					// } else if (toCustomerAttr1 === "03") {
-					// 	bpAttributes.Division = "Dual"; //DUAL
-					// 	bpAttributes.Attribute = "03";
-					// } else if (toCustomerAttr1 === "04") {
-					// 	bpAttributes.Division = "10";
-					// 	bpAttributes.Attribute = "04";
-					// } else if (toCustomerAttr1 === "05") {
-					// 	bpAttributes.Division = "Dual";
-					// 	bpAttributes.Attribute = "05";
-					// } else {
-					// 	// Set as Toyota dealer as fallback
-					// 	bpAttributes.Division = "10";
-					// 	bpAttributes.Attribute = "01";
-					// }
+					/*if (toCustomerAttr1 === "01") {
+						// Toyota dealer
+						bpAttributes.Division = "10";
+						bpAttributes.Attribute = "01";
+					} else if (toCustomerAttr1 === "02") {
+						// Lexus dealer
+						bpAttributes.Division = "20";
+						bpAttributes.Attribute = "02";
+					} else if (toCustomerAttr1 === "03") {
+						// Dual (Toyota + Lexus) dealer
+						bpAttributes.Division = "Dual";
+						bpAttributes.Attribute = "03";
+					} else if (toCustomerAttr1 === "04") {
+						bpAttributes.Division = "10";
+						bpAttributes.Attribute = "04";
+					} else if (toCustomerAttr1 === "05") {
+						bpAttributes.Division = "Dual";
+						bpAttributes.Attribute = "05";
+					} else {
+						// Set as Toyota dealer as fallback
+						bpAttributes.Division = "10";
+						bpAttributes.Attribute = "01";
+					}*/
 
 					if (userType === "Dealer") {
 						if (bpAttributes.BusinessPartner === dealerCode || bpAttributes.SearchTerm2 === dealerCode) {
@@ -238,6 +248,14 @@ module.exports = function (appContext) {
 
 		tracer.debug("Scopes from JWT: %s", JSON.stringify(scopes));
 		tracer.debug("User attributes from JWT: %s", JSON.stringify(userAttributes));
+
+		// If there is no user type, it is most probably a call from Neo, in which case we can fake the data as TCI user
+		if (mockUserMode && mockUserOrigin === req.authInfo.origin) {
+			tracer.debug("Mock user mode is enabled and JWT is from origin %s, switch to mock user type.", req.authInfo.origin);
+			return res.type("application/json").status(200).send(JSON.stringify({
+				loggedUserType: ["TCI_User"]
+			}));
+		}
 
 		var role = "Unknown";
 		var assignVehicles = false;

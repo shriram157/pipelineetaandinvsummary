@@ -6,6 +6,9 @@ modules:
  - name: pipelineInventory_node
    parameters:
       host: tci-dev-pipelineetaandinvsummary-node
+   properties:
+      MOCK_USER_MODE: true
+      MOCK_USER_ORIGIN: d36z7bqhz1-GSR-Neo-to-CF
  - name: pipelineInventory
    parameters:
       host: tci-dev-pipelineetaandinvsummary
