@@ -20,7 +20,7 @@
 				</tnt:ToolHeader>
 				<ScrollContainer height='90%' width="100%" vertical='true'>
 					<content>
-						<Label text="{i18n>PageTitle}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
+						<!--<Label text="{i18n>PageTitle}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>-->
 						<f:SimpleForm id="dealerformContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="1" adjustLabelSpan="true" emptySpanL="0"
 							emptySpanM="3" columnsL="3" columnsM="3" class="styleForms">
 							<f:content>

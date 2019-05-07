@@ -52,8 +52,6 @@
 									<Label text="{i18n>ETA}"/>
 									<Text
 										text="From {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} To {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
-									<!--<Label text="{i18n>ETATo}"/>-->
-									<!--<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ETATo}"/>-->
 									<Label text="{i18n>VTN}"/>
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZVTN}"/>
 									<core:Title text="{i18n>NewVehicleConfig}"/>

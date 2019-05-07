@@ -90,13 +90,13 @@ sap.ui.define([
 					"Division": "",
 					"SearchTerm2": ""
 				}, {
-					"Attribute": "02",
-					"BusinessPartner": "01050",
-					"BusinessPartnerKey": "2400001050",
-					"BusinessPartnerName": "Kelowna Toyota Inc.1234",
+					"Attribute": "01",
+					"BusinessPartner": "42193",
+					"BusinessPartnerKey": "2400042193",
+					"BusinessPartnerName": "Bailey Toyota",
 					"BusinessPartnerType": "Z001",
 					"Division": "10",
-					"SearchTerm2": "01050"
+					"SearchTerm2": "42193"
 				}, {
 					"Attribute": "01",
 					"BusinessPartner": "01002",

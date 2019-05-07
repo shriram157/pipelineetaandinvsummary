@@ -59,16 +59,16 @@
 								<Text text="{i18n>Series}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>OldModel}"/>
+								<Text text="{i18n>Model}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>Old Suffix}"/>
+								<Text text="{i18n>Suffix}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>Old APX}"/>
+								<Text text="{i18n>APX}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>Old Colour}"/>
+								<Text text="{i18n>Colour}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="{i18n>New Model}"/>

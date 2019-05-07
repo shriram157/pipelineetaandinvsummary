@@ -81,11 +81,6 @@ sap.ui.define([
 				var Day = oDate.substring(6, 8);
 				var date = Year + "-" + Month + "-" + Day;
 				return date;
-				// jQuery.sap.require("sap.ui.core.format.DateFormat");
-				// _thatVD.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
-				// 	pattern: "yyyy-MM-dd"
-				// });
-				// return _thatVD.oDateFormat.format(new Date(date));
 			}
 		},
 
