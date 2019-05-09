@@ -85,7 +85,7 @@ sap.ui.define([
 					"Attribute": "",
 					"BusinessPartner": "-",
 					"BusinessPartnerKey": "",
-					"BusinessPartnerName": "Zone All",
+					"BusinessPartnerName": "National All",
 					"BusinessPartnerType": "",
 					"Division": "",
 					"SearchTerm2": ""
@@ -109,7 +109,7 @@ sap.ui.define([
 
 				var samlAttributes = {
 					"Language": ["English"],
-					"UserType": ["Zone"],
+					"UserType": ["National"],
 					"Zone": ["1"]
 				};
 				_that.salesOffice = "1000";
@@ -547,7 +547,7 @@ sap.ui.define([
 
 		/*Fetch data on apply filter click for all three tables*/
 		applyFiltersBtn: function () {
-			if(_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National"){
+			if(_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "National All"){
 				MessageBox.show(_that.oI18nModel.getResourceBundle().getText("MandatorySeriesForNationalUser"), MessageBox.Icon.ERROR, "Error", MessageBox.Action.OK, null, null);
 				//MandatorySeriesForNationalUser
 			}
