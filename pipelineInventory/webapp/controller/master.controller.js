@@ -547,7 +547,7 @@ sap.ui.define([
 
 		/*Fetch data on apply filter click for all three tables*/
 		applyFiltersBtn: function () {
-			if(_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "National All" && _that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select"){
+			if(_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "National All" && _that.getView().byId("ID_seriesDesc").getSelectedKey() == "Please Select"){
 				MessageBox.show(_that.oI18nModel.getResourceBundle().getText("MandatorySeriesForNationalUser"), MessageBox.Icon.ERROR, "Error", MessageBox.Action.OK, null, null);
 				//MandatorySeriesForNationalUser
 			}
