@@ -547,6 +547,11 @@ sap.ui.define([
 
 		/*Fetch data on apply filter click for all three tables*/
 		applyFiltersBtn: function () {
+			if(_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National"){
+				MessageBox.show(_that.oI18nModel.getResourceBundle().getText("MandatorySeriesForNationalUser"), MessageBox.Icon.ERROR, "Error", MessageBox.Action.OK, null, null);
+				//MandatorySeriesForNationalUser
+			}
+			else{
 			// _that.getView().byId("ID_APXValue").getItems()[0].setEnabled(false);
 			sap.ui.core.BusyIndicator.show();
 			_that.ID_modelYearPicker = _that.getView().byId("ID_modelYearPicker").getValue();
@@ -565,7 +570,6 @@ sap.ui.define([
 					var intcol = _that.getView().getModel("GlobalJSONModel").getProperty(_that.getView().byId("ID_marktgIntDesc").getSelectedItem().getBindingContext(
 						"GlobalJSONModel").sPath).int_c;
 					_that.intcolor = intcol;
-
 				}
 
 			} else {
@@ -604,6 +608,7 @@ sap.ui.define([
 				"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
 				_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' &$format=json";
 			_that.fetchCountsforTables(filteredData);
+			}
 		},
 
 		fetchCountsforTables: function (filteredData) {
