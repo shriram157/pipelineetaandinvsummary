@@ -162,22 +162,7 @@ sap.ui.define([
 					currentImageSource.setProperty("src", "images/Lexus.png");
 				}
 			}
-
-			// if (window.location.search == "?language=fr") {
-			// 	_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
-			// 		bundleUrl: "i18n/i18n.properties",
-			// 		bundleLocale: ("fr")
-			// 	});
-			// 	_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
-			// 	_thatVD.sCurrentLocale = 'FR';
-			// } else {
-			// 	_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
-			// 		bundleUrl: "i18n/i18n.properties",
-			// 		bundleLocale: ("en")
-			// 	});
-			// 	_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
-			// 	_thatVD.sCurrentLocale = 'EN';
-			// }
+			this.oBundle = this.getView().getModel("i18n").getResourceBundle();
 			if (oEvent.getParameters().name != "orderChange") {
 				if (oEvent.getParameters().name == "vehicleDetails2") {
 					if (oEvent.getParameter("arguments").VCData2 != undefined) {
@@ -246,16 +231,19 @@ sap.ui.define([
 						};*/
 						/*Defect Number 12306 solution start*/
 						_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
-							"DNCVehicle": "DNC Stock"
+							"DNCVehicle": this.oBundle.getText("DNCStock")
 						};
 						_thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
-							"DNCVehicle": "DNC Demo / Loaner Vehicle"
+							"DNCVehicle": this.oBundle.getText("DNDemoLoanerVehicle")
+						};
+						_thatVD.oVehicleDetailsJSON.getData().DNCData[2] = {
+							"DNCVehicle": this.oBundle.getText("RemoveSelection")
 						};
 						_thatVD.oVehicleDetailsJSON.updateBindings(true);
 						_thatVD.oVehicleDetailsJSON.refresh(true);
 						_thatVD.getView().setModel(_thatVD.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
-						debugger;
+						//debugger;
 						$.ajax({
 							dataType: "json",
 							url: _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + data.Modelyear +
@@ -318,20 +306,26 @@ sap.ui.define([
 										"DNCVehicle": ""
 									};*/
 									/*Defect Number 12306 solution start*/
-
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
-										"DNCVehicle": "DNC Stock"
+										"DNCVehicle": this.oBundle.getText("DNCStock")
 									};
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
-										"DNCVehicle": "DNC Demo / Loaner Vehicle"
+										"DNCVehicle": this.oBundle.getText("DNDemoLoanerVehicle")
 									};
+
+									// _thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
+									// 	"DNCVehicle": "DNC Stock"
+									// };
+									// _thatVD.oVehicleDetailsJSON.getData().DNCData[1] = {
+									// 	"DNCVehicle": "DNC Demo / Loaner Vehicle"
+									// };
 									/*Defect Number 12615 solution start*/
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[2] = {
-										"DNCVehicle": "Remove DNC Stock"
+										"DNCVehicle": this.oBundle.getText("RemoveSelection")
 									};
-									_thatVD.oVehicleDetailsJSON.getData().DNCData[3] = {
-										"DNCVehicle": "Remove DNC Demo / Loaner Vehicle"
-									};
+									// _thatVD.oVehicleDetailsJSON.getData().DNCData[3] = {
+									// 	"DNCVehicle": "Remove DNC Demo / Loaner Vehicle"
+									// };
 									/*Defect Number 12615 solution end*/
 									_thatVD.oVehicleDetailsJSON.updateBindings();
 
@@ -366,7 +360,7 @@ sap.ui.define([
 										}
 									});
 									var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
-									debugger;
+									//debugger;
 									$.ajax({
 										dataType: "json",
 										url: _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + data.Modelyear +
@@ -390,7 +384,7 @@ sap.ui.define([
 				}
 			}
 		},
-
+		
 		getAPXData: function (data) {
 			$.ajax({
 				dataType: "json",
@@ -415,7 +409,7 @@ sap.ui.define([
 				url: url,
 				type: "GET",
 				success: function (oRowData) {
-					debugger;
+					//debugger;
 					_thatVD.APX_ChangeFlag = oRowData.d.APX_ChangeFlag;
 					if (_thatVD.APX_ChangeFlag == "X") {
 						_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", true);
@@ -445,6 +439,14 @@ sap.ui.define([
 				//var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 				var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatVD);
 				oRouter.navTo("details");
+			}
+		},
+		onDNCOptionSlection:function(oDNCVal){
+			// debugger;
+			this.oBundle = this.getView().getModel("i18n").getResourceBundle();
+			var _oDNCVal = oDNCVal.getParameters().selectedItem.getText();
+			if(_oDNCVal == this.oBundle.getText("RemoveSelection")){
+				_thatVD.getView().byId("DNCVal").setSelectedKey("");
 			}
 		},
 
@@ -546,7 +548,7 @@ sap.ui.define([
 			oModel.setUseBatch(false);
 			oModel.create("/VehicleDetailsSet", Obj, {
 				success: $.proxy(function (oResponse) {
-					debugger;
+					//debugger;
 					console.log(oResponse);
 					if (oResponse.Error != "") {
 						sap.m.MessageBox.error(oResponse.Error);

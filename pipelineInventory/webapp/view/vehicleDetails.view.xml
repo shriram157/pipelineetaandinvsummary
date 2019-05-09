@@ -76,7 +76,7 @@
 								</Select>
 								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/AccessoriesInstalled}"/>-->
 								<Label text="{i18n>DNCVehicle}" required="false"/>
-								<Select forceSelection="false" selectedKey="" id="DNCVal" items="{ path: 'VehicleDetailsJSON>/DNCData'}">
+								<Select forceSelection="false" selectedKey="" id="DNCVal" items="{ path: 'VehicleDetailsJSON>/DNCData'}" change="onDNCOptionSlection">
 									<core:Item key="{VehicleDetailsJSON>DNCVehicle}" text="{VehicleDetailsJSON>DNCVehicle}"/>
 								</Select>
 								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/DNCVehicle}"/>-->
