@@ -444,7 +444,7 @@ sap.ui.define([
 		onDNCOptionSlection: function (oDNCVal) {
 			// debugger;
 			this.oBundle = this.getView().getModel("i18n").getResourceBundle();
-			if (oDNCVal.getParameters().selectedItem != "") {
+			if (oDNCVal.getParameters().selectedItem != null) {
 				var _oDNCVal = oDNCVal.getParameters().selectedItem.getText();
 			}
 			if (_oDNCVal == this.oBundle.getText("RemoveSelection")) {
@@ -516,21 +516,17 @@ sap.ui.define([
 			_thatVD.getView().byId("accessoryVal");
 
 			var sUserInput = _thatVD.getView().byId("accessoryVal").getSelectedKey();
-			// var sUserInput2 = _thatVD.getView().byId("DNCVal").getSelectedKey();
 
 			var oInputControl = _thatVD.getView().byId("accessoryVal");
-			// var oInputControl2 = _thatVD.getView().byId("DNCVal");
 			if (oInputControl.getVisible()) {
 				if (sUserInput) {
 					oInputControl.setValueState(sap.ui.core.ValueState.Success);
-					// oInputControl2.setValueState(sap.ui.core.ValueState.Success);
 					_thatVD.postVehicleUpdates(oPost);
 				} else {
 					oInputControl.setValueState(sap.ui.core.ValueState.Error);
-					// oInputControl2.setValueState(sap.ui.core.ValueState.Error);
 				}
 			} 
-			else{
+			else if (!oInputControl.getVisible()){
 				_thatVD.postVehicleUpdates(oPost);
 			}
 			// else {
