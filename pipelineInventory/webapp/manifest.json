@@ -86,7 +86,7 @@
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request",
 					"json": true,
-					"useBatch": false
+					"useBatch": true
 				},
 				"dataSource": "ZPIPELINE_ETA_INVENT_SUMMARY_SRV",
 				"preload": false
