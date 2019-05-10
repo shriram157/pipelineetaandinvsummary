@@ -141,6 +141,19 @@ sap.ui.define([
 				},
 				error: function (oError) {}
 			});
+			
+			// $.ajax({
+			// 	dataType: "json",
+			// 	url: _that.nodeJsUrl + "/API_BUSINESS_PARTNER/A_BusinessPartner?$format=json" +	"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
+			// 	"and zstatus ne 'X' &$orderby=BusinessPartner asc",
+			// 	type: "GET",
+			// 	success: function (testData) {
+			// 		console.log("testData",testData);
+			// 	},
+			// 	error: function (oError) {
+			// 		sap.ui.core.BusyIndicator.hide();
+			// 	}
+			// });
 
 			$.ajax({
 				dataType: "json",
@@ -547,11 +560,11 @@ sap.ui.define([
 
 		/*Fetch data on apply filter click for all three tables*/
 		applyFiltersBtn: function () {
-			// if(_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "National All" && _that.getView().byId("ID_seriesDesc").getSelectedKey() == "Please Select"){
-			// 	MessageBox.show(_that.oI18nModel.getResourceBundle().getText("MandatorySeriesForNationalUser"), MessageBox.Icon.ERROR, "Error", MessageBox.Action.OK, null, null);
-			// 	//MandatorySeriesForNationalUser
-			// }
-			// else{
+			if(_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "National All" && _that.getView().byId("ID_seriesDesc").getSelectedKey() == "Please Select"){
+				MessageBox.show(_that.oI18nModel.getResourceBundle().getText("MandatorySeriesForNationalUser"), MessageBox.Icon.ERROR, "Error", MessageBox.Action.OK, null, null);
+				//MandatorySeriesForNationalUser
+			}
+			else{
 			// _that.getView().byId("ID_APXValue").getItems()[0].setEnabled(false);
 			sap.ui.core.BusyIndicator.show();
 			_that.ID_modelYearPicker = _that.getView().byId("ID_modelYearPicker").getValue();
@@ -608,7 +621,7 @@ sap.ui.define([
 				"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
 				_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' &$format=json";
 			_that.fetchCountsforTables(filteredData);
-			// }
+			}
 		},
 
 		fetchCountsforTables: function (filteredData) {
