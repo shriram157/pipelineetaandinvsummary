@@ -516,12 +516,12 @@ sap.ui.define([
 			_thatVD.getView().byId("accessoryVal");
 
 			var sUserInput = _thatVD.getView().byId("accessoryVal").getSelectedKey();
-			var sUserInput2 = _thatVD.getView().byId("DNCVal").getSelectedKey();
+			// var sUserInput2 = _thatVD.getView().byId("DNCVal").getSelectedKey();
 
 			var oInputControl = _thatVD.getView().byId("accessoryVal");
-			var oInputControl2 = _thatVD.getView().byId("DNCVal");
+			// var oInputControl2 = _thatVD.getView().byId("DNCVal");
 			if (oInputControl.getVisible()) {
-				if (sUserInput && sUserInput2) {
+				if (sUserInput) {
 					oInputControl.setValueState(sap.ui.core.ValueState.Success);
 					// oInputControl2.setValueState(sap.ui.core.ValueState.Success);
 					_thatVD.postVehicleUpdates(oPost);
@@ -529,14 +529,15 @@ sap.ui.define([
 					oInputControl.setValueState(sap.ui.core.ValueState.Error);
 					// oInputControl2.setValueState(sap.ui.core.ValueState.Error);
 				}
-			} else {
-				if (sUserInput2) {
-					oInputControl2.setValueState(sap.ui.core.ValueState.Success);
-					_thatVD.postVehicleUpdates(oPost);
-				} else {
-					oInputControl2.setValueState(sap.ui.core.ValueState.Error);
-				}
-			}
+			} 
+			// else {
+			// 	if (sUserInput2) {
+			// 		oInputControl2.setValueState(sap.ui.core.ValueState.Success);
+			// 		_thatVD.postVehicleUpdates(oPost);
+			// 	} else {
+			// 		oInputControl2.setValueState(sap.ui.core.ValueState.Error);
+			// 	}
+			// }
 
 		},
 
