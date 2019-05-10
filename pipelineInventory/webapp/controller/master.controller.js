@@ -144,11 +144,14 @@ sap.ui.define([
 			
 			// $.ajax({
 			// 	dataType: "json",
-			// 	url: _that.nodeJsUrl + "/API_BUSINESS_PARTNER/A_BusinessPartner?$format=json" +	"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
-			// 	"and zstatus ne 'X' &$orderby=BusinessPartner asc",
+			// 	url: _that.nodeJsUrl + "/API_BUSINESS_PARTNER/A_BusinessPartner?$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')",
 			// 	type: "GET",
 			// 	success: function (testData) {
 			// 		console.log("testData",testData);
+			// 		var oFilteredData = testData.d.results.filter(function (val) {
+			// 			return val.BusinessPartner === "2400053146";
+			// 		});
+			// 		console.log("oFilteredData",oFilteredData);
 			// 	},
 			// 	error: function (oError) {
 			// 		sap.ui.core.BusyIndicator.hide();

@@ -7,7 +7,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (BaseController, History, JSONModel, ResourceModel, MessageBox) {
 	"use strict";
-	var _thatVD, sSelectedLocale, Division;
+	var _thatVD, sSelectedLocale, Division, SelectedDNCVal;
 	return BaseController.extend("pipelineInventory.controller.vehicleDetails", {
 		onInit: function () {
 			_thatVD = this;
@@ -384,7 +384,7 @@ sap.ui.define([
 				}
 			}
 		},
-		
+
 		getAPXData: function (data) {
 			$.ajax({
 				dataType: "json",
@@ -441,12 +441,20 @@ sap.ui.define([
 				oRouter.navTo("details");
 			}
 		},
-		onDNCOptionSlection:function(oDNCVal){
+		onDNCOptionSlection: function (oDNCVal) {
 			// debugger;
 			this.oBundle = this.getView().getModel("i18n").getResourceBundle();
-			var _oDNCVal = oDNCVal.getParameters().selectedItem.getText();
-			if(_oDNCVal == this.oBundle.getText("RemoveSelection")){
-				_thatVD.getView().byId("DNCVal").setSelectedKey("");
+			if (oDNCVal.getParameters().selectedItem != null) {
+				var _oDNCVal = oDNCVal.getParameters().selectedItem.getText();
+
+				if (_oDNCVal == this.oBundle.getText("RemoveSelection")) {
+					_thatVD.getView().byId("DNCVal").setSelectedKey("");
+					SelectedDNCVal = "";
+				}
+			} else if (_oDNCVal == this.oBundle.getText("DNDemoLoanerVehicle")) {
+				SelectedDNCVal = "DNC Demo / Loaner Vehicle";
+			} else if (_oDNCVal == this.oBundle.getText("DNCStock")) {
+				SelectedDNCVal = "DNC Stock";
 			}
 		},
 
@@ -541,7 +549,7 @@ sap.ui.define([
 				Obj.NewAPX = _thatVD.newAPX;
 			}
 			Obj.AccessoriesInstalled = _thatVD.getView().byId("accessoryVal").getSelectedKey(); //oVehicleDetailsJSON.AccessoriesInstalled;
-			Obj.DNC = _thatVD.getView().byId("DNCVal").getSelectedKey(); //DNCVal //_thatVD.oVehicleDetailsJSON.DNCVehicle;
+			Obj.DNC = SelectedDNCVal; //DNCVal //_thatVD.oVehicleDetailsJSON.DNCVehicle;
 			Obj.Comments = _thatVD.oVehicleDetailsJSON.Comments;
 			var oModel = _thatVD.getOwnerComponent().getModel("DataModel");
 			//new sap.ui.model.odata.v2.ODataModel(_thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
