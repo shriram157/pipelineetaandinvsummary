@@ -523,11 +523,11 @@ sap.ui.define([
 			if (oInputControl.getVisible()) {
 				if (sUserInput && sUserInput2) {
 					oInputControl.setValueState(sap.ui.core.ValueState.Success);
-					oInputControl2.setValueState(sap.ui.core.ValueState.Success);
+					// oInputControl2.setValueState(sap.ui.core.ValueState.Success);
 					_thatVD.postVehicleUpdates(oPost);
 				} else {
 					oInputControl.setValueState(sap.ui.core.ValueState.Error);
-					oInputControl2.setValueState(sap.ui.core.ValueState.Error);
+					// oInputControl2.setValueState(sap.ui.core.ValueState.Error);
 				}
 			} else {
 				if (sUserInput2) {
