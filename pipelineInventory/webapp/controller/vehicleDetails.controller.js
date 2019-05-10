@@ -530,10 +530,13 @@ sap.ui.define([
 					// oInputControl2.setValueState(sap.ui.core.ValueState.Error);
 				}
 			} 
+			else{
+				_thatVD.postVehicleUpdates(oPost);
+			}
 			// else {
 			// 	if (sUserInput2) {
 			// 		oInputControl2.setValueState(sap.ui.core.ValueState.Success);
-			// 		_thatVD.postVehicleUpdates(oPost);
+			// 		
 			// 	} else {
 			// 		oInputControl2.setValueState(sap.ui.core.ValueState.Error);
 			// 	}
