@@ -444,13 +444,12 @@ sap.ui.define([
 		onDNCOptionSlection: function (oDNCVal) {
 			// debugger;
 			this.oBundle = this.getView().getModel("i18n").getResourceBundle();
-			// if (oDNCVal.getParameters().selectedItem.getText() != "") {
-			var _oDNCVal = oDNCVal.getParameters().selectedItem.getText();
+			if (oDNCVal.getParameters().selectedItem.getText() != "") {
+				var _oDNCVal = oDNCVal.getParameters().selectedItem.getText();
+			}
 			if (_oDNCVal == this.oBundle.getText("RemoveSelection")) {
 				_thatVD.getView().byId("DNCVal").setSelectedKey("");
 				SelectedDNCVal = "";
-				// }
-				// }
 			} else if (_oDNCVal == this.oBundle.getText("DNDemoLoanerVehicle")) {
 				SelectedDNCVal = "DNC Demo / Loaner Vehicle";
 			} else if (_oDNCVal == this.oBundle.getText("DNCStock")) {
