@@ -444,7 +444,7 @@ sap.ui.define([
 		onDNCOptionSlection: function (oDNCVal) {
 			// debugger;
 			this.oBundle = this.getView().getModel("i18n").getResourceBundle();
-			if (oDNCVal.getParameters().selectedItem.getText() != "") {
+			if (oDNCVal.getParameters().selectedItem != "") {
 				var _oDNCVal = oDNCVal.getParameters().selectedItem.getText();
 			}
 			if (_oDNCVal == this.oBundle.getText("RemoveSelection")) {
