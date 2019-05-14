@@ -144,6 +144,21 @@ sap.ui.define([
 
 			_thatDT.oTable = _thatDT.getView().byId("Tab_vehicleDetails");
 			_thatDT.oTable.removeSelections();
+			
+			var dealerData = sap.ui.getCore().getModel("BusinessDataModel").getData();
+			console.log("dealerData", dealerData);
+			if (dealerData._TCIZoneAdmin == "AdminUser") {
+				console.log("dealerData._TCIZoneAdmin", dealerData._TCIZoneAdmin);
+				_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
+				_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
+			} else if (dealerData._TCIZoneAdmin == "ZoneONLY") {
+				_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
+				_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+			} else {
+				_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
+				_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+			}
+
 
 			if (oDetailsRoute.getParameters().arguments.tableFirst != undefined) {
 				_thatDT.routedData = JSON.parse(oDetailsRoute.getParameters().arguments.tableFirst);
@@ -416,16 +431,16 @@ sap.ui.define([
 						l].getBindingContext("VehicleDetailsJSON").getPath()).__metadata = "";
 					checkedItem = oVUID.getParameters().listItems[l].getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItems[
 						l].getBindingContext("VehicleDetailsJSON").getPath());
-					if (checkedItem.DropShip == true) {
-						_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
-					} else {
-						_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
-					}
-					if (checkedItem.AssignVehicle == true) {
-						_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
-					} else {
-						_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
-					}
+					// if (checkedItem.DropShip == true) {
+					// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
+					// } else {
+					// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+					// }
+					// if (checkedItem.AssignVehicle == true) {
+					// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
+					// } else {
+					// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
+					// }
 					_thatDT.checkedData.push(oVUID.getParameters().listItems[l].getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters()
 						.listItems[l].getBindingContext("VehicleDetailsJSON").getPath()));
 				}
@@ -435,22 +450,23 @@ sap.ui.define([
 
 				checkedItem = oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
 					.getBindingContext("VehicleDetailsJSON").getPath());
-				if (checkedItem.DropShip == true) {
-					_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
-				} else {
-					_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
-				}
-				if (checkedItem.AssignVehicle == true) {
-					_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
-				} else {
-					_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
-				}
+				// if (checkedItem.DropShip == true) {
+				// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
+				// } else {
+				// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+				// }
+				// if (checkedItem.AssignVehicle == true) {
+				// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
+				// } else {
+				// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
+				// }
 				_thatDT.checkedData.push(oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
 					.getBindingContext("VehicleDetailsJSON").getPath()));
-			} else {
-				_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
-				_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
-			}
+			} 
+			// else {
+			// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
+			// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
+			// }
 		},
 
 		navToDropShipVehicles: function () {
