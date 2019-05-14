@@ -449,7 +449,7 @@ sap.ui.define([
 			}
 			if (_oDNCVal == this.oBundle.getText("RemoveSelection")) {
 				_thatVD.getView().byId("DNCVal").setSelectedKey("");
-				SelectedDNCVal = "";
+				SelectedDNCVal = "Remove Selection";
 			} else if (_oDNCVal == this.oBundle.getText("DNDemoLoanerVehicle")) {
 				SelectedDNCVal = "DNC Demo / Loaner Vehicle";
 			} else if (_oDNCVal == this.oBundle.getText("DNCStock")) {
