@@ -90,6 +90,14 @@ sap.ui.define([
 		_oVehicleDetailsRoute: function (oEvent) {
 			_thatVD.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
+			
+			var _oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0,
+				soldOrderEnabled: false,
+				APXEnabled: false
+			});
+			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
 
 			_thatVD.getView().setModel(sap.ui.getCore().getModel("VehicleDetailsJSON"), "VehicleDetailsJSON");
 			_thatVD.oVehicleDetailsJSON = _thatVD.getView().getModel("VehicleDetailsJSON");
@@ -141,13 +149,13 @@ sap.ui.define([
 				this.sPrefix = "";
 			}
 			_thatVD.nodeJsUrl = this.sPrefix + "/node";
-			var _oViewModel = new sap.ui.model.json.JSONModel({
-				busy: false,
-				delay: 0,
-				soldOrderEnabled: false,
-				APXEnabled: false
-			});
-			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
+			// var _oViewModel = new sap.ui.model.json.JSONModel({
+			// 	busy: false,
+			// 	delay: 0,
+			// 	soldOrderEnabled: false,
+			// 	APXEnabled: false
+			// });
+			// _thatVD.getView().setModel(_oViewModel, "LocalVDModel");
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
