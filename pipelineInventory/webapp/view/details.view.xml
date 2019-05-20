@@ -72,10 +72,6 @@
 						<Button text="{i18n>AssignVehicles}" type="Default" press="navToAssignVehicles" visible="{DetailsLocalModel>/enableAssignVehicleBtn}"/>
 						<Button text="{i18n>ExportToExcel}" type="Default" press="onDataExport"/>
 					</OverflowToolbar>
-					<!--<l:VerticalLayout class="filterNotification" id="invFilterBar" visible="false">-->
-					<!--	<Text id="invFilterLabel"/>-->
-					<!--	<Button class="closeFilterNotif" text="X" press="closeNotifBar"/>-->
-					<!--</l:VerticalLayout>-->
 					<ScrollContainer height='65%' width="100%" vertical='true'>
 						<Table items="{VehicleDetailsJSON>/results}" width="97%" class="sapUiResponsiveMargin headerFixClass" mode="MultiSelect" id="Tab_vehicleDetails"
 							selectionChange="vehicleSelect" growing="true" growingThreshold="25" growingScrollToLoad="false">
@@ -130,8 +126,6 @@
 							</items>
 						</Table>
 					</ScrollContainer>
-					<!--<Button type="Emphasized" id="btnPrevious" text="Previous" press="callPreviousRowCount"/>-->
-					<!--<Button type="Emphasized" id="btnNext" text="Next" press="callNextRowCount"/>-->
 				</content>
 				<footer>
 					<OverflowToolbar></OverflowToolbar>

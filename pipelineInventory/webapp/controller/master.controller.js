@@ -142,17 +142,17 @@ sap.ui.define([
 				error: function (oError) {}
 			});
 			
-			$.ajax({
-				dataType: "json",
-				url: _that.nodeJsUrl + "/API_BUSINESS_PARTNER/A_BusinessPartner?$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004') and zstatus ne 'X'",
-				type: "GET",
-				success: function (testData) {
-					console.log("testData",testData);
-				},
-				error: function (oError) {
-					sap.ui.core.BusyIndicator.hide();
-				}
-			});
+			// $.ajax({
+			// 	dataType: "json",
+			// 	url: _that.nodeJsUrl + "/API_BUSINESS_PARTNER/A_BusinessPartner?$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004') and zstatus ne 'X'",
+			// 	type: "GET",
+			// 	success: function (testData) {
+			// 		console.log("testData",testData);
+			// 	},
+			// 	error: function (oError) {
+			// 		sap.ui.core.BusyIndicator.hide();
+			// 	}
+			// });
 
 			$.ajax({
 				dataType: "json",

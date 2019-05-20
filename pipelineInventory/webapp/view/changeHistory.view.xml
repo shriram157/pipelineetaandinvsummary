@@ -71,16 +71,16 @@
 								<Text text="{i18n>Colour}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>New Model}"/>
+								<Text text="{i18n>NewModel}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>New Suffix}"/>
+								<Text text="{i18n>NewSuffix}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>New APX}"/>
+								<Text text="{i18n>NewAPX}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>New Colour}"/>
+								<Text text="{i18n>NewColour}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="{i18n>SubmissionDateTime}"/>
