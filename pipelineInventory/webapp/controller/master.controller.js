@@ -615,19 +615,19 @@ sap.ui.define([
 			if(_that.salesOffice == undefined){
 				_that.salesOffice = "";
 			}
-			// filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType +
-			// 	"' and Dealer eq '" +
-			// 	SelectedDealer + "' and Model eq '" + _that.ID_model +
-			// 	"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
-			// 	"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
-			// 	_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' and LANGUAGE eq '"+this.localLang+"' &$format=json";
-			
 			filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType +
 				"' and Dealer eq '" +
 				SelectedDealer + "' and Model eq '" + _that.ID_model +
 				"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
 				"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
-				_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' &$format=json";
+				_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' and LANGUAGE eq '"+this.localLang+"' &$format=json";
+			
+			// filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType +
+			// 	"' and Dealer eq '" +
+			// 	SelectedDealer + "' and Model eq '" + _that.ID_model +
+			// 	"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
+			// 	"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
+			// 	_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' &$format=json";
 			
 			_that.fetchCountsforTables(filteredData);
 			}
