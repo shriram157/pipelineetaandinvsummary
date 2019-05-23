@@ -38,6 +38,7 @@ sap.ui.define([
 				sSelectedLocale = "EN"; // default is english 
 			}
 			if (sSelectedLocale == "fr") {
+				this.localLang = "F";
 				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
@@ -45,6 +46,7 @@ sap.ui.define([
 				this.getView().setModel(_that.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
 			} else {
+				this.localLang = "E";
 				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
@@ -618,7 +620,7 @@ sap.ui.define([
 				SelectedDealer + "' and Model eq '" + _that.ID_model +
 				"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
 				"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
-				_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' &$format=json";
+				_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' and LANGUAGE eq '"+this.localLang+"' &$format=json";
 			_that.fetchCountsforTables(filteredData);
 			}
 		},

@@ -90,7 +90,7 @@ sap.ui.define([
 		_oVehicleDetailsRoute: function (oEvent) {
 			_thatVD.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
-			
+
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
 				delay: 0,
@@ -192,7 +192,9 @@ sap.ui.define([
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData.push(Data);
 
 						var _OrderNumber = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].VHCLE;
-						var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('" + _OrderNumber + "')";
+						var MatrixVal = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].MATRIX;
+						//VHCLE='" + _OrderNumber + "',MATRIX='"+MatrixVal+"'
+						var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet(VHCLE='" + _OrderNumber + "',MATRIX='" +	MatrixVal + "')";
 						$.ajax({
 							dataType: "json",
 							url: url,
@@ -338,8 +340,10 @@ sap.ui.define([
 									_thatVD.oVehicleDetailsJSON.updateBindings();
 
 									var _OrderNumber = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].VHCLE;
-
-									var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('" + _OrderNumber + "')";
+									var MatrixVal = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].MATRIX;
+									//VHCLE='" + _OrderNumber + "',MATRIX='"+MatrixVal+"'
+									var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet(VHCLE='" + _OrderNumber + "',MATRIX='" +	MatrixVal + "')";
+									// var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet('" + _OrderNumber + "')";
 									$.ajax({
 										dataType: "json",
 										url: url,
@@ -533,8 +537,7 @@ sap.ui.define([
 				} else {
 					oInputControl.setValueState(sap.ui.core.ValueState.Error);
 				}
-			} 
-			else if (!oInputControl.getVisible()){
+			} else if (!oInputControl.getVisible()) {
 				_thatVD.postVehicleUpdates(oPost);
 			}
 			// else {
