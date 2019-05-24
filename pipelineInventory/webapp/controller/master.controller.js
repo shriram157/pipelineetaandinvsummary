@@ -85,9 +85,9 @@ sap.ui.define([
 
 				var attributes = [{
 					"Attribute": "",
-					"BusinessPartner": "-",
+					"BusinessPartner": "Zone Dealers Only",
 					"BusinessPartnerKey": "",
-					"BusinessPartnerName": "National All",
+					"BusinessPartnerName": "Zone Dealers Only",
 					"BusinessPartnerType": "",
 					"Division": "",
 					"SearchTerm2": ""
@@ -111,7 +111,7 @@ sap.ui.define([
 
 				var samlAttributes = {
 					"Language": ["English"],
-					"UserType": ["National"],
+					"UserType": ["Zone"],
 					"Zone": ["1"]
 				};
 				_that.salesOffice = "1000";
@@ -143,7 +143,7 @@ sap.ui.define([
 				},
 				error: function (oError) {}
 			});
-			
+
 			// $.ajax({
 			// 	dataType: "json",
 			// 	url: _that.nodeJsUrl + "/API_BUSINESS_PARTNER/A_BusinessPartner?$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004') and zstatus ne 'X'",
@@ -192,6 +192,14 @@ sap.ui.define([
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
+						_that.BusinessPartnerData.getData().DealerList.unshift({
+							BusinessPartner: "-",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "Zone Dealers Only",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
+						
 					} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
@@ -242,6 +250,13 @@ sap.ui.define([
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
+						_that.BusinessPartnerData.getData().DealerList.unshift({
+							BusinessPartner: "-",
+							BusinessPartnerKey: "",
+							BusinessPartnerName: "National Zones Only",
+							BusinessPartnerType: "",
+							SearchTerm2: ""
+						});
 					} else {
 						_that.salesOffice = "";
 					}
@@ -261,38 +276,38 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 				}
 			});
-			$.ajax({
-				dataType: "json",
-				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser + "'",
-				type: "GET",
-				success: function (oData) {
-					if (oData.d.results.length > 0) {
-						var b = 0;
-						for (var i = 0; i < oData.d.results.length; i++) {
-							var ModelSeriesNo = oData.d.results[i].ModelSeriesNo;
-							for (var j = 0; j < seriesdata.length; j++) {
-								if (ModelSeriesNo != seriesdata[j].ModelSeriesNo) {
-									b++;
-								}
-							}
-							if (b == seriesdata.length) {
-								seriesdata.push({
-									"ModelSeriesNo": oData.d.results[i].ModelSeriesNo,
-									"TCISeriesDescriptionEN": oData.d.results[i].TCISeriesDescriptionEN
-								});
-							}
-							b = 0;
-						}
-						console.log("Series Data", seriesdata);
-					} else {
-						//
-					}
-				},
-				error: function (oError) {
-					sap.ui.core.BusyIndicator.hide();
-					_that.errorFlag = true;
-				}
-			});
+			// $.ajax({
+			// 	dataType: "json",
+			// 	url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser + "'",
+			// 	type: "GET",
+			// 	success: function (oData) {
+			// 		if (oData.d.results.length > 0) {
+			// 			var b = 0;
+			// 			for (var i = 0; i < oData.d.results.length; i++) {
+			// 				var ModelSeriesNo = oData.d.results[i].ModelSeriesNo;
+			// 				for (var j = 0; j < seriesdata.length; j++) {
+			// 					if (ModelSeriesNo != seriesdata[j].ModelSeriesNo) {
+			// 						b++;
+			// 					}
+			// 				}
+			// 				if (b == seriesdata.length) {
+			// 					seriesdata.push({
+			// 						"ModelSeriesNo": oData.d.results[i].ModelSeriesNo,
+			// 						"TCISeriesDescriptionEN": oData.d.results[i].TCISeriesDescriptionEN
+			// 					});
+			// 				}
+			// 				b = 0;
+			// 			}
+			// 			console.log("Series Data", seriesdata);
+			// 		} else {
+			// 			//
+			// 		}
+			// 	},
+			// 	error: function (oError) {
+			// 		sap.ui.core.BusyIndicator.hide();
+			// 		_that.errorFlag = true;
+			// 	}
+			// });
 
 			/*Global Model initialization and mapping on view*/
 			_that.oGlobalJSONModel = new JSONModel();
@@ -342,7 +357,9 @@ sap.ui.define([
 
 			_that.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 			_that.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
-			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '"+DivUser+"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
+
+			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
+				"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
 			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser +	"' &$orderby=ProductHierarchy asc";
 
 			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq 'TOY' and zzzadddata2 eq 'X'&$orderby=SeriesSequenceNumber asc
@@ -356,12 +373,22 @@ sap.ui.define([
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
 						//	_that.fetchSeries(oModelData.d.results);
-
-						for (var i = 0; i < oModelData.d.results.length; i++) {
-							_that.oGlobalJSONModel.getData().seriesData.push({
-								"ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
-								"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN
+						var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
+						if (DealerVal !== "2400029000" || DealerVal !== "2400049000") {
+							$.each(oModelData.d.results, function (key, value) {
+								if (value.ModelSeriesNo == "L/C") {
+									delete oModelData.d.results[key];
+								}
 							});
+						}
+						console.log("Series data", oModelData.d.results);
+						for (var i = 0; i < oModelData.d.results.length; i++) {
+							if (oModelData.d.results[i] != undefined) {
+								_that.oGlobalJSONModel.getData().seriesData.push({
+									"ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
+									"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN
+								});
+							}
 						}
 						_that.oGlobalJSONModel.getData().seriesData.unshift({
 							"ModelSeriesNo": "Please Select",
@@ -490,27 +517,29 @@ sap.ui.define([
 				//var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
 				var SelectedDealerKey = oDealer.getParameters().selectedItem.getText();
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
-				if(oDealer.getParameters().selectedItem.getAdditionalText() == "National All"){
+				if (oDealer.getParameters().selectedItem.getAdditionalText() == "National All") {
 					SelectedDealerKey = "National All";
-				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Zone All"){
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone All") {
 					SelectedDealerKey = "Zone All";
-				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Lexus Zone"){
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Lexus Zone") {
 					SelectedDealerKey = "Lexus Zone";
-				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Atlantic Zone"){
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Atlantic Zone") {
 					SelectedDealerKey = "Atlantic Zone";
-				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Quebec Zone"){
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Quebec Zone") {
 					SelectedDealerKey = "Quebec Zone";
-				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Central Zone"){
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Central Zone") {
 					SelectedDealerKey = "Central Zone";
-				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Pacific Zone"){
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Pacific Zone") {
 					SelectedDealerKey = "Pacific Zone";
-				}else if(oDealer.getParameters().selectedItem.getAdditionalText() == "Prairie Zone"){
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Prairie Zone") {
 					SelectedDealerKey = "Prairie Zone";
 				}
-			
+
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 					if (SelectedDealerKey == "Zone All") {
 						_that.userType = "ZZA";
+					} else if (SelectedDealerKey == "Zone Dealers Only") {
+						_that.userType = "ZDD";
 					} else if (SelectedDealerType == "Z004") {
 						_that.userType = "ZZU";
 					} else {
@@ -520,7 +549,12 @@ sap.ui.define([
 					_that.userType = "DDU";
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
 					if (SelectedDealerKey == "National All") {
+						_that.salesOffice = "";
 						_that.userType = "NNA";
+					}
+					else if (SelectedDealerKey == "National Zones Only") {
+						_that.salesOffice = "";
+						_that.userType = "NZZ";
 					} else if (SelectedDealerKey == "Pacific Zone") {
 						_that.salesOffice = "1000";
 						_that.userType = "NZA";
@@ -561,75 +595,78 @@ sap.ui.define([
 
 		/*Fetch data on apply filter click for all three tables*/
 		applyFiltersBtn: function () {
-			if(_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "National All" && _that.getView().byId("ID_seriesDesc").getSelectedKey() == "Please Select"){
-				MessageBox.show(_that.oI18nModel.getResourceBundle().getText("MandatorySeriesForNationalUser"), MessageBox.Icon.ERROR, "Error", MessageBox.Action.OK, null, null);
+			if (_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "National All" && _that.getView().byId(
+					"ID_seriesDesc").getSelectedKey() == "Please Select") {
+				MessageBox.show(_that.oI18nModel.getResourceBundle().getText("MandatorySeriesForNationalUser"), MessageBox.Icon.ERROR, "Error",
+					MessageBox.Action.OK, null, null);
 				//MandatorySeriesForNationalUser
-			}
-			else{
-			// _that.getView().byId("ID_APXValue").getItems()[0].setEnabled(false);
-			sap.ui.core.BusyIndicator.show();
-			_that.ID_modelYearPicker = _that.getView().byId("ID_modelYearPicker").getValue();
+			} else {
+				// _that.getView().byId("ID_APXValue").getItems()[0].setEnabled(false);
+				sap.ui.core.BusyIndicator.show();
+				_that.ID_modelYearPicker = _that.getView().byId("ID_modelYearPicker").getValue();
 
-			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {
-				_that.ID_seriesDesc = _that.getView().byId("ID_seriesDesc").getSelectedKey();
-			} else _that.ID_seriesDesc = "";
+				if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {
+					_that.ID_seriesDesc = _that.getView().byId("ID_seriesDesc").getSelectedKey();
+				} else _that.ID_seriesDesc = "";
 
-			if (_that.getView().byId("ID_modelDesc").getSelectedKey() != "Please Select") {
-				_that.ID_model = _that.getView().byId("ID_modelDesc").getSelectedKey();
-			} else _that.ID_model = "";
+				if (_that.getView().byId("ID_modelDesc").getSelectedKey() != "Please Select") {
+					_that.ID_model = _that.getView().byId("ID_modelDesc").getSelectedKey();
+				} else _that.ID_model = "";
 
-			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select") {
-				_that.ID_marktgIntDesc = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
-				if (_that.getView().byId("ID_marktgIntDesc").getSelectedItem() != null) {
-					var intcol = _that.getView().getModel("GlobalJSONModel").getProperty(_that.getView().byId("ID_marktgIntDesc").getSelectedItem().getBindingContext(
-						"GlobalJSONModel").sPath).int_c;
-					_that.intcolor = intcol;
+				if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select") {
+					_that.ID_marktgIntDesc = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
+					if (_that.getView().byId("ID_marktgIntDesc").getSelectedItem() != null) {
+						var intcol = _that.getView().getModel("GlobalJSONModel").getProperty(_that.getView().byId("ID_marktgIntDesc").getSelectedItem().getBindingContext(
+							"GlobalJSONModel").sPath).int_c;
+						_that.intcolor = intcol;
+					}
+
+				} else {
+					_that.ID_marktgIntDesc = "";
+					_that.intcolor = "";
 				}
 
-			} else {
-				_that.ID_marktgIntDesc = "";
-				_that.intcolor = "";
-			}
+				if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
+					_that.ID_ExteriorColorCode = _that.getView().byId("ID_ExteriorColorCode").getSelectedKey();
+				} else _that.ID_ExteriorColorCode = "";
 
-			if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
-				_that.ID_ExteriorColorCode = _that.getView().byId("ID_ExteriorColorCode").getSelectedKey();
-			} else _that.ID_ExteriorColorCode = "";
+				if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
+					_that.ID_APXValue = _that.getView().byId("ID_APXValue").getSelectedKey();
+				} else _that.ID_APXValue = "";
 
-			if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
-				_that.ID_APXValue = _that.getView().byId("ID_APXValue").getSelectedKey();
-			} else _that.ID_APXValue = "";
+				var ETADate = _that.getView().byId("id_ETADate").getValue();
+				if (ETADate != "Please Select") {
+					_that.ETADate = _that.oDateFormat.format(new Date(ETADate));
+				} else _that.ETADate = "";
+				//VKBUR
+				/*adding logic to store selected values from dropdown*/
+				selectedDDValues = [_that.getView().byId("ID_DealearPicker").getSelectedKey(), _that.ID_modelYearPicker, _that.ID_seriesDesc,
+					_that
+					.ID_model, _that.getView().byId("ID_marktgIntDesc").getSelectedKey(), _that.ID_ExteriorColorCode,
+					_that.ID_APXValue, _that.getView().byId("id_ETADate").getValue(), _that.getView().byId("ID_DealearPicker").getSelectedItem(),
+					_that.userType, _that.intcolor
+				];
+				seriesModel = _that.oGlobalJSONModel.getData();
+				console.log(selectedDDValues);
+				if (_that.salesOffice == undefined) {
+					_that.salesOffice = "";
+				}
+				filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType +
+					"' and Dealer eq '" +
+					SelectedDealer + "' and Model eq '" + _that.ID_model +
+					"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
+					"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
+					_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' and LANGUAGE eq '" + this.localLang +
+					"' &$format=json";
 
-			var ETADate = _that.getView().byId("id_ETADate").getValue();
-			if (ETADate != "Please Select") {
-				_that.ETADate = _that.oDateFormat.format(new Date(ETADate));
-			} else _that.ETADate = "";
-			//VKBUR
-			/*adding logic to store selected values from dropdown*/
-			selectedDDValues = [_that.getView().byId("ID_DealearPicker").getSelectedKey(), _that.ID_modelYearPicker, _that.ID_seriesDesc, _that
-				.ID_model, _that.getView().byId("ID_marktgIntDesc").getSelectedKey(), _that.ID_ExteriorColorCode,
-				_that.ID_APXValue, _that.getView().byId("id_ETADate").getValue(), _that.getView().byId("ID_DealearPicker").getSelectedItem(),
-				_that.userType, _that.intcolor
-			];
-			seriesModel = _that.oGlobalJSONModel.getData();
-			console.log(selectedDDValues);
-			if(_that.salesOffice == undefined){
-				_that.salesOffice = "";
-			}
-			filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType +
-				"' and Dealer eq '" +
-				SelectedDealer + "' and Model eq '" + _that.ID_model +
-				"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
-				"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
-				_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' and LANGUAGE eq '"+this.localLang+"' &$format=json";
-			
-			// filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType +
-			// 	"' and Dealer eq '" +
-			// 	SelectedDealer + "' and Model eq '" + _that.ID_model +
-			// 	"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
-			// 	"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
-			// 	_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' &$format=json";
-			
-			_that.fetchCountsforTables(filteredData);
+				// filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType +
+				// 	"' and Dealer eq '" +
+				// 	SelectedDealer + "' and Model eq '" + _that.ID_model +
+				// 	"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
+				// 	"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
+				// 	_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' &$format=json";
+
+				_that.fetchCountsforTables(filteredData);
 			}
 		},
 
@@ -942,10 +979,12 @@ sap.ui.define([
 			_that.getView().byId("ID_marktgIntDesc").getSelectedKey("Please Select");
 			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey("Please Select");
 			_that.getView().byId("ID_APXValue").getSelectedKey("Please Select");
+			// debugger;
 
 			sap.ui.core.BusyIndicator.show();
 			var ModelYear = oModVal.getParameters("selectedItem").selectedItem.getKey();
-			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '"+DivUser+"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
+			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
+				"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
 			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser + "' &$orderby=ProductHierarchy asc";
 			console.log("Series:" + url)
 				//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq 'TOY' and zzzadddata2 eq 'X'&$orderby=SeriesSequenceNumber asc
@@ -960,11 +999,23 @@ sap.ui.define([
 					if (oModelData.d.results.length > 0) {
 						//_that.oGlobalJSONModel.getData().seriesData push to this. remove fetch series function
 						//_that.fetchSeries(oModelData.d.results);
-						for (var i = 0; i < oModelData.d.results.length; i++) {
-							_that.oGlobalJSONModel.getData().seriesData.push({
-								"ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
-								"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN
+						var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
+						if (DealerVal !== "2400029000" || DealerVal !== "2400049000") {
+							$.each(oModelData.d.results, function (key, value) {
+								if (value.ModelSeriesNo == "L/C") {
+									delete oModelData.d.results[key];
+								}
 							});
+						}
+						console.log("Series data", oModelData.d.results);
+						for (var i = 0; i < oModelData.d.results.length; i++) {
+							if (oModelData.d.results[i] != undefined) {
+								_that.oGlobalJSONModel.getData().seriesData.push({
+									"ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
+									"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN
+								});
+							}
+
 						}
 						_that.oGlobalJSONModel.getData().seriesData.unshift({
 							"ModelSeriesNo": "Please Select",
@@ -1104,8 +1155,8 @@ sap.ui.define([
 		getObjectData: function (obj_first) {
 			obj_first.Dealer = SelectedDealer;
 			obj_first.userType = _that.userType;
-			if(_that.salesOffice ==undefined){
-				_that.salesOffice ="";
+			if (_that.salesOffice == undefined) {
+				_that.salesOffice = "";
 			}
 			obj_first.salesOffice = _that.salesOffice;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
