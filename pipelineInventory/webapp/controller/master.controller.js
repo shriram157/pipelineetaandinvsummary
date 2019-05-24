@@ -172,7 +172,11 @@ sap.ui.define([
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
 						_that.BusinessPartnerData.getData().DealerList = userAttributes.attributes;
 					} else {
-						var aBusinessPartnerKey = userAttributes.sales.reduce(function (obj, hash) {
+						var salesArr =userAttributes.sales;
+						var SalesData = salesArr.filter(function (val) {
+							return val.Division === Division;
+						});
+						var aBusinessPartnerKey = SalesData.reduce(function (obj, hash) {
 							obj[hash.Customer] = true;
 							return obj;
 						}, {});
@@ -199,7 +203,7 @@ sap.ui.define([
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
-						
+
 					} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
@@ -519,6 +523,10 @@ sap.ui.define([
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
 				if (oDealer.getParameters().selectedItem.getAdditionalText() == "National All") {
 					SelectedDealerKey = "National All";
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "National Zones Only") {
+					SelectedDealerKey = "National Zones Only";
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone Dealers Only") {
+					SelectedDealerKey = "Zone Dealers Only";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone All") {
 					SelectedDealerKey = "Zone All";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Lexus Zone") {
@@ -551,8 +559,7 @@ sap.ui.define([
 					if (SelectedDealerKey == "National All") {
 						_that.salesOffice = "";
 						_that.userType = "NNA";
-					}
-					else if (SelectedDealerKey == "National Zones Only") {
+					} else if (SelectedDealerKey == "National Zones Only") {
 						_that.salesOffice = "";
 						_that.userType = "NZZ";
 					} else if (SelectedDealerKey == "Pacific Zone") {
