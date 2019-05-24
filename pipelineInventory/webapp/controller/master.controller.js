@@ -395,8 +395,8 @@ sap.ui.define([
 							}
 						}
 						_that.oGlobalJSONModel.getData().seriesData.unshift({
-							"ModelSeriesNo": "Please Select",
-							"TCISeriesDescriptionEN": "Please Select"
+							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
 
@@ -510,11 +510,11 @@ sap.ui.define([
 		onDealerChange: function (oDealer) {
 			_that.userType = "";
 			if (oDealer.getParameters().selectedItem != undefined) {
-				_that.getView().byId("ID_marktgIntDesc").setSelectedKey("Please Select");
-				_that.getView().byId("ID_modelDesc").setSelectedKey("Please Select");
-				_that.getView().byId("ID_seriesDesc").setSelectedKey("Please Select");
-				_that.getView().byId("ID_ExteriorColorCode").setSelectedKey("Please Select");
-				_that.getView().byId("ID_APXValue").setSelectedKey("Please Select");
+				_that.getView().byId("ID_marktgIntDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+				_that.getView().byId("ID_modelDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+				_that.getView().byId("ID_seriesDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+				_that.getView().byId("ID_ExteriorColorCode").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+				_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 				_that.getView().byId("id_ETADate").setValue();
 
 				_that.getView().byId("id_BusinessPartnerName").setValue(oDealer.getParameters().selectedItem.getAdditionalText());
@@ -602,8 +602,9 @@ sap.ui.define([
 
 		/*Fetch data on apply filter click for all three tables*/
 		applyFiltersBtn: function () {
+			//_that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 			if (_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "National All" && _that.getView().byId(
-					"ID_seriesDesc").getSelectedKey() == "Please Select") {
+					"ID_seriesDesc").getSelectedKey() == _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				MessageBox.show(_that.oI18nModel.getResourceBundle().getText("MandatorySeriesForNationalUser"), MessageBox.Icon.ERROR, "Error",
 					MessageBox.Action.OK, null, null);
 				//MandatorySeriesForNationalUser
@@ -612,15 +613,15 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show();
 				_that.ID_modelYearPicker = _that.getView().byId("ID_modelYearPicker").getValue();
 
-				if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {
+				if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 					_that.ID_seriesDesc = _that.getView().byId("ID_seriesDesc").getSelectedKey();
 				} else _that.ID_seriesDesc = "";
 
-				if (_that.getView().byId("ID_modelDesc").getSelectedKey() != "Please Select") {
+				if (_that.getView().byId("ID_modelDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 					_that.ID_model = _that.getView().byId("ID_modelDesc").getSelectedKey();
 				} else _that.ID_model = "";
 
-				if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select") {
+				if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 					_that.ID_marktgIntDesc = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
 					if (_that.getView().byId("ID_marktgIntDesc").getSelectedItem() != null) {
 						var intcol = _that.getView().getModel("GlobalJSONModel").getProperty(_that.getView().byId("ID_marktgIntDesc").getSelectedItem().getBindingContext(
@@ -633,16 +634,16 @@ sap.ui.define([
 					_that.intcolor = "";
 				}
 
-				if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
+				if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 					_that.ID_ExteriorColorCode = _that.getView().byId("ID_ExteriorColorCode").getSelectedKey();
 				} else _that.ID_ExteriorColorCode = "";
 
-				if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
+				if (_that.getView().byId("ID_APXValue").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 					_that.ID_APXValue = _that.getView().byId("ID_APXValue").getSelectedKey();
 				} else _that.ID_APXValue = "";
 
 				var ETADate = _that.getView().byId("id_ETADate").getValue();
-				if (ETADate != "Please Select") {
+				if (ETADate != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 					_that.ETADate = _that.oDateFormat.format(new Date(ETADate));
 				} else _that.ETADate = "";
 				//VKBUR
@@ -743,9 +744,9 @@ sap.ui.define([
 			_that.temp = [];
 			_that.temp1 = [];
 			// _that.getView().byId("ID_modelDesc").getItems()[0].setEnabled(false);
-			_that.getView().byId("ID_marktgIntDesc").getSelectedKey("Please Select");
-			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey("Please Select");
-			_that.getView().byId("ID_APXValue").getSelectedKey("Please Select");
+			_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			sap.ui.core.BusyIndicator.show();
 			_that.Modelyear = _that.modelYearPicker.getSelectedKey();
 			_that.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
@@ -763,7 +764,7 @@ sap.ui.define([
 						_that.oGlobalJSONModel.getData().suffixData.unshift({
 							"Model": "",
 							"Modelyear": "",
-							"Suffix": "Please Select",
+							"Suffix": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"int_c": "",
 							"SuffixDescriptionEN": "",
 							"SuffixDescriptionFR": "",
@@ -812,7 +813,7 @@ sap.ui.define([
 						}
 						// var b = 0;
 						_that.oGlobalJSONModel.getData().suffixData.unshift({
-							"Suffix": "Please Select",
+							"Suffix": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"SuffixDescriptionEN": "",
 							"MarktgIntDescEN": ""
 						});
@@ -830,8 +831,8 @@ sap.ui.define([
 		},
 
 		onSuffixChange: function (oSuffixVal) {
-			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey("Please Select");
-			_that.getView().byId("ID_APXValue").getSelectedKey("Please Select");
+			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			sap.ui.core.BusyIndicator.show();
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
 			var Suffix = oSuffixVal.getParameters("selectedItem").selectedItem.getKey();
@@ -854,7 +855,7 @@ sap.ui.define([
 						});
 
 						_that.oGlobalJSONModel.getData().colorData.unshift({
-							"ExteriorColorCode": "Please Select",
+							"ExteriorColorCode": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"MarketingDescriptionEXTColorEN": ""
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
@@ -873,10 +874,10 @@ sap.ui.define([
 		//ON Series change
 		onSeriesSelectionChange: function (oSeriesVal) {
 			sap.ui.core.BusyIndicator.show();
-			_that.getView().byId("ID_marktgIntDesc").getSelectedKey("Please Select");
-			_that.getView().byId("ID_modelDesc").getSelectedKey("Please Select");
-			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey("Please Select");
-			_that.getView().byId("ID_APXValue").getSelectedKey("Please Select");
+			_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_modelDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
 			var oSeriesVal = oSeriesVal.getParameters("selectedItem").selectedItem.getKey();
@@ -910,7 +911,7 @@ sap.ui.define([
 						}
 						sap.ui.core.BusyIndicator.hide();
 						_that.oGlobalJSONModel.getData().modelData.unshift({
-							"Model": "Please Select",
+							"Model": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"ENModelDesc": ""
 						});
 
@@ -928,7 +929,7 @@ sap.ui.define([
 
 		//zzmoyr eq '2018' and zzmodel eq 'LB71JZ' and zzsuffix eq '03'
 		onColorCodeChange: function (oModVal) {
-			_that.getView().byId("ID_APXValue").getSelectedKey("Please Select");
+			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			sap.ui.core.BusyIndicator.show();
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
 			var Suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
@@ -964,7 +965,7 @@ sap.ui.define([
 							b = 0;
 						}
 						_that.oGlobalJSONModel.getData().APXCollection.unshift({
-							"APX": "Please Select"
+							"APX": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
 						console.log(_that.oGlobalJSONModel.getData().APXCollection);
@@ -981,11 +982,11 @@ sap.ui.define([
 
 		/*On Model Year Selection*/
 		onModelYearChange: function (oModVal) {
-			_that.getView().byId("ID_seriesDesc").getSelectedKey("Please Select");
-			_that.getView().byId("ID_modelDesc").getSelectedKey("Please Select");
-			_that.getView().byId("ID_marktgIntDesc").getSelectedKey("Please Select");
-			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey("Please Select");
-			_that.getView().byId("ID_APXValue").getSelectedKey("Please Select");
+			_that.getView().byId("ID_seriesDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_modelDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			// debugger;
 
 			sap.ui.core.BusyIndicator.show();
@@ -1025,8 +1026,8 @@ sap.ui.define([
 
 						}
 						_that.oGlobalJSONModel.getData().seriesData.unshift({
-							"ModelSeriesNo": "Please Select",
-							"TCISeriesDescriptionEN": "Please Select"
+							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
 						//_that.oGlobalJSONModel.getData().seriesData.push(oModelData.d.results);
@@ -1068,8 +1069,8 @@ sap.ui.define([
 				}
 			}
 			_that.oGlobalJSONModel.getData().seriesData.unshift({
-				"ModelSeriesNo": "Please Select",
-				"TCISeriesDescriptionEN": "Please Select"
+				"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+				"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 			});
 			_that.oGlobalJSONModel.updateBindings(true);
 		},
@@ -1168,15 +1169,15 @@ sap.ui.define([
 			obj_first.salesOffice = _that.salesOffice;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 
-			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != "Please Select") {
+			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				obj_first.series = _that.getView().byId("ID_seriesDesc").getSelectedKey();
 			} else obj_first.series = "";
 
-			if (_that.getView().byId("ID_modelDesc").getSelectedKey() != "Please Select") {
+			if (_that.getView().byId("ID_modelDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				obj_first.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
 			} else obj_first.Model = "";
 
-			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != "Please Select" && _that.getView().byId("ID_marktgIntDesc").getSelectedKey() !=
+			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect") && _that.getView().byId("ID_marktgIntDesc").getSelectedKey() !=
 				"") {
 				obj_first.suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
 				var intcol = _that.getView().getModel("GlobalJSONModel").getProperty(_that.getView().byId("ID_marktgIntDesc").getSelectedItem().getBindingContext(
@@ -1186,16 +1187,16 @@ sap.ui.define([
 				obj_first.suffix = "";
 				obj_first.intcolor = "";
 			}
-			if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != "Please Select") {
+			if (_that.getView().byId("ID_ExteriorColorCode").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				obj_first.ExteriorColorCode = _that.getView().byId("ID_ExteriorColorCode").getSelectedKey();
 			} else obj_first.ExteriorColorCode = "";
 
-			if (_that.getView().byId("ID_APXValue").getSelectedKey() != "Please Select") {
+			if (_that.getView().byId("ID_APXValue").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				obj_first.APXValue = _that.getView().byId("ID_APXValue").getSelectedKey();
 			} else obj_first.APXValue = "";
 
 			var ETADate = _that.getView().byId("id_ETADate").getValue();
-			if (ETADate != "Please Select") {
+			if (ETADate != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				obj_first.ETADate = _that.oDateFormat.format(new Date(ETADate));
 			} else obj_first.ETADate = "";
 

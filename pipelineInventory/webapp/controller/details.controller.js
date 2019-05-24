@@ -633,17 +633,17 @@ sap.ui.define([
 				row = row.slice(0, -1);
 			}
 
-			row += '"Dealer",';
-			row += '"Order Number",';
-			row += '"Order Type",';
-			row += '"Status",';
-			row += '"VTN",';
-			row += '"VIN",';
-			row += '"Model EN",';
-			row += '"Suffix EN",';
-			row += '"Colour EN",';
-			row += '"ETAFrom",';
-			row += '"ETATo",';
+			row += _thatDT.oI18nModel.getResourceBundle().getText("Dealer") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("OrderNumber") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("OrderType") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("Status") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("VTN") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("VIN") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("Model") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("Suffix") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("Colour") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("ETAFrom") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("ETATo") + ",";
 
 			CSV += row + '\r\n';
 
