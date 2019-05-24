@@ -663,7 +663,7 @@ sap.ui.define([
 				alert("Invalid data");
 				return;
 			}
-			var fileName = "VehicleDetailsReport_";
+			var fileName = _thatDT.oI18nModel.getResourceBundle().getText("VehicleDetailsReport");
 			fileName += ReportTitle.replace(/ /g, "_");
 			// Initialize file format you want csv or xls
 
@@ -671,7 +671,7 @@ sap.ui.define([
 				type: "text/csv;charset=utf-8,"
 			});
 			if (sap.ui.Device.browser.name === "ie" || sap.ui.Device.browser.name === "ed") { // IE 10+ , Edge (IE 12+)
-				navigator.msSaveBlob(blob, "VehicleDetailsReport.csv");
+				navigator.msSaveBlob(blob, _thatDT.oI18nModel.getResourceBundle().getText("VehicleDetailsReport")+".csv");
 			} else {
 				var uri = 'data:text/csv;charset=utf-8,' + "\ufeff" + encodeURIComponent(CSV); //'data:application/vnd.ms-excel,' + escape(CSV);
 				var link = document.createElement("a");
