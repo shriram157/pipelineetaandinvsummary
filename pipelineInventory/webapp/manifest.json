@@ -74,7 +74,10 @@
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request",
 					"json": true,
-					"useBatch": false
+					"useBatch": false,
+					"headers": {
+						"X-Requested-With": "XMLHttpRequest"
+					}
 				},
 				"dataSource": "ZPIPELINE_ETA_INVENT_SUMMARY_SRV",
 				"preload": false
@@ -86,7 +89,10 @@
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request",
 					"json": true,
-					"useBatch": false
+					"useBatch": false,
+					"headers": {
+						"X-Requested-With": "XMLHttpRequest"
+					}
 				},
 				"dataSource": "ZPIPELINE_ETA_INVENT_SUMMARY_SRV",
 				"preload": false
