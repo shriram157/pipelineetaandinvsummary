@@ -178,6 +178,7 @@ sap.ui.define([
 						var SalesData = salesArr.filter(function (val) {
 							return val.Division === DivAttribute;
 						});
+						console.log("SalesData", SalesData);
 						var aBusinessPartnerKey = SalesData.reduce(function (obj, hash) {
 							obj[hash.Customer] = true;
 							return obj;
