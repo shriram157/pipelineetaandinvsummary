@@ -68,7 +68,7 @@ sap.ui.define([
 
 				} else { // set the lexus logo
 					DivUser = "LEX";
-					DivAttribute = 20";
+					DivAttribute = "20";
 					currentImageSource = this.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/Lexus.png");
 				}
