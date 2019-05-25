@@ -5,10 +5,20 @@ extends: pipelineInventory
 modules:
  - name: pipelineInventory_node
    parameters:
-      host: tci-dev-pipelineetaandinvsummary-node
+      host: dev-pipelineetaandinvsummary-node
+      domain: scp.toyota.ca
    properties:
       MOCK_USER_MODE: true
       MOCK_USER_ORIGIN: d36z7bqhz1-GSR-Neo-to-CF
  - name: pipelineInventory
    parameters:
-      host: tci-dev-pipelineetaandinvsummary
+      host: dev-pipelineetaandinvsummary
+      domain: scp.toyota.ca
+
+resources:
+ - name: uaa_pipelineInventory
+   parameters:
+      config:
+         oauth2-configuration:
+            redirect-uris:
+               - https://dev-pipelineetaandinvsummary.scp.toyota.ca/login/callback
