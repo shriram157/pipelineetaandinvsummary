@@ -10,7 +10,7 @@ sap.ui.define([
 	"use strict";
 
 	var Division, DivUser, _that, filteredData, SelectedDealer, seriesdata = [],
-		sSelectedLocale, scopesData;
+		sSelectedLocale, scopesData,DivAttribute;
 	return BaseController.extend("pipelineInventory.controller.master", {
 		/*Initialization of the page data*/
 		onInit: function () {
@@ -62,11 +62,13 @@ sap.ui.define([
 				if (Division == '10') // set the toyoto logo
 				{
 					DivUser = "TOY";
+					DivAttribute = "10";
 					currentImageSource = this.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
 
 				} else { // set the lexus logo
 					DivUser = "LEX";
+					DivAttribute = 20";
 					currentImageSource = this.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/Lexus.png");
 				}
@@ -172,9 +174,9 @@ sap.ui.define([
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
 						_that.BusinessPartnerData.getData().DealerList = userAttributes.attributes;
 					} else {
-						var salesArr =userAttributes.sales;
+						var salesArr = userAttributes.sales;
 						var SalesData = salesArr.filter(function (val) {
-							return val.Division === Division;
+							return val.Division === DivAttribute;
 						});
 						var aBusinessPartnerKey = SalesData.reduce(function (obj, hash) {
 							obj[hash.Customer] = true;
@@ -882,49 +884,56 @@ sap.ui.define([
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
 			var oSeriesVal = oSeriesVal.getParameters("selectedItem").selectedItem.getKey();
 			console.log("oSeriesVal", oSeriesVal);
-			_that.oGlobalJSONModel.getData().modelData = [];
-			//?$filter=Modelyear%20eq%20%272020%27%20and%20TCISeries%20eq%20%27RXH%27
-			$.ajax({
-				dataType: "json",
-				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + Modelyear +
-					"' and TCISeries eq '" + oSeriesVal + "'",
-				type: "GET",
-				success: function (oData) {
-					if (oData.d.results.length > 0) {
-						var b = 0;
-						console.log("Model Data", oData.d.results);
-						for (var i = 0; i < oData.d.results.length; i++) {
-							var oModel = oData.d.results[i].Model;
-							for (var j = 0; j < _that.oGlobalJSONModel.getData().modelData.length; j++) {
-								if (oModel != _that.oGlobalJSONModel.getData().modelData[j].Model) {
-									b++;
+			if (oSeriesVal.getParameters("selectedItem").selectedItem.getKey() !== _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
+				_that.oGlobalJSONModel.getData().modelData = [];
+				//?$filter=Modelyear%20eq%20%272020%27%20and%20TCISeries%20eq%20%27RXH%27
+				$.ajax({
+					dataType: "json",
+					url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + Modelyear +
+						"' and TCISeries eq '" + oSeriesVal + "'",
+					type: "GET",
+					success: function (oData) {
+						if (oData.d.results.length > 0) {
+							var b = 0;
+							console.log("Model Data", oData.d.results);
+							for (var i = 0; i < oData.d.results.length; i++) {
+								var oModel = oData.d.results[i].Model;
+								for (var j = 0; j < _that.oGlobalJSONModel.getData().modelData.length; j++) {
+									if (oModel != _that.oGlobalJSONModel.getData().modelData[j].Model) {
+										b++;
+									}
 								}
+								if (b == _that.oGlobalJSONModel.getData().modelData.length) {
+									_that.oGlobalJSONModel.getData().modelData.push({
+										"Model": oData.d.results[i].Model,
+										"ENModelDesc": oData.d.results[i].ENModelDesc
+									});
+									_that.oGlobalJSONModel.updateBindings(true);
+								}
+								b = 0;
 							}
-							if (b == _that.oGlobalJSONModel.getData().modelData.length) {
-								_that.oGlobalJSONModel.getData().modelData.push({
-									"Model": oData.d.results[i].Model,
-									"ENModelDesc": oData.d.results[i].ENModelDesc
-								});
-								_that.oGlobalJSONModel.updateBindings(true);
-							}
-							b = 0;
-						}
-						sap.ui.core.BusyIndicator.hide();
-						_that.oGlobalJSONModel.getData().modelData.unshift({
-							"Model": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
-							"ENModelDesc": ""
-						});
+							sap.ui.core.BusyIndicator.hide();
+							_that.oGlobalJSONModel.getData().modelData.unshift({
+								"Model": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+								"ENModelDesc": ""
+							});
 
-					} else {
+						} else {
+							sap.ui.core.BusyIndicator.hide();
+						}
+						_that.oGlobalJSONModel.updateBindings(true);
+					},
+					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
+						_that.errorFlag = true;
 					}
-					_that.oGlobalJSONModel.updateBindings(true);
-				},
-				error: function (oError) {
-					sap.ui.core.BusyIndicator.hide();
-					_that.errorFlag = true;
-				}
-			});
+				});
+			} else {
+				_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+				_that.getView().byId("ID_modelDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+				_that.getView().byId("ID_ExteriorColorCode").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+				_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			}
 		},
 
 		//zzmoyr eq '2018' and zzmodel eq 'LB71JZ' and zzsuffix eq '03'
@@ -1177,7 +1186,8 @@ sap.ui.define([
 				obj_first.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
 			} else obj_first.Model = "";
 
-			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect") && _that.getView().byId("ID_marktgIntDesc").getSelectedKey() !=
+			if (_that.getView().byId("ID_marktgIntDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect") &&
+				_that.getView().byId("ID_marktgIntDesc").getSelectedKey() !=
 				"") {
 				obj_first.suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
 				var intcol = _that.getView().getModel("GlobalJSONModel").getProperty(_that.getView().byId("ID_marktgIntDesc").getSelectedItem().getBindingContext(
