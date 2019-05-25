@@ -85,42 +85,42 @@ sap.ui.define([
 			if (sLocation_conf == 0) {
 				this.sPrefix = "/pipelineInventory-dest";
 
-				// var attributes = [{
-				// 	"Attribute": "",
-				// 	"BusinessPartner": "Zone Dealers Only",
-				// 	"BusinessPartnerKey": "",
-				// 	"BusinessPartnerName": "Zone Dealers Only",
-				// 	"BusinessPartnerType": "",
-				// 	"Division": "",
-				// 	"SearchTerm2": ""
-				// }, {
-				// 	"Attribute": "01",
-				// 	"BusinessPartner": "42193",
-				// 	"BusinessPartnerKey": "2400042193",
-				// 	"BusinessPartnerName": "Bailey Toyota",
-				// 	"BusinessPartnerType": "Z001",
-				// 	"Division": "10",
-				// 	"SearchTerm2": "42193"
-				// }, {
-				// 	"Attribute": "01",
-				// 	"BusinessPartner": "01002",
-				// 	"BusinessPartnerKey": "2400501002",
-				// 	"BusinessPartnerName": "",
-				// 	"BusinessPartnerType": "Z004",
-				// 	"Division": "10",
-				// 	"SearchTerm2": "01002"
-				// }];
+				var attributes = [{
+					"Attribute": "",
+					"BusinessPartner": "Zone Dealers Only",
+					"BusinessPartnerKey": "",
+					"BusinessPartnerName": "Zone Dealers Only",
+					"BusinessPartnerType": "",
+					"Division": "",
+					"SearchTerm2": ""
+				}, {
+					"Attribute": "01",
+					"BusinessPartner": "42193",
+					"BusinessPartnerKey": "2400042193",
+					"BusinessPartnerName": "Bailey Toyota",
+					"BusinessPartnerType": "Z001",
+					"Division": "10",
+					"SearchTerm2": "42193"
+				}, {
+					"Attribute": "01",
+					"BusinessPartner": "01002",
+					"BusinessPartnerKey": "2400501002",
+					"BusinessPartnerName": "",
+					"BusinessPartnerType": "Z004",
+					"Division": "10",
+					"SearchTerm2": "01002"
+				}];
 
-				// var samlAttributes = {
-				// 	"Language": ["English"],
-				// 	"UserType": ["Zone"],
-				// 	"Zone": ["1"]
-				// };
-				// _that.salesOffice = "1000";
-				// _that.BusinessPartnerData.getData().DealerList = attributes;
-				// _that.BusinessPartnerData.getData().SamlList = samlAttributes;
-				// _that.BusinessPartnerData.updateBindings(true);
-				// _that.BusinessPartnerData.refresh(true);
+				var samlAttributes = {
+					"Language": ["English"],
+					"UserType": ["Zone"],
+					"Zone": ["1"]
+				};
+				_that.salesOffice = "1000";
+				_that.BusinessPartnerData.getData().DealerList = attributes;
+				_that.BusinessPartnerData.getData().SamlList = samlAttributes;
+				_that.BusinessPartnerData.updateBindings(true);
+				_that.BusinessPartnerData.refresh(true);
 			} else {
 				//Cloud Deployment
 				this.sPrefix = "";
