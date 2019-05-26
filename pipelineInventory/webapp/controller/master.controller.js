@@ -883,9 +883,9 @@ sap.ui.define([
 			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
-			var oSeriesVal = oSeriesVal.getParameters("selectedItem").selectedItem.getKey();
+			// var oSeriesVal = oSeriesVal.getParameters("selectedItem").selectedItem.getKey();
 			console.log("oSeriesVal", oSeriesVal);
-			if (oSeriesVal.getParameters("selectedItem").selectedItem.getKey() !== _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
+			if (oSeriesVal !== _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				_that.oGlobalJSONModel.getData().modelData = [];
 				//?$filter=Modelyear%20eq%20%272020%27%20and%20TCISeries%20eq%20%27RXH%27
 				$.ajax({
