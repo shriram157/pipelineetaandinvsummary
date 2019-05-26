@@ -10,7 +10,7 @@ sap.ui.define([
 	"use strict";
 
 	var Division, DivUser, _that, filteredData, SelectedDealer, seriesdata = [],
-		sSelectedLocale, scopesData,DivAttribute;
+		sSelectedLocale, scopesData, DivAttribute;
 	return BaseController.extend("pipelineInventory.controller.master", {
 		/*Initialization of the page data*/
 		onInit: function () {
@@ -875,7 +875,7 @@ sap.ui.define([
 		},
 
 		//ON Series change
-		onSeriesSelectionChange: function (oSeriesVal) {
+		onSeriesSelectionChange: function (oSeriesVal2) {
 			sap.ui.core.BusyIndicator.show();
 			_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			_that.getView().byId("ID_modelDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
@@ -883,8 +883,12 @@ sap.ui.define([
 			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
-			// var oSeriesVal = oSeriesVal.getParameters("selectedItem").selectedItem.getKey();
-			console.log("oSeriesVal", oSeriesVal);
+			if (oSeriesVal2.getParameters("selectedItem").selectedItem.getKey() !== undefined) {
+				var oSeriesVal = oSeriesVal2.getParameters("selectedItem").selectedItem.getKey();
+			} else {
+				oSeriesVal = oSeriesVal2;
+			}
+			console.log("oSeriesVal2", oSeriesVal2);
 			if (oSeriesVal !== _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				_that.oGlobalJSONModel.getData().modelData = [];
 				//?$filter=Modelyear%20eq%20%272020%27%20and%20TCISeries%20eq%20%27RXH%27
