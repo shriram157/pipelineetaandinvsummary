@@ -174,6 +174,7 @@ sap.ui.define([
 			if (oEvent.getParameters().name != "orderChange") {
 				if (oEvent.getParameters().name == "vehicleDetails2") {
 					if (oEvent.getParameter("arguments").VCData2 != undefined) {
+						sap.ui.core.BusyIndicator.hide();
 						var Data = JSON.parse(oEvent.getParameter("arguments").VCData2);
 						//Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
 						Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
@@ -201,6 +202,7 @@ sap.ui.define([
 							url: url,
 							type: "GET",
 							success: function (oRowData) {
+								sap.ui.core.BusyIndicator.hide();
 								console.log("CustomerData", oRowData);
 								_thatVD.APX_ChangeFlag = oRowData.d.APX_ChangeFlag;
 								if (_thatVD.APX_ChangeFlag == "X") {
@@ -268,6 +270,7 @@ sap.ui.define([
 								data.Model + "' and zzsuffix eq '" + data.Suffix + "'",
 							type: "GET",
 							success: function (oRowData) {
+								sap.ui.core.BusyIndicator.hide();
 								console.log("APXData", oRowData);
 								_thatVD.oVehicleDetailsJSON.getData().APXData = oRowData.d.results;
 								_thatVD.oVehicleDetailsJSON.updateBindings(true);
@@ -290,6 +293,7 @@ sap.ui.define([
 						Data.Suffix = Data.Suffix.replace("%2F", "/");
 						// Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
 						if (_thatVD.oVehicleDetailsJSON.getData().results.length > 0) {
+							sap.ui.core.BusyIndicator.hide();
 							for (var i = 0; i < _thatVD.oVehicleDetailsJSON.getData().results.length; i++) {
 								if (_thatVD.oVehicleDetailsJSON.getData().results[i].VHCLE == Data.VHCLE) {
 
@@ -357,6 +361,7 @@ sap.ui.define([
 										url: url,
 										type: "GET",
 										success: function (oRowData) {
+											sap.ui.core.BusyIndicator.hide();
 											_thatVD.APX_ChangeFlag = oRowData.d.APX_ChangeFlag;
 											if (_thatVD.APX_ChangeFlag == "X") {
 												_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", true);
@@ -394,6 +399,7 @@ sap.ui.define([
 											data.Model + "' and zzsuffix eq '" + data.Suffix + "'",
 										type: "GET",
 										success: function (oRowData) {
+											sap.ui.core.BusyIndicator.hide();
 											console.log("APXData", oRowData);
 											_thatVD.oVehicleDetailsJSON.getData().APXData = oRowData.d.results;
 											_thatVD.oVehicleDetailsJSON.updateBindings(true);
