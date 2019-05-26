@@ -934,6 +934,7 @@ sap.ui.define([
 					}
 				});
 			} else {
+				sap.ui.core.BusyIndicator.hide();
 				_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 				_that.getView().byId("ID_modelDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 				_that.getView().byId("ID_ExteriorColorCode").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
