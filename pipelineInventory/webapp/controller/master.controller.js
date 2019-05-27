@@ -175,8 +175,9 @@ sap.ui.define([
 						_that.BusinessPartnerData.getData().DealerList = userAttributes.attributes;
 					} else {
 						var salesArr = userAttributes.sales;
+							console.log("salesArr", salesArr);
 						var SalesData = salesArr.filter(function (val) {
-							return val.Division === DivAttribute;
+							return val.BPDivision === DivAttribute;
 						});
 						console.log("SalesData", SalesData);
 						var aBusinessPartnerKey = SalesData.reduce(function (obj, hash) {
