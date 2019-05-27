@@ -142,9 +142,7 @@ sap.ui.define([
 			// 	_thatSDR.getRouter().navTo("changeHistory");
 			// }
 			else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_thatSDR.getRouter().navTo("changeHistory", {
-					SelectedDealer: ""
-				});
+				_thatSDR.getRouter().navTo("changeHistory2");
 
 			} else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();

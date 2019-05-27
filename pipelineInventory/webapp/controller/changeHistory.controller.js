@@ -156,13 +156,6 @@ sap.ui.define([
 						console.log("ChangeHistory Data", oChangeData);
 						_thatCH.oChangeHistoryModel.setData(oChangeData.d);
 						_thatCH.oChangeHistoryModel.updateBindings(true);
-						// $.each(_thatCH.oChangeHistoryModel.getData().results, function (i, item) {
-						// 	if (item.Status !== "Rejected") {
-						// 		_thatCH.btnResubmit.setVisible(false);
-						// 	} else {
-						// 		_thatCH.btnResubmit.setVisible(true);
-						// 	}
-						// });
 						for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
 							if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
 								_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
@@ -176,6 +169,36 @@ sap.ui.define([
 						_thatCH.errorFlag = true;
 					}
 				});
+			} else {
+				sap.ui.core.BusyIndicator.hide();
+				_thatCH.Dealer = "";
+				_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
+				var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq ' " + DivUser +
+					" ' and Dealer eq '" + _thatCH.Dealer +
+					"'&$format=json";
+				$.ajax({
+					dataType: "json",
+					url: url,
+					type: "GET",
+					success: function (oChangeData) {
+						sap.ui.core.BusyIndicator.hide();
+						console.log("ChangeHistory Data", oChangeData);
+						_thatCH.oChangeHistoryModel.setData(oChangeData.d);
+						_thatCH.oChangeHistoryModel.updateBindings(true);
+						for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
+							if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
+								_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
+							} else {
+								_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
+							}
+						}
+						_thatCH.oChangeHistoryModel.updateBindings(true);
+					},
+					error: function (oError) {
+						_thatCH.errorFlag = true;
+					}
+				});
+
 			}
 		},
 

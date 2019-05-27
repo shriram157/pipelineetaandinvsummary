@@ -256,9 +256,7 @@ sap.ui.define([
 						SelectedDealer: SelectedDealerS
 					});
 				} else {
-					_thatSD.getRouter().navTo("changeHistory", {
-						SelectedDealer: ""
-					});
+					_thatSD.getRouter().navTo("changeHistory2");
 				}
 			}
 			// else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("ChangeHistory")) {

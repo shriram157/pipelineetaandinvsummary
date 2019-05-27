@@ -411,9 +411,7 @@ sap.ui.define([
 					});
 				}
 				else{
-					_thatDT.getRouter().navTo("changeHistory", {
-						SelectedDealer: ""
-					});
+					_thatDT.getRouter().navTo("changeHistory2");
 				}
 			} else if (_oSelectedScreen == _thatDT.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();

@@ -1108,9 +1108,7 @@ sap.ui.define([
 				_that.getRouter().navTo("vehicleDetailsNodata");
 			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
 				if (SelectedDealer == undefined || SelectedDealer == "") {
-					_that.getRouter().navTo("changeHistory", {
-						SelectedDealer: ""
-					});
+					_that.getRouter().navTo("changeHistory2");
 				} else {
 					_that.getRouter().navTo("changeHistory", {
 						SelectedDealer: SelectedDealer

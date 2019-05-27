@@ -161,6 +161,11 @@
 				"name": "changeHistory",
 				"pattern": "changeHistory/{SelectedDealer}",
 				"target": "changeHistory"
+			},
+			{
+				"name": "changeHistory2",
+				"pattern": "changeHistory",
+				"target": "changeHistory2"
 			}],
 			"targets": {
 				"Routemaster": {
@@ -215,6 +220,10 @@
 					"viewName": "assignVehiclesStatus"
 				},
 				"changeHistory": {
+					"viewType": "XML",
+					"viewName": "changeHistory"
+				},
+				"changeHistory2": {
 					"viewType": "XML",
 					"viewName": "changeHistory"
 				}

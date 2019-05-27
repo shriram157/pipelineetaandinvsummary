@@ -371,11 +371,13 @@ sap.ui.define([
 												_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", false);
 											}
 											_thatVD.SoldOrderBlock = oRowData.d.SoldOrderBlock;
-											if (_thatVD.SoldOrderBlock == "X" && (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] !== "Dealer")) {
-						_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
-					} else if (_thatVD.SoldOrderBlock == "" && (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] == "Dealer")) {
-						_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", true);
-					}
+											if (_thatVD.SoldOrderBlock == "X" && (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] !==
+													"Dealer")) {
+												_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
+											} else if (_thatVD.SoldOrderBlock == "" && (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] ==
+													"Dealer")) {
+												_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", true);
+											}
 											console.log("CustomerData", oRowData);
 											oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
 											_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
@@ -552,9 +554,7 @@ sap.ui.define([
 					});
 				} else {
 					// sap.m.MessageBox.information(_thatVD.oI18nModel.getResourceBundle().getText("PleaseSelectDealer"));
-					_thatVD.getRouter().navTo("changeHistory", {
-						SelectedDealer: ""
-					});
+					_thatVD.getRouter().navTo("changeHistory2");
 				}
 			}
 		},

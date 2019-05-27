@@ -266,9 +266,7 @@ sap.ui.define([
 					});
 				} else {
 					// sap.m.MessageBox.information(_thatAV.oI18nModel.getResourceBundle().getText("PleaseSelectDealer"));
-					_thatAV.getRouter().navTo("changeHistory", {
-						SelectedDealer: ""
-					});
+					_thatAV.getRouter().navTo("changeHistory2");
 				}
 			} else if (_oSelectedScreen == _thatAV.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();
