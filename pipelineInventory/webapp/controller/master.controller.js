@@ -209,13 +209,15 @@ sap.ui.define([
 						});
 
 					} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "-",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "Lexus Zone",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
+						if (DivAttribute == "20") {
+							_that.BusinessPartnerData.getData().DealerList.unshift({
+								BusinessPartner: "-",
+								BusinessPartnerKey: "",
+								BusinessPartnerName: "Lexus Zone",
+								BusinessPartnerType: "",
+								SearchTerm2: ""
+							});
+						}
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
 							BusinessPartnerKey: "",
