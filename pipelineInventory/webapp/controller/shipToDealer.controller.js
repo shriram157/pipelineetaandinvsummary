@@ -47,7 +47,7 @@ sap.ui.define([
 				this.sPrefix = "";
 			}
 			_thatSD.nodeJsUrl = this.sPrefix + "/node";
-			
+
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -76,8 +76,6 @@ sap.ui.define([
 				enableResubmitBtn: false
 			});
 			_thatSD.getView().setModel(_thatSD._oViewModel, "LocalModel");
-
-			
 
 			_thatSD.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatSD._oShipToDealerRoute, _thatSD);
 		},
@@ -121,7 +119,7 @@ sap.ui.define([
 				this.sPrefix = "";
 			}
 			_thatSD.nodeJsUrl = this.sPrefix + "/node";
-			
+
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -136,7 +134,7 @@ sap.ui.define([
 					currentImageSource.setProperty("src", "images/Lexus.png");
 				}
 			}
-			
+
 			if (oEvent.getParameters().arguments.vehicleData != undefined) {
 				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
 				_thatSD.oDropShipDataModel.getData().results = [];
@@ -253,10 +251,22 @@ sap.ui.define([
 			} else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
 				_thatSD.getRouter().navTo("vehicleDetailsNodata");
 			} else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_thatSD.getRouter().navTo("changeHistory", {
-					SelectedDealer: SelectedDealerS
-				});
-			} else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("Back")) {
+				if (SelectedDealerS != undefined) {
+					_thatSD.getRouter().navTo("changeHistory", {
+						SelectedDealer: SelectedDealerS
+					});
+				} else {
+					_thatSD.getRouter().navTo("changeHistory", {
+						SelectedDealer: ""
+					});
+				}
+			}
+			// else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+			// 	_thatSD.getRouter().navTo("changeHistory", {
+			// 		SelectedDealer: SelectedDealerS
+			// 	});
+			// } 
+			else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();
 				var sPreviousHash = oHistory.getPreviousHash();
 				if (sPreviousHash !== undefined) {

@@ -410,6 +410,11 @@ sap.ui.define([
 						SelectedDealer: _thatDT.SelectedDealer
 					});
 				}
+				else{
+					_thatDT.getRouter().navTo("changeHistory", {
+						SelectedDealer: ""
+					});
+				}
 			} else if (_oSelectedScreen == _thatDT.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();
 				var sPreviousHash = oHistory.getPreviousHash();

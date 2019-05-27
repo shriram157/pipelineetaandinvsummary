@@ -4,9 +4,9 @@ sap.ui.define([
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/resource/ResourceModel',
 	"sap/ui/core/routing/History"
-], function (BaseController, JSONModel, ResourceModel,History) {
+], function (BaseController, JSONModel, ResourceModel, History) {
 	"use strict";
-	var _thatAV, SelectedDealerA,sSelectedLocale,Division;
+	var _thatAV, SelectedDealerA, sSelectedLocale, Division;
 	return BaseController.extend("pipelineInventory.controller.assignVehicles", {
 		onInit: function () {
 			_thatAV = this;
@@ -46,7 +46,7 @@ sap.ui.define([
 				this.getView().setModel(_thatAV.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
 			}
-			
+
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -75,7 +75,6 @@ sap.ui.define([
 				enableResubmitBtn: false
 			});
 			_thatAV.getView().setModel(_thatAV._oViewModel, "LocalModel");
-			
 
 			_thatAV.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatAV._oAssignVehicleRoute, _thatAV);
 		},
@@ -116,7 +115,7 @@ sap.ui.define([
 				this.getView().setModel(_thatAV.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
 			}
-			
+
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -131,18 +130,18 @@ sap.ui.define([
 					currentImageSource.setProperty("src", "images/Lexus.png");
 				}
 			}
-			
+
 			_thatAV.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
 			if (oEvent.getParameters().arguments.vehicleData != undefined) {
 				_thatAV.oAssignVehiclesModel.getData().results = [];
 				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
 				for (var n = 0; n < VUIdata.length; n++) {
-					VUIdata[n].SUFFIX_DESC_FR = VUIdata[n].SUFFIX_DESC_FR.replace("%2F","/");
-					VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F","/");
-					VUIdata[n].SERIES_DESC_EN = VUIdata[n].SERIES_DESC_EN.replace("%2F","/");
-					VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F","/");
-					VUIdata[n].SERIES_DESC_FR = VUIdata[n].SERIES_DESC_FR.replace("%2F","/");
+					VUIdata[n].SUFFIX_DESC_FR = VUIdata[n].SUFFIX_DESC_FR.replace("%2F", "/");
+					VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F", "/");
+					VUIdata[n].SERIES_DESC_EN = VUIdata[n].SERIES_DESC_EN.replace("%2F", "/");
+					VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F", "/");
+					VUIdata[n].SERIES_DESC_FR = VUIdata[n].SERIES_DESC_FR.replace("%2F", "/");
 					if (VUIdata[n].AssignVehicle !== false) {
 						_thatAV.oAssignVehiclesModel.getData().results.push(VUIdata[n]);
 						_thatAV.oAssignVehiclesModel.updateBindings(true);
@@ -167,7 +166,7 @@ sap.ui.define([
 			} else {
 				_thatAV._oViewModel.setProperty("/enableResubmitBtn", false);
 			}
-			if(oDealer.getParameters().selectedItem.getText().split("-")[2] == "Zone All"){
+			if (oDealer.getParameters().selectedItem.getText().split("-")[2] == "Zone All") {
 				SelectedDealerKey = "-";
 			}
 			for (var d = 0; d < _thatAV.getView().getModel("BusinessDataModel").getData().DealerList.length; d++) {
@@ -254,18 +253,31 @@ sap.ui.define([
 				_thatAV.getRouter().navTo("Routemaster");
 			} else if (_oSelectedScreen == _thatAV.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
 				_thatAV.getRouter().navTo("vehicleDetailsNodata");
-			} else if (_oSelectedScreen == _thatAV.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_thatAV.getRouter().navTo("changeHistory", {
-					SelectedDealer: SelectedDealerA
-				});
-			}else if (_oSelectedScreen == _thatAV.oI18nModel.getResourceBundle().getText("Back")) {
+			}
+			// else if (_oSelectedScreen == _thatAV.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+			// 	_thatAV.getRouter().navTo("changeHistory", {
+			// 		SelectedDealer: SelectedDealerA
+			// 	});
+			// }
+			else if (_oSelectedScreen == _thatAV.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+				if (SelectedDealerA != undefined) {
+					_thatAV.getRouter().navTo("changeHistory", {
+						SelectedDealer: SelectedDealerA
+					});
+				} else {
+					// sap.m.MessageBox.information(_thatAV.oI18nModel.getResourceBundle().getText("PleaseSelectDealer"));
+					_thatAV.getRouter().navTo("changeHistory", {
+						SelectedDealer: ""
+					});
+				}
+			} else if (_oSelectedScreen == _thatAV.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();
 				var sPreviousHash = oHistory.getPreviousHash();
 				if (sPreviousHash !== undefined) {
 					window.history.go(-1);
-				}else{
-						var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatAV);
-						oRouter.navTo("details");
+				} else {
+					var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatAV);
+					oRouter.navTo("details");
 				}
 			}
 		},

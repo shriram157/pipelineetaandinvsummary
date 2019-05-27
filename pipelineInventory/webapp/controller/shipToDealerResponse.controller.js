@@ -6,7 +6,7 @@ sap.ui.define([
 	"sap/ui/core/routing/History"
 ], function (BaseController, JSONModel, ResourceModel, History) {
 	"use strict";
-	var _thatSDR, sSelectedLocale,Division;
+	var _thatSDR, sSelectedLocale, Division;
 	return BaseController.extend("pipelineInventory.controller.shipToDealerResponse", {
 
 		onInit: function () {
@@ -137,8 +137,15 @@ sap.ui.define([
 				_thatSDR.getRouter().navTo("Routemaster");
 			} else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
 				_thatSDR.getRouter().navTo("vehicleDetailsNodata");
-			} else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_thatSDR.getRouter().navTo("changeHistory");
+			}
+			// else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+			// 	_thatSDR.getRouter().navTo("changeHistory");
+			// }
+			else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+				_thatSDR.getRouter().navTo("changeHistory", {
+					SelectedDealer: ""
+				});
+
 			} else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();
 				var sPreviousHash = oHistory.getPreviousHash();

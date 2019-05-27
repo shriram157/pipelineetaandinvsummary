@@ -87,7 +87,7 @@ sap.ui.define([
 				url: url,
 				type: "GET",
 				success: function (oRowData) {
-					debugger;
+					// debugger;
 					_thatOC.Order_ChangeFlag = oRowData.d.Order_ChangeFlag;
 					if (_thatOC.Order_ChangeFlag == "X") {
 						_thatOC.getView().getModel("LocalOCModel").setProperty("/dropdownEnabled", true);
@@ -166,7 +166,7 @@ sap.ui.define([
 
 			if (oEvent.getParameters().name == "orderChange2") {
 				if (oEvent.getParameter("arguments").Data2 != undefined) {
-					debugger;
+					// debugger;
 					var Data = JSON.parse(oEvent.getParameter("arguments").Data2);
 
 					Data.NewSuffix = Data.NewSuffix.replace("%2F", "/");
@@ -194,7 +194,7 @@ sap.ui.define([
 					_thatOC.byId("APXrequired").setSelectedKey(Data.NewAPX.split("-")[0]);
 					_thatOC.byId("ID_suffixSelect").setSelectedKey(Data.NewSuffix.split("-")[0]);
 					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(Data.NewColor.split("-")[0]);
-					
+
 					_thatOC.onModelSelectionChange(_thatOC.byId("ID_modelSelect"), Data.NewSuffix.split("-")[0]);
 					_thatOC.onSuffixChange(_thatOC.byId("ID_suffixSelect"), Data.NewColor.split("-")[0]);
 
@@ -216,7 +216,7 @@ sap.ui.define([
 				}
 			} else {
 				if (oEvent.getParameter("arguments").Data != undefined) {
-					debugger;
+					// debugger;
 					var Data = JSON.parse(oEvent.getParameter("arguments").Data);
 					if (Data.NewSuffix != undefined) {
 						Data.NewSuffix = Data.NewSuffix.replace("%2F", "/");
@@ -243,7 +243,7 @@ sap.ui.define([
 					_thatOC.byId("ID_suffixSelect").setSelectedKey(Data.Suffix);
 					_thatOC.byId("APXrequired").setSelectedKey(Data.APX);
 					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(Data.ExteriorColorCode);
-					
+
 					_thatOC.onModelSelectionChange(_thatOC.byId("ID_modelSelect"), Data.Suffix);
 					_thatOC.onSuffixChange(_thatOC.byId("ID_suffixSelect"), Data.ExteriorColorCode);
 
@@ -347,12 +347,11 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 				},
 				complete: function () {
-					if (oSuffixValue != undefined || oSuffixValue !="" ) {
-						if(!oSuffixValue.NewSuffix){
+					if (oSuffixValue != undefined || oSuffixValue != "") {
+						if (!oSuffixValue.NewSuffix) {
 							_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.Suffix);
-						}
-						else{
-						_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.NewSuffix.split("-")[0]);
+						} else {
+							_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.NewSuffix.split("-")[0]);
 						}
 						_thatOC.onSuffixChange(_thatOC.byId("ID_suffixSelect"), oSuffixValue)
 					}
@@ -443,11 +442,24 @@ sap.ui.define([
 			// 	_thatOC.getRouter().navTo("changeHistory");
 			// 	_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer
 			// }
-			else if (_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer != undefined) {
-				_thatOC.getRouter().navTo("changeHistory", {
-					SelectedDealer: _thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer
-				});
+			// else if 
+			else if (_oSelectedScreen == _thatOC.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+				if (_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer != undefined) {
+					_thatOC.getRouter().navTo("changeHistory", {
+						SelectedDealer: _thatOC.SelectedDealer
+					});
+				} else {
+					// sap.m.MessageBox.information(_thatOC.oI18nModel.getResourceBundle().getText("PleaseSelectDealer"));
+					_thatOC.getRouter().navTo("changeHistory", {
+						SelectedDealer: ""
+					});
+				}
 			}
+			// (_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer != undefined) {
+			// 	_thatOC.getRouter().navTo("changeHistory", {
+			// 		SelectedDealer: _thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer
+			// 	});
+			// }
 		},
 
 		_DataValidate: function (oPost) {
@@ -493,7 +505,7 @@ sap.ui.define([
 			OrderChangeModel.setUseBatch(false);
 			OrderChangeModel.create("/OrderChangeSet", Obj, {
 				success: $.proxy(function (oResponse) {
-					debugger;
+					// debugger;
 					console.log(oResponse);
 					if (oResponse.Error != "") {
 						sap.m.MessageBox.error(oResponse.Error);
