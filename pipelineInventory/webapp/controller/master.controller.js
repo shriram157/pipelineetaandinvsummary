@@ -164,10 +164,10 @@ sap.ui.define([
 				type: "GET",
 				success: function (userAttributes) {
 					sap.ui.core.BusyIndicator.hide();
+					console.log("User Attributes", userAttributes);
 					_that.BusinessPartnerData.getData().Dealers = [];
 					_that.BusinessPartnerData.getData().DealerList = [];
 					_that.BusinessPartnerData.getData().SamlList = [];
-					console.log("User Attributes", userAttributes);
 					_that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
 					_that.BusinessPartnerData.setSizeLimit(userAttributes.attributes.length);
 					_that.BusinessPartnerData.getData().SamlList = userAttributes.samlAttributes;
@@ -175,9 +175,9 @@ sap.ui.define([
 						_that.BusinessPartnerData.getData().DealerList = userAttributes.attributes;
 					} else {
 						var salesArr = userAttributes.sales;
-							console.log("salesArr", salesArr);
+						console.log("salesArr", salesArr);
 						var SalesData = salesArr.filter(function (val) {
-							return val.BPDivision === DivAttribute;
+							return val.Division === DivAttribute;
 						});
 						console.log("SalesData", SalesData);
 						var aBusinessPartnerKey = SalesData.reduce(function (obj, hash) {
