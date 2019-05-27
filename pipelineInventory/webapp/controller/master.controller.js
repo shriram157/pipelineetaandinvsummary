@@ -87,9 +87,9 @@ sap.ui.define([
 
 				var attributes = [{
 					"Attribute": "",
-					"BusinessPartner": "Zone Dealers Only",
+					"BusinessPartner": "Zone Stock",
 					"BusinessPartnerKey": "",
-					"BusinessPartnerName": "Zone Dealers Only",
+					"BusinessPartnerName": "Zone Stock",
 					"BusinessPartnerType": "",
 					"Division": "",
 					"SearchTerm2": ""
@@ -527,14 +527,14 @@ sap.ui.define([
 				//var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
 				var SelectedDealerKey = oDealer.getParameters().selectedItem.getText();
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
-				if (oDealer.getParameters().selectedItem.getAdditionalText() == "National All") {
-					SelectedDealerKey = "National All";
-				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "National Zones Only") {
-					SelectedDealerKey = "National Zones Only";
-				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone Dealers Only") {
-					SelectedDealerKey = "Zone Dealers Only";
-				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone All") {
-					SelectedDealerKey = "Zone All";
+				if (oDealer.getParameters().selectedItem.getAdditionalText() == "National Total") {
+					SelectedDealerKey = "National Total";
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "National/Zone Stock") {
+					SelectedDealerKey = "National/Zone Stock";
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone Stock") {
+					SelectedDealerKey = "Zone Stock";
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone Total") {
+					SelectedDealerKey = "Zone Total";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Lexus Zone") {
 					SelectedDealerKey = "Lexus Zone";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Atlantic Zone") {
@@ -550,9 +550,9 @@ sap.ui.define([
 				}
 
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
-					if (SelectedDealerKey == "Zone All") {
+					if (SelectedDealerKey == "Zone Total") {
 						_that.userType = "ZZA";
-					} else if (SelectedDealerKey == "Zone Dealers Only") {
+					} else if (SelectedDealerKey == "Zone Stock") {
 						_that.userType = "ZDD";
 					} else if (SelectedDealerType == "Z004") {
 						_that.userType = "ZZU";
@@ -562,10 +562,10 @@ sap.ui.define([
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
 					_that.userType = "DDU";
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
-					if (SelectedDealerKey == "National All") {
+					if (SelectedDealerKey == "National Total") {
 						_that.salesOffice = "";
 						_that.userType = "NNA";
-					} else if (SelectedDealerKey == "National Zones Only") {
+					} else if (SelectedDealerKey == "National/Zone Stock") {
 						_that.salesOffice = "";
 						_that.userType = "NZZ";
 					} else if (SelectedDealerKey == "Pacific Zone") {
@@ -595,7 +595,7 @@ sap.ui.define([
 					}
 				}
 				for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
-					if (SelectedDealerKey == "Zone All") {
+					if (SelectedDealerKey == "Zone Total") {
 						SelectedDealer = "";
 					} else if (SelectedDealerKey == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
 						SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
@@ -609,7 +609,7 @@ sap.ui.define([
 		/*Fetch data on apply filter click for all three tables*/
 		applyFiltersBtn: function () {
 			//_that.oI18nModel.getResourceBundle().getText("PleaseSelect")
-			if (_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "National All" && _that.getView().byId(
+			if (_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "National Total" && _that.getView().byId(
 					"ID_seriesDesc").getSelectedKey() == _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				MessageBox.show(_that.oI18nModel.getResourceBundle().getText("MandatorySeriesForNationalUser"), MessageBox.Icon.ERROR, "Error",
 					MessageBox.Action.OK, null, null);
