@@ -196,14 +196,14 @@ sap.ui.define([
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
 							BusinessPartnerKey: "",
-							BusinessPartnerName: "Zone All",
+							BusinessPartnerName: "Zone Total",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
 							BusinessPartnerKey: "",
-							BusinessPartnerName: "Zone Dealers Only",
+							BusinessPartnerName: "Zone Stock",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
@@ -256,14 +256,14 @@ sap.ui.define([
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
 							BusinessPartnerKey: "",
-							BusinessPartnerName: "National All",
+							BusinessPartnerName: "National Total",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
 							BusinessPartnerKey: "",
-							BusinessPartnerName: "National Zones Only",
+							BusinessPartnerName: "National/Zone Stock",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
