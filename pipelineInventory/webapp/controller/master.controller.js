@@ -217,42 +217,43 @@ sap.ui.define([
 								BusinessPartnerType: "",
 								SearchTerm2: ""
 							});
+						} else if (DivAttribute == "10") {
+							_that.BusinessPartnerData.getData().DealerList.unshift({
+								BusinessPartner: "-",
+								BusinessPartnerKey: "",
+								BusinessPartnerName: "Atlantic Zone",
+								BusinessPartnerType: "",
+								SearchTerm2: ""
+							});
+							_that.BusinessPartnerData.getData().DealerList.unshift({
+								BusinessPartner: "-",
+								BusinessPartnerKey: "",
+								BusinessPartnerName: "Quebec Zone",
+								BusinessPartnerType: "",
+								SearchTerm2: ""
+							});
+							_that.BusinessPartnerData.getData().DealerList.unshift({
+								BusinessPartner: "-",
+								BusinessPartnerKey: "",
+								BusinessPartnerName: "Central Zone",
+								BusinessPartnerType: "",
+								SearchTerm2: ""
+							});
+							_that.BusinessPartnerData.getData().DealerList.unshift({
+								BusinessPartner: "-",
+								BusinessPartnerKey: "",
+								BusinessPartnerName: "Pacific Zone",
+								BusinessPartnerType: "",
+								SearchTerm2: ""
+							});
+							_that.BusinessPartnerData.getData().DealerList.unshift({
+								BusinessPartner: "-",
+								BusinessPartnerKey: "",
+								BusinessPartnerName: "Prairie Zone",
+								BusinessPartnerType: "",
+								SearchTerm2: ""
+							});
 						}
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "-",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "Atlantic Zone",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "-",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "Quebec Zone",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "-",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "Central Zone",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "-",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "Pacific Zone",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "-",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "Prairie Zone",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
 							BusinessPartnerKey: "",
@@ -504,12 +505,9 @@ sap.ui.define([
 						case 7:
 							_that.getView().byId("id_ETADate").setValue(selectedDDValues[i]);
 							break;
-
 						}
-
 					}
 				}
-
 			}
 			/*Defect number 9293 code end*/
 		},
