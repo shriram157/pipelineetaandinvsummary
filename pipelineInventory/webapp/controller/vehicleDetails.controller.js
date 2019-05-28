@@ -195,8 +195,8 @@ sap.ui.define([
 						var _OrderNumber = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].VHCLE;
 						var MatrixVal = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].MATRIX;
 						//VHCLE='" + _OrderNumber + "',MATRIX='"+MatrixVal+"'
-						var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet(VHCLE='" + _OrderNumber + "',MATRIX='" +
-							MatrixVal + "')";
+						// _thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
+						var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet(VHCLE='" + _OrderNumber + "',MATRIX='0000')";
 						$.ajax({
 							dataType: "json",
 							url: url,
@@ -204,6 +204,7 @@ sap.ui.define([
 							success: function (oRowData) {
 								sap.ui.core.BusyIndicator.hide();
 								console.log("CustomerData", oRowData);
+								// _thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
 								_thatVD.APX_ChangeFlag = oRowData.d.APX_ChangeFlag;
 								if (_thatVD.APX_ChangeFlag == "X") {
 									_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", true);
@@ -211,11 +212,9 @@ sap.ui.define([
 									_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", false);
 								}
 								_thatVD.SoldOrderBlock = oRowData.d.SoldOrderBlock;
-								if (_thatVD.SoldOrderBlock == "X" && (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] !==
-										"Dealer")) {
+								if (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] !== "Dealer") {
 									_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
-								} else if (_thatVD.SoldOrderBlock == "" && (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] ==
-										"Dealer")) {
+								} else if (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] ==	"Dealer") {
 									_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", true);
 								}
 								oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
@@ -592,6 +591,8 @@ sap.ui.define([
 			Obj.VHCLE = _thatVD.oVehicleDetailsJSON.VHCLE;
 			if (_thatVD.newAPX != "" && _thatVD.newAPX != undefined) {
 				Obj.NewAPX = _thatVD.newAPX;
+			} else {
+				Obj.NewAPX = _thatVD.getView().byId("apxVal").getSelectedKey();
 			}
 			Obj.AccessoriesInstalled = _thatVD.getView().byId("accessoryVal").getSelectedKey(); //oVehicleDetailsJSON.AccessoriesInstalled;
 			Obj.DNC = SelectedDNCVal; //DNCVal //_thatVD.oVehicleDetailsJSON.DNCVehicle;
