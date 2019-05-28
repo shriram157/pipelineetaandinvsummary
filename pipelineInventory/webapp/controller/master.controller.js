@@ -759,7 +759,7 @@ sap.ui.define([
 			$.ajax({
 				dataType: "json",
 				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _that.Model + "' and Modelyear eq '" +
-					_that.Modelyear + "'",
+					_that.Modelyear + "'&$orderby=Suffix asc",
 				type: "GET",
 				success: function (oData) {
 					if (oData.d.results.length > 0) {

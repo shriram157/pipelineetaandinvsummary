@@ -446,7 +446,7 @@ sap.ui.define([
 			else if (_oSelectedScreen == _thatOC.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
 				if (_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer != undefined) {
 					_thatOC.getRouter().navTo("changeHistory", {
-						SelectedDealer: _thatOC.SelectedDealer
+						SelectedDealer: _thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer
 					});
 				} else {
 					// sap.m.MessageBox.information(_thatOC.oI18nModel.getResourceBundle().getText("PleaseSelectDealer"));

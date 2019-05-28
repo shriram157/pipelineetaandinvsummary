@@ -31,10 +31,10 @@
 						emptySpanM="3" columnsL="3" columnsM="3" class="styleForms">
 						<f:content>
 							<Label text="{i18n>Dealer}" design="Bold" required="required"/>
-							<ComboBox showSecondaryValues="true" filterSecondaryValues="true" width="25em" value="" selectedKey="" selectionChange="onDealerChange"
+							<ComboBox showSecondaryValues="false" filterSecondaryValues="true" width="25em" value="" selectedKey="" selectionChange="onDealerChange"
 								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
 								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}"
-									text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}"/>
+									text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}" additionalText="{BusinessDataModel>BusinessPartnerKey}"/>
 							</ComboBox>
 								</f:content>
 					</f:SimpleForm>

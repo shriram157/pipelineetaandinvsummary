@@ -204,7 +204,8 @@ sap.ui.define([
 
 		onDealerChange: function (oDealer) {
 			sap.ui.core.BusyIndicator.show();
-			var SelectedDealer = oDealer.getParameters().selectedItem.getProperty("key");
+			var BPDataMo = _thatCH.getView().getModel("BusinessDataModel");
+			var SelectedDealer = oDealer.getParameters().selectedItem.getAdditionalText(); //oDealer.getParameters().selectedItem.getProperty("key");
 			_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
 			_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
 			var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq '" + DivUser +
