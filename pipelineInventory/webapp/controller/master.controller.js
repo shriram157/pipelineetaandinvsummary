@@ -20,6 +20,10 @@ sap.ui.define([
 				delay: 0
 			});
 			_that.getView().setModel(_oViewModel, "LocalOCModel");
+			var fleetMatrix = new sap.ui.model.json.JSONModel({
+				"FleetColnIndex":""
+			});
+			sap.ui.getCore().setModel(fleetMatrix, "fleetMatrixModel");
 			_that.errorFlag = false;
 			jQuery.sap.require("sap.ui.core.format.DateFormat");
 			_that.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
@@ -253,18 +257,18 @@ sap.ui.define([
 								BusinessPartnerType: "",
 								SearchTerm2: ""
 							});
+							_that.BusinessPartnerData.getData().DealerList.unshift({
+								BusinessPartner: "-",
+								BusinessPartnerKey: "",
+								BusinessPartnerName: "National/Zone Stock",
+								BusinessPartnerType: "",
+								SearchTerm2: ""
+							});
 						}
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
 							BusinessPartnerKey: "",
 							BusinessPartnerName: "National Total",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "-",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "National/Zone Stock",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
@@ -1127,6 +1131,7 @@ sap.ui.define([
 					ColumnIndex = "15";
 				}
 			}
+			sap.ui.getCore().getModel( "fleetMatrixModel").setProperty("/FleetColnIndex",ColumnIndex);
 			_that.RowIndex = (Number(oTableClick.getParameters().rowIndex) + 1).toString();
 			var obj_first = {};
 			obj_first.MatrixVal = "A" + _that.RowIndex + ColumnIndex;
@@ -1147,6 +1152,7 @@ sap.ui.define([
 					ColumnIndex = "15";
 				}
 			}
+			sap.ui.getCore().getModel( "fleetMatrixModel").setProperty("/FleetColnIndex",ColumnIndex);
 			_that.RowIndex = (Number(oTableClick.getParameters().rowIndex) + 1).toString();
 			var obj_first = {};
 			obj_first.MatrixVal = "B" + _that.RowIndex + ColumnIndex;
@@ -1167,6 +1173,7 @@ sap.ui.define([
 					ColumnIndex = "15";
 				}
 			}
+			sap.ui.getCore().getModel( "fleetMatrixModel").setProperty("/FleetColnIndex",ColumnIndex);
 			_that.RowIndex = (Number(oTableClick.getParameters().rowIndex) + 1).toString();
 			var obj_first = {};
 			obj_first.MatrixVal = "C" + _that.RowIndex + ColumnIndex;

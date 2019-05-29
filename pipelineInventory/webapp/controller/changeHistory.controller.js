@@ -6,7 +6,7 @@ sap.ui.define([
 	"sap/ui/core/routing/History"
 ], function (BaseController, JSONModel, ResourceModel, History) {
 	"use strict";
-	var _thatCH, SelectedDealerCH, sSelectedLocale, Division, DivUser;
+	var _thatCH, SelectedDealerCH, sSelectedLocale, Division, DivUser, localLang;
 	return BaseController.extend("pipelineInventory.controller.changeHistory", {
 
 		onInit: function () {
@@ -23,6 +23,7 @@ sap.ui.define([
 				sSelectedLocale = "EN"; // default is english 
 			}
 			if (sSelectedLocale == "fr") {
+				localLang= "F";
 				_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
@@ -30,6 +31,7 @@ sap.ui.define([
 				this.getView().setModel(_thatCH.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
 			} else {
+				localLang= "E";
 				_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
@@ -146,7 +148,7 @@ sap.ui.define([
 				//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '2400042193'&$format=json
 				var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq ' " + DivUser +
 					" ' and Dealer eq '" + _thatCH.Dealer +
-					"'&$format=json";
+					"'and LANGUAGE eq '"+localLang+"' &$format=json";
 				$.ajax({
 					dataType: "json",
 					url: url,

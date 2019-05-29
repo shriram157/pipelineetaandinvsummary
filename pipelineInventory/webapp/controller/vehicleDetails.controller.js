@@ -90,14 +90,23 @@ sap.ui.define([
 		_oVehicleDetailsRoute: function (oEvent) {
 			_thatVD.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
+			console.log("FleetColnIndex",sap.ui.getCore().getModel( "fleetMatrixModel"));
 
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
 				delay: 0,
 				soldOrderEnabled: false,
-				APXEnabled: false
+				APXEnabled: false,
+				DNCEnabled:true
 			});
 			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
+			var FleetVal = sap.ui.getCore().getModel( "fleetMatrixModel").getProperty("/FleetColnIndex");
+			if(FleetVal=="08" || FleetVal=="09"|| FleetVal=="10"|| FleetVal=="11"|| FleetVal=="12"|| FleetVal=="13"){
+				this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", false);
+			}
+			else{
+				this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", true);
+			}
 
 			_thatVD.getView().setModel(sap.ui.getCore().getModel("VehicleDetailsJSON"), "VehicleDetailsJSON");
 			_thatVD.oVehicleDetailsJSON = _thatVD.getView().getModel("VehicleDetailsJSON");
