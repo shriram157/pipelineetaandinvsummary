@@ -653,7 +653,7 @@ sap.ui.define([
 			//loop is to extract each row
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
-				row += '"' + arrData[i].Dealer.substring(5) + '","' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ZZORDERTYPE + "-" + arrData[i].ORDERTYPE_DESC_EN +
+				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="'  + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ZZORDERTYPE + "-" + arrData[i].ORDERTYPE_DESC_EN +
 					'","' + arrData[i].ZMMSTA + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN +
 					'","' + arrData[i].Suffix +
 					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].ETAFrom +
