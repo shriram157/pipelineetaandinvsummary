@@ -143,18 +143,17 @@ module.exports = function (appContext) {
 						if (!customerSalesArea) {
 							return false;
 						}
+						var filtered = false;
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
 							if (customerSalesArea.results[i].SalesOffice === bpZone) {
+								filtered = true;
 								if (customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10" &&
 										customerSalesArea.results[i].SalesGroup != "T99" && customerSalesArea.results[i].Customer !== "2400500000") {
-									// if (customerSalesArea.results[i].Customer !== "2400500000") {
-										resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
-									// }
+									resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
 								}
-								return true;
 							}
 						}
-						return false;
+						return filtered;
 					});
 				}
 				if (userType === "National") {
