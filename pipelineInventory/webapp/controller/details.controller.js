@@ -8,7 +8,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (BaseController, ResourceModel, JSONModel, Filter, History, MessageBox) {
 	"use strict";
-	var _thatDT, clicks, num, numpre, sSelectedLocale,Division,DivUser;
+	var _thatDT, clicks, num, numpre, sSelectedLocale,Division,DivUser, localLang;
 	return BaseController.extend("pipelineInventory.controller.details", {
 		onInit: function () {
 			_thatDT = this;
@@ -31,6 +31,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatDT.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
+				localLang = "F";
 			} else {
 				_thatDT.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
@@ -38,6 +39,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatDT.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
+				localLang = "E";
 			}
 
 			var sLocation = window.location.host;

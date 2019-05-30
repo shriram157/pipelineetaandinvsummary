@@ -148,7 +148,8 @@ sap.ui.define([
 				//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '2400042193'&$format=json
 				var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq ' " + DivUser +
 					" ' and Dealer eq '" + _thatCH.Dealer +
-					"'and LANGUAGE eq '"+localLang+"' &$format=json";
+					"' &$format=json";
+					//'and LANGUAGE eq '"+localLang+"
 				$.ajax({
 					dataType: "json",
 					url: url,
