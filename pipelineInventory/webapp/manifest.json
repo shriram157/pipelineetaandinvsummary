@@ -99,6 +99,9 @@
 			}
 		},
 		"resources": {
+			"js": [{
+				"uri": "utils/fabIcons.js"
+			}],
 			"css": [{
 				"uri": "css/style.css"
 			}]
@@ -161,8 +164,7 @@
 				"name": "changeHistory",
 				"pattern": "changeHistory/{SelectedDealer}",
 				"target": "changeHistory"
-			},
-			{
+			}, {
 				"name": "changeHistory2",
 				"pattern": "changeHistory",
 				"target": "changeHistory2"

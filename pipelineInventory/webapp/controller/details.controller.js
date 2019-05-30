@@ -298,11 +298,11 @@ sap.ui.define([
 					JSONModel.setData(ModelArray);
 					_thatDT.setModel(JSONModel, JSONModelName);
 				}
-				removeDuplicateValues("MODEL_DESC_EN", new sap.ui.model.json.JSONModel(), "FilterModelJSON");
-				removeDuplicateValues("SUFFIX_DESC_EN", new sap.ui.model.json.JSONModel(), "FilterSuffixJSON");
+				removeDuplicateValues("Model", new sap.ui.model.json.JSONModel(), "FilterModelJSON");
+				removeDuplicateValues("Suffix", new sap.ui.model.json.JSONModel(), "FilterSuffixJSON");
 				removeDuplicateValues("ZZORDERTYPE", new sap.ui.model.json.JSONModel(), "FilterOrderTypeJSON");
 				removeDuplicateValues("ZMMSTA", new sap.ui.model.json.JSONModel(), "FilterStatusJSON");
-				removeDuplicateValues("EXTCOL_DESC_EN", new sap.ui.model.json.JSONModel(), "FilterColourJSON");
+				removeDuplicateValues("ExteriorColorCode", new sap.ui.model.json.JSONModel(), "FilterColourJSON");
 				removeDuplicateValues("ETAFrom", new sap.ui.model.json.JSONModel(), "FilterETAFromJSON");
 				removeDuplicateValues("ETATo", new sap.ui.model.json.JSONModel(), "FilterETAToJSON");
 

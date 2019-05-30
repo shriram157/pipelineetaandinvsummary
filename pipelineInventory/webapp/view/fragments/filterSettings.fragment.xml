@@ -1,56 +1,56 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
 	<ViewSettingsDialog confirm="handleSettingsConfirm">
 		<sortItems>
-			<ViewSettingsItem text="Order Number" key="ZZDLR_REF_NO" selected="true"/>
-			<ViewSettingsItem text="Order Type" key="ZZORDERTYPE"/>
-			<ViewSettingsItem text="Status" key="ZMMSTA"/>
-			<ViewSettingsItem text="VTN" key="ZZVTN"/>
-			<ViewSettingsItem text="VIN" key="VHVIN"/>
-			<ViewSettingsItem text="Model" key="MODEL_DESC_EN"/>
-			<ViewSettingsItem text="Suffix" key="SUFFIX_DESC_EN"/>
-			<ViewSettingsItem text="Colour" key="EXTCOL_DESC_EN"/>
+			<ViewSettingsItem text="{i18n>OrderNumber}" key="ZZDLR_REF_NO" selected="true"/>
+			<ViewSettingsItem text="{i18n>OrderType}" key="ZZORDERTYPE"/>
+			<ViewSettingsItem text="{i18n>Status}" key="ZMMSTA"/>
+			<ViewSettingsItem text="{i18n>VTN}" key="ZZVTN"/>
+			<ViewSettingsItem text="{i18n>VIN}" key="VHVIN"/>
+			<ViewSettingsItem text="{i18n>Model}" key="Model"/>
+			<ViewSettingsItem text="{i18n>Suffix}" key="Suffix"/>
+			<ViewSettingsItem text="{i18n>Colour}" key="Colour"/>
 			<!--<ViewSettingsItem text="ETA From" key="ETATo"/>-->
 			<!--<ViewSettingsItem text="ETA To" key="ETAFrom"/>-->
 		</sortItems>
 		<filterItems>
-			<ViewSettingsFilterItem text="Order Number" key="ZZDLR_REF_NO" multiSelect="true" items="{VehicleDetailsJSON>/results}">
+			<ViewSettingsFilterItem text="{i18n>OrderNumber}" key="ZZDLR_REF_NO" multiSelect="true" items="{VehicleDetailsJSON>/results}">
 				<items>
 					<ViewSettingsItem text="{VehicleDetailsJSON>ZZDLR_REF_NO}" key="ZZDLR_REF_NO"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="Order Type" key="ZZORDERTYPE" multiSelect="true" items="{FilterOrderTypeJSON>/}">
+			<ViewSettingsFilterItem text="{i18n>OrderType}" key="ZZORDERTYPE" multiSelect="true" items="{FilterOrderTypeJSON>/}">
 				<items>
 					<ViewSettingsItem text="{FilterOrderTypeJSON>ZZORDERTYPE}" key="ZZORDERTYPE"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="Status" key="ZMMSTA" multiSelect="true" items="{FilterStatusJSON>/}">
+			<ViewSettingsFilterItem text="{i18n>Status}" key="ZMMSTA" multiSelect="true" items="{FilterStatusJSON>/}">
 				<items>
 					<ViewSettingsItem text="{FilterStatusJSON>ZMMSTA}" key="ZMMSTA"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="VTN" key="ZZVTN" multiSelect="true" items="{VehicleDetailsJSON>/results}">
+			<ViewSettingsFilterItem text="{i18n>VTN}" key="ZZVTN" multiSelect="true" items="{VehicleDetailsJSON>/results}">
 				<items>
 					<ViewSettingsItem text="{VehicleDetailsJSON>ZZVTN}" key="ZZVTN"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="VIN" key="VHVIN" multiSelect="true" items="{VehicleDetailsJSON>/results}">
+			<ViewSettingsFilterItem text="{i18n>VIN}" key="VHVIN" multiSelect="true" items="{VehicleDetailsJSON>/results}">
 				<items>
 					<ViewSettingsItem text="{VehicleDetailsJSON>VHVIN}" key="VHVIN"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="Model" key="MODEL_DESC_EN" multiSelect="true" items="{FilterModelJSON>/}">
+			<ViewSettingsFilterItem text="{i18n>Model}" key="Model" multiSelect="true" items="{FilterModelJSON>/}">
 				<items>
-					<ViewSettingsItem text="{FilterModelJSON>MODEL_DESC_EN}" key="MODEL_DESC_EN"/>
+					<ViewSettingsItem text="{FilterModelJSON>Model}" key="Model"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="Suffix" key="SUFFIX_DESC_EN" multiSelect="true" items="{FilterSuffixJSON>/}">
+			<ViewSettingsFilterItem text="{i18n>Suffix}" key="Suffix" multiSelect="true" items="{FilterSuffixJSON>/}">
 				<items>
-					<ViewSettingsItem text="{FilterSuffixJSON>SUFFIX_DESC_EN}" key="SUFFIX_DESC_EN"/>
+					<ViewSettingsItem text="{FilterSuffixJSON>Suffix}" key="Suffix"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="Colour" key="EXTCOL_DESC_EN" multiSelect="true" items="{FilterColourJSON>/}">
+			<ViewSettingsFilterItem text="{i18n>Colour}" key="Colour" multiSelect="true" items="{FilterColourJSON>/}">
 				<items>
-					<ViewSettingsItem text="{FilterColourJSON>EXTCOL_DESC_EN}" key="EXTCOL_DESC_EN"/>
+					<ViewSettingsItem text="{FilterColourJSON>ExteriorColorCode}" key="Colour"/>
 				</items>
 			</ViewSettingsFilterItem>
 			<!--<ViewSettingsFilterItem text="ETA From" key="ETAFrom" multiSelect="true" items="{FilterETAFromJSON>/}">-->
