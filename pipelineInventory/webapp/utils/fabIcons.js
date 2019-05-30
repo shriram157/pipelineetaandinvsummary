@@ -46,5 +46,8 @@ if (isLanguageSent) {
 if (isLanguageSent == 'fr') {
  var currentText = document.getElementById('oTitleText');
 	 currentText.text = "Arrivée prévue sur la chaîne d'approv. et sommaire des stocks";
- 
+}
+else{
+	var currentText = document.getElementById('oTitleText');
+currentText.text = "Pipeline ETA & Inventory Summary";	
 }
