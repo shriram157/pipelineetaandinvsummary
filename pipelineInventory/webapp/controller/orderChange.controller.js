@@ -308,6 +308,7 @@ sap.ui.define([
 								_thatOC.oVehicleDetailsJSON.getData().modelData.push({
 									"Model": oData.d.results[i].Model,
 									"ENModelDesc": oData.d.results[i].ENModelDesc,
+									"FRModelDesc": oData.d.results[i].FRModelDesc,
 									"localLang": localLang
 								});
 								_thatOC.oVehicleDetailsJSON.updateBindings(true);
@@ -472,6 +473,7 @@ sap.ui.define([
 							_thatOC.oVehicleDetailsJSON.getData().colorData.push({
 								"ExteriorColorCode": item.ExteriorColorCode,
 								"MarketingDescriptionEXTColorEN": item.MarketingDescriptionEXTColorEN,
+								"MarketingDescriptionEXTColorFR": item.MarketingDescriptionEXTColorFR,
 								"localLang": localLang
 							});
 						});
