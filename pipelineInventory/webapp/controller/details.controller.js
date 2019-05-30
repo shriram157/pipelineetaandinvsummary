@@ -242,7 +242,7 @@ sap.ui.define([
 			//debugger;
 			var sOperator;
 			jQuery.each(mParams.filterItems, function (i, oItem) {
-				sOperator = "Contains";
+				sOperator = "StartsWith";
 				//console.log(that.oTable.getBinding().oList);
 				var sPath2 = oItem.getKey();
 				var sValue1 = oItem.getText();
