@@ -6,7 +6,7 @@ sap.ui.define([
 	'sap/ui/model/resource/ResourceModel',
 ], function (BaseController, History, JSONModel, ResourceModel) {
 	"use strict";
-	var _thatOC, sSelectedLocale, Division;
+	var _thatOC, sSelectedLocale, Division, localLang;
 	return BaseController.extend("pipelineInventory.controller.orderChange", {
 
 		onInit: function () {
@@ -35,6 +35,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatOC.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
+				localLang = "F";
 			} else {
 				_thatOC.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
@@ -42,6 +43,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatOC.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
+				localLang = "E";
 			}
 
 			var sLocation = window.location.host;
@@ -305,7 +307,8 @@ sap.ui.define([
 							if (b == _thatOC.oVehicleDetailsJSON.getData().modelData.length) {
 								_thatOC.oVehicleDetailsJSON.getData().modelData.push({
 									"Model": oData.d.results[i].Model,
-									"ENModelDesc": oData.d.results[i].ENModelDesc
+									"ENModelDesc": oData.d.results[i].ENModelDesc,
+									"localLang": localLang
 								});
 								_thatOC.oVehicleDetailsJSON.updateBindings(true);
 							}
@@ -336,16 +339,14 @@ sap.ui.define([
 			} else {
 				_thatOC.Model = oModel.getSelectedKey();
 			}
-			if(!_thatOC.Model.split("-")[0]){
+			if (!_thatOC.Model.split("-")[0]) {
 				_thatOC.Model = _thatOC.Model;
-			}
-			else{
+			} else {
 				_thatOC.Model = _thatOC.Model.split("-")[0];
 			}
-			if(!oSuffixValue.split("-")[0]){
+			if (!oSuffixValue.split("-")[0]) {
 				oSuffixValue = oSuffixValue;
-			}
-			else{
+			} else {
 				oSuffixValue = oSuffixValue.split("-")[0];
 			}
 			_thatOC.oVehicleDetailsJSON.getData().suffixData = [];
@@ -357,12 +358,26 @@ sap.ui.define([
 				type: "GET",
 				success: function (oData) {
 					if (oData.d.results.length > 0) {
-						var selectedKey = _thatOC.oVehicleDetailsJSON.getData().suffixData.filter(function(val){
-							if(val.suffix == oSuffixValue)
-							return val.suffix;
+						console.log("suffixData", oData.d.results);
+						var selectedKey = _thatOC.oVehicleDetailsJSON.getData().suffixData.filter(function (val) {
+							if (val.suffix == oSuffixValue)
+								return val.suffix;
 						});
 						_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
-						_thatOC.oVehicleDetailsJSON.getData().suffixData = oData.d.results;
+						// _thatOC.oVehicleDetailsJSON.getData().suffixData = oData.d.results;
+						$.each(oData.d.results, function (i, item) {
+							_thatOC.oGlobalJSONModel.getData().suffixData.push({
+								"Model": item.Model,
+								"Modelyear": item.Model,
+								"Suffix": item.Suffix,
+								"int_c": item.int_c,
+								"SuffixDescriptionEN": item.SuffixDescriptionEN,
+								"SuffixDescriptionFR": item.SuffixDescriptionFR,
+								"mrktg_int_desc_en": item.mrktg_int_desc_en,
+								"mrktg_int_desc_fr": item.mrktg_int_desc_fr,
+								"localLang": localLang
+							});
+						});
 						sap.ui.core.BusyIndicator.hide();
 						_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					} else {
@@ -382,7 +397,7 @@ sap.ui.define([
 									_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.Suffix);
 								} else {
 									// if (!oSuffixValue.split("-")[0]) {
-										_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue);
+									_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue);
 									// } else {
 									// 	_thatOC.byId("ID_suffixSelect").setValue(oSuffixValue.split("-")[0]);
 									// }
@@ -400,7 +415,7 @@ sap.ui.define([
 									} else {
 										// console.log("oSuffixValue.split(" - ")[0]", oSuffixValue.split("-")[0]);
 										// if (!oSuffixValue.split("-")[0]) {
-											_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue);
+										_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue);
 										// }
 										// else {
 										// 	_thatOC.byId("ID_suffixSelect").setValue(oSuffixValue.split("-")[0]);
@@ -430,16 +445,14 @@ sap.ui.define([
 			var series = _thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].TCISeries;
 
 			_thatOC.oVehicleDetailsJSON.getData().colorData = [];
-			if(!Suffix.split("-")[0]){
+			if (!Suffix.split("-")[0]) {
 				Suffix = Suffix;
-			}
-			else{
+			} else {
 				Suffix = Suffix.split("-")[0];
 			}
-			if(!Model.split("-")[0]){
+			if (!Model.split("-")[0]) {
 				Model = Model;
-			}
-			else{
+			} else {
 				Model = Model.split("-")[0];
 			}
 			$.ajax({
@@ -451,15 +464,15 @@ sap.ui.define([
 					console.log("suffix data", oData.d.results);
 					if (oData.d.results.length > 0) {
 						$.each(oData.d.results, function (i, item) {
-							if(!ColorVal.split("-")[0] && ColorVal ==  item.ExteriorColorCode){
-								_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode+"-"+item.MarketingDescriptionEXTColorEN);
-							}
-							else if(ColorVal.split("-")[0] && ColorVal.split("-")[0] ==  item.ExteriorColorCode){
-								_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode+"-"+item.MarketingDescriptionEXTColorEN);
+							if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
+								_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+							} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
+								_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
 							}
 							_thatOC.oVehicleDetailsJSON.getData().colorData.push({
 								"ExteriorColorCode": item.ExteriorColorCode,
-								"MarketingDescriptionEXTColorEN": item.MarketingDescriptionEXTColorEN
+								"MarketingDescriptionEXTColorEN": item.MarketingDescriptionEXTColorEN,
+								"localLang": localLang
 							});
 						});
 

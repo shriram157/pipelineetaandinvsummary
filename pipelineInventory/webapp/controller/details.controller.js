@@ -177,7 +177,8 @@ sap.ui.define([
 					_thatDT.routedData.series + "'and Suffix eq '" + _thatDT.routedData.suffix + "'and ExteriorColorCode eq '" + _thatDT.routedData.ExteriorColorCode +
 					"'and APX eq '" + _thatDT.routedData.APXValue + "'and ETA eq '" + _thatDT.routedData.ETADate + "'and Dealer eq '" + _thatDT.routedData
 					.Dealer +
-					"'and UserType eq '" + _thatDT.UserType + "' &$format=json";
+					"'and UserType eq '" + _thatDT.UserType + "' and LANGUAGE eq '"+localLang+"' &$format=json";
+					console.log("page2 url",url);
 				$.ajax({
 					dataType: "json",
 					url: url,

@@ -10,7 +10,7 @@ sap.ui.define([
 	"use strict";
 
 	var Division, DivUser, _that, filteredData, SelectedDealer, seriesdata = [],
-		sSelectedLocale, scopesData, DivAttribute;
+		sSelectedLocale, scopesData, DivAttribute, URILang;
 	return BaseController.extend("pipelineInventory.controller.master", {
 		/*Initialization of the page data*/
 		onInit: function () {
@@ -21,7 +21,7 @@ sap.ui.define([
 			});
 			_that.getView().setModel(_oViewModel, "LocalOCModel");
 			var fleetMatrix = new sap.ui.model.json.JSONModel({
-				"FleetColnIndex":""
+				"FleetColnIndex": ""
 			});
 			sap.ui.getCore().setModel(fleetMatrix, "fleetMatrixModel");
 			_that.errorFlag = false;
@@ -43,6 +43,7 @@ sap.ui.define([
 			}
 			if (sSelectedLocale == "fr") {
 				this.localLang = "F";
+				URILang = "F";
 				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
@@ -50,6 +51,7 @@ sap.ui.define([
 				this.getView().setModel(_that.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
 			} else {
+				URILang = "E";
 				this.localLang = "E";
 				_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
@@ -401,14 +403,19 @@ sap.ui.define([
 							if (oModelData.d.results[i] != undefined) {
 								_that.oGlobalJSONModel.getData().seriesData.push({
 									"ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
-									"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN
+									"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN,
+									"localLang": URILang,
+									"TCISeriesDescriptionFR": oModelData.d.results[i].TCISeriesDescriptionFR
 								});
 							}
 						}
 						_that.oGlobalJSONModel.getData().seriesData.unshift({
 							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
-							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
+							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+							"localLang": "",
+							"TCISeriesDescriptionFR": ""
 						});
+						console.log("series", _that.oGlobalJSONModel);
 						_that.oGlobalJSONModel.updateBindings(true);
 
 					} else {
@@ -767,7 +774,21 @@ sap.ui.define([
 				type: "GET",
 				success: function (oData) {
 					if (oData.d.results.length > 0) {
-						_that.oGlobalJSONModel.getData().suffixData = oData.d.results;
+						// _that.oGlobalJSONModel.getData().suffixData = oData.d.results;
+						$.each(oData.d.results, function (i, item) {
+							_that.oGlobalJSONModel.getData().suffixData.push({
+								"Model": item.Model,
+								"Modelyear": item.Model,
+								"Suffix": item.Suffix,
+								"int_c": item.int_c,
+								"SuffixDescriptionEN": item.SuffixDescriptionEN,
+								"SuffixDescriptionFR": item.SuffixDescriptionFR,
+								"mrktg_int_desc_en": item.mrktg_int_desc_en,
+								"mrktg_int_desc_fr": item.mrktg_int_desc_fr,
+								"localLang": URILang
+							});
+						});
+						console.log("_that.oGlobalJSONModel.getData().suffixData", _that.oGlobalJSONModel.getData().suffixData);
 						sap.ui.core.BusyIndicator.hide();
 						_that.oGlobalJSONModel.getData().suffixData.unshift({
 							"Model": "",
@@ -777,7 +798,8 @@ sap.ui.define([
 							"SuffixDescriptionEN": "",
 							"SuffixDescriptionFR": "",
 							"mrktg_int_desc_en": "",
-							"mrktg_int_desc_fr": ""
+							"mrktg_int_desc_fr": "",
+							"localLang": ""
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
 					} else {
@@ -812,18 +834,26 @@ sap.ui.define([
 								_that.oGlobalJSONModel.getData().suffixData.push({
 									"Suffix": _that.temp[n].Suffix,
 									"SuffixDescriptionEN": _that.temp[n].SuffixDescriptionEN,
+									"SuffixDescriptionFE": _that.temp[n].SuffixDescriptionFR,
 									"MarktgIntDescEN": _that.temp1[m].mrktg_int_desc_en,
-									"intColorCode": _that.temp1[m].int_c
+									"MarktgIntDescFR": _that.temp1[m].mrktg_int_desc_fr,
+									"intColorCode": _that.temp1[m].int_c,
+									"localLang": URILang
 								});
 								sap.ui.core.BusyIndicator.hide();
 								_that.oGlobalJSONModel.updateBindings(true);
 							}
 						}
+						console.log("_that.oGlobalJSONModel.getData().suffixData2", _that.oGlobalJSONModel.getData().suffixData);
 						// var b = 0;
 						_that.oGlobalJSONModel.getData().suffixData.unshift({
 							"Suffix": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"SuffixDescriptionEN": "",
-							"MarktgIntDescEN": ""
+							"SuffixDescriptionFE": "",
+							"MarktgIntDescEN": "",
+							"MarktgIntDescFR": "",
+							"intColorCode": "",
+							"localLang": ""
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
 					} else {
@@ -858,13 +888,17 @@ sap.ui.define([
 						$.each(oData.d.results, function (i, item) {
 							_that.oGlobalJSONModel.getData().colorData.push({
 								"ExteriorColorCode": item.ExteriorColorCode,
-								"MarketingDescriptionEXTColorEN": item.MarketingDescriptionEXTColorEN
+								"MarketingDescriptionEXTColorEN": item.MarketingDescriptionEXTColorEN,
+								"MarketingDescriptionEXTColorFR": item.MarketingDescriptionEXTColorFR,
+								"localLang": URILang
 							});
 						});
-
+						console.log("_that.oGlobalJSONModel.getData().colorData",_that.oGlobalJSONModel.getData().colorData);
 						_that.oGlobalJSONModel.getData().colorData.unshift({
 							"ExteriorColorCode": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
-							"MarketingDescriptionEXTColorEN": ""
+							"MarketingDescriptionEXTColorEN": "",
+							"MarketingDescriptionEXTColorFR": "",
+							"localLang": ""
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
 						sap.ui.core.BusyIndicator.hide();
@@ -916,7 +950,9 @@ sap.ui.define([
 								if (b == _that.oGlobalJSONModel.getData().modelData.length) {
 									_that.oGlobalJSONModel.getData().modelData.push({
 										"Model": oData.d.results[i].Model,
-										"ENModelDesc": oData.d.results[i].ENModelDesc
+										"ENModelDesc": oData.d.results[i].ENModelDesc,
+										"FRModelDesc": oData.d.results[i].FRModelDesc,
+										"localLang": URILang
 									});
 									_that.oGlobalJSONModel.updateBindings(true);
 								}
@@ -925,7 +961,9 @@ sap.ui.define([
 							sap.ui.core.BusyIndicator.hide();
 							_that.oGlobalJSONModel.getData().modelData.unshift({
 								"Model": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
-								"ENModelDesc": ""
+								"ENModelDesc": "",
+								"FRModelDesc": "",
+								"localLang": ""
 							});
 
 						} else {
@@ -1040,14 +1078,18 @@ sap.ui.define([
 							if (oModelData.d.results[i] != undefined) {
 								_that.oGlobalJSONModel.getData().seriesData.push({
 									"ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
-									"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN
+									"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN,
+									"localLang": URILang,
+									"TCISeriesDescriptionFR": oModelData.d.results[i].TCISeriesDescriptionFR
 								});
 							}
 
 						}
 						_that.oGlobalJSONModel.getData().seriesData.unshift({
 							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
-							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
+							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+							"localLang": "",
+							"TCISeriesDescriptionFR": ""
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
 						//_that.oGlobalJSONModel.getData().seriesData.push(oModelData.d.results);
@@ -1131,7 +1173,7 @@ sap.ui.define([
 					ColumnIndex = "15";
 				}
 			}
-			sap.ui.getCore().getModel( "fleetMatrixModel").setProperty("/FleetColnIndex",ColumnIndex);
+			sap.ui.getCore().getModel("fleetMatrixModel").setProperty("/FleetColnIndex", ColumnIndex);
 			_that.RowIndex = (Number(oTableClick.getParameters().rowIndex) + 1).toString();
 			var obj_first = {};
 			obj_first.MatrixVal = "A" + _that.RowIndex + ColumnIndex;
@@ -1152,7 +1194,7 @@ sap.ui.define([
 					ColumnIndex = "15";
 				}
 			}
-			sap.ui.getCore().getModel( "fleetMatrixModel").setProperty("/FleetColnIndex",ColumnIndex);
+			sap.ui.getCore().getModel("fleetMatrixModel").setProperty("/FleetColnIndex", ColumnIndex);
 			_that.RowIndex = (Number(oTableClick.getParameters().rowIndex) + 1).toString();
 			var obj_first = {};
 			obj_first.MatrixVal = "B" + _that.RowIndex + ColumnIndex;
@@ -1173,7 +1215,7 @@ sap.ui.define([
 					ColumnIndex = "15";
 				}
 			}
-			sap.ui.getCore().getModel( "fleetMatrixModel").setProperty("/FleetColnIndex",ColumnIndex);
+			sap.ui.getCore().getModel("fleetMatrixModel").setProperty("/FleetColnIndex", ColumnIndex);
 			_that.RowIndex = (Number(oTableClick.getParameters().rowIndex) + 1).toString();
 			var obj_first = {};
 			obj_first.MatrixVal = "C" + _that.RowIndex + ColumnIndex;

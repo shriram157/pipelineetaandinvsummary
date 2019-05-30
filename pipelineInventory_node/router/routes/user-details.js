@@ -134,29 +134,51 @@ module.exports = function (appContext) {
 				var bpResults = bpResBody.d.results;
 
 				// Filter BP results by sales area for zone user
+				// if (userType === "Zone") {
+				// 	bpResults = bpResults.filter(o => {
+				// 		if (!o.to_Customer) {
+				// 			return false;
+				// 		}
+				// 		var customerSalesArea = o.to_Customer.to_CustomerSalesArea;
+				// 		if (!customerSalesArea) {
+				// 			return false;
+				// 		}
+				// 		for (var i = 0; i < customerSalesArea.results.length; i++) {
+				// 			if (customerSalesArea.results[i].SalesOffice === bpZone) {
+				// 				if (customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10" &&
+				// 						customerSalesArea.results[i].SalesGroup != "T99" && customerSalesArea.results[i].Customer !== "2400500000") {
+				// 					// if (customerSalesArea.results[i].Customer !== "2400500000") {
+				// 						resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
+				// 					// }
+				// 				}
+				// 				return true;
+				// 			}
+				// 		}
+				// 		return false;
+				// 	});
+				// }
 				if (userType === "Zone") {
-					bpResults = bpResults.filter(o => {
-						if (!o.to_Customer) {
-							return false;
-						}
-						var customerSalesArea = o.to_Customer.to_CustomerSalesArea;
-						if (!customerSalesArea) {
-							return false;
-						}
-						for (var i = 0; i < customerSalesArea.results.length; i++) {
-							if (customerSalesArea.results[i].SalesOffice === bpZone) {
-								if (customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10" &&
-										customerSalesArea.results[i].SalesGroup != "T99" && customerSalesArea.results[i].Customer !== "2400500000") {
-									// if (customerSalesArea.results[i].Customer !== "2400500000") {
-										resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
-									// }
-								}
-								return true;
-							}
-						}
-						return false;
-					});
-				}
+                    bpResults = bpResults.filter(o => {
+                        if (!o.to_Customer) {
+                            return false;
+                        }
+                        var customerSalesArea = o.to_Customer.to_CustomerSalesArea;
+                        if (!customerSalesArea) {
+                            return false;
+                        }
+                        var filtered = false;
+                        for (var i = 0; i < customerSalesArea.results.length; i++) {
+                            if (customerSalesArea.results[i].SalesOffice === bpZone) {
+                                filtered = true;
+                                if (customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10" &&
+                                        customerSalesArea.results[i].SalesGroup != "T99" && customerSalesArea.results[i].Customer !== "2400500000") {
+                                    resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
+                                }
+                            }
+                        }
+                        return filtered;
+                    });
+                }
 				if (userType === "National") {
 					bpResults = bpResults.filter(o => {
 						if (!o.to_Customer) {
@@ -166,6 +188,7 @@ module.exports = function (appContext) {
 						if (!customerSalesArea) {
 							return false;
 						}
+						var filtered = false;
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
 							if ((customerSalesArea.results[i].SalesOffice === "1000" || customerSalesArea.results[i].SalesOffice === "2000" ||
 									customerSalesArea.results[i].SalesOffice === "3000" || customerSalesArea.results[i].SalesOffice === "4000" ||
@@ -179,10 +202,11 @@ module.exports = function (appContext) {
 								resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
 								// }
 							}
-							return true;
+							// return true;
 							// }
 						}
-						return false;
+						// return false;
+						return filtered;
 					});
 				}
 

@@ -58,7 +58,7 @@
 								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/VHVIN}"/>
 								<Label text="{i18n>ETA}"/>
 								<Text
-									text="From {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} To {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
+									text="{i18n>From} {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} {i18n>TO} {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
 								<Label text="{i18n>VehicleDeliveredDate}"/>
 								<Text text="{path:'VehicleDetailsJSON>/selectedCustomerData/DeliveryDate', formatter: '.formatDate'}"/>
 								<core:Title text="{i18n>AdditionalInformation}"/>

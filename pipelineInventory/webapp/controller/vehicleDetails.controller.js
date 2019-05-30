@@ -7,7 +7,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (BaseController, History, JSONModel, ResourceModel, MessageBox) {
 	"use strict";
-	var _thatVD, sSelectedLocale, Division, SelectedDNCVal;
+	var _thatVD, sSelectedLocale, Division, SelectedDNCVal, localLang;
 	return BaseController.extend("pipelineInventory.controller.vehicleDetails", {
 		onInit: function () {
 			_thatVD = this;
@@ -30,6 +30,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatVD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
+				localLang="F";
 			} else {
 				_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
@@ -37,6 +38,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatVD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
+				localLang:"E";
 			}
 
 			var sLocation = window.location.host;
@@ -616,7 +618,7 @@ sap.ui.define([
 					if (oResponse.Error != "") {
 						sap.m.MessageBox.error(oResponse.Error);
 					} else {
-						sap.m.MessageBox.success("Vehicle succesfully updated");
+						sap.m.MessageBox.success(_thatVD.oI18nModel.getResourceBundle().getText("VehicleUpdated"));
 					}
 				}, _thatVD),
 				error: function (oError) {

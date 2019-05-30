@@ -51,7 +51,7 @@
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZMMSTA}"/>
 									<Label text="{i18n>ETA}"/>
 									<Text
-										text="From {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} To {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
+										text="{i18n>From} {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} {i18n>TO} {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
 									<Label text="{i18n>VTN}"/>
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZVTN}"/>
 									<core:Title text="{i18n>NewVehicleConfig}"/>
@@ -62,17 +62,18 @@
 									
 									<Label text="{i18n>NewModel}" required="true"/>
 									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_modelSelect" forceSelection="true" items="{VehicleDetailsJSON>/modelData}" change="onModelSelectionChange">
-										<core:Item key="{VehicleDetailsJSON>Model}" text="{VehicleDetailsJSON>Model} - {VehicleDetailsJSON>ENModelDesc}"/>
+										<core:Item key="{VehicleDetailsJSON>Model}" text="{VehicleDetailsJSON>Model} - {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>ENModelDesc}:${VehicleDetailsJSON>FRModelDesc}}"/>
 									</Select>
 									<Label text="{i18n>NewSuffix}" required="true"/>
 									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_suffixSelect" forceSelection="true" items="{VehicleDetailsJSON>/suffixData}" change="onSuffixChange">
 										<core:Item key="{VehicleDetailsJSON>Suffix}"
-											text="{VehicleDetailsJSON>Suffix} - {VehicleDetailsJSON>SuffixDescriptionEN} / {VehicleDetailsJSON>mrktg_int_desc_en}"/>
+											text="{VehicleDetailsJSON>Suffix} - {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>SuffixDescriptionEN}:${VehicleDetailsJSON>SuffixDescriptionFR}} / {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>mrktg_int_desc_en}:${VehicleDetailsJSON>mrktg_int_desc_fr}}"/>
+											<!--{=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>ENModelDesc}:${VehicleDetailsJSON>FRModelDesc}}-->
 									</Select>
 									<Label text="{i18n>NewColour}" required="true"/>
 									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_ExteriorColorSelect" forceSelection="true" items="{VehicleDetailsJSON>/colorData}">
 										<core:Item key="{VehicleDetailsJSON>ExteriorColorCode}"
-											text="{VehicleDetailsJSON>ExteriorColorCode} - {VehicleDetailsJSON>MarketingDescriptionEXTColorEN}"/>
+											text="{VehicleDetailsJSON>ExteriorColorCode} - {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>MarketingDescriptionEXTColorEN}:${VehicleDetailsJSON>MarketingDescriptionEXTColorEN}}"/>
 									</Select>
 									<Label text="{i18n>NewAPX}" required="true"/>
 									<Select enabled="{LocalOCModel>/dropdownEnabled}" forceSelection="false" selectedKey="" id="APXrequired" items="{ path: 'VehicleDetailsJSON>/selectedVehicleData/0/newAPXValues'}">
