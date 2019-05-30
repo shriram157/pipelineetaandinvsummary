@@ -158,27 +158,27 @@ module.exports = function (appContext) {
 				// 	});
 				// }
 				if (userType === "Zone") {
-                    bpResults = bpResults.filter(o => {
-                        if (!o.to_Customer) {
-                            return false;
-                        }
-                        var customerSalesArea = o.to_Customer.to_CustomerSalesArea;
-                        if (!customerSalesArea) {
-                            return false;
-                        }
-                        var filtered = false;
-                        for (var i = 0; i < customerSalesArea.results.length; i++) {
-                            if (customerSalesArea.results[i].SalesOffice === bpZone) {
-                                filtered = true;
-                                if (customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10" &&
-                                        customerSalesArea.results[i].SalesGroup != "T99" && customerSalesArea.results[i].Customer !== "2400500000") {
-                                    resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
-                                }
-                            }
-                        }
-                        return filtered;
-                    });
-                }
+					bpResults = bpResults.filter(o => {
+						if (!o.to_Customer) {
+							return false;
+						}
+						var customerSalesArea = o.to_Customer.to_CustomerSalesArea;
+						if (!customerSalesArea) {
+							return false;
+						}
+						var filtered = false;
+						for (var i = 0; i < customerSalesArea.results.length; i++) {
+							if (customerSalesArea.results[i].SalesOffice === bpZone) {
+								filtered = true;
+								if (customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10" &&
+										customerSalesArea.results[i].SalesGroup != "T99" && customerSalesArea.results[i].Customer !== "2400500000") {
+									resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
+								}
+							}
+						}
+						return filtered;
+					});
+				}
 				if (userType === "National") {
 					bpResults = bpResults.filter(o => {
 						if (!o.to_Customer) {
