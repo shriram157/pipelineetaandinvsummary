@@ -465,11 +465,21 @@ sap.ui.define([
 					console.log("suffix data", oData.d.results);
 					if (oData.d.results.length > 0) {
 						$.each(oData.d.results, function (i, item) {
-							if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
-								_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
-							} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
-								_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+							if (localLang = "F") {
+								if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
+									_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
+								} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
+									_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
+								}
+							} else if (localLang = "E") {
+								if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
+									_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+								} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
+									_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+								}
+
 							}
+
 							_thatOC.oVehicleDetailsJSON.getData().colorData.push({
 								"ExteriorColorCode": item.ExteriorColorCode,
 								"MarketingDescriptionEXTColorEN": item.MarketingDescriptionEXTColorEN,
