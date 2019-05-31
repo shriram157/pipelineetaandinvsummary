@@ -81,7 +81,7 @@ sap.ui.define([
 			}
 
 			_that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
-			_that.BusinessPartnerData.setSizeLimit(500);
+			_that.BusinessPartnerData.setSizeLimit(750);
 			_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 			// _that.getView().setModel("BusinessDataModel").setSizeLimit(500);
 			sap.ui.getCore().setModel(_that.BusinessPartnerData, "BusinessDataModel");
