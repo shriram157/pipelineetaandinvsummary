@@ -409,8 +409,16 @@ sap.ui.define([
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
 						//	_that.fetchSeries(oModelData.d.results);
+						if (SelectedDealer == undefined) {
+							var DealerVal = _that.getView().byId("ID_DealearPicker").getSelectedKey();
+							for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
+								if (DealerVal == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
+									SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
+								}
+							}
+						}
 						console.log("SelectedDealer", SelectedDealer);
-						var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
+						// var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
 						if (SelectedDealer !== "2400029000" || DealerVal !== "SelectedDealer") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
@@ -495,6 +503,73 @@ sap.ui.define([
 			/*Defect Number 10427 Code Start*/
 			_that.getView().byId("id_ETADate").setMinDate(new Date());
 			/*Defect Number 10427 Code End*/
+		},
+
+		getUpdatedSeries: function (SelectedDealer) {
+			_that.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
+			_that.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
+
+			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
+				"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
+			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser +	"' &$orderby=ProductHierarchy asc";
+
+			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq 'TOY' and zzzadddata2 eq 'X'&$orderby=SeriesSequenceNumber asc
+			//	var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + _that.ModelYear + "'";
+			$.ajax({
+				dataType: "json",
+				url: url,
+				type: "GET",
+				success: function (oModelData) {
+					sap.ui.core.BusyIndicator.hide();
+					_that.oGlobalJSONModel.getData().seriesData = [];
+					if (oModelData.d.results.length > 0) {
+						if (SelectedDealer == undefined) {
+							var DealerVal = _that.getView().byId("ID_DealearPicker").getSelectedKey();
+							for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
+								if (DealerVal == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
+									SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
+								}
+							}
+						}
+						// var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
+						if (SelectedDealer !== "2400029000" || DealerVal !== "SelectedDealer") {
+							$.each(oModelData.d.results, function (key, value) {
+								if (value.ModelSeriesNo == "L/C") {
+									delete oModelData.d.results[key];
+								}
+							});
+						}
+						console.log("SelectedDealer", SelectedDealer);
+						console.log("Series data", oModelData.d.results);
+						for (var i = 0; i < oModelData.d.results.length; i++) {
+							if (oModelData.d.results[i] != undefined) {
+								_that.oGlobalJSONModel.getData().seriesData.push({
+									"ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
+									"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN,
+									"localLang": URILang,
+									"TCISeriesDescriptionFR": oModelData.d.results[i].TCISeriesDescriptionFR
+								});
+							}
+						}
+						_that.oGlobalJSONModel.getData().seriesData.unshift({
+							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+							"localLang": "",
+							"TCISeriesDescriptionFR": ""
+						});
+						console.log("series", _that.oGlobalJSONModel);
+						_that.oGlobalJSONModel.updateBindings(true);
+
+					} else {
+						sap.ui.core.BusyIndicator.hide();
+					}
+				},
+				error: function (oError) {
+					sap.ui.core.BusyIndicator.hide();
+					_that.errorFlag = true;
+				}
+			});
+
 		},
 		onAfterRendering: function () {
 			/*Defect number 9293 code start*/
@@ -630,6 +705,7 @@ sap.ui.define([
 						SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
 					}
 				}
+				_that.getUpdatedSeries(SelectedDealer);
 			} else {
 				_that.getView().byId("id_BusinessPartnerName").setValue(oDealer.getParameters().selectedItem.getAdditionalText());
 			}
@@ -1072,7 +1148,7 @@ sap.ui.define([
 			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
 				"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
 			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser + "' &$orderby=ProductHierarchy asc";
-			console.log("Series:" + url)
+			console.log("Series:" + url);
 				//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq 'TOY' and zzzadddata2 eq 'X'&$orderby=SeriesSequenceNumber asc
 				//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + ModelYear + "'";
 			$.ajax({
@@ -1083,10 +1159,15 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
-						//_that.oGlobalJSONModel.getData().seriesData push to this. remove fetch series function
-						//_that.fetchSeries(oModelData.d.results);
-						console.log("SelectedDealer", SelectedDealer);
-						var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
+						if (SelectedDealer == undefined) {
+							var DealerVal = _that.getView().byId("ID_DealearPicker").getSelectedKey();
+							for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
+								if (DealerVal == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
+									SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
+								}
+							}
+						}
+						console.log("SelectedDealer:" + SelectedDealer);
 						if (SelectedDealer !== "2400029000" || SelectedDealer !== "2400049000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
