@@ -523,16 +523,16 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
-						if (SelectedDealer == undefined) {
-							var DealerVal = _that.getView().byId("ID_DealearPicker").getSelectedKey();
-							for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
-								if (DealerVal == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
-									SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
-								}
-							}
-						}
+						// if (SelectedDealer == undefined) {
+						// 	var DealerVal = _that.getView().byId("ID_DealearPicker").getSelectedKey();
+						// 	for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
+						// 		if (DealerVal == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
+						// 			SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
+						// 		}
+						// 	}
+						// }
 						// var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
-						if (SelectedDealer !== "2400029000" || DealerVal !== "SelectedDealer") {
+						if (SelectedDealer !== "2400029000" || SelectedDealer !== "2400049000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
 									delete oModelData.d.results[key];
