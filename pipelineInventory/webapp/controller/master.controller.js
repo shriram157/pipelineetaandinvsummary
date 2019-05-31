@@ -83,9 +83,9 @@ sap.ui.define([
 			_that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
 			_that.BusinessPartnerData.setSizeLimit(500);
 			_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
-			_that.getView().setModel("BusinessDataModel").setSizeLimit(500);
+			// _that.getView().setModel("BusinessDataModel").setSizeLimit(500);
 			sap.ui.getCore().setModel(_that.BusinessPartnerData, "BusinessDataModel");
-			sap.ui.getCore().setModel("BusinessDataModel").setSizeLimit(500);
+			// sap.ui.getCore().setModel("BusinessDataModel").setSizeLimit(500);
 
 			//Local Testing
 			var sLocation = window.location.host;
@@ -178,7 +178,7 @@ sap.ui.define([
 					_that.BusinessPartnerData.getData().DealerList = [];
 					_that.BusinessPartnerData.getData().SamlList = [];
 					_that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
-					// _that.BusinessPartnerData.setSizeLimit(userAttributes.attributes.length);
+					_that.BusinessPartnerData.setSizeLimit(350);
 					_that.BusinessPartnerData.getData().SamlList = userAttributes.samlAttributes;
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
 						_that.BusinessPartnerData.getData().DealerList = userAttributes.attributes;
