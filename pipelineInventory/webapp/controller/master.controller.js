@@ -100,7 +100,7 @@ sap.ui.define([
 					"BusinessPartnerKey": "",
 					"BusinessPartnerName": "Zone Stock",
 					"BusinessPartnerType": "",
-					"Division": "",
+					"BPDivision": "",
 					"SearchTerm2": ""
 				}, {
 					"Attribute": "01",
@@ -108,7 +108,7 @@ sap.ui.define([
 					"BusinessPartnerKey": "2400042193",
 					"BusinessPartnerName": "Bailey Toyota",
 					"BusinessPartnerType": "Z001",
-					"Division": "10",
+					"BPDivision": "10",
 					"SearchTerm2": "42193"
 				}, {
 					"Attribute": "01",
@@ -116,14 +116,30 @@ sap.ui.define([
 					"BusinessPartnerKey": "2400501002",
 					"BusinessPartnerName": "",
 					"BusinessPartnerType": "Z004",
-					"Division": "10",
+					"BPDivision": "10",
 					"SearchTerm2": "01002"
+				}, {
+					"Attribute": "01",
+					"BPDivision": "10",
+					"BusinessPartner": "01116",
+					"BusinessPartnerKey": "2400001116",
+					"BusinessPartnerName": "Regency Toyota (Vancouver)..",
+					"BusinessPartnerType": "Z001",
+					"SearchTerm2": "01116"
+				}, {
+					"Attribute": "01",
+					"BPDivision": "10",
+					"BusinessPartner": "42120",
+					"BusinessPartnerKey": "2400042120",
+					"BusinessPartnerName": "Don Valley North Toyota - Shoaib 2",
+					"BusinessPartnerType": "Z001",
+					"SearchTerm2": "42120"
 				}];
 
 				var samlAttributes = {
 					"Language": ["English"],
 					"UserType": ["Zone"],
-					"Zone": ["1"]
+					"Zone": ["3"]
 				};
 				_that.salesOffice = "1000";
 				_that.BusinessPartnerData.getData().DealerList = attributes;
@@ -222,7 +238,7 @@ sap.ui.define([
 							_that.BusinessPartnerData.getData().DealerList.unshift({
 								BusinessPartner: "-",
 								BusinessPartnerKey: "",
-								BusinessPartnerName: "Lexus Zone",
+								BusinessPartnerName: "Lexus",
 								BusinessPartnerType: "",
 								SearchTerm2: ""
 							});
@@ -393,8 +409,9 @@ sap.ui.define([
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
 						//	_that.fetchSeries(oModelData.d.results);
+						console.log("SelectedDealer", SelectedDealer);
 						var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
-						if (DealerVal !== "2400029000" || DealerVal !== "2400049000") {
+						if (SelectedDealer !== "2400029000" || DealerVal !== "SelectedDealer") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
 									delete oModelData.d.results[key];
@@ -547,8 +564,8 @@ sap.ui.define([
 					SelectedDealerKey = "Zone Stock";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone Total") {
 					SelectedDealerKey = "Zone Total";
-				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Lexus Zone") {
-					SelectedDealerKey = "Lexus Zone";
+				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Lexus") {
+					SelectedDealerKey = "Lexus";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Atlantic Zone") {
 					SelectedDealerKey = "Atlantic Zone";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Quebec Zone") {
@@ -595,7 +612,7 @@ sap.ui.define([
 					} else if (SelectedDealerKey == "Quebec Zone") {
 						_that.salesOffice = "4000";
 						_that.userType = "NZA";
-					} else if (SelectedDealerKey == "Lexus Zone") {
+					} else if (SelectedDealerKey == "Lexus") {
 						_that.salesOffice = "9000";
 						_that.userType = "NZA";
 					} else if (SelectedDealerType == "Z004") {
@@ -1068,8 +1085,9 @@ sap.ui.define([
 					if (oModelData.d.results.length > 0) {
 						//_that.oGlobalJSONModel.getData().seriesData push to this. remove fetch series function
 						//_that.fetchSeries(oModelData.d.results);
+						console.log("SelectedDealer", SelectedDealer);
 						var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
-						if (DealerVal !== "2400029000" || DealerVal !== "2400049000") {
+						if (SelectedDealer !== "2400029000" || SelectedDealer !== "2400049000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
 									delete oModelData.d.results[key];
@@ -1276,7 +1294,7 @@ sap.ui.define([
 		},
 
 		_oMasterRoute: function (oEvent) {
-			console.log("Event",oEvent);
+			console.log("Event", oEvent);
 			console.log("filteredData", filteredData);
 			_that.fetchCountsforTables(filteredData);
 			_that.getView().setBusy(false);

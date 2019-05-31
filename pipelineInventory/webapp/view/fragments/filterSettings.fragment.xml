@@ -2,15 +2,15 @@
 	<ViewSettingsDialog confirm="handleSettingsConfirm">
 		<sortItems>
 			<ViewSettingsItem text="{i18n>OrderNumber}" key="ZZDLR_REF_NO" selected="true"/>
-			<ViewSettingsItem text="{i18n>OrderType}" key="ZZORDERTYPE"/>
+			<ViewSettingsItem text="{i18n>OrderType}" key="ORDERTYPE_DESC_EN"/>
 			<ViewSettingsItem text="{i18n>Status}" key="ZMMSTA"/>
 			<ViewSettingsItem text="{i18n>VTN}" key="ZZVTN"/>
 			<ViewSettingsItem text="{i18n>VIN}" key="VHVIN"/>
 			<ViewSettingsItem text="{i18n>Model}" key="Model"/>
 			<ViewSettingsItem text="{i18n>Suffix}" key="Suffix"/>
-			<ViewSettingsItem text="{i18n>Colour}" key="Colour"/>
-			<!--<ViewSettingsItem text="ETA From" key="ETATo"/>-->
-			<!--<ViewSettingsItem text="ETA To" key="ETAFrom"/>-->
+			<ViewSettingsItem text="{i18n>Colour}" key="ExteriorColorCode"/>
+			<ViewSettingsItem text="ETA From" key="ETATo"/>
+			<ViewSettingsItem text="ETA To" key="ETAFrom"/>
 		</sortItems>
 		<filterItems>
 			<ViewSettingsFilterItem text="{i18n>OrderNumber}" key="ZZDLR_REF_NO" multiSelect="true" items="{VehicleDetailsJSON>/results}">
@@ -18,9 +18,9 @@
 					<ViewSettingsItem text="{VehicleDetailsJSON>ZZDLR_REF_NO}" key="ZZDLR_REF_NO"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="{i18n>OrderType}" key="ZZORDERTYPE" multiSelect="true" items="{FilterOrderTypeJSON>/}">
+			<ViewSettingsFilterItem text="{i18n>OrderType}" key="ORDERTYPE_DESC_EN" multiSelect="true" items="{FilterOrderTypeJSON>/}">
 				<items>
-					<ViewSettingsItem text="{FilterOrderTypeJSON>ZZORDERTYPE}" key="ZZORDERTYPE"/>
+					<ViewSettingsItem text="{FilterOrderTypeJSON>ORDERTYPE_DESC_EN}" key="ORDERTYPE_DESC_EN"/>
 				</items>
 			</ViewSettingsFilterItem>
 			<ViewSettingsFilterItem text="{i18n>Status}" key="ZMMSTA" multiSelect="true" items="{FilterStatusJSON>/}">
@@ -48,21 +48,21 @@
 					<ViewSettingsItem text="{FilterSuffixJSON>Suffix}" key="Suffix"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="{i18n>Colour}" key="Colour" multiSelect="true" items="{FilterColourJSON>/}">
+			<ViewSettingsFilterItem text="{i18n>Colour}" key="ExteriorColorCode" multiSelect="true" items="{FilterColourJSON>/}">
 				<items>
-					<ViewSettingsItem text="{FilterColourJSON>ExteriorColorCode}" key="Colour"/>
+					<ViewSettingsItem text="{FilterColourJSON>ExteriorColorCode}" key="ExteriorColorCode"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<!--<ViewSettingsFilterItem text="ETA From" key="ETAFrom" multiSelect="true" items="{FilterETAFromJSON>/}">-->
-			<!--	<items>-->
-			<!--		<ViewSettingsItem text="{FilterETAFromJSON>ETAFromText}" key="ETAFrom-{FilterETAFromJSON>ETAFrom}"/>-->
-			<!--	</items>-->
-			<!--</ViewSettingsFilterItem>-->
-			<!--<ViewSettingsFilterItem text="ETA To" key="ETATo" multiSelect="true" items="{FilterETAToJSON>/}">-->
-			<!--	<items>-->
-			<!--		<ViewSettingsItem text="{FilterETAToJSON>ETAToText}" key="ETATo-{FilterETAToJSON>ETATo}"/>-->
-			<!--	</items>-->
-			<!--</ViewSettingsFilterItem>-->
+			<ViewSettingsFilterItem text="ETA From" key="ETAFrom-{FilterETAFromJSON>ETAFrom}" multiSelect="true" items="{FilterETAFromJSON>/}">
+				<items>
+					<ViewSettingsItem text="{FilterETAFromJSON>ETAFromText}" key="ETAFrom-{FilterETAFromJSON>ETAFrom}"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="ETA To" key="ETATo-{FilterETAToJSON>ETATo}" multiSelect="true" items="{FilterETAToJSON>/}">
+				<items>
+					<ViewSettingsItem text="{FilterETAToJSON>ETAToText}" key="ETATo-{FilterETAToJSON>ETATo}"/>
+				</items>
+			</ViewSettingsFilterItem>
 		</filterItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>
