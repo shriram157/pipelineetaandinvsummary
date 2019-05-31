@@ -9,8 +9,8 @@
 			<ViewSettingsItem text="{i18n>Model}" key="Model"/>
 			<ViewSettingsItem text="{i18n>Suffix}" key="Suffix"/>
 			<ViewSettingsItem text="{i18n>Colour}" key="ExteriorColorCode"/>
-			<ViewSettingsItem text="ETA From" key="ETATo"/>
-			<ViewSettingsItem text="ETA To" key="ETAFrom"/>
+			<ViewSettingsItem text="{i18n>ETAFrom}" key="ETATo"/>
+			<ViewSettingsItem text="{i18n>ETATo}" key="ETAFrom"/>
 		</sortItems>
 		<filterItems>
 			<ViewSettingsFilterItem text="{i18n>OrderNumber}" key="ZZDLR_REF_NO" multiSelect="true" items="{VehicleDetailsJSON>/results}">
@@ -53,12 +53,12 @@
 					<ViewSettingsItem text="{FilterColourJSON>ExteriorColorCode}" key="ExteriorColorCode"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="ETA From" key="ETAFrom-{FilterETAFromJSON>ETAFrom}" multiSelect="true" items="{FilterETAFromJSON>/}">
+			<ViewSettingsFilterItem text="{i18n>ETAFrom}" key="ETAFrom-{FilterETAFromJSON>ETAFrom}" multiSelect="true" items="{FilterETAFromJSON>/}">
 				<items>
 					<ViewSettingsItem text="{FilterETAFromJSON>ETAFromText}" key="ETAFrom-{FilterETAFromJSON>ETAFrom}"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="ETA To" key="ETATo-{FilterETAToJSON>ETATo}" multiSelect="true" items="{FilterETAToJSON>/}">
+			<ViewSettingsFilterItem text="{i18n>ETATo}" key="ETATo-{FilterETAToJSON>ETATo}" multiSelect="true" items="{FilterETAToJSON>/}">
 				<items>
 					<ViewSettingsItem text="{FilterETAToJSON>ETAToText}" key="ETATo-{FilterETAToJSON>ETATo}"/>
 				</items>
