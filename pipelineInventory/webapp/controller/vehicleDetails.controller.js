@@ -103,7 +103,7 @@ sap.ui.define([
 			});
 			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
 			var FleetVal = sap.ui.getCore().getModel( "fleetMatrixModel").getProperty("/FleetColnIndex");
-			if(FleetVal=="08" || FleetVal=="09"|| FleetVal=="10"|| FleetVal=="11"|| FleetVal=="12"|| FleetVal=="13"){
+			if(FleetVal=="07" ||FleetVal=="08" || FleetVal=="09"|| FleetVal=="10"|| FleetVal=="11"|| FleetVal=="12"|| FleetVal=="13"){
 				this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", false);
 			}
 			else{

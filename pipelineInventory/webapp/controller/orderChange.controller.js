@@ -339,16 +339,18 @@ sap.ui.define([
 				_thatOC.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
 			} else {
 				_thatOC.Model = oModel.getSelectedKey();
+				if (!oSuffixValue.split("-")[0]) {
+					oSuffixValue = oSuffixValue;
+				} else {
+					oSuffixValue = oSuffixValue.split("-")[0];
+				}
 			}
-			if (!_thatOC.Model.split("-")[0]) {
-				_thatOC.Model = _thatOC.Model;
-			} else {
-				_thatOC.Model = _thatOC.Model.split("-")[0];
-			}
-			if (!oSuffixValue.split("-")[0]) {
-				oSuffixValue = oSuffixValue;
-			} else {
-				oSuffixValue = oSuffixValue.split("-")[0];
+			if (_thatOC.Model != undefined) {
+				if (!_thatOC.Model.split("-")[0]) {
+					_thatOC.Model = _thatOC.Model;
+				} else {
+					_thatOC.Model = _thatOC.Model.split("-")[0];
+				}
 			}
 			_thatOC.oVehicleDetailsJSON.getData().suffixData = [];
 			$.ajax({
@@ -446,15 +448,19 @@ sap.ui.define([
 			var series = _thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].TCISeries;
 
 			_thatOC.oVehicleDetailsJSON.getData().colorData = [];
-			if (!Suffix.split("-")[0]) {
-				Suffix = Suffix;
-			} else {
-				Suffix = Suffix.split("-")[0];
+			if (Suffix != undefined) {
+				if (!Suffix.split("-")[0]) {
+					Suffix = Suffix;
+				} else {
+					Suffix = Suffix.split("-")[0];
+				}
 			}
-			if (!Model.split("-")[0]) {
-				Model = Model;
-			} else {
-				Model = Model.split("-")[0];
+			if (Model != undefined) {
+				if (!Model.split("-")[0]) {
+					Model = Model;
+				} else {
+					Model = Model.split("-")[0];
+				}
 			}
 			$.ajax({
 				dataType: "json",
@@ -465,19 +471,21 @@ sap.ui.define([
 					console.log("suffix data", oData.d.results);
 					if (oData.d.results.length > 0) {
 						$.each(oData.d.results, function (i, item) {
-							if (localLang = "F") {
-								if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
-									_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
-								} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
-									_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
-								}
-							} else if (localLang = "E") {
-								if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
-									_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
-								} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
-									_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
-								}
+							if (ColorVal != undefined) {
+								if (localLang = "F") {
+									if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
+										_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
+									} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
+										_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
+									}
+								} else if (localLang = "E") {
+									if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
+										_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+									} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
+										_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+									}
 
+								}
 							}
 
 							_thatOC.oVehicleDetailsJSON.getData().colorData.push({

@@ -81,6 +81,7 @@ sap.ui.define([
 			}
 
 			_that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
+			_that.BusinessPartnerData.setSizeLimit(350);
 			_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 			sap.ui.getCore().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 
@@ -893,7 +894,7 @@ sap.ui.define([
 								"localLang": URILang
 							});
 						});
-						console.log("_that.oGlobalJSONModel.getData().colorData",_that.oGlobalJSONModel.getData().colorData);
+						console.log("_that.oGlobalJSONModel.getData().colorData", _that.oGlobalJSONModel.getData().colorData);
 						_that.oGlobalJSONModel.getData().colorData.unshift({
 							"ExteriorColorCode": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"MarketingDescriptionEXTColorEN": "",
@@ -1273,6 +1274,9 @@ sap.ui.define([
 		},
 
 		_oMasterRoute: function (oEvent) {
+			console.log("Event",oEvent);
+			console.log("filteredData", filteredData);
+			_that.fetchCountsforTables(filteredData);
 			_that.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
 		},
