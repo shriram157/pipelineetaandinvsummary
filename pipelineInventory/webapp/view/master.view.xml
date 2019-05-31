@@ -56,12 +56,13 @@
 									</ComboBox>
 									<Label text="{i18n>Series}"/>
 									<Select id="ID_seriesDesc" forceSelection="true" change="onSeriesSelectionChange" items="{GlobalJSONModel>/seriesData}">
-										<core:Item key="{GlobalJSONModel>ModelSeriesNo}" text="{=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>TCISeriesDescriptionEN}:${GlobalJSONModel>TCISeriesDescriptionFR}}"/>
-										
+										<core:Item key="{GlobalJSONModel>ModelSeriesNo}"
+											text="{=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>TCISeriesDescriptionEN}:${GlobalJSONModel>TCISeriesDescriptionFR}}"/>
 									</Select>
 									<Label text="{i18n>Model}"/>
 									<Select id="ID_modelDesc" forceSelection="true" items="{GlobalJSONModel>/modelData}" change="onModelSelectionChange">
-										<core:Item key="{GlobalJSONModel>Model}" text="{GlobalJSONModel>Model} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>ENModelDesc}:${GlobalJSONModel>FRModelDesc}}"/>
+										<core:Item key="{GlobalJSONModel>Model}"
+											text="{GlobalJSONModel>Model} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>ENModelDesc}:${GlobalJSONModel>FRModelDesc}}"/>
 									</Select>
 									<Label text="{i18n>Suffix}"/>
 									<Select id="ID_marktgIntDesc" forceSelection="true" items="{GlobalJSONModel>/suffixData}" change="onSuffixChange">
@@ -110,8 +111,10 @@
 								</t:Column>
 								<t:Column>
 									<t:multiLabels id="multiheaderColumn">
-										<Label text="{i18n>Stock}" textAlign="Center" width="100%"/>
-										<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>
+										<Label text=""/>
+										<!--<Label text="{i18n>Stock}" textAlign="Center" width="100%"/>-->
+										<Label text=""/>
+										<!--<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>-->
 										<Label text="{i18n>TTLUnits}" tooltip="{i18n>TTLUnits}" textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -120,8 +123,9 @@
 								</t:Column>
 								<t:Column>
 									<t:multiLabels>
-										<Label text="{i18n>Stock}"/>
-										<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>
+										<Label text="{i18n>Stock}" textAlign="Center" width="100%"/>
+										<Label text=""/>
+										<!--<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>-->
 										<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -169,8 +173,8 @@
 									</t:template>
 								</t:Column>
 								<t:Column>
-									<t:multiLabels sortProperty="{i18n>Retail}">
-										<Label text="{i18n>Retail}" textAlign="Center" width="100%"/>
+									<t:multiLabels>
+										<Label text="{i18n>PriorityUnits}" textAlign="Center" width="100%"/>
 										<Label text=""/>
 										<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
@@ -180,8 +184,9 @@
 								</t:Column>
 								<t:Column>
 									<t:multiLabels>
-										<Label text="{i18n>PriorityUnits}" textAlign="Center" width="100%"/>
-										<Label text="{i18n>Fleet}" textAlign="Center" width="100%"/>
+										<Label text="{i18n>PriorityUnits}"/>
+										<Label text=""/>
+										<!--<Label text="{i18n>Fleet}" textAlign="Center" width="100%"/>-->
 										<Label text="{i18n>TTLFleet} " tooltip="{i18n>TTLFleet} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -190,8 +195,8 @@
 								</t:Column>
 								<t:Column>
 									<t:multiLabels>
-										<Label text="{i18n>PriorityUnits}" width="100%"/>
-										<Label text="" textAlign="Center" width="100%"/>
+										<Label text="{i18n>PriorityUnits}"/>
+										<Label text="{i18n>Fleet}" textAlign="Center" width="100%"/>
 										<Label text="{i18n>DealerElite} " tooltip="{i18n>DealerElite} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -201,7 +206,7 @@
 								<t:Column>
 									<t:multiLabels>
 										<Label text="{i18n>PriorityUnits}"/>
-										<Label text="{i18n>Fleet}" textAlign="Center" width="100%"/>
+										<Label text=""/>
 										<Label text="{i18n>DealerRAC} " tooltip="{i18n>DealerRAC} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -211,7 +216,7 @@
 								<t:Column>
 									<t:multiLabels>
 										<Label text="{i18n>PriorityUnits}"/>
-										<Label text="{i18n>Fleet}" textAlign="Center" width="100%"/>
+										<Label text=""/>
 										<Label text="{i18n>Mobility} " tooltip="{i18n>Mobility} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -220,8 +225,8 @@
 								</t:Column>
 								<t:Column>
 									<t:multiLabels>
-										<Label text="{i18n>PriorityUnits}" wrapping="true"/>
-										<Label text="{i18n>Fleet}" textAlign="Center" width="100%"/>
+										<Label text="{i18n>PriorityUnits}"/>
+										<Label text=""/>
 										<Label text="{i18n>NationalElite} " tooltip="{i18n>NationalElite} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -231,7 +236,7 @@
 								<t:Column>
 									<t:multiLabels>
 										<Label text="{i18n>PriorityUnits}"/>
-										<Label text="{i18n>Fleet}" textAlign="Center" width="100%"/>
+										<Label text=""/>
 										<Label text="{i18n>NationalRAC} " tooltip="{i18n>NationalRAC} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -289,8 +294,8 @@
 								</t:Column>
 								<t:Column>
 									<t:multiLabels id="multiheaderColumn">
-										<Label text="{i18n>Stock}" textAlign="Center" width="100%"/>
-										<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>
+										<Label text="" /><Label text="" />
+										<!--<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>-->
 										<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -299,8 +304,8 @@
 								</t:Column>
 								<t:Column>
 									<t:multiLabels>
-										<Label text="{i18n>Stock}"/>
-										<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>
+										<Label text="{i18n>Stock}" textAlign="Center" width="100%"/>
+										<Label text="" />
 										<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -468,8 +473,10 @@
 								</t:Column>
 								<t:Column>
 									<t:multiLabels id="multiheaderColumn">
-										<Label text="{i18n>Stock}" textAlign="Center" width="100%"/>
-										<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>
+										<Label text="" />
+										<Label text="" />
+										<!--<Label text="{i18n>Stock}" textAlign="Center" width="100%"/>-->
+										<!--<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>-->
 										<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -478,8 +485,8 @@
 								</t:Column>
 								<t:Column>
 									<t:multiLabels>
-										<Label text="{i18n>Stock}"/>
-										<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>
+										<Label text="{i18n>Stock}" textAlign="Center" width="100%"/><Label text="" />
+										<!--<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>-->
 										<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>

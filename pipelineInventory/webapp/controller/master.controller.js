@@ -419,7 +419,7 @@ sap.ui.define([
 						}
 						console.log("SelectedDealer", SelectedDealer);
 						// var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
-						if (SelectedDealer !== "2400029000" || DealerVal !== "SelectedDealer") {
+						if (SelectedDealer !== "2400029000" && DealerVal !== "SelectedDealer") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
 									delete oModelData.d.results[key];
@@ -470,25 +470,42 @@ sap.ui.define([
 				}]
 			};
 			/*code change for defect number 9302*/
-			_that.getView().byId("tableMultiHeader").getColumns()[1].setHeaderSpan([6, 6, 1]);
-			_that.getView().byId("tableMultiHeader").getColumns()[7].setHeaderSpan([1, 1, 1]);
-			_that.getView().byId("tableMultiHeader").getColumns()[8].setHeaderSpan([6, 6, 1]);
-			//_that.getView().byId("tableMultiHeader").getColumns()[7].setHeaderSpan([7, 1, 1]);
-			//_that.getView().byId("tableMultiHeader").getColumns()[8].setHeaderSpan([7, 2, 1]);
-			//_that.getView().byId("tableMultiHeader").getColumns()[10].setHeaderSpan([7, 4, 1]);
+			_that.getView().byId("tableMultiHeader").getColumns()[1].setHeaderSpan([1, 1, 1]);
+			_that.getView().byId("tableMultiHeader").getColumns()[2].setHeaderSpan([5, 1, 1]);
+			_that.getView().byId("tableMultiHeader").getColumns()[3].setHeaderSpan([5, 4, 1]);
+			
+			// _that.getView().byId("tableMultiHeader").getColumns()[7].setHeaderSpan([7, 2, 1]);
+			// _that.getView().byId("tableMultiHeader").getColumns()[8].setHeaderSpan([7, 5, 1]);
+			_that.getView().byId("tableMultiHeader").getColumns()[7].setHeaderSpan([7, 2, 1]);
+			_that.getView().byId("tableMultiHeader").getColumns()[8].setHeaderSpan([1, 1, 1]);
+			_that.getView().byId("tableMultiHeader").getColumns()[9].setHeaderSpan([5, 5, 1]);
 			_that.getView().byId("tableMultiHeader").getColumns()[15].setHeaderSpan([2, 2, 1]);
 
-			_that.getView().byId("tableMultiHeader2").getColumns()[1].setHeaderSpan([6, 6, 1]);
-			_that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([1, 1, 1]);
-			_that.getView().byId("tableMultiHeader2").getColumns()[8].setHeaderSpan([6, 6, 1]);
+			_that.getView().byId("tableMultiHeader2").getColumns()[1].setHeaderSpan([1, 1, 1]);
+			_that.getView().byId("tableMultiHeader2").getColumns()[2].setHeaderSpan([5, 1, 1]);
+			_that.getView().byId("tableMultiHeader2").getColumns()[3].setHeaderSpan([5, 4, 1]);
+			
+			_that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([7, 2, 1]);
+			_that.getView().byId("tableMultiHeader2").getColumns()[8].setHeaderSpan([1, 1, 1]);
+			_that.getView().byId("tableMultiHeader2").getColumns()[9].setHeaderSpan([5, 5, 1]);
+			// _that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([1, 1, 1]);
+			// _that.getView().byId("tableMultiHeader2").getColumns()[8].setHeaderSpan([6, 6, 1]);
 			//_that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([7, 1, 1]);
 			//_that.getView().byId("tableMultiHeader2").getColumns()[8].setHeaderSpan([7, 2, 1]);
 			//_that.getView().byId("tableMultiHeader2").getColumns()[10].setHeaderSpan([7, 4, 1]);
 			_that.getView().byId("tableMultiHeader2").getColumns()[15].setHeaderSpan([2, 2, 1]);
 
-			_that.getView().byId("tableMultiHeader3").getColumns()[1].setHeaderSpan([6, 6, 1]);
-			_that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([1, 1, 1]);
-			_that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([6, 6, 1]);
+			// _that.getView().byId("tableMultiHeader3").getColumns()[1].setHeaderSpan([6, 6, 1]);
+			
+			_that.getView().byId("tableMultiHeader3").getColumns()[1].setHeaderSpan([1, 1, 1]);
+			_that.getView().byId("tableMultiHeader3").getColumns()[2].setHeaderSpan([5, 1, 1]);
+			_that.getView().byId("tableMultiHeader3").getColumns()[3].setHeaderSpan([5, 4, 1]);
+			// _that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([1, 1, 1]);
+			// _that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([6, 6, 1]);
+			
+			_that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([7, 2, 1]);
+			_that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([1, 1, 1]);
+			_that.getView().byId("tableMultiHeader3").getColumns()[9].setHeaderSpan([5, 5, 1]);
 			//_that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([7, 1, 1]);
 			//_that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([7, 2, 1]);
 			//_that.getView().byId("tableMultiHeader3").getColumns()[10].setHeaderSpan([7, 4, 1]);
@@ -532,7 +549,7 @@ sap.ui.define([
 						// 	}
 						// }
 						// var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
-						if (SelectedDealer !== "2400029000" || SelectedDealer !== "2400049000") {
+						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
 									delete oModelData.d.results[key];
@@ -1168,7 +1185,7 @@ sap.ui.define([
 							}
 						}
 						console.log("SelectedDealer:" + SelectedDealer);
-						if (SelectedDealer !== "2400029000" || SelectedDealer !== "2400049000") {
+						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
 									delete oModelData.d.results[key];
