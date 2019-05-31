@@ -300,7 +300,7 @@ sap.ui.define([
 				}
 				removeDuplicateValues("Model", new sap.ui.model.json.JSONModel(), "FilterModelJSON");
 				removeDuplicateValues("Suffix", new sap.ui.model.json.JSONModel(), "FilterSuffixJSON");
-				removeDuplicateValues("ZZORDERTYPE", new sap.ui.model.json.JSONModel(), "FilterOrderTypeJSON");
+				removeDuplicateValues("ORDERTYPE_DESC_EN", new sap.ui.model.json.JSONModel(), "FilterOrderTypeJSON");
 				removeDuplicateValues("ZMMSTA", new sap.ui.model.json.JSONModel(), "FilterStatusJSON");
 				removeDuplicateValues("ExteriorColorCode", new sap.ui.model.json.JSONModel(), "FilterColourJSON");
 				removeDuplicateValues("ETAFrom", new sap.ui.model.json.JSONModel(), "FilterETAFromJSON");
