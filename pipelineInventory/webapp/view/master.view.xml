@@ -353,8 +353,8 @@
 									</t:template>
 								</t:Column>
 								<t:Column>
-									<t:multiLabels sortProperty="{i18n>Retail}">
-										<Label text="{i18n>Retail}" textAlign="Center" width="100%"/>
+									<t:multiLabels>
+										<Label text="{i18n>PriorityUnits}" textAlign="Center" width="100%"/>
 										<Label text=""/>
 										<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" width="100%" wrapping="true"/>
 									</t:multiLabels>
@@ -534,8 +534,8 @@
 									</t:template>
 								</t:Column>
 								<t:Column>
-									<t:multiLabels sortProperty="{i18n>Retail}">
-										<Label text="{i18n>Retail}" textAlign="Center" width="100%"/>
+									<t:multiLabels>
+										<Label text="{i18n>PriorityUnits}" textAlign="Center" width="100%"/>
 										<Label text="" textAlign="Center" width="100%"/>
 										<Label text="{i18n>Retail} " tooltip="{i18n>Retail} " textAlign="Center" width="100%" wrapping="true"/>
 									</t:multiLabels>
