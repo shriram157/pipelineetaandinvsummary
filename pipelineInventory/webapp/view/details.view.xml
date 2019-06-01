@@ -68,7 +68,8 @@
 						<Label text="{i18n>VehicleDetails}" design="Bold" class="styleFontSize"/>
 						<ToolbarSpacer/>
 						<OverflowToolbarButton tooltip="{i18n>ApplyFilters}" icon="sap-icon://filter" text="{i18n>ApplyFilters}" press="handleFiltersDialog"/>
-						<Button text="{i18n>DropShipVehicles}" type="Default" press="navToDropShipVehicles" visible="{DetailsLocalModel>/enableDropShipBtn}"/>
+						<!--//remove enabled false once confirmed by client-->
+						<Button text="{i18n>DropShipVehicles}" type="Default" press="navToDropShipVehicles" visible="{DetailsLocalModel>/enableDropShipBtn}" enabled="false"/>
 						<Button text="{i18n>AssignVehicles}" type="Default" press="navToAssignVehicles" visible="{DetailsLocalModel>/enableAssignVehicleBtn}"/>
 						<Button text="{i18n>ExportToExcel}" type="Default" press="onDataExport"/>
 					</OverflowToolbar>

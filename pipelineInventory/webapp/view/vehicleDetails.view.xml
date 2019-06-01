@@ -25,102 +25,110 @@
 					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="NavigateBack"/>
 				</tnt:ToolHeader>
 				<ScrollContainer height='90%' width="100%" vertical='true'>
-				<content>
-					<VBox class="sapUiSmallMargin">
-						<f:SimpleForm class="formDetails" id="ID_VLForm" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false"
-							emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
-							<f:content>
-								<core:Title text="{i18n>VehicleInformation}"/>
-								<Label text="{i18n>ModelYear}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Modelyear}"/>
-								<Label text="{i18n>Series}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries} - {VehicleDetailsJSON>/selectedVehicleData/0/SERIES_DESC_EN}"/>
-								<Label text="{i18n>Model}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Model} {VehicleDetailsJSON>/selectedVehicleData/0/MODEL_DESC_EN}"/>
-								<Label text="{i18n>Suffix}"/>
-								<Text
-									text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN} / {VehicleDetailsJSON>/selectedVehicleData/0/INTCOL_DESC_EN}"/>
-								<Label text="{i18n>Colour}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ExteriorColorCode} {VehicleDetailsJSON>/selectedVehicleData/0/EXTCOL_DESC_EN}"/>
-								<Label text="{i18n>APX}"/>
-								<Select enabled="{LocalVDModel>/APXEnabled}" forceSelection="false" selectedKey="" id="apxVal" change="onAPXChange" items="{ path: 'VehicleDetailsJSON>/APXData'}">
-									<core:Item key="{VehicleDetailsJSON>zzapx}" text="{VehicleDetailsJSON>zzapx}"/>
-								</Select>
-								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>-->
-								<Label text="{i18n>OrderType}"/>
-								<!--{VehicleDetailsJSON>/selectedVehicleData/0/ZZORDERTYPE} removed from order type (defect number 10426)-->
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ORDERTYPE_DESC_EN}"/>
-								<Label text="{i18n>Status}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZMMSTA}"/>
-								<Label text="{i18n>VTN}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZVTN}"/>
-								<Label text="{i18n>VIN}"/>
-								<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/VHVIN}"/>
-								<Label text="{i18n>ETA}"/>
-								<Text
-									text="{i18n>From} {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} {i18n>TO} {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
-								<Label text="{i18n>VehicleDeliveredDate}"/>
-								<Text text="{path:'VehicleDetailsJSON>/selectedCustomerData/DeliveryDate', formatter: '.formatDate'}"/>
-								<core:Title text="{i18n>AdditionalInformation}"/>
-								<Label text="{i18n>OrderingDealer}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/KUNNR}"/>
-								<Label text="{i18n>ShipToDealer}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/ZZKUNWE}"/>
-								<Label text="{i18n>Plant}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/PLANTDESC}"/>
-								<Label text="{i18n>HoldVehicle}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/HOLD}"/>
-								<Label text="{i18n>AccessoriesInstalled}" required="false" visible = "{VehicleDetailsJSON>/AccessInstl_flag}"/>
-								<Select forceSelection="false" selectedKey="" id="accessoryVal" items="{ path: 'VehicleDetailsJSON>/AcceessoryData'}" visible = "{VehicleDetailsJSON>/AccessInstl_flag}">
-									<core:Item key="{VehicleDetailsJSON>AccessoryInstalled}" text="{VehicleDetailsJSON>AccessoryInstalled}"/>
-								</Select>
-								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/AccessoriesInstalled}"/>-->
-								<Label text="{i18n>DNCVehicle}"/>
-								<Select forceSelection="false" selectedKey="" id="DNCVal" items="{ path: 'VehicleDetailsJSON>/DNCData'}" change="onDNCOptionSlection" enabled="{LocalVDModel>/DNCEnabled}">
-									<core:Item key="{VehicleDetailsJSON>DNCVehicle}" text="{VehicleDetailsJSON>DNCVehicle}"/>
-								</Select>
-								<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/DNCVehicle}"/>-->
-								<Label text="{i18n>Comments}"/>
-								<TextArea value="{VehicleDetailsJSON>/selectedVehicleData/0/Comments}" rows="4"/>
-							</f:content>
-						</f:SimpleForm>
-					</VBox>
-					<VBox class="sapUiSmallMargin">
-						<f:SimpleForm class="formDetails" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false" emptySpanL="0"
-							emptySpanM="0" columnsL="2" columnsM="2">
-							<f:content>
-								<core:Title text="{i18n>CustomerInformation}"/>
-								<Label text="{i18n>CustomerName}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/ENDCU}"/>
-								<Label text="{i18n>Address}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/STREET} {VehicleDetailsJSON>/selectedCustomerData/POST_CODE}"/>
-								<Label text="{i18n>City}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/CITY}"/>
-								<Label text="{i18n>Province}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/REGIO}"/>
-								<Label text="{i18n>PostalCode}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/POST_CODE}"/>
-								<Label text="{i18n>PhoneNumber}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/TEL_NO}"/>
-								<Label text="{i18n>Email}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/EMAIL}"/>
-								<Label text="{i18n>DriversLicense}"/>
-								<Text text=""/>
-								<core:Title text="{i18n>AccessoryInformation}"/>
-								<Label text="{i18n>AccessoryName}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/MAKTX}"/>
-								<Text text="{VehicleDetailsJSON>/selectedCustomerData/MAKTX}"/>
-							</f:content>
-						</f:SimpleForm>
-					</VBox>
-					<OverflowToolbar>
-						<ToolbarSpacer/>
-						<Button text="{i18n>Save}" type="Default" press="_DataValidate"/>
-						<Button text="{i18n>SoldOrder}" type="Default" press="navToSoldOrer" enabled="{LocalVDModel>/soldOrderEnabled}"/>
-						<Button text="{i18n>OrderChange}" type="Default" press="NavToOrderChange"/>
-						<!--<Button text="{i18n>Back}" type="Default" press="NavigateBack"/>-->
-					</OverflowToolbar>
-				</content>
+					<content>
+						<VBox class="sapUiSmallMargin">
+							<f:SimpleForm class="formDetails" id="ID_VLForm" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false"
+								emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2">
+								<f:content>
+									<core:Title text="{i18n>VehicleInformation}"/>
+									<Label text="{i18n>ModelYear}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Modelyear}"/>
+									<Label text="{i18n>Series}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries} - {VehicleDetailsJSON>/selectedVehicleData/0/SERIES_DESC_EN}"/>
+									<Label text="{i18n>Model}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Model} {VehicleDetailsJSON>/selectedVehicleData/0/MODEL_DESC_EN}"/>
+									<Label text="{i18n>Suffix}"/>
+									<Text
+										text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN} / {VehicleDetailsJSON>/selectedVehicleData/0/INTCOL_DESC_EN}"/>
+									<Label text="{i18n>Colour}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ExteriorColorCode} {VehicleDetailsJSON>/selectedVehicleData/0/EXTCOL_DESC_EN}"/>
+									<Label text="{i18n>APX}"/>
+									<Select enabled="{LocalVDModel>/APXEnabled}" forceSelection="false" selectedKey="" id="apxVal" change="onAPXChange"
+										items="{ path: 'VehicleDetailsJSON>/APXData'}">
+										<core:Item key="{VehicleDetailsJSON>zzapx}" text="{VehicleDetailsJSON>zzapx}"/>
+									</Select>
+									<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>-->
+									<Label text="{i18n>OrderType}"/>
+									<!--{VehicleDetailsJSON>/selectedVehicleData/0/ZZORDERTYPE} removed from order type (defect number 10426)-->
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ORDERTYPE_DESC_EN}"/>
+									<Label text="{i18n>Status}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZMMSTA}"/>
+									<Label text="{i18n>VTN}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZVTN}"/>
+									<Label text="{i18n>VIN}"/>
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/VHVIN}"/>
+									<Label text="{i18n>ETA}"/>
+									<Text
+										text="{i18n>From} {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETAFrom', formatter: '.formatDate'} {i18n>TO} {path:'VehicleDetailsJSON>/selectedVehicleData/0/ETATo', formatter: '.formatDate'}"/>
+									<Label text="{i18n>VehicleDeliveredDate}"/>
+									<Text text="{path:'VehicleDetailsJSON>/selectedCustomerData/DeliveryDate', formatter: '.formatDate'}"/>
+									<core:Title text="{i18n>AdditionalInformation}"/>
+									<Label text="{i18n>OrderingDealer}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/KUNNR}"/>
+									<Label text="{i18n>ShipToDealer}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/ZZKUNWE}"/>
+									<Label text="{i18n>Plant}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/PLANTDESC}"/>
+									<Label text="{i18n>HoldVehicle}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/HOLD}"/>
+									<Label text="{i18n>AccessoriesInstalled}" required="false" visible="{VehicleDetailsJSON>/AccessInstl_flag}"/>
+									<Select forceSelection="false" selectedKey="" id="accessoryVal" items="{ path: 'VehicleDetailsJSON>/AcceessoryData'}"
+										visible="{VehicleDetailsJSON>/AccessInstl_flag}">
+										<core:Item key="{VehicleDetailsJSON>AccessoryInstalled}" text="{VehicleDetailsJSON>AccessoryInstalled}"/>
+									</Select>
+									<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/AccessoriesInstalled}"/>-->
+									<Label text="{i18n>DNCVehicle}"/>
+									<Select forceSelection="false" selectedKey="" id="DNCVal" items="{ path: 'VehicleDetailsJSON>/DNCData'}" change="onDNCOptionSlection"
+										enabled="{LocalVDModel>/DNCEnabled}">
+										<core:Item key="{VehicleDetailsJSON>DNCVehicle}" text="{VehicleDetailsJSON>DNCVehicle}"/>
+									</Select>
+									<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/DNCVehicle}"/>-->
+									<Label text="{i18n>Comments}"/>
+									<TextArea value="{VehicleDetailsJSON>/selectedVehicleData/0/Comments}" rows="4"/>
+								</f:content>
+							</f:SimpleForm>
+						</VBox>
+						<VBox class="sapUiSmallMargin">
+							<f:SimpleForm class="formDetails" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false" emptySpanL="0"
+								emptySpanM="0" columnsL="2" columnsM="2">
+								<f:content>
+									<core:Title text="{i18n>CustomerInformation}"/>
+									<Label text="{i18n>CustomerName}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/ENDCU}"/>
+									<Label text="{i18n>Address}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/STREET} {VehicleDetailsJSON>/selectedCustomerData/POST_CODE}"/>
+									<Label text="{i18n>City}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/CITY}"/>
+									<Label text="{i18n>Province}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/REGIO}"/>
+									<Label text="{i18n>PostalCode}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/POST_CODE}"/>
+									<Label text="{i18n>PhoneNumber}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/TEL_NO}"/>
+									<Label text="{i18n>Email}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/EMAIL}"/>
+									<Label text="{i18n>DriversLicense}"/>
+									<Text text=""/>
+									<core:Title text="{i18n>AccessoryInformation}"/>
+									<Label text="{i18n>AccessoryName}"/>
+									<!--<Text text="{VehicleDetailsJSON>/selectedCustomerData/MAKTX}"/>-->
+									<!--<Text text="{VehicleDetailsJSON>/selectedCustomerData/MAKTX}"/>-->
+									<List class="noBkgrnd" items="{ path: 'VehicleDetailsJSON>/AccessoryInfoData', sorter: { path: 'MAKTX' } }">
+										<items>
+											<StandardListItem title="{VehicleDetailsJSON>MAKTX}"/>
+										</items>
+									</List>
+								</f:content>
+							</f:SimpleForm>
+						</VBox>
+						<OverflowToolbar>
+							<ToolbarSpacer/>
+							<Button text="{i18n>Save}" type="Default" press="_DataValidate"/>
+							<Button text="{i18n>SoldOrder}" type="Default" press="navToSoldOrer" enabled="{LocalVDModel>/soldOrderEnabled}"/>
+							<Button text="{i18n>OrderChange}" type="Default" press="NavToOrderChange"/>
+							<!--<Button text="{i18n>Back}" type="Default" press="NavigateBack"/>-->
+						</OverflowToolbar>
+					</content>
 				</ScrollContainer>
 				<footer>
 					<Toolbar>

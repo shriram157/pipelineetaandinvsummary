@@ -250,6 +250,11 @@
     margin-left: 0;
 }
 
+.noBkgrnd li {
+    background: #fafafa;
+    border: 1px solid #fafafa;
+}
+
 
 /*Remove all styling from input*/
 

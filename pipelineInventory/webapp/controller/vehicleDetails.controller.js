@@ -30,7 +30,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatVD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
-				localLang="F";
+				localLang = "F";
 			} else {
 				_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
@@ -38,7 +38,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatVD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
-				localLang:"E";
+				localLang: "E";
 			}
 
 			var sLocation = window.location.host;
@@ -92,21 +92,21 @@ sap.ui.define([
 		_oVehicleDetailsRoute: function (oEvent) {
 			_thatVD.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
-			console.log("FleetColnIndex",sap.ui.getCore().getModel( "fleetMatrixModel"));
+			console.log("FleetColnIndex", sap.ui.getCore().getModel("fleetMatrixModel"));
 
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
 				delay: 0,
 				soldOrderEnabled: false,
 				APXEnabled: false,
-				DNCEnabled:true
+				DNCEnabled: true
 			});
 			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
-			var FleetVal = sap.ui.getCore().getModel( "fleetMatrixModel").getProperty("/FleetColnIndex");
-			if(FleetVal=="07" ||FleetVal=="08" || FleetVal=="09"|| FleetVal=="10"|| FleetVal=="11"|| FleetVal=="12"|| FleetVal=="13"){
+			var FleetVal = sap.ui.getCore().getModel("fleetMatrixModel").getProperty("/FleetColnIndex");
+			if (FleetVal == "07" || FleetVal == "08" || FleetVal == "09" || FleetVal == "10" || FleetVal == "11" || FleetVal == "12" ||
+				FleetVal == "13") {
 				this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", false);
-			}
-			else{
+			} else {
 				this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", true);
 			}
 
@@ -142,6 +142,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatVD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
+				localLang = "F";
 			} else {
 				_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
@@ -149,6 +150,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatVD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
+				localLang = "E";
 			}
 
 			var sLocation = window.location.host;
@@ -182,6 +184,7 @@ sap.ui.define([
 				}
 			}
 			this.oBundle = this.getView().getModel("i18n").getResourceBundle();
+
 			if (oEvent.getParameters().name != "orderChange") {
 				if (oEvent.getParameters().name == "vehicleDetails2") {
 					if (oEvent.getParameter("arguments").VCData2 != undefined) {
@@ -201,10 +204,28 @@ sap.ui.define([
 						_thatVD.oVehicleDetailsJSON.getData().DNCData = [];
 						_thatVD.oVehicleDetailsJSON.getData().APXData = [];
 						_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = [];
+						_thatVD.oVehicleDetailsJSON.getData().AccessoryInfoData = [];
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData.push(Data);
 
 						var _OrderNumber = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].VHCLE;
 						var MatrixVal = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].MATRIX;
+
+						//To Get accessory informtion
+						// ZPIPELINE_ETA_INVENT_SUMMARY_SRV/AccessoryInfoSet?$filter=VHCLE eq '0000561630' and LANGUAGE eq 'E'
+						$.ajax({
+							dataType: "json",
+							url: _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/AccessoryInfoSet?$filter=VHCLE eq '" + _OrderNumber +
+								"' and LANGUAGE eq '" + localLang + "'",
+							type: "GET",
+							success: function (oAccessoryData) {
+								console.log("oAccessoryData", oAccessoryData);
+								_thatVD.oVehicleDetailsJSON.getData().AccessoryInfoData = oAccessoryData.d.results;
+								_thatVD.oVehicleDetailsJSON.updateBindings(true);
+							},
+							error: function (oError) {
+								_thatVD.errorFlag = true;
+							}
+						});
 						//VHCLE='" + _OrderNumber + "',MATRIX='"+MatrixVal+"'
 						// _thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
 						var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet(VHCLE='" + _OrderNumber + "',MATRIX='0000')";
@@ -225,7 +246,7 @@ sap.ui.define([
 								_thatVD.SoldOrderBlock = oRowData.d.SoldOrderBlock;
 								if (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] !== "Dealer") {
 									_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
-								} else if (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] ==	"Dealer") {
+								} else if (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] == "Dealer") {
 									_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", true);
 								}
 								oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
@@ -244,17 +265,19 @@ sap.ui.define([
 								_thatVD.errorFlag = true;
 							}
 						});
+						
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Model = Data.NewModel;
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Suffix = Data.NewSuffix;
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].APX = Data.NewAPX;
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ExteriorColorCode = Data.NewColor;
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].AccessoriesInstalled = "";
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNCVehicle = "";
+						//this.oBundle.getText("No") //this.oBundle.getText("Yes")
 						_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[0] = {
-							"AccessoryInstalled": "Yes"
+							"AccessoryInstalled": this.oBundle.getText("Yes")
 						};
 						_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[1] = {
-							"AccessoryInstalled": "No"
+							"AccessoryInstalled": this.oBundle.getText("No")
 						};
 						/*Defect Number 12306 solution start*/
 						/*_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
@@ -324,15 +347,17 @@ sap.ui.define([
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData = [];
 									_thatVD.oVehicleDetailsJSON.getData().DNCData = [];
 									_thatVD.oVehicleDetailsJSON.getData().APXData = [];
+									_thatVD.oVehicleDetailsJSON.getData().AccessoryInfoData = [];
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData.push(_thatVD.oVehicleDetailsJSON.getData().results[i]);
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].AccessoriesInstalled = "";
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNCVehicle = "";
 									_thatVD.oVehicleDetailsJSON.getData().AccessInstl_flag = Data.AccessInstl_flag;
+									//this.oBundle.getText("No") //this.oBundle.getText("Yes")
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[0] = {
-										"AccessoryInstalled": "Yes"
+										"AccessoryInstalled": this.oBundle.getText("Yes")
 									};
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[1] = {
-										"AccessoryInstalled": "No"
+										"AccessoryInstalled": this.oBundle.getText("No")
 									};
 									/*Defect Number 12306 solution start*/
 									/*_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
@@ -364,6 +389,23 @@ sap.ui.define([
 
 									var _OrderNumber = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].VHCLE;
 									var MatrixVal = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].MATRIX;
+
+									//To Get accessory informtion
+									// ZPIPELINE_ETA_INVENT_SUMMARY_SRV/AccessoryInfoSet?$filter=VHCLE eq '0000561630' and LANGUAGE eq 'E'
+									$.ajax({
+										dataType: "json",
+										url: _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/AccessoryInfoSet?$filter=VHCLE eq '" + _OrderNumber +
+											"' and LANGUAGE eq '" + localLang + "'",
+										type: "GET",
+										success: function (oAccessoryData) {
+											console.log("oAccessoryData", oAccessoryData);
+											_thatVD.oVehicleDetailsJSON.getData().AccessoryInfoData = oAccessoryData.d.results;
+											_thatVD.oVehicleDetailsJSON.updateBindings(true);
+										},
+										error: function (oError) {
+											_thatVD.errorFlag = true;
+										}
+									});
 									//VHCLE='" + _OrderNumber + "',MATRIX='"+MatrixVal+"'
 									var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet(VHCLE='" + _OrderNumber + "',MATRIX='" +
 										MatrixVal + "')";
@@ -497,7 +539,7 @@ sap.ui.define([
 		},
 		onDNCOptionSlection: function (oDNCVal) {
 			// debugger;
-			this.oBundle = this.getView().getModel("i18n").getResourceBundle();
+			this.oBundle = this.getView().getModel("i18n").getResourceBundle(); //this.oBundle.getText("DNDemoLoanerVehicle")
 			if (oDNCVal.getParameters().selectedItem != null) {
 				var _oDNCVal = oDNCVal.getParameters().selectedItem.getText();
 			}
@@ -605,7 +647,12 @@ sap.ui.define([
 			} else {
 				Obj.NewAPX = _thatVD.getView().byId("apxVal").getSelectedKey();
 			}
-			Obj.AccessoriesInstalled = _thatVD.getView().byId("accessoryVal").getSelectedKey(); //oVehicleDetailsJSON.AccessoriesInstalled;
+			if(_thatVD.getView().byId("accessoryVal").getSelectedKey() == this.oBundle.getText("Yes")){
+				Obj.AccessoriesInstalled = "Yes";
+			} else if(_thatVD.getView().byId("accessoryVal").getSelectedKey() == this.oBundle.getText("No")){
+				Obj.AccessoriesInstalled = "No";
+			}
+			// Obj.AccessoriesInstalled = _thatVD.getView().byId("accessoryVal").getSelectedKey(); //oVehicleDetailsJSON.AccessoriesInstalled;
 			Obj.DNC = SelectedDNCVal; //DNCVal //_thatVD.oVehicleDetailsJSON.DNCVehicle;
 			Obj.Comments = _thatVD.oVehicleDetailsJSON.Comments;
 			var oModel = _thatVD.getOwnerComponent().getModel("DataModel");
@@ -618,13 +665,15 @@ sap.ui.define([
 					if (oResponse.Error != "") {
 						sap.m.MessageBox.error(oResponse.Error);
 					} else {
-						sap.m.MessageBox.success(_thatVD.oI18nModel.getResourceBundle().getText("VehicleUpdated"));
+						sap.m.MessageBox.success(_thatVD.oI18nModel.getResourceBundle().getText("VehicleUpdated"),MessageBox.Icon.ERROR, _thatVD.oI18nModel.getResourceBundle().getText("Success"), MessageBox.Action.OK, null, null);
+						// MessageBox.show(msg, MessageBox.Icon.ERROR, "Error", MessageBox.Action.OK, null, null);
 					}
 				}, _thatVD),
 				error: function (oError) {
-					sap.m.MessageBox.error(
-						"Error in data saving"
-					);
+					sap.m.MessageBox.error(_thatVD.oI18nModel.getResourceBundle().getText("ErrorInData"),MessageBox.Icon.ERROR, _thatVD.oI18nModel.getResourceBundle().getText("Error"), MessageBox.Action.OK, null, null);
+					// sap.m.MessageBox.error(
+					// 	"Error in data saving"
+					// );
 				}
 			});
 		},
