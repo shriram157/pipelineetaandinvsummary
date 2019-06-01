@@ -23,7 +23,7 @@ sap.ui.define([
 				sSelectedLocale = "EN"; // default is english 
 			}
 			if (sSelectedLocale == "fr") {
-				localLang= "F";
+				localLang = "F";
 				_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
@@ -31,7 +31,7 @@ sap.ui.define([
 				this.getView().setModel(_thatCH.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
 			} else {
-				localLang= "E";
+				localLang = "E";
 				_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
@@ -88,6 +88,7 @@ sap.ui.define([
 			_thatCH.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.show();
 			_thatCH.getView().setModel(_thatCH.oChangeHistoryModel, "ChangeHistoryModel");
+			// _thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
 
 			_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
@@ -147,8 +148,8 @@ sap.ui.define([
 				_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
 				//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '2400042193'&$format=json
 				var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq ' " + DivUser +
-					" ' and Dealer eq '" + _thatCH.Dealer +	"'and LANGUAGE eq '"+localLang+"' &$format=json";
-					//'and LANGUAGE eq '"+localLang+"'
+					" ' and Dealer eq '" + _thatCH.Dealer + "'and LANGUAGE eq '" + localLang + "' &$format=json";
+				//'and LANGUAGE eq '"+localLang+"'
 				$.ajax({
 					dataType: "json",
 					url: url,
@@ -156,16 +157,23 @@ sap.ui.define([
 					success: function (oChangeData) {
 						sap.ui.core.BusyIndicator.hide();
 						console.log("ChangeHistory Data", oChangeData);
-						_thatCH.oChangeHistoryModel.setData(oChangeData.d);
-						_thatCH.oChangeHistoryModel.updateBindings(true);
-						for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
-							if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
-								_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
-							} else {
-								_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
+						if (oChangeData.d.results.length > 0) {
+							_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
+							_thatCH.oChangeHistoryModel.setData(oChangeData.d);
+							_thatCH.oChangeHistoryModel.updateBindings(true);
+							for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
+								if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
+									_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
+								} else {
+									_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
+								}
 							}
+							_thatCH.oChangeHistoryModel.updateBindings(true);
+						} else {
+							_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
+							_thatCH.oChangeHistoryModel.setData();
+							_thatCH.oChangeHistoryModel.updateBindings(true);
 						}
-						_thatCH.oChangeHistoryModel.updateBindings(true);
 					},
 					error: function (oError) {
 						_thatCH.errorFlag = true;
@@ -185,16 +193,23 @@ sap.ui.define([
 					success: function (oChangeData) {
 						sap.ui.core.BusyIndicator.hide();
 						console.log("ChangeHistory Data", oChangeData);
-						_thatCH.oChangeHistoryModel.setData(oChangeData.d);
-						_thatCH.oChangeHistoryModel.updateBindings(true);
-						for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
-							if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
-								_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
-							} else {
-								_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
+						if (oChangeData.d.results.length > 0) {
+							_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
+							_thatCH.oChangeHistoryModel.setData(oChangeData.d);
+							_thatCH.oChangeHistoryModel.updateBindings(true);
+							for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
+								if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
+									_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
+								} else {
+									_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
+								}
 							}
+							_thatCH.oChangeHistoryModel.updateBindings(true);
+						} else {
+							_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
+							_thatCH.oChangeHistoryModel.setData();
+							_thatCH.oChangeHistoryModel.updateBindings(true);
 						}
-						_thatCH.oChangeHistoryModel.updateBindings(true);
 					},
 					error: function (oError) {
 						_thatCH.errorFlag = true;
@@ -209,7 +224,7 @@ sap.ui.define([
 			var BPDataMo = _thatCH.getView().getModel("BusinessDataModel");
 			var SelectedDealer = oDealer.getParameters().selectedItem.getAdditionalText(); //oDealer.getParameters().selectedItem.getProperty("key");
 			_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
-			_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
+
 			var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq '" + DivUser +
 				"' and Dealer eq '" + SelectedDealer +
 				"'&$format=json";
@@ -220,25 +235,33 @@ sap.ui.define([
 				success: function (oChangeData) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log("ChangeHistory Data", oChangeData);
-					_thatCH.oChangeHistoryModel.setData(oChangeData.d);
-					_thatCH.oChangeHistoryModel.updateBindings(true);
-					// $.each(_thatCH.oChangeHistoryModel.getData().results, function (i, item) {
-					// 	if (item.Status !== "Rejected") {
-					// 		_thatCH.btnResubmit.setVisible(false);
-					// 	} else {
-					// 		_thatCH.btnResubmit.setVisible(true);
-					// 	}
-					// });
-					for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
-						if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
-							_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
-						} else {
-							_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
+					if (oChangeData.d.results.length > 0) {
+						_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
+						_thatCH.oChangeHistoryModel.setData(oChangeData.d);
+						_thatCH.oChangeHistoryModel.updateBindings(true);
+						// $.each(_thatCH.oChangeHistoryModel.getData().results, function (i, item) {
+						// 	if (item.Status !== "Rejected") {
+						// 		_thatCH.btnResubmit.setVisible(false);
+						// 	} else {
+						// 		_thatCH.btnResubmit.setVisible(true);
+						// 	}
+						// });
+						for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
+							if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
+								_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
+							} else {
+								_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
+							}
 						}
+						_thatCH.oChangeHistoryModel.updateBindings(true);
+					} else {
+						_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
+						_thatCH.oChangeHistoryModel.setData();
+						_thatCH.oChangeHistoryModel.updateBindings(true);
 					}
-					_thatCH.oChangeHistoryModel.updateBindings(true);
 				},
 				error: function (oError) {
+					_thatCH.oChangeHistoryModel.setData();
 					_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
 					sap.ui.core.BusyIndicator.hide();
 					_thatCH.errorFlag = true;

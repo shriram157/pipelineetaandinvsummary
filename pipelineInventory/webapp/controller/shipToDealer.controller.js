@@ -109,6 +109,12 @@ sap.ui.define([
 				this.getView().setModel(_thatSD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
 			}
+			_thatSD._oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0,
+				enableResubmitBtn: false
+			});
+			_thatSD.getView().setModel(_thatSD._oViewModel, "LocalModel");
 
 			var sLocation = window.location.host;
 			var sLocation_conf = sLocation.search("webide");

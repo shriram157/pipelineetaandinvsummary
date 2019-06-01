@@ -93,6 +93,12 @@ sap.ui.define([
 				bundleUrl: "i18n/i18n.properties"
 			});
 			_thatAV.getView().setModel(_thatAV.oI18nModel, "i18n");
+			_thatAV._oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0,
+				enableResubmitBtn: false
+			});
+			_thatAV.getView().setModel(_thatAV._oViewModel, "LocalModel");
 
 			var isLocaleSent = window.location.search.match(/language=([^&]*)/i);
 			if (isLocaleSent) {

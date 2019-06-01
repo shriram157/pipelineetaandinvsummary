@@ -139,7 +139,7 @@ sap.ui.define([
 				var samlAttributes = {
 					"Language": ["English"],
 					"UserType": ["Zone"],
-					"Zone": ["3"]
+					"Zone": ["1"]
 				};
 				_that.salesOffice = "1000";
 				_that.BusinessPartnerData.getData().DealerList = attributes;
@@ -225,13 +225,13 @@ sap.ui.define([
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "-",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "Zone Stock",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
+						// _that.BusinessPartnerData.getData().DealerList.unshift({
+						// 	BusinessPartner: "-",
+						// 	BusinessPartnerKey: "",
+						// 	BusinessPartnerName: "Zone Stock",
+						// 	BusinessPartnerType: "",
+						// 	SearchTerm2: ""
+						// });
 
 					} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
 						if (DivAttribute == "20") {
@@ -289,7 +289,7 @@ sap.ui.define([
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
 							BusinessPartnerKey: "",
-							BusinessPartnerName: "National Total",
+							BusinessPartnerName: "TCI Total",
 							BusinessPartnerType: "",
 							SearchTerm2: ""
 						});
@@ -419,9 +419,15 @@ sap.ui.define([
 						}
 						console.log("SelectedDealer", SelectedDealer);
 						// var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
-						if (SelectedDealer !== "2400029000" && DealerVal !== "SelectedDealer") {
+						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
+									delete oModelData.d.results[key];
+								}
+							});
+						} else {
+							$.each(oModelData.d.results, function (key, value) {
+								if (value.ModelSeriesNo !== "L/C") {
 									delete oModelData.d.results[key];
 								}
 							});
@@ -473,7 +479,7 @@ sap.ui.define([
 			_that.getView().byId("tableMultiHeader").getColumns()[1].setHeaderSpan([1, 1, 1]);
 			_that.getView().byId("tableMultiHeader").getColumns()[2].setHeaderSpan([5, 1, 1]);
 			_that.getView().byId("tableMultiHeader").getColumns()[3].setHeaderSpan([5, 4, 1]);
-			
+
 			// _that.getView().byId("tableMultiHeader").getColumns()[7].setHeaderSpan([7, 2, 1]);
 			// _that.getView().byId("tableMultiHeader").getColumns()[8].setHeaderSpan([7, 5, 1]);
 			_that.getView().byId("tableMultiHeader").getColumns()[7].setHeaderSpan([7, 2, 1]);
@@ -484,7 +490,7 @@ sap.ui.define([
 			_that.getView().byId("tableMultiHeader2").getColumns()[1].setHeaderSpan([1, 1, 1]);
 			_that.getView().byId("tableMultiHeader2").getColumns()[2].setHeaderSpan([5, 1, 1]);
 			_that.getView().byId("tableMultiHeader2").getColumns()[3].setHeaderSpan([5, 4, 1]);
-			
+
 			_that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([7, 2, 1]);
 			_that.getView().byId("tableMultiHeader2").getColumns()[8].setHeaderSpan([1, 1, 1]);
 			_that.getView().byId("tableMultiHeader2").getColumns()[9].setHeaderSpan([5, 5, 1]);
@@ -496,13 +502,13 @@ sap.ui.define([
 			_that.getView().byId("tableMultiHeader2").getColumns()[15].setHeaderSpan([2, 2, 1]);
 
 			// _that.getView().byId("tableMultiHeader3").getColumns()[1].setHeaderSpan([6, 6, 1]);
-			
+
 			_that.getView().byId("tableMultiHeader3").getColumns()[1].setHeaderSpan([1, 1, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[2].setHeaderSpan([5, 1, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[3].setHeaderSpan([5, 4, 1]);
 			// _that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([1, 1, 1]);
 			// _that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([6, 6, 1]);
-			
+
 			_that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([7, 2, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([1, 1, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[9].setHeaderSpan([5, 5, 1]);
@@ -552,6 +558,12 @@ sap.ui.define([
 						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
+									delete oModelData.d.results[key];
+								}
+							});
+						}else {
+							$.each(oModelData.d.results, function (key, value) {
+								if (value.ModelSeriesNo !== "L/C") {
 									delete oModelData.d.results[key];
 								}
 							});
@@ -648,8 +660,8 @@ sap.ui.define([
 				//var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
 				var SelectedDealerKey = oDealer.getParameters().selectedItem.getText();
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
-				if (oDealer.getParameters().selectedItem.getAdditionalText() == "National Total") {
-					SelectedDealerKey = "National Total";
+				if (oDealer.getParameters().selectedItem.getAdditionalText() == "TCI Total") {
+					SelectedDealerKey = "TCI Total";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "National/Zone Stock") {
 					SelectedDealerKey = "National/Zone Stock";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone Stock") {
@@ -683,7 +695,7 @@ sap.ui.define([
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
 					_that.userType = "DDU";
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
-					if (SelectedDealerKey == "National Total") {
+					if (SelectedDealerKey == "TCI Total") {
 						_that.salesOffice = "";
 						_that.userType = "NNA";
 					} else if (SelectedDealerKey == "National/Zone Stock") {
@@ -731,7 +743,7 @@ sap.ui.define([
 		/*Fetch data on apply filter click for all three tables*/
 		applyFiltersBtn: function () {
 			//_that.oI18nModel.getResourceBundle().getText("PleaseSelect")
-			if (_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "National Total" && _that.getView().byId(
+			if (_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "TCI Total" && _that.getView().byId(
 					"ID_seriesDesc").getSelectedKey() == _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				MessageBox.show(_that.oI18nModel.getResourceBundle().getText("MandatorySeriesForNationalUser"), MessageBox.Icon.ERROR, "Error",
 					MessageBox.Action.OK, null, null);
@@ -1166,8 +1178,8 @@ sap.ui.define([
 				"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
 			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser + "' &$orderby=ProductHierarchy asc";
 			console.log("Series:" + url);
-				//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq 'TOY' and zzzadddata2 eq 'X'&$orderby=SeriesSequenceNumber asc
-				//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + ModelYear + "'";
+			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq 'TOY' and zzzadddata2 eq 'X'&$orderby=SeriesSequenceNumber asc
+			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + ModelYear + "'";
 			$.ajax({
 				dataType: "json",
 				url: url,
@@ -1188,6 +1200,12 @@ sap.ui.define([
 						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
+									delete oModelData.d.results[key];
+								}
+							});
+						}else {
+							$.each(oModelData.d.results, function (key, value) {
+								if (value.ModelSeriesNo !== "L/C") {
 									delete oModelData.d.results[key];
 								}
 							});
