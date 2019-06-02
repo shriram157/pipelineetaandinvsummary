@@ -379,7 +379,7 @@
 										<Label text="{i18n>DealerElite} " tooltip="{i18n>DealerElite} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
-										<Text text="{GlobalJSONModel>Dealerelite}" class="TabFontStyle"/>
+										<Text text="{GlobalJSONModel>Dealerelite}" textAlign="Center" class="TabFontStyle"/>
 									</t:template>
 								</t:Column>
 								<t:Column>
