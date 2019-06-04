@@ -191,13 +191,17 @@ sap.ui.define([
 						sap.ui.core.BusyIndicator.hide();
 						var Data = JSON.parse(oEvent.getParameter("arguments").VCData2);
 						console.log("preformatted data", Data);
-						//Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
 						Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
 						Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
 						Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
-						//Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("%2F", "/");
 						Data.NewSuffix = Data.NewSuffix.replace("%2F", "/");
 						Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
+						Data.OldColor = Data.OldColor.replace("%2F", "/");
+						Data.NewColor = Data.NewColor.replace("%2F", "/");
+						Data.NewModel = Data.NewModel.replace("%2F", "/");
+						Data.OldModel = Data.OldModel.replace("%2F", "/");
+
+						console.log("% formatted data", Data);
 
 						_thatVD.oVehicleDetailsJSON = new sap.ui.model.json.JSONModel();
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData = [];
@@ -322,41 +326,53 @@ sap.ui.define([
 					if (oEvent.getParameter("arguments").VCData != undefined) {
 						var Data = JSON.parse(oEvent.getParameter("arguments").VCData);
 						console.log("preformatted data", Data);
-						Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
-						Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
-						Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
-						Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("%2F", "/");
-						Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
-						Data.INTCOL_DESC_EN = Data.INTCOL_DESC_EN.replace("%2F", "/");
-						Data.INTCOL_DESC_FR = Data.INTCOL_DESC_FR.replace("%2F", "/");
-						Data.MODEL_DESC_EN = Data.MODEL_DESC_EN.replace("%2F", "/");
-						Data.MODEL_DESC_FR = Data.MODEL_DESC_FR.replace("%2F", "/");
-						Data.EXTCOL_DESC_EN = Data.EXTCOL_DESC_EN.replace("%2F", "/");
-						Data.EXTCOL_DESC_FR = Data.EXTCOL_DESC_FR.replace("%2F", "/");
-						console.log("preformatted data", Data);
+						// Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
+						// Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
+						// Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
+						// Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("%2F", "/");
+						// Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
+						// Data.INTCOL_DESC_EN = Data.INTCOL_DESC_EN.replace("%2F", "/");
+						// Data.INTCOL_DESC_FR = Data.INTCOL_DESC_FR.replace("%2F", "/");
+						// Data.MODEL_DESC_EN = Data.MODEL_DESC_EN.replace("%2F", "/");
+						// Data.MODEL_DESC_FR = Data.MODEL_DESC_FR.replace("%2F", "/");
+						// Data.EXTCOL_DESC_EN = Data.EXTCOL_DESC_EN.replace("%2F", "/");
+						// Data.EXTCOL_DESC_FR = Data.EXTCOL_DESC_FR.replace("%2F", "/");
+						// console.log("preformatted data", Data);
 						// Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
 						// Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
 						// Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
 						// Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
 						// Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("%2F", "/");
-						Data.Suffix = Data.Suffix.replace("%2F", "/");
+						// Data.Suffix = Data.Suffix.replace("%2F", "/");
 						// Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
 						if (_thatVD.oVehicleDetailsJSON.getData().results.length > 0) {
 							sap.ui.core.BusyIndicator.hide();
 							for (var i = 0; i < _thatVD.oVehicleDetailsJSON.getData().results.length; i++) {
 								if (_thatVD.oVehicleDetailsJSON.getData().results[i].VHCLE == Data.VHCLE) {
+									_thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].INTCOL_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].INTCOL_DESC_EN.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].INTCOL_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].INTCOL_DESC_FR.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].MODEL_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].MODEL_DESC_EN.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].MODEL_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].MODEL_DESC_FR.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_EN.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_FR.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].Suffix = _thatVD.oVehicleDetailsJSON.getData().results[i].Suffix.replace("%2F", "/");
 
-									_thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR
-										.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN
-										.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN
-										.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR
-										.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN
-										.replace("%2F", "/");
-
+									// _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR
+									// 	.replace("%2F", "/");
+									// _thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN
+									// 	.replace("%2F", "/");
+									// _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN
+									// 	.replace("%2F", "/");
+									// _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR
+									// 	.replace("%2F", "/");
+									// _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN
+									// 	.replace("%2F", "/");
+									console.log("% formatted data", Data);
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData = [];
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData = [];
 									_thatVD.oVehicleDetailsJSON.getData().DNCData = [];
@@ -698,11 +714,11 @@ sap.ui.define([
 				}, _thatVD),
 				error: function (oError) {
 					sap.m.MessageBox.show(_thatVD.oI18nModel.getResourceBundle().getText("ErrorInData"), {
-							icon: sap.m.MessageBox.Icon.ERROR,
-							title: _thatVD.oI18nModel.getResourceBundle().getText("Error"),
-							actions: [sap.m.MessageBox.Action.OK],
-							onClose: function (oAction) {}
-						});
+						icon: sap.m.MessageBox.Icon.ERROR,
+						title: _thatVD.oI18nModel.getResourceBundle().getText("Error"),
+						actions: [sap.m.MessageBox.Action.OK],
+						onClose: function (oAction) {}
+					});
 					// sap.m.MessageBox.error(_thatVD.oI18nModel.getResourceBundle().getText("ErrorInData"), MessageBox.Icon.ERROR, _thatVD.oI18nModel
 					// 	.getResourceBundle().getText("Error"), MessageBox.Action.OK, null, null);
 					// sap.m.MessageBox.error(
