@@ -42,7 +42,7 @@
 					</OverflowToolbar>
 					<ScrollContainer height='70%' width="100%" vertical='true'>
 					<Table items="{ChangeHistoryModel>/results}" width="auto" class="sapUiResponsiveMargin headerFixClass" growing="true" growingThreshold="5"
-						growingScrollToLoad="false">
+						growingScrollToLoad="false" updateFinished="afterConfigLoad">
 						<!--<headerToolbar>-->
 						<!--	<Toolbar>-->
 						<!--		<MessageStrip text="{i18n>Disclaimer}" type="Information" showIcon="true"></MessageStrip>-->
@@ -88,7 +88,7 @@
 							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="{i18n>Status}"/>
 							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
+							<Column minScreenWidth="Desktop" demandPopin="true" width="10rem">
 								<Text text="{i18n>ReSubmit}"/>
 							</Column>
 						</columns>

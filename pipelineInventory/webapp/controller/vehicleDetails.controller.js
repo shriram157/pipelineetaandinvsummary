@@ -190,6 +190,7 @@ sap.ui.define([
 					if (oEvent.getParameter("arguments").VCData2 != undefined) {
 						sap.ui.core.BusyIndicator.hide();
 						var Data = JSON.parse(oEvent.getParameter("arguments").VCData2);
+						console.log("preformatted data", Data);
 						//Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
 						Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
 						Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
@@ -265,7 +266,7 @@ sap.ui.define([
 								_thatVD.errorFlag = true;
 							}
 						});
-						
+
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Model = Data.NewModel;
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Suffix = Data.NewSuffix;
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].APX = Data.NewAPX;
@@ -320,11 +321,24 @@ sap.ui.define([
 				} else {
 					if (oEvent.getParameter("arguments").VCData != undefined) {
 						var Data = JSON.parse(oEvent.getParameter("arguments").VCData);
-						Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
+						console.log("preformatted data", Data);
 						Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
 						Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
 						Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
 						Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("%2F", "/");
+						Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
+						Data.INTCOL_DESC_EN = Data.INTCOL_DESC_EN.replace("%2F", "/");
+						Data.INTCOL_DESC_FR = Data.INTCOL_DESC_FR.replace("%2F", "/");
+						Data.MODEL_DESC_EN = Data.MODEL_DESC_EN.replace("%2F", "/");
+						Data.MODEL_DESC_FR = Data.MODEL_DESC_FR.replace("%2F", "/");
+						Data.EXTCOL_DESC_EN = Data.EXTCOL_DESC_EN.replace("%2F", "/");
+						Data.EXTCOL_DESC_FR = Data.EXTCOL_DESC_FR.replace("%2F", "/");
+						console.log("preformatted data", Data);
+						// Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
+						// Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
+						// Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
+						// Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
+						// Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("%2F", "/");
 						Data.Suffix = Data.Suffix.replace("%2F", "/");
 						// Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
 						if (_thatVD.oVehicleDetailsJSON.getData().results.length > 0) {
@@ -647,9 +661,9 @@ sap.ui.define([
 			} else {
 				Obj.NewAPX = _thatVD.getView().byId("apxVal").getSelectedKey();
 			}
-			if(_thatVD.getView().byId("accessoryVal").getSelectedKey() == this.oBundle.getText("Yes")){
+			if (_thatVD.getView().byId("accessoryVal").getSelectedKey() == this.oBundle.getText("Yes")) {
 				Obj.AccessoriesInstalled = "Yes";
-			} else if(_thatVD.getView().byId("accessoryVal").getSelectedKey() == this.oBundle.getText("No")){
+			} else if (_thatVD.getView().byId("accessoryVal").getSelectedKey() == this.oBundle.getText("No")) {
 				Obj.AccessoriesInstalled = "No";
 			}
 			// Obj.AccessoriesInstalled = _thatVD.getView().byId("accessoryVal").getSelectedKey(); //oVehicleDetailsJSON.AccessoriesInstalled;
@@ -663,14 +677,34 @@ sap.ui.define([
 					//debugger;
 					console.log(oResponse);
 					if (oResponse.Error != "") {
-						sap.m.MessageBox.error(oResponse.Error);
+						sap.m.MessageBox.show(oResponse.Error, {
+							icon: sap.m.MessageBox.Icon.ERROR,
+							title: _thatVD.oI18nModel.getResourceBundle().getText("Error"),
+							actions: [sap.m.MessageBox.Action.OK],
+							onClose: function (oAction) {}
+						});
+						// sap.m.MessageBox.error(oResponse.Error);
 					} else {
-						sap.m.MessageBox.success(_thatVD.oI18nModel.getResourceBundle().getText("VehicleUpdated"),MessageBox.Icon.ERROR, _thatVD.oI18nModel.getResourceBundle().getText("Success"), MessageBox.Action.OK, null, null);
+						sap.m.MessageBox.show(_thatVD.oI18nModel.getResourceBundle().getText("VehicleUpdated"), {
+							icon: sap.m.MessageBox.Icon.SUCCESS,
+							title: _thatVD.oI18nModel.getResourceBundle().getText("Success"),
+							actions: [sap.m.MessageBox.Action.OK],
+							onClose: function (oAction) {}
+						});
+						// sap.m.MessageBox.success(_thatVD.oI18nModel.getResourceBundle().getText("VehicleUpdated"), MessageBox.Icon.SUCCESS, _thatVD.oI18nModel
+						// 	.getResourceBundle().getText("Success"), MessageBox.Action.OK, null, null);
 						// MessageBox.show(msg, MessageBox.Icon.ERROR, "Error", MessageBox.Action.OK, null, null);
 					}
 				}, _thatVD),
 				error: function (oError) {
-					sap.m.MessageBox.error(_thatVD.oI18nModel.getResourceBundle().getText("ErrorInData"),MessageBox.Icon.ERROR, _thatVD.oI18nModel.getResourceBundle().getText("Error"), MessageBox.Action.OK, null, null);
+					sap.m.MessageBox.show(_thatVD.oI18nModel.getResourceBundle().getText("ErrorInData"), {
+							icon: sap.m.MessageBox.Icon.ERROR,
+							title: _thatVD.oI18nModel.getResourceBundle().getText("Error"),
+							actions: [sap.m.MessageBox.Action.OK],
+							onClose: function (oAction) {}
+						});
+					// sap.m.MessageBox.error(_thatVD.oI18nModel.getResourceBundle().getText("ErrorInData"), MessageBox.Icon.ERROR, _thatVD.oI18nModel
+					// 	.getResourceBundle().getText("Error"), MessageBox.Action.OK, null, null);
 					// sap.m.MessageBox.error(
 					// 	"Error in data saving"
 					// );

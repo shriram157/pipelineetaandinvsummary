@@ -142,12 +142,26 @@ sap.ui.define([
 			if (oEvent.getParameters().arguments.vehicleData != undefined) {
 				_thatAV.oAssignVehiclesModel.getData().results = [];
 				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
+				console.log("pre formatted data",VUIdata);
 				for (var n = 0; n < VUIdata.length; n++) {
-					VUIdata[n].SUFFIX_DESC_FR = VUIdata[n].SUFFIX_DESC_FR.replace("%2F", "/");
 					VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F", "/");
 					VUIdata[n].SERIES_DESC_EN = VUIdata[n].SERIES_DESC_EN.replace("%2F", "/");
-					VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F", "/");
 					VUIdata[n].SERIES_DESC_FR = VUIdata[n].SERIES_DESC_FR.replace("%2F", "/");
+					VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F", "/");
+					VUIdata[n].SUFFIX_DESC_FR = VUIdata[n].SUFFIX_DESC_FR.replace("%2F", "/");
+					VUIdata[n].INTCOL_DESC_EN = VUIdata[n].INTCOL_DESC_EN.replace("%2F", "/");
+					VUIdata[n].INTCOL_DESC_FR = VUIdata[n].INTCOL_DESC_FR.replace("%2F", "/");
+					VUIdata[n].MODEL_DESC_EN = VUIdata[n].MODEL_DESC_EN.replace("%2F", "/");
+					VUIdata[n].MODEL_DESC_FR = VUIdata[n].MODEL_DESC_FR.replace("%2F", "/");
+					VUIdata[n].EXTCOL_DESC_EN = VUIdata[n].EXTCOL_DESC_EN.replace("%2F", "/");
+					VUIdata[n].EXTCOL_DESC_FR = VUIdata[n].EXTCOL_DESC_FR.replace("%2F", "/");
+					
+					console.log("% formatted data",VUIdata);
+					// VUIdata[n].SUFFIX_DESC_FR = VUIdata[n].SUFFIX_DESC_FR.replace("%2F", "/");
+					// VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F", "/");
+					// VUIdata[n].SERIES_DESC_EN = VUIdata[n].SERIES_DESC_EN.replace("%2F", "/");
+					// VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F", "/");
+					// VUIdata[n].SERIES_DESC_FR = VUIdata[n].SERIES_DESC_FR.replace("%2F", "/");
 					if (VUIdata[n].AssignVehicle !== false) {
 						_thatAV.oAssignVehiclesModel.getData().results.push(VUIdata[n]);
 						_thatAV.oAssignVehiclesModel.updateBindings(true);

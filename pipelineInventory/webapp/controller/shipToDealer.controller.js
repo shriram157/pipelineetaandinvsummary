@@ -143,14 +143,27 @@ sap.ui.define([
 
 			if (oEvent.getParameters().arguments.vehicleData != undefined) {
 				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
+				console.log("preformatted data",VUIdata);
 				_thatSD.oDropShipDataModel.getData().results = [];
 				for (var n = 0; n < VUIdata.length; n++) {
-
-					VUIdata[n].SUFFIX_DESC_FR = VUIdata[n].SUFFIX_DESC_FR.replace("%2F", "/");
 					VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F", "/");
 					VUIdata[n].SERIES_DESC_EN = VUIdata[n].SERIES_DESC_EN.replace("%2F", "/");
-					VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F", "/");
 					VUIdata[n].SERIES_DESC_FR = VUIdata[n].SERIES_DESC_FR.replace("%2F", "/");
+					VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F", "/");
+					VUIdata[n].SUFFIX_DESC_FR = VUIdata[n].SUFFIX_DESC_FR.replace("%2F", "/");
+					VUIdata[n].INTCOL_DESC_EN = VUIdata[n].INTCOL_DESC_EN.replace("%2F", "/");
+					VUIdata[n].INTCOL_DESC_FR = VUIdata[n].INTCOL_DESC_FR.replace("%2F", "/");
+					VUIdata[n].MODEL_DESC_EN = VUIdata[n].MODEL_DESC_EN.replace("%2F", "/");
+					VUIdata[n].MODEL_DESC_FR = VUIdata[n].MODEL_DESC_FR.replace("%2F", "/");
+					VUIdata[n].EXTCOL_DESC_EN = VUIdata[n].EXTCOL_DESC_EN.replace("%2F", "/");
+					VUIdata[n].EXTCOL_DESC_FR = VUIdata[n].EXTCOL_DESC_FR.replace("%2F", "/");
+
+					// VUIdata[n].SUFFIX_DESC_FR = VUIdata[n].SUFFIX_DESC_FR.replace("%2F", "/");
+					// VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F", "/");
+					// VUIdata[n].SERIES_DESC_EN = VUIdata[n].SERIES_DESC_EN.replace("%2F", "/");
+					// VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F", "/");
+					// VUIdata[n].SERIES_DESC_FR = VUIdata[n].SERIES_DESC_FR.replace("%2F", "/");
+					console.log("% formatted data",VUIdata);
 					if (VUIdata[n].DropShip !== false) {
 						_thatSD.oDropShipDataModel.getData().results.push(VUIdata[n]);
 						_thatSD.oDropShipDataModel.updateBindings(true);

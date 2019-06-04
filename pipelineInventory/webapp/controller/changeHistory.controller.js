@@ -39,7 +39,6 @@ sap.ui.define([
 				this.getView().setModel(_thatCH.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
 			}
-
 			var sLocation = window.location.host;
 			var sLocation_conf = sLocation.search("webide");
 
@@ -82,6 +81,14 @@ sap.ui.define([
 			_thatCH.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatCH._oChangeHistoryRoute, _thatCH);
 			// var err = JSON.parse(oError.response.body);
 			// sap.m.MessageBox.error(err.error.message.value);
+		},
+
+		afterConfigLoad: function () {
+			if (localLang === "F") {
+				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "Plus";
+			} else {
+				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "More";
+			}
 		},
 
 		_oChangeHistoryRoute: function (oEvent) {
@@ -270,8 +277,10 @@ sap.ui.define([
 		},
 
 		onNavigateToVL: function (oNavEvent) {
+			
 			var obj = oNavEvent.getSource().getModel("ChangeHistoryModel").getProperty(oNavEvent.getSource().getBindingContext(
 				"ChangeHistoryModel").sPath);
+			console.log("pre formatted data",obj);
 			obj.NewSuffix = obj.NewSuffix.replace("/", "%2F");
 			obj.OldSuffix = obj.OldSuffix.replace("/", "%2F");
 			obj.__metadata = "";
@@ -282,6 +291,7 @@ sap.ui.define([
 		onNavigateToOC: function (oResubmit) {
 			var data = oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
 				"ChangeHistoryModel").sPath);
+			console.log("pre formatted data",data);
 			data.NewSuffix = data.NewSuffix.replace("/", "%2F");
 			data.OldSuffix = data.OldSuffix.replace("/", "%2F");
 			data.__metadata = "";

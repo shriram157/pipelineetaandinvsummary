@@ -8,7 +8,7 @@ sap.ui.define([
 	"sap/m/MessageBox"
 ], function (BaseController, ResourceModel, JSONModel, Filter, History, MessageBox) {
 	"use strict";
-	var _thatDT, clicks, num, numpre, sSelectedLocale,Division,DivUser, localLang;
+	var _thatDT, clicks, num, numpre, sSelectedLocale, Division, DivUser, localLang;
 	return BaseController.extend("pipelineInventory.controller.details", {
 		onInit: function () {
 			_thatDT = this;
@@ -76,7 +76,7 @@ sap.ui.define([
 				enableDropShipBtn: false,
 				enableAssignVehicleBtn: false
 			});
-			
+
 			_thatDT.getView().setModel(_thatDT._oViewModel, "DetailsLocalModel");
 			_thatDT.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatDT._oDetailsRoute, _thatDT);
 
@@ -146,7 +146,7 @@ sap.ui.define([
 
 			_thatDT.oTable = _thatDT.getView().byId("Tab_vehicleDetails");
 			_thatDT.oTable.removeSelections();
-			
+
 			var dealerData = sap.ui.getCore().getModel("BusinessDataModel").getData();
 			console.log("dealerData", dealerData);
 			if (dealerData._TCIZoneAdmin == "AdminUser") {
@@ -161,7 +161,6 @@ sap.ui.define([
 				_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
 			}
 
-
 			if (oDetailsRoute.getParameters().arguments.tableFirst != undefined) {
 				_thatDT.routedData = JSON.parse(oDetailsRoute.getParameters().arguments.tableFirst);
 				console.log("routedData", _thatDT.routedData);
@@ -170,15 +169,16 @@ sap.ui.define([
 				_thatDT.UserType = _thatDT.routedData.userType;
 				_thatDT.salesOffice = _thatDT.routedData.salesOffice;
 				//intcolor
-				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '"+DivUser+"' and VKBUR eq '" + _thatDT.salesOffice +
+				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
+					"' and VKBUR eq '" + _thatDT.salesOffice +
 					"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
 					"' and Model eq '" + _thatDT.routedData.Model + "' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and Modelyear eq '" +
 					_thatDT.routedData.ModelYear + "'and TCISeries eq '" +
 					_thatDT.routedData.series + "'and Suffix eq '" + _thatDT.routedData.suffix + "'and ExteriorColorCode eq '" + _thatDT.routedData.ExteriorColorCode +
 					"'and APX eq '" + _thatDT.routedData.APXValue + "'and ETA eq '" + _thatDT.routedData.ETADate + "'and Dealer eq '" + _thatDT.routedData
 					.Dealer +
-					"'and UserType eq '" + _thatDT.UserType + "' and LANGUAGE eq '"+localLang+"' &$format=json";
-					console.log("page2 url",url);
+					"'and UserType eq '" + _thatDT.UserType + "' and LANGUAGE eq '" + localLang + "' &$format=json";
+				console.log("page2 url", url);
 				$.ajax({
 					dataType: "json",
 					url: url,
@@ -250,12 +250,12 @@ sap.ui.define([
 				var sPath2 = oItem.getKey();
 				var sValue1 = oItem.getText();
 				var sValue2 = oItem.getText();
-				if(sPath2.indexOf("-") != -1){
+				if (sPath2.indexOf("-") != -1) {
 					sPath2 = oItem.getKey().split("-")[0];
 					sValue1 = oItem.getKey().split("-")[1];
 					sValue2 = oItem.getKey().split("-")[1];
 				}
-				
+
 				var oFilter = new Filter(sPath2, sOperator, sValue1, sValue2);
 				aFilters.push(oFilter);
 
@@ -284,11 +284,11 @@ sap.ui.define([
 						if (!(name in lookup)) {
 							lookup[name] = 1;
 							var ModelObj = {};
-							if(JSONModelName == "FilterETAFromJSON"){
-								ModelObj.ETAFromText =  name.slice(0,4) +"-"+ name.slice(4,6)+"-"+name.slice(6,8);
+							if (JSONModelName == "FilterETAFromJSON") {
+								ModelObj.ETAFromText = name.slice(0, 4) + "-" + name.slice(4, 6) + "-" + name.slice(6, 8);
 								ModelObj[PropertyName] = name;
-							}else if(JSONModelName == "FilterETAToJSON"){
-								ModelObj.ETAToText =  name.slice(0,4) +"-"+ name.slice(4,6)+"-"+name.slice(6,8);
+							} else if (JSONModelName == "FilterETAToJSON") {
+								ModelObj.ETAToText = name.slice(0, 4) + "-" + name.slice(4, 6) + "-" + name.slice(6, 8);
 								ModelObj[PropertyName] = name;
 							}
 							ModelObj[PropertyName] = name;
@@ -384,13 +384,22 @@ sap.ui.define([
 		onNavigateToVL: function (oNavEvent) {
 			var Data = oNavEvent.getSource().getModel("VehicleDetailsJSON").getProperty(oNavEvent.getSource().getBindingContext(
 				"VehicleDetailsJSON").sPath);
+			console.log("routed data",Data);
 			Data.Suffix = Data.Suffix.replace("/", "%2F");
-			Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("/", "%2F");
 			Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("/", "%2F");
 			Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("/", "%2F");
 			Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("/", "%2F");
 			Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("/", "%2F");
+			Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("/", "%2F");
+			Data.INTCOL_DESC_EN = Data.INTCOL_DESC_EN.replace("/", "%2F");
+			Data.INTCOL_DESC_FR = Data.INTCOL_DESC_FR.replace("/", "%2F");
+			Data.MODEL_DESC_EN = Data.MODEL_DESC_EN.replace("/", "%2F");
+			Data.MODEL_DESC_FR = Data.MODEL_DESC_FR.replace("/", "%2F");
+			Data.EXTCOL_DESC_EN = Data.EXTCOL_DESC_EN.replace("/", "%2F");
+			Data.EXTCOL_DESC_FR = Data.EXTCOL_DESC_FR.replace("/", "%2F");
 			Data.__metadata = "";
+			
+			console.log("routed formatted data",Data);
 			_thatDT.getRouter().navTo("vehicleDetails", {
 				VCData: JSON.stringify(Data)
 
@@ -412,8 +421,7 @@ sap.ui.define([
 					_thatDT.getRouter().navTo("changeHistory", {
 						SelectedDealer: _thatDT.SelectedDealer
 					});
-				}
-				else{
+				} else {
 					_thatDT.getRouter().navTo("changeHistory2");
 				}
 			} else if (_oSelectedScreen == _thatDT.oI18nModel.getResourceBundle().getText("Back")) {
@@ -468,7 +476,7 @@ sap.ui.define([
 				// }
 				_thatDT.checkedData.push(oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
 					.getBindingContext("VehicleDetailsJSON").getPath()));
-			} 
+			}
 			// else {
 			// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
 			// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
@@ -477,24 +485,41 @@ sap.ui.define([
 
 		navToDropShipVehicles: function () {
 			sap.ui.core.BusyIndicator.hide();
-			for(var i=0; i < _thatDT.checkedData.length; i++){
-				_thatDT.checkedData[i].SUFFIX_DESC_FR = _thatDT.checkedData[i].SUFFIX_DESC_FR.replace("/","%2F");
-				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/","%2F");
-				_thatDT.checkedData[i].SERIES_DESC_EN = _thatDT.checkedData[i].SERIES_DESC_EN.replace("/","%2F");
-				_thatDT.checkedData[i].SUFFIX_DESC_EN = _thatDT.checkedData[i].SUFFIX_DESC_EN.replace("/","%2F");
-				_thatDT.checkedData[i].SERIES_DESC_FR = _thatDT.checkedData[i].SERIES_DESC_FR.replace("/","%2F");
+			for (var i = 0; i < _thatDT.checkedData.length; i++) {
+				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/", "%2F");
+				_thatDT.checkedData[i].MODEL_DESC_EN = _thatDT.checkedData[i].MODEL_DESC_EN.replace("/", "%2F");
+				_thatDT.checkedData[i].MODEL_DESC_FR = _thatDT.checkedData[i].MODEL_DESC_FR.replace("/", "%2F");
+				_thatDT.checkedData[i].SUFFIX_DESC_EN = _thatDT.checkedData[i].SUFFIX_DESC_EN.replace("/", "%2F");
+				_thatDT.checkedData[i].SUFFIX_DESC_FR = _thatDT.checkedData[i].SUFFIX_DESC_FR.replace("/", "%2F");
+				_thatDT.checkedData[i].SERIES_DESC_EN = _thatDT.checkedData[i].SERIES_DESC_EN.replace("/", "%2F");
+				_thatDT.checkedData[i].SERIES_DESC_FR = _thatDT.checkedData[i].SERIES_DESC_FR.replace("/", "%2F");
+				_thatDT.checkedData[i].INTCOL_DESC_EN = _thatDT.checkedData[i].INTCOL_DESC_EN.replace("/", "%2F");
+				_thatDT.checkedData[i].INTCOL_DESC_FR = _thatDT.checkedData[i].INTCOL_DESC_FR.replace("/", "%2F");
+				_thatDT.checkedData[i].EXTCOL_DESC_EN = _thatDT.checkedData[i].EXTCOL_DESC_EN.replace("/", "%2F");
+				_thatDT.checkedData[i].EXTCOL_DESC_FR = _thatDT.checkedData[i].EXTCOL_DESC_FR.replace("/", "%2F");
 			}
 			_thatDT.getRouter().navTo("shipToDealer", {
 				vehicleData: JSON.stringify(_thatDT.checkedData)
 			});
 		},
 		navToAssignVehicles: function () {
-			for(var i=0; i < _thatDT.checkedData.length; i++){
-				_thatDT.checkedData[i].SUFFIX_DESC_FR = _thatDT.checkedData[i].SUFFIX_DESC_FR.replace("/","%2F");
-				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/","%2F");
-				_thatDT.checkedData[i].SERIES_DESC_EN = _thatDT.checkedData[i].SERIES_DESC_EN.replace("/","%2F");
-				_thatDT.checkedData[i].SUFFIX_DESC_EN = _thatDT.checkedData[i].SUFFIX_DESC_EN.replace("/","%2F");
-				_thatDT.checkedData[i].SERIES_DESC_FR = _thatDT.checkedData[i].SERIES_DESC_FR.replace("/","%2F");
+			for (var i = 0; i < _thatDT.checkedData.length; i++) {
+				// _thatDT.checkedData[i].SUFFIX_DESC_FR = _thatDT.checkedData[i].SUFFIX_DESC_FR.replace("/","%2F");
+				// _thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/","%2F");
+				// _thatDT.checkedData[i].SERIES_DESC_EN = _thatDT.checkedData[i].SERIES_DESC_EN.replace("/","%2F");
+				// _thatDT.checkedData[i].SUFFIX_DESC_EN = _thatDT.checkedData[i].SUFFIX_DESC_EN.replace("/","%2F");
+				// _thatDT.checkedData[i].SERIES_DESC_FR = _thatDT.checkedData[i].SERIES_DESC_FR.replace("/","%2F");
+				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/", "%2F");
+				_thatDT.checkedData[i].MODEL_DESC_EN = _thatDT.checkedData[i].MODEL_DESC_EN.replace("/", "%2F");
+				_thatDT.checkedData[i].MODEL_DESC_FR = _thatDT.checkedData[i].MODEL_DESC_FR.replace("/", "%2F");
+				_thatDT.checkedData[i].SUFFIX_DESC_EN = _thatDT.checkedData[i].SUFFIX_DESC_EN.replace("/", "%2F");
+				_thatDT.checkedData[i].SUFFIX_DESC_FR = _thatDT.checkedData[i].SUFFIX_DESC_FR.replace("/", "%2F");
+				_thatDT.checkedData[i].SERIES_DESC_EN = _thatDT.checkedData[i].SERIES_DESC_EN.replace("/", "%2F");
+				_thatDT.checkedData[i].SERIES_DESC_FR = _thatDT.checkedData[i].SERIES_DESC_FR.replace("/", "%2F");
+				_thatDT.checkedData[i].INTCOL_DESC_EN = _thatDT.checkedData[i].INTCOL_DESC_EN.replace("/", "%2F");
+				_thatDT.checkedData[i].INTCOL_DESC_FR = _thatDT.checkedData[i].INTCOL_DESC_FR.replace("/", "%2F");
+				_thatDT.checkedData[i].EXTCOL_DESC_EN = _thatDT.checkedData[i].EXTCOL_DESC_EN.replace("/", "%2F");
+				_thatDT.checkedData[i].EXTCOL_DESC_FR = _thatDT.checkedData[i].EXTCOL_DESC_FR.replace("/", "%2F");
 			}
 			_thatDT.getRouter().navTo("assignVehicles", {
 				vehicleData: JSON.stringify(_thatDT.checkedData)
@@ -540,7 +565,8 @@ sap.ui.define([
 		},
 
 		data: function () {
-			var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '"+DivUser+"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
+			var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
+				"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
 				"' and Model eq '" + _thatDT.routedData.Model + "' and Modelyear eq '" + _thatDT.routedData.ModelYear + "'&$top=5&$skip='" +
 				Number(
 					num) + "'";
@@ -656,7 +682,7 @@ sap.ui.define([
 			//loop is to extract each row
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
-				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="'  + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
+				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
 					'","' + arrData[i].ZMMSTA + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN +
 					'","' + arrData[i].Suffix +
 					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].ETAFrom +
@@ -677,7 +703,7 @@ sap.ui.define([
 				type: "text/csv;charset=utf-8,"
 			});
 			if (sap.ui.Device.browser.name === "ie" || sap.ui.Device.browser.name === "ed") { // IE 10+ , Edge (IE 12+)
-				navigator.msSaveBlob(blob, _thatDT.oI18nModel.getResourceBundle().getText("VehicleDetailsReport")+".csv");
+				navigator.msSaveBlob(blob, _thatDT.oI18nModel.getResourceBundle().getText("VehicleDetailsReport") + ".csv");
 			} else {
 				var uri = 'data:text/csv;charset=utf-8,' + "\ufeff" + encodeURIComponent(CSV); //'data:application/vnd.ms-excel,' + escape(CSV);
 				var link = document.createElement("a");
