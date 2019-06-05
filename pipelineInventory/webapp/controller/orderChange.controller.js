@@ -365,7 +365,7 @@ sap.ui.define([
 					_thatOC.Model = _thatOC.Model.split("-")[0];
 				}
 			}
-			_thatOC.oVehicleDetailsJSON.getData().suffixData = [];
+
 			$.ajax({
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _thatOC.Model +
@@ -373,6 +373,8 @@ sap.ui.define([
 					_thatOC.Modelyear + "'",
 				type: "GET",
 				success: function (oData) {
+					_thatOC.oVehicleDetailsJSON.getData().suffixData = [];
+					_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					if (oData.d.results.length > 0) {
 						console.log("suffixData", oData.d.results);
 						var selectedKey;
@@ -468,7 +470,7 @@ sap.ui.define([
 			var Model = _thatOC.getView().byId("ID_modelSelect").getSelectedKey();
 			var series = _thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].TCISeries;
 
-			_thatOC.oVehicleDetailsJSON.getData().colorData = [];
+			// _thatOC.oVehicleDetailsJSON.getData().colorData = [];
 			if (Suffix != undefined) {
 				if (!Suffix.split("-")[0]) {
 					Suffix = Suffix;
@@ -489,6 +491,8 @@ sap.ui.define([
 					"' and Model eq '" + Model + "' and Suffix eq '" + Suffix + "' and TCISeries eq '" + series + "'",
 				type: "GET",
 				success: function (oData) {
+					_thatOC.oVehicleDetailsJSON.getData().colorData=[];
+					_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					console.log("suffix data", oData.d.results);
 					if (oData.d.results.length > 0) {
 						$.each(oData.d.results, function (i, item) {
