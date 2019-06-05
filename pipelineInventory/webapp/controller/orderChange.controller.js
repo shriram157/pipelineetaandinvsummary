@@ -333,10 +333,6 @@ sap.ui.define([
 							b = 0;
 						}
 						sap.ui.core.BusyIndicator.hide();
-						// _thatOC.oVehicleDetailsJSON.getData().modelData.unshift({
-						// 	"Model": "",
-						// 	"ENModelDesc": ""
-						// });
 						_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					} else {
 						sap.ui.core.BusyIndicator.hide();
@@ -379,11 +375,15 @@ sap.ui.define([
 				success: function (oData) {
 					if (oData.d.results.length > 0) {
 						console.log("suffixData", oData.d.results);
-						var selectedKey = _thatOC.oVehicleDetailsJSON.getData().suffixData.filter(function (val) {
-							if (val.suffix == oSuffixValue)
-								return val.suffix;
-						});
+
 						if (_thatOC.Data2.ZMMSTA == "Rejected") {
+							var selectedKey = _thatOC.oVehicleDetailsJSON.getData().suffixData.filter(function (val) {
+								if (localLang === "F" && val.suffix == oSuffixValue) {
+									return val.suffix + " " + val.SuffixDescriptionFR +" "+ val.mrktg_int_desc_fr;
+								} else if (localLang === "E" && val.suffix == oSuffixValue) {
+									return val.suffix + " " + val.SuffixDescriptionEN +" "+ val.mrktg_int_desc_en;
+								}
+							});
 							_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
 						}
 						// _thatOC.oVehicleDetailsJSON.getData().suffixData = oData.d.results;
@@ -419,30 +419,16 @@ sap.ui.define([
 									if (oSuffixValue.Suffix != undefined) {
 										_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.Suffix);
 									} else {
-										// if (!oSuffixValue.split("-")[0]) {
 										_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue);
-										// } else {
-										// 	_thatOC.byId("ID_suffixSelect").setValue(oSuffixValue.split("-")[0]);
-										// }
 									}
 								} else {
 									if (oSuffixValue.OldSuffix != undefined || oSuffixValue.OldSuffix != "") {
 										_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.OldSuffix.split("-")[0]);
-									}
-									// else if (oSuffixValue.OldSuffix != undefined || oSuffixValue.OldSuffix != "") {
-									// 	_thatOC.byId("ID_suffixSelect").setValue(oSuffixValue.OldSuffix.split("-")[0]);
-									// } 
-									else {
+									} else {
 										if (oSuffixValue.Suffix != undefined) {
 											_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.Suffix.split("-")[0]);
 										} else {
-											// console.log("oSuffixValue.split(" - ")[0]", oSuffixValue.split("-")[0]);
-											// if (!oSuffixValue.split("-")[0]) {
 											_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue);
-											// }
-											// else {
-											// 	_thatOC.byId("ID_suffixSelect").setValue(oSuffixValue.split("-")[0]);
-											// }
 										}
 									}
 								}
