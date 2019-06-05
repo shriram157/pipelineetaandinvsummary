@@ -6,7 +6,7 @@ sap.ui.define([
 	"sap/ui/core/routing/History"
 ], function (BaseController, JSONModel, ResourceModel, History) {
 	"use strict";
-	var _thatSD, SelectedDealerS, sSelectedLocale, Division;
+	var _thatSD, SelectedDealerS, sSelectedLocale, Division, localLang;
 	return BaseController.extend("pipelineInventory.controller.shipToDealer", {
 
 		onInit: function () {
@@ -29,6 +29,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatSD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
+				localLang="F";
 			} else {
 				_thatSD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
@@ -36,6 +37,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatSD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
+				localLang="E";
 			}
 
 			var sLocation = window.location.host;
@@ -78,6 +80,14 @@ sap.ui.define([
 			_thatSD.getView().setModel(_thatSD._oViewModel, "LocalModel");
 
 			_thatSD.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatSD._oShipToDealerRoute, _thatSD);
+		},
+		
+		afterConfigLoad: function () {
+			if (localLang === "F") {
+				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "Plus";
+			} else {
+				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "More";
+			}
 		},
 
 		_oShipToDealerRoute: function (oEvent) {

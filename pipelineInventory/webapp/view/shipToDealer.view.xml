@@ -40,7 +40,7 @@
 						<Button text="{i18n>Submit}" type="Accept" enabled="{LocalModel>/enableResubmitBtn}" press="onSubmitChanges"/>
 					</OverflowToolbar>
 					<ScrollContainer height='70%' width="100%" vertical='true'>
-					<Table items="{DropShipDataModel>/results}" width="auto" class="sapUiResponsiveMargin headerFixClass">
+					<Table items="{DropShipDataModel>/results}" width="auto" class="sapUiResponsiveMargin headerFixClass" growing="true" growingThreshold="25" growingScrollToLoad="false" updateFinished="afterConfigLoad">
 						<headerToolbar>
 							<Toolbar>
 								<MessageStrip text="{i18n>Disclaimer}" type="Information" showIcon="true"></MessageStrip>

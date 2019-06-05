@@ -6,7 +6,7 @@ sap.ui.define([
 	"sap/ui/core/routing/History"
 ], function (BaseController, ResourceModel, JSONModel, History) {
 	"use strict";
-	var _thatAVS, sSelectedLocale,Division;
+	var _thatAVS, sSelectedLocale,Division , localLang;
 	return BaseController.extend("pipelineInventory.controller.assignVehiclesStatus", {
 
 		onInit: function () {
@@ -29,6 +29,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatAVS.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
+				localLang = "F";
 			} else {
 				_thatAVS.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
@@ -36,6 +37,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatAVS.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
+				localLang = "E";
 			}
 
 			var _oViewModel = new sap.ui.model.json.JSONModel({
@@ -57,8 +59,15 @@ sap.ui.define([
 					currentImageSource.setProperty("src", "images/Lexus.png");
 				}
 			}
-
 			_thatAVS.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatAVS._oAssignVehicleResponseRoute, _thatAVS);
+		},
+		
+		afterConfigLoad: function () {
+			if (localLang === "F") {
+				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "Plus";
+			} else {
+				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "More";
+			}
 		},
 
 		_oAssignVehicleResponseRoute: function (oEvt) {

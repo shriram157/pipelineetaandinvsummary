@@ -375,17 +375,29 @@ sap.ui.define([
 				success: function (oData) {
 					if (oData.d.results.length > 0) {
 						console.log("suffixData", oData.d.results);
-
-						if (_thatOC.Data2.ZMMSTA == "Rejected") {
-							var selectedKey = _thatOC.oVehicleDetailsJSON.getData().suffixData.filter(function (val) {
-								if (localLang === "F" && val.suffix == oSuffixValue) {
-									return val.suffix + " " + val.SuffixDescriptionFR +" "+ val.mrktg_int_desc_fr;
-								} else if (localLang === "E" && val.suffix == oSuffixValue) {
-									return val.suffix + " " + val.SuffixDescriptionEN +" "+ val.mrktg_int_desc_en;
-								}
-							});
-							_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
+						var selectedKey;
+						if (_thatOC.Data) {
+							if (_thatOC.Data.Status == "Rejected") {
+								selectedKey = _thatOC.oVehicleDetailsJSON.getData().suffixData.filter(function (val) {
+									if (localLang === "F" && val.suffix == oSuffixValue) {
+										return val.suffix + " " + val.SuffixDescriptionFR + " " + val.mrktg_int_desc_fr;
+									} else if (localLang === "E" && val.suffix == oSuffixValue) {
+										return val.suffix + " " + val.SuffixDescriptionEN + " " + val.mrktg_int_desc_en;
+									}
+								});
+								_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
+							}
 						}
+						// if (_thatOC.Data2.ZMMSTA == "Rejected") {
+						// 	var selectedKey = _thatOC.oVehicleDetailsJSON.getData().suffixData.filter(function (val) {
+						// 		if (localLang === "F" && val.suffix == oSuffixValue) {
+						// 			return val.suffix + " " + val.SuffixDescriptionFR +" "+ val.mrktg_int_desc_fr;
+						// 		} else if (localLang === "E" && val.suffix == oSuffixValue) {
+						// 			return val.suffix + " " + val.SuffixDescriptionEN +" "+ val.mrktg_int_desc_en;
+						// 		}
+						// 	});
+						// 	_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
+						// }
 						// _thatOC.oVehicleDetailsJSON.getData().suffixData = oData.d.results;
 						$.each(oData.d.results, function (i, item) {
 							_thatOC.oVehicleDetailsJSON.getData().suffixData.push({
@@ -411,29 +423,31 @@ sap.ui.define([
 				},
 				complete: function () {
 					jQuery.sap.delayedCall(500, _thatOC, function () {
-						if (_thatOC.Data2.ZMMSTA == "Rejected") {
-							_thatOC.oSuffixValue = oSuffixValue;
-							console.log("oSuffixValue", oSuffixValue);
-							if (oSuffixValue != undefined) {
-								if (!oSuffixValue.OldSuffix) {
-									if (oSuffixValue.Suffix != undefined) {
-										_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.Suffix);
-									} else {
-										_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue);
-									}
-								} else {
-									if (oSuffixValue.OldSuffix != undefined || oSuffixValue.OldSuffix != "") {
-										_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.OldSuffix.split("-")[0]);
-									} else {
+						if (_thatOC.Data) {
+							if (_thatOC.Data.Status == "Rejected") {
+								_thatOC.oSuffixValue = oSuffixValue;
+								console.log("oSuffixValue", oSuffixValue);
+								if (oSuffixValue != undefined) {
+									if (!oSuffixValue.OldSuffix) {
 										if (oSuffixValue.Suffix != undefined) {
-											_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.Suffix.split("-")[0]);
+											_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.Suffix);
 										} else {
 											_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue);
 										}
+									} else {
+										if (oSuffixValue.OldSuffix != undefined || oSuffixValue.OldSuffix != "") {
+											_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.OldSuffix.split("-")[0]);
+										} else {
+											if (oSuffixValue.Suffix != undefined) {
+												_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue.Suffix.split("-")[0]);
+											} else {
+												_thatOC.byId("ID_suffixSelect").setSelectedKey(oSuffixValue);
+											}
+										}
 									}
+									_thatOC.getView().getModel("VehicleDetailsJSON").updateBindings(true);
+									// _thatOC.onSuffixChange(_thatOC.byId("ID_suffixSelect"), _thatOC.ColorCode);
 								}
-								_thatOC.getView().getModel("VehicleDetailsJSON").updateBindings(true);
-								// _thatOC.onSuffixChange(_thatOC.byId("ID_suffixSelect"), _thatOC.ColorCode);
 							}
 						}
 
@@ -478,19 +492,21 @@ sap.ui.define([
 					console.log("suffix data", oData.d.results);
 					if (oData.d.results.length > 0) {
 						$.each(oData.d.results, function (i, item) {
-							if (_thatOC.Data2.ZMMSTA == "Rejected") {
-								if (ColorVal != undefined) {
-									if (localLang == "F") {
-										if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
-											_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
-										} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
-											_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
-										}
-									} else if (localLang == "E") {
-										if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
-											_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
-										} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
-											_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+							if (_thatOC.Data) {
+								if (_thatOC.Data.Status == "Rejected") {
+									if (ColorVal != undefined) {
+										if (localLang == "F") {
+											if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
+												_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
+											} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
+												_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
+											}
+										} else if (localLang == "E") {
+											if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
+												_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+											} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
+												_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+											}
 										}
 									}
 								}
@@ -518,20 +534,22 @@ sap.ui.define([
 				complete: function () {
 					jQuery.sap.delayedCall(1000, _thatOC, function () {
 						console.log("ColorVal", ColorVal);
-						if (_thatOC.Data2.ZMMSTA == "Rejected") {
-							if (ColorVal != undefined) {
-								if (ColorVal.OldColor != undefined) {
-									_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal.OldColor.split("-")[0]);
-								} else {
-									if (ColorVal.ExteriorColorCode != undefined) {
-										_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal.ExteriorColorCode);
+						if (_thatOC.Data) {
+							if (_thatOC.Data.Status == "Rejected") {
+								if (ColorVal != undefined) {
+									if (ColorVal.OldColor != undefined) {
+										_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal.OldColor.split("-")[0]);
 									} else {
-										if (!ColorVal.split("-")[0]) {
-											_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal);
+										if (ColorVal.ExteriorColorCode != undefined) {
+											_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal.ExteriorColorCode);
 										} else {
-											_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal.split("-")[0]);
+											if (!ColorVal.split("-")[0]) {
+												_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal);
+											} else {
+												_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal.split("-")[0]);
+											}
+											// _thatOC.byId("ID_ExteriorColorSelect").setValue(ColorVal);
 										}
-										// _thatOC.byId("ID_ExteriorColorSelect").setValue(ColorVal);
 									}
 								}
 							}

@@ -613,6 +613,18 @@ sap.ui.define([
 			if (obj.SERIES_DESC_FR != undefined) {
 				obj.SERIES_DESC_FR = obj.SERIES_DESC_FR.replace("/", "%2F");
 			}
+			if (obj.INTCOL_DESC_FR != undefined) {
+				obj.INTCOL_DESC_FR = obj.INTCOL_DESC_FR.replace("/", "%2F");
+			}
+			if (obj.INTCOL_DESC_EN != undefined) {
+				obj.INTCOL_DESC_EN = obj.INTCOL_DESC_EN.replace("/", "%2F");
+			}
+			if (obj.EXTCOL_DESC_EN != undefined) {
+				obj.EXTCOL_DESC_EN = obj.EXTCOL_DESC_EN.replace("/", "%2F");
+			}
+			if (obj.EXTCOL_DESC_FR != undefined) {
+				obj.EXTCOL_DESC_FR = obj.EXTCOL_DESC_FR.replace("/", "%2F");
+			}
 			oRouter.navTo("orderChange", {
 				Data: JSON.stringify(obj)
 			});

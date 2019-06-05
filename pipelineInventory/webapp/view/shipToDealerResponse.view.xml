@@ -28,7 +28,7 @@
 					<Label text="{i18n>DropShipStatus}" design="Bold" class="styleFontSize sapUiSmallMargin sapUiSmallPadding"/>
 					<ScrollContainer height='70%' width="100%" vertical='true'>
 					<Table items="{DropResponseModel>/responseResults}" width="auto" class="sapUiResponsiveMargin headerFixClass" growing="true" growingThreshold="7"
-						growingScrollToLoad="false">
+						growingScrollToLoad="false" updateFinished="afterConfigLoad">
 						<columns>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 								<Text text="{i18n>OrderNumber}"/>

@@ -38,7 +38,7 @@
 							</ComboBox>
 								</f:content>
 					</f:SimpleForm>
-						<Button text="{i18n>Submit}" type="Accept" enabled="{LocalModel>/enablesubmitBtn}"/>
+						<!--<Button text="{i18n>Submit}" type="Accept" enabled="{LocalModel>/enablesubmitBtn}"/>-->
 					</OverflowToolbar>
 					<ScrollContainer height='70%' width="100%" vertical='true'>
 					<Table items="{ChangeHistoryModel>/results}" width="auto" class="sapUiResponsiveMargin headerFixClass" growing="true" growingThreshold="5"

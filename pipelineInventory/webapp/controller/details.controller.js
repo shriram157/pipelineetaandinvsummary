@@ -81,6 +81,14 @@ sap.ui.define([
 			_thatDT.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatDT._oDetailsRoute, _thatDT);
 
 		},
+		
+		afterConfigLoad: function () {
+			if (localLang === "F") {
+				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "Plus";
+			} else {
+				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "More";
+			}
+		},
 
 		_oDetailsRoute: function (oDetailsRoute) {
 			_thatDT.getView().setBusy(false);

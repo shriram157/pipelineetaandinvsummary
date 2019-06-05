@@ -6,7 +6,7 @@ sap.ui.define([
 	"sap/ui/core/routing/History"
 ], function (BaseController, JSONModel, ResourceModel, History) {
 	"use strict";
-	var _thatAV, SelectedDealerA, sSelectedLocale, Division;
+	var _thatAV, SelectedDealerA, sSelectedLocale, Division, localLang;
 	return BaseController.extend("pipelineInventory.controller.assignVehicles", {
 		onInit: function () {
 			_thatAV = this;
@@ -38,6 +38,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatAV.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
+				localLang= "F";
 			} else {
 				_thatAV.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
@@ -45,6 +46,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatAV.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
+				localLang = "E";
 			}
 
 			/*Logic for logo change depending upon Toyota and Lexus user*/
@@ -77,6 +79,13 @@ sap.ui.define([
 			_thatAV.getView().setModel(_thatAV._oViewModel, "LocalModel");
 
 			_thatAV.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatAV._oAssignVehicleRoute, _thatAV);
+		},
+		afterConfigLoad: function () {
+			if (localLang === "F") {
+				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "Plus";
+			} else {
+				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "More";
+			}
 		},
 
 		_oAssignVehicleRoute: function (oEvent) {
