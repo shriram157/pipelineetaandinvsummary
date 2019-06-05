@@ -102,13 +102,13 @@ sap.ui.define([
 				DNCEnabled: true
 			});
 			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
-			var FleetVal = sap.ui.getCore().getModel("fleetMatrixModel").getProperty("/FleetColnIndex");
-			if (FleetVal == "07" || FleetVal == "08" || FleetVal == "09" || FleetVal == "10" || FleetVal == "11" || FleetVal == "12" ||
-				FleetVal == "13") {
-				this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", false);
-			} else {
-				this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", true);
-			}
+			// var FleetVal = sap.ui.getCore().getModel("fleetMatrixModel").getProperty("/FleetColnIndex");
+			// if (FleetVal == "07" || FleetVal == "08" || FleetVal == "09" || FleetVal == "10" || FleetVal == "11" || FleetVal == "12" ||
+			// 	FleetVal == "13") {
+			// 	this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", false);
+			// } else {
+			// 	this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", true);
+			// }
 
 			_thatVD.getView().setModel(sap.ui.getCore().getModel("VehicleDetailsJSON"), "VehicleDetailsJSON");
 			_thatVD.oVehicleDetailsJSON = _thatVD.getView().getModel("VehicleDetailsJSON");
@@ -361,17 +361,6 @@ sap.ui.define([
 									_thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_EN.replace("%2F", "/");
 									_thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_FR.replace("%2F", "/");
 									_thatVD.oVehicleDetailsJSON.getData().results[i].Suffix = _thatVD.oVehicleDetailsJSON.getData().results[i].Suffix.replace("%2F", "/");
-
-									// _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR
-									// 	.replace("%2F", "/");
-									// _thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN
-									// 	.replace("%2F", "/");
-									// _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN
-									// 	.replace("%2F", "/");
-									// _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR
-									// 	.replace("%2F", "/");
-									// _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN
-									// 	.replace("%2F", "/");
 									console.log("% formatted data", Data);
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData = [];
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData = [];
@@ -415,6 +404,13 @@ sap.ui.define([
 									// 	"DNCVehicle": "Remove DNC Demo / Loaner Vehicle"
 									// };
 									/*Defect Number 12615 solution end*/
+									
+									if(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNC_Hide == true){
+										this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", false);
+									}
+									else if(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNC_Hide == false){
+										this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", true);
+									}
 									_thatVD.oVehicleDetailsJSON.updateBindings();
 
 									var _OrderNumber = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].VHCLE;
@@ -570,7 +566,7 @@ sap.ui.define([
 		onDNCOptionSlection: function (oDNCVal) {
 			// debugger;
 			this.oBundle = this.getView().getModel("i18n").getResourceBundle(); //this.oBundle.getText("DNDemoLoanerVehicle")
-			if (oDNCVal.getParameters().selectedItem != null) {
+			if (oDNCVal.getParameters().selectedItem !== null) {
 				var _oDNCVal = oDNCVal.getParameters().selectedItem.getText();
 			}
 			if (_oDNCVal == this.oBundle.getText("RemoveSelection")) {
