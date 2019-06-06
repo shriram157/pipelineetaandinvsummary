@@ -38,7 +38,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatVD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
-				localLang: "E";
+				localLang= "E";
 			}
 
 			var sLocation = window.location.host;
@@ -584,8 +584,8 @@ sap.ui.define([
 			var obj = _thatVD.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(_thatVD);
 			obj.newAPXValues = [];
-			for (var m = 0; m < _thatVD.oVehicleDetailsJSON.getData().APXData.length; m++) {
-				obj.newAPXValues.push(_thatVD.oVehicleDetailsJSON.getData().APXData[m]);
+			for (var m = 0; m < _thatVD.getView().getModel("VehicleDetailsJSON").getData().APXData.length; m++) {
+				obj.newAPXValues.push(_thatVD.getView().getModel("VehicleDetailsJSON").getData().APXData[m]);
 				obj.newAPXValues[m].__metadata = "";
 			}
 
