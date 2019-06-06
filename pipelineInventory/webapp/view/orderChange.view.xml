@@ -73,7 +73,7 @@
 									<Label text="{i18n>NewColour}" required="true"/>
 									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_ExteriorColorSelect" forceSelection="true" items="{VehicleDetailsJSON>/colorData}">
 										<core:Item key="{VehicleDetailsJSON>ExteriorColorCode}"
-											text="{VehicleDetailsJSON>ExteriorColorCode} - {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>MarketingDescriptionEXTColorEN}:${VehicleDetailsJSON>MarketingDescriptionEXTColorEN}}"/>
+											text="{VehicleDetailsJSON>ExteriorColorCode} - {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>MarketingDescriptionEXTColorEN}:${VehicleDetailsJSON>MarketingDescriptionEXTColorFR}}"/>
 									</Select>
 									<Label text="{i18n>NewAPX}" required="true"/>
 									<Select enabled="{LocalOCModel>/dropdownEnabled}" forceSelection="false" selectedKey="" id="APXrequired" items="{ path: 'VehicleDetailsJSON>/selectedVehicleData/0/newAPXValues'}">

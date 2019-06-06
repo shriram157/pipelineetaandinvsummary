@@ -84,11 +84,15 @@ sap.ui.define([
 		},
 
 		afterConfigLoad: function () {
+			console.log("afterConfigLoad  ", localLang);
 			if (localLang === "F") {
 				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "Plus";
 			} else {
 				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "More";
 			}
+		},
+		onAfterRendering: function () {
+			_thatCH.afterConfigLoad();
 		},
 
 		_oChangeHistoryRoute: function (oEvent) {
@@ -115,6 +119,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatCH.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
+				localLang = "F";
 			} else {
 				_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
@@ -122,6 +127,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatCH.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
+				localLang = "E";
 			}
 
 			var sLocation = window.location.host;
@@ -175,6 +181,7 @@ sap.ui.define([
 									_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
 								}
 							}
+							_thatCH.afterConfigLoad();
 							_thatCH.oChangeHistoryModel.updateBindings(true);
 						} else {
 							_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
@@ -211,6 +218,7 @@ sap.ui.define([
 									_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
 								}
 							}
+							_thatCH.afterConfigLoad();
 							_thatCH.oChangeHistoryModel.updateBindings(true);
 						} else {
 							_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
@@ -222,7 +230,6 @@ sap.ui.define([
 						_thatCH.errorFlag = true;
 					}
 				});
-
 			}
 		},
 
@@ -260,6 +267,7 @@ sap.ui.define([
 								_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
 							}
 						}
+						_thatCH.afterConfigLoad();
 						_thatCH.oChangeHistoryModel.updateBindings(true);
 					} else {
 						_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
@@ -277,10 +285,10 @@ sap.ui.define([
 		},
 
 		onNavigateToVL: function (oNavEvent) {
-			
+
 			var obj = oNavEvent.getSource().getModel("ChangeHistoryModel").getProperty(oNavEvent.getSource().getBindingContext(
 				"ChangeHistoryModel").sPath);
-			console.log("pre formatted data",obj);
+			console.log("pre formatted data", obj);
 			obj.NewSuffix = obj.NewSuffix.replace("/", "%2F");
 			obj.OldSuffix = obj.OldSuffix.replace("/", "%2F");
 			obj.__metadata = "";
@@ -291,7 +299,7 @@ sap.ui.define([
 		onNavigateToOC: function (oResubmit) {
 			var data = oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
 				"ChangeHistoryModel").sPath);
-			console.log("pre formatted data",data);
+			console.log("pre formatted data", data);
 			data.NewSuffix = data.NewSuffix.replace("/", "%2F");
 			data.OldSuffix = data.OldSuffix.replace("/", "%2F");
 			data.__metadata = "";
@@ -336,6 +344,11 @@ sap.ui.define([
 					_thatCH.getRouter().navTo("vehicleDetailsNodata");
 				}
 			}
+		},
+		onExit: function () {
+			this.getView().byId("configTable").destroy();
+			this.getView().destroy();
 		}
+
 	});
 });

@@ -378,29 +378,40 @@ sap.ui.define([
 					if (oData.d.results.length > 0) {
 						console.log("suffixData", oData.d.results);
 						var selectedKey;
-						if (_thatOC.Data) {
-							if (_thatOC.Data.Status == "Rejected") {
-								selectedKey = _thatOC.oVehicleDetailsJSON.getData().suffixData.filter(function (val) {
-									if (localLang === "F" && val.suffix == oSuffixValue) {
-										return val.suffix + " " + val.SuffixDescriptionFR + " " + val.mrktg_int_desc_fr;
-									} else if (localLang === "E" && val.suffix == oSuffixValue) {
-										return val.suffix + " " + val.SuffixDescriptionEN + " " + val.mrktg_int_desc_en;
-									}
-								});
-								_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
-							}
-						}
-						// if (_thatOC.Data2.ZMMSTA == "Rejected") {
-						// 	var selectedKey = _thatOC.oVehicleDetailsJSON.getData().suffixData.filter(function (val) {
-						// 		if (localLang === "F" && val.suffix == oSuffixValue) {
-						// 			return val.suffix + " " + val.SuffixDescriptionFR +" "+ val.mrktg_int_desc_fr;
-						// 		} else if (localLang === "E" && val.suffix == oSuffixValue) {
-						// 			return val.suffix + " " + val.SuffixDescriptionEN +" "+ val.mrktg_int_desc_en;
-						// 		}
-						// 	});
-						// 	_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
-						// }
-						// _thatOC.oVehicleDetailsJSON.getData().suffixData = oData.d.results;
+							if (_thatOC.Data) {
+								if (_thatOC.Data.Status !== "Accepted") {
+									selectedKey = oData.d.results.filter(function (val) {
+										if (localLang === "F" && val.suffix == oSuffixValue) {
+											return val.suffix + " " + val.SuffixDescriptionFR + " " + val.mrktg_int_desc_fr;
+										} else if (localLang === "E" && val.suffix == oSuffixValue) {
+											return val.suffix + " " + val.SuffixDescriptionEN + " " + val.mrktg_int_desc_en;
+										}
+									});
+									_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
+								}
+							} 
+							// else {
+							// 	selectedKey = oData.d.results.filter(function (val) {
+							// 		if (localLang === "F" && val.suffix == oSuffixValue) {
+							// 			return val.suffix + " " + val.SuffixDescriptionFR + " " + val.mrktg_int_desc_fr;
+							// 		} else if (localLang === "E" && val.suffix == oSuffixValue) {
+							// 			return val.suffix + " " + val.SuffixDescriptionEN + " " + val.mrktg_int_desc_en;
+							// 		}
+							// 	});
+							// 	_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
+							// }
+							// if (_thatOC.Data2.ZMMSTA == "Rejected") {
+							// 	var selectedKey = _thatOC.oVehicleDetailsJSON.getData().suffixData.filter(function (val) {
+							// 		if (localLang === "F" && val.suffix == oSuffixValue) {
+							// 			return val.suffix + " " + val.SuffixDescriptionFR +" "+ val.mrktg_int_desc_fr;
+							// 		} else if (localLang === "E" && val.suffix == oSuffixValue) {
+							// 			return val.suffix + " " + val.SuffixDescriptionEN +" "+ val.mrktg_int_desc_en;
+							// 		}
+							// 	});
+							// 	_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
+							// }
+							// _thatOC.oVehicleDetailsJSON.getData().suffixData = oData.d.results;
+						
 						$.each(oData.d.results, function (i, item) {
 							_thatOC.oVehicleDetailsJSON.getData().suffixData.push({
 								"Model": item.Model,
@@ -491,31 +502,75 @@ sap.ui.define([
 					"' and Model eq '" + Model + "' and Suffix eq '" + Suffix + "' and TCISeries eq '" + series + "'",
 				type: "GET",
 				success: function (oData) {
-					_thatOC.oVehicleDetailsJSON.getData().colorData=[];
+					_thatOC.oVehicleDetailsJSON.getData().colorData = [];
 					_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					console.log("suffix data", oData.d.results);
+					if (!ColorVal.split("-")[0]) {
+						ColorVal = ColorVal;
+					} else {
+						ColorVal = ColorVal.split("-")[0];
+					}
+					var selectedKey;
 					if (oData.d.results.length > 0) {
-						$.each(oData.d.results, function (i, item) {
-							if (_thatOC.Data) {
-								if (_thatOC.Data.Status == "Rejected") {
-									if (ColorVal != undefined) {
-										if (localLang == "F") {
-											if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
-												_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
-											} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
-												_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
-											}
-										} else if (localLang == "E") {
-											if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
-												_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
-											} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
-												_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
-											}
+						if (_thatOC.Data) {
+							if (_thatOC.Data.Status !== "Accepted") {
+								if (ColorVal != undefined) {
+									selectedKey = oData.d.results.filter(function (val) {
+										if (localLang === "F" && val.ExteriorColorCode == ColorVal) {
+											return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorFR + " " + val.mrktg_int_desc_fr;
+										} else if (localLang === "E" && val.ExteriorColorCode == ColorVal) {
+											return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorEN + " " + val.mrktg_int_desc_en;
 										}
-									}
+									});
+									_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(selectedKey);
 								}
 							}
+						} else {
+							// if (_thatOC.Data) {
+							// 	if (_thatOC.Data.Status == "Accepted") {
+							// 		if (ColorVal != undefined) {
+							// 			if (localLang == "F") {
+							// 				if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
+							// 					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
+							// 				} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
+							// 					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
+							// 				}
+							// 			} else if (localLang == "E") {
+							// 				if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
+							// 					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+							// 				} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
+							// 					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+							// 				}
+							// 			}
+							// 		}
+							// 	}
+							// } else {
+							// if (localLang == "F") {
+							// 	if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
+							// 		_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
+							// 	} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
+							// 		_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
+							// 	}
+							// } else if (localLang == "E") {
+							// 	if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
+							// 		_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+							// 	} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
+							// 		_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
+							// 	}
+							// }
+							if (ColorVal != undefined) {
+								selectedKey = oData.d.results.filter(function (val) {
+									if (localLang === "F" && val.ExteriorColorCode == ColorVal) {
+										return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorFR + " " + val.mrktg_int_desc_fr;
+									} else if (localLang === "E" && val.ExteriorColorCode == ColorVal) {
+										return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorEN + " " + val.mrktg_int_desc_en;
+									}
+								});
+								_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(selectedKey);
+							}
+						}
 
+						$.each(oData.d.results, function (i, item) {
 							_thatOC.oVehicleDetailsJSON.getData().colorData.push({
 								"ExteriorColorCode": item.ExteriorColorCode,
 								"MarketingDescriptionEXTColorEN": item.MarketingDescriptionEXTColorEN,
@@ -661,7 +716,7 @@ sap.ui.define([
 					} else {
 						_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Status = "Requested";
 						_thatOC.getView().getModel("VehicleDetailsJSON").updateBindings(true);
-						sap.m.MessageBox.show(_thatOC.oI18nModel.getResourceBundle().getText("Error"), {
+						sap.m.MessageBox.show(_thatOC.oI18nModel.getResourceBundle().getText("VehicleUpdated"), {
 							icon: sap.m.MessageBox.Icon.SUCCESS,
 							title: _thatOC.oI18nModel.getResourceBundle().getText("Success"),
 							actions: [sap.m.MessageBox.Action.OK],
