@@ -27,7 +27,6 @@
 				<content>
 					<f:SimpleForm id="ID_filterDetailsForm" class="styleSearchForm" columnsL="2" columnsM="2" editable="false" emptySpanL="0" emptySpanM="0"
 						labelSpanL="2" labelSpanM="2" layout="ResponsiveGridLayout">
-						<!--<f:SimpleForm width="100%" editable="true" layout="ResponsiveGridLayout">-->
 						<f:content>
 							<HBox>
 								<Label text="{i18n>OrderNumber}" class="sapUiSmallMargin"/>
@@ -56,11 +55,6 @@
 							
 							<HBox>
 								<Label text="" class="sapUiSmallMargin"/>
-								<!--<Button text="{i18n>ApplyFilters}" type="Default" press="onApplyFilterBtn">
-									<layoutData>
-										<l:GridData span="L2 M12 S12"/>
-									</layoutData>
-								</Button>-->
 							</HBox>
 						</f:content>
 					</f:SimpleForm>
@@ -76,7 +70,6 @@
 					<ScrollContainer height='65%' width="100%" vertical='true'>
 						<Table items="{VehicleDetailsJSON>/results}" width="97%" class="sapUiResponsiveMargin headerFixClass" mode="MultiSelect" id="Tab_vehicleDetails"
 							selectionChange="vehicleSelect" growing="true" growingThreshold="25" growingScrollToLoad="false" updateFinished="afterConfigLoad">
-							<!--growing="true" growingThreshold="2" growingScrollToLoad="false"-->
 							<columns>
 								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 									<Text text="{i18n>OrderNumber}"/>

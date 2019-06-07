@@ -1,5 +1,4 @@
 sap.ui.define([
-	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/resource/ResourceModel',
@@ -45,6 +44,7 @@ sap.ui.define([
 				delay: 0
 			});
 			_thatSDR.getView().setModel(_oViewModel, "LocalSDRModel");
+			
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -60,7 +60,6 @@ sap.ui.define([
 				}
 			}
 
-			// _thatSDR.getView().setModel(sap.ui.getCore().getModel("DropShipDataModel"), "DropShipDataModel");
 			_thatSDR.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatSDR._oShipToDealerResponseRoute, _thatSDR);
 		},
 		afterConfigLoad: function () {
@@ -107,6 +106,7 @@ sap.ui.define([
 				delay: 0
 			});
 			_thatSDR.getView().setModel(_oViewModel, "LocalSDRModel");
+			
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -147,9 +147,6 @@ sap.ui.define([
 			} else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
 				_thatSDR.getRouter().navTo("vehicleDetailsNodata");
 			}
-			// else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-			// 	_thatSDR.getRouter().navTo("changeHistory");
-			// }
 			else if (_oSelectedScreen == _thatSDR.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
 				_thatSDR.getRouter().navTo("changeHistory2");
 
@@ -163,7 +160,5 @@ sap.ui.define([
 				}
 			}
 		}
-
 	});
-
 });

@@ -16,7 +16,6 @@
 				<tnt:ToolHeader>
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
-					<!--<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>-->
 					<ToolbarSpacer>
 						<layoutData>
 							<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px"/>
@@ -38,16 +37,10 @@
 							</ComboBox>
 								</f:content>
 					</f:SimpleForm>
-						<!--<Button text="{i18n>Submit}" type="Accept" enabled="{LocalModel>/enablesubmitBtn}"/>-->
 					</OverflowToolbar>
 					<ScrollContainer height='70%' width="100%" vertical='true'>
 					<Table id="configTable" items="{ChangeHistoryModel>/results}" width="auto" class="sapUiResponsiveMargin headerFixClass" growing="true" growingThreshold="5"
 						growingScrollToLoad="false" updateFinished="afterConfigLoad">
-						<!--<headerToolbar>-->
-						<!--	<Toolbar>-->
-						<!--		<MessageStrip text="{i18n>Disclaimer}" type="Information" showIcon="true"></MessageStrip>-->
-						<!--	</Toolbar>-->
-						<!--</headerToolbar>-->
 						<columns>
 							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 								<Text text="{i18n>OrderNumber}"/>

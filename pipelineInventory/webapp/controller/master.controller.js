@@ -83,9 +83,7 @@ sap.ui.define([
 			_that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
 			_that.BusinessPartnerData.setSizeLimit(750);
 			_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
-			// _that.getView().setModel("BusinessDataModel").setSizeLimit(500);
 			sap.ui.getCore().setModel(_that.BusinessPartnerData, "BusinessDataModel");
-			// sap.ui.getCore().setModel("BusinessDataModel").setSizeLimit(500);
 
 			//Local Testing
 			var sLocation = window.location.host;
@@ -151,7 +149,6 @@ sap.ui.define([
 				this.sPrefix = "";
 			}
 			this.nodeJsUrl = this.sPrefix + "/node";
-			// _that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 			sap.ui.core.BusyIndicator.show();
 
 			$.ajax({
@@ -159,7 +156,6 @@ sap.ui.define([
 				url: "/userDetails/currentScopesForUser",
 				type: "GET",
 				success: function (scopesData) {
-					console.log("currentScopesForUser", scopesData);
 					scopesData = scopesData.loggedUserType[0];
 					if (scopesData == "TCI_Zone_Admin" || scopesData == "TCI_User") {
 						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "AdminUser";
@@ -188,7 +184,6 @@ sap.ui.define([
 						_that.BusinessPartnerData.getData().DealerList = userAttributes.attributes;
 					} else {
 						var salesArr = userAttributes.sales;
-						console.log("salesArr", salesArr);
 						var SalesData = salesArr.filter(function (val) {
 							return val.Division === DivAttribute;
 						});
@@ -292,38 +287,6 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 				}
 			});
-			// $.ajax({
-			// 	dataType: "json",
-			// 	url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser + "'",
-			// 	type: "GET",
-			// 	success: function (oData) {
-			// 		if (oData.d.results.length > 0) {
-			// 			var b = 0;
-			// 			for (var i = 0; i < oData.d.results.length; i++) {
-			// 				var ModelSeriesNo = oData.d.results[i].ModelSeriesNo;
-			// 				for (var j = 0; j < seriesdata.length; j++) {
-			// 					if (ModelSeriesNo != seriesdata[j].ModelSeriesNo) {
-			// 						b++;
-			// 					}
-			// 				}
-			// 				if (b == seriesdata.length) {
-			// 					seriesdata.push({
-			// 						"ModelSeriesNo": oData.d.results[i].ModelSeriesNo,
-			// 						"TCISeriesDescriptionEN": oData.d.results[i].TCISeriesDescriptionEN
-			// 					});
-			// 				}
-			// 				b = 0;
-			// 			}
-			// 			console.log("Series Data", seriesdata);
-			// 		} else {
-			// 			//
-			// 		}
-			// 	},
-			// 	error: function (oError) {
-			// 		sap.ui.core.BusyIndicator.hide();
-			// 		_that.errorFlag = true;
-			// 	}
-			// });
 
 			/*Global Model initialization and mapping on view*/
 			_that.oGlobalJSONModel = new JSONModel();
@@ -376,10 +339,7 @@ sap.ui.define([
 
 			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
 				"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
-			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser +	"' &$orderby=ProductHierarchy asc";
-
-			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq 'TOY' and zzzadddata2 eq 'X'&$orderby=SeriesSequenceNumber asc
-			//	var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + _that.ModelYear + "'";
+		
 			$.ajax({
 				dataType: "json",
 				url: url,
@@ -388,7 +348,6 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
-						//	_that.fetchSeries(oModelData.d.results);
 						if (SelectedDealer == undefined) {
 							var DealerVal = _that.getView().byId("ID_DealearPicker").getSelectedKey();
 							for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
@@ -397,8 +356,6 @@ sap.ui.define([
 								}
 							}
 						}
-						console.log("SelectedDealer", SelectedDealer);
-						// var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
 						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
@@ -412,7 +369,6 @@ sap.ui.define([
 								}
 							});
 						}
-						console.log("Series data", oModelData.d.results);
 						for (var i = 0; i < oModelData.d.results.length; i++) {
 							if (oModelData.d.results[i] != undefined) {
 								_that.oGlobalJSONModel.getData().seriesData.push({
@@ -429,7 +385,6 @@ sap.ui.define([
 							"localLang": "",
 							"TCISeriesDescriptionFR": ""
 						});
-						console.log("series", _that.oGlobalJSONModel);
 						_that.oGlobalJSONModel.updateBindings(true);
 
 					} else {
@@ -460,8 +415,6 @@ sap.ui.define([
 			_that.getView().byId("tableMultiHeader").getColumns()[2].setHeaderSpan([5, 1, 1]);
 			_that.getView().byId("tableMultiHeader").getColumns()[3].setHeaderSpan([5, 4, 1]);
 
-			// _that.getView().byId("tableMultiHeader").getColumns()[7].setHeaderSpan([7, 2, 1]);
-			// _that.getView().byId("tableMultiHeader").getColumns()[8].setHeaderSpan([7, 5, 1]);
 			_that.getView().byId("tableMultiHeader").getColumns()[7].setHeaderSpan([7, 2, 1]);
 			_that.getView().byId("tableMultiHeader").getColumns()[8].setHeaderSpan([1, 1, 1]);
 			_that.getView().byId("tableMultiHeader").getColumns()[9].setHeaderSpan([5, 5, 1]);
@@ -474,27 +427,15 @@ sap.ui.define([
 			_that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([7, 2, 1]);
 			_that.getView().byId("tableMultiHeader2").getColumns()[8].setHeaderSpan([1, 1, 1]);
 			_that.getView().byId("tableMultiHeader2").getColumns()[9].setHeaderSpan([5, 5, 1]);
-			// _that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([1, 1, 1]);
-			// _that.getView().byId("tableMultiHeader2").getColumns()[8].setHeaderSpan([6, 6, 1]);
-			//_that.getView().byId("tableMultiHeader2").getColumns()[7].setHeaderSpan([7, 1, 1]);
-			//_that.getView().byId("tableMultiHeader2").getColumns()[8].setHeaderSpan([7, 2, 1]);
-			//_that.getView().byId("tableMultiHeader2").getColumns()[10].setHeaderSpan([7, 4, 1]);
 			_that.getView().byId("tableMultiHeader2").getColumns()[15].setHeaderSpan([2, 2, 1]);
-
-			// _that.getView().byId("tableMultiHeader3").getColumns()[1].setHeaderSpan([6, 6, 1]);
 
 			_that.getView().byId("tableMultiHeader3").getColumns()[1].setHeaderSpan([1, 1, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[2].setHeaderSpan([5, 1, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[3].setHeaderSpan([5, 4, 1]);
-			// _that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([1, 1, 1]);
-			// _that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([6, 6, 1]);
 
 			_that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([7, 2, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([1, 1, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[9].setHeaderSpan([5, 5, 1]);
-			//_that.getView().byId("tableMultiHeader3").getColumns()[7].setHeaderSpan([7, 1, 1]);
-			//_that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([7, 2, 1]);
-			//_that.getView().byId("tableMultiHeader3").getColumns()[10].setHeaderSpan([7, 4, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[15].setHeaderSpan([2, 2, 1]);
 
 			for (var n = 1; n < _that.getView().byId("tableMultiHeader3").getRows()[2].getCells().length; n++) {
@@ -514,10 +455,7 @@ sap.ui.define([
 
 			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
 				"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
-			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser +	"' &$orderby=ProductHierarchy asc";
-
-			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq 'TOY' and zzzadddata2 eq 'X'&$orderby=SeriesSequenceNumber asc
-			//	var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + _that.ModelYear + "'";
+		
 			$.ajax({
 				dataType: "json",
 				url: url,
@@ -526,15 +464,6 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
-						// if (SelectedDealer == undefined) {
-						// 	var DealerVal = _that.getView().byId("ID_DealearPicker").getSelectedKey();
-						// 	for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
-						// 		if (DealerVal == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
-						// 			SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
-						// 		}
-						// 	}
-						// }
-						// var DealerVal = _that.getView().byId("ID_DealearPicker").getValue();
 						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
@@ -548,8 +477,6 @@ sap.ui.define([
 								}
 							});
 						}
-						console.log("SelectedDealer", SelectedDealer);
-						console.log("Series data", oModelData.d.results);
 						for (var i = 0; i < oModelData.d.results.length; i++) {
 							if (oModelData.d.results[i] != undefined) {
 								_that.oGlobalJSONModel.getData().seriesData.push({
@@ -566,7 +493,6 @@ sap.ui.define([
 							"localLang": "",
 							"TCISeriesDescriptionFR": ""
 						});
-						console.log("series", _that.oGlobalJSONModel);
 						_that.oGlobalJSONModel.updateBindings(true);
 
 					} else {
@@ -589,13 +515,7 @@ sap.ui.define([
 				_that.intcolor = selectedDDValues[selectedDDValues.length - 1];
 				_that.getView().byId("ID_DealearPicker").setSelectedItem(selectedDDValues[selectedDDValues.length - 3]);
 				_that.getView().byId("id_BusinessPartnerName").setValue(selectedDDValues[selectedDDValues.length - 3].getAdditionalText());
-				/*if (selectedDDValues[0] != "") {
-					_that.getView().byId("ID_DealearPicker").setSelectedKey(selectedDDValues[0]);
-					_that.getView().byId("id_BusinessPartnerName").setValue(selectedDDValues[selectedDDValues.length - 3].getAdditionalText());
-				} else if (selectedDDValues[selectedDDValues.length - 3] != "") {
-					_that.getView().byId("ID_DealearPicker").setSelectedItem(selectedDDValues[selectedDDValues.length - 3]);
-					_that.getView().byId("id_BusinessPartnerName").setValue(selectedDDValues[selectedDDValues.length - 3].getAdditionalText());
-				}*/
+			
 				for (var i = 0; i < selectedDDValues.length; i++) {
 					if (selectedDDValues[i] != "") {
 						switch (i) {
@@ -637,7 +557,7 @@ sap.ui.define([
 				_that.getView().byId("id_ETADate").setValue();
 
 				_that.getView().byId("id_BusinessPartnerName").setValue(oDealer.getParameters().selectedItem.getAdditionalText());
-				//var SelectedDealerKey = oDealer.getParameters().selectedItem.getText().split("-")[0];
+				
 				var SelectedDealerKey = oDealer.getParameters().selectedItem.getText();
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
 				if (oDealer.getParameters().selectedItem.getAdditionalText() == "TCI Total") {
@@ -722,14 +642,12 @@ sap.ui.define([
 
 		/*Fetch data on apply filter click for all three tables*/
 		applyFiltersBtn: function () {
-			//_that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 			if (_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "TCI Total" && _that.getView().byId(
 					"ID_seriesDesc").getSelectedKey() == _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				MessageBox.show(_that.oI18nModel.getResourceBundle().getText("MandatorySeriesForNationalUser"), MessageBox.Icon.ERROR, "Error",
 					MessageBox.Action.OK, null, null);
-				//MandatorySeriesForNationalUser
+				
 			} else {
-				// _that.getView().byId("ID_APXValue").getItems()[0].setEnabled(false);
 				sap.ui.core.BusyIndicator.show();
 				_that.ID_modelYearPicker = _that.getView().byId("ID_modelYearPicker").getValue();
 
@@ -748,7 +666,6 @@ sap.ui.define([
 							"GlobalJSONModel").sPath).int_c;
 						_that.intcolor = intcol;
 					}
-
 				} else {
 					_that.ID_marktgIntDesc = "";
 					_that.intcolor = "";
@@ -766,7 +683,6 @@ sap.ui.define([
 				if (ETADate != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 					_that.ETADate = _that.oDateFormat.format(new Date(ETADate));
 				} else _that.ETADate = "";
-				//VKBUR
 				/*adding logic to store selected values from dropdown*/
 				selectedDDValues = [_that.getView().byId("ID_DealearPicker").getSelectedKey(), _that.ID_modelYearPicker, _that.ID_seriesDesc,
 					_that
@@ -775,7 +691,6 @@ sap.ui.define([
 					_that.userType, _that.intcolor
 				];
 				seriesModel = _that.oGlobalJSONModel.getData();
-				console.log(selectedDDValues);
 				if (_that.salesOffice == undefined) {
 					_that.salesOffice = "";
 				}
@@ -786,21 +701,12 @@ sap.ui.define([
 					"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
 					_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' and LANGUAGE eq '" + this.localLang +
 					"' &$format=json";
-
-				// filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType +
-				// 	"' and Dealer eq '" +
-				// 	SelectedDealer + "' and Model eq '" + _that.ID_model +
-				// 	"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
-				// 	"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
-				// 	_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' &$format=json";
-
 				_that.fetchCountsforTables(filteredData);
 			}
 		},
 
 		fetchCountsforTables: function (filteredData) {
 			var ETACounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Pipeline_CountSet" + filteredData;
-			console.log("queryString", filteredData);
 			if (_that.oGlobalJSONModel != undefined) {
 				$.ajax({
 					dataType: "json",
@@ -808,7 +714,6 @@ sap.ui.define([
 					type: "GET",
 					success: function (oCountData) {
 						sap.ui.core.BusyIndicator.hide();
-						console.log("ETA Count Data", oCountData.d.results);
 						_that.oGlobalJSONModel.getData().ETAResults = oCountData.d.results;
 						_that.oGlobalJSONModel.updateBindings();
 					},
@@ -818,7 +723,6 @@ sap.ui.define([
 					}
 				});
 			}
-			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Inventory_CountSet?$filter=Model eq 'YZ3DCT' and Modelyear eq '2018'&$format=json
 			var InventCounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Inventory_CountSet" + filteredData;
 			if (_that.oGlobalJSONModel != undefined) {
 				$.ajax({
@@ -827,8 +731,6 @@ sap.ui.define([
 					type: "GET",
 					success: function (oCountData) {
 						sap.ui.core.BusyIndicator.hide();
-						console.log("Invent Count Data", oCountData.d.results);
-						//oCountData.d.results
 						_that.oGlobalJSONModel.getData().InventSumResults = oCountData.d.results;
 						_that.oGlobalJSONModel.updateBindings();
 					},
@@ -839,7 +741,6 @@ sap.ui.define([
 				});
 			}
 
-			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Inventory_CountSet?$filter=Model eq 'YZ3DCT' and Modelyear eq '2018'&$format=json
 			var DelCounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Delivery_CountSet" + filteredData;
 			if (_that.oGlobalJSONModel != undefined) {
 				$.ajax({
@@ -848,7 +749,6 @@ sap.ui.define([
 					type: "GET",
 					success: function (oCountData) {
 						sap.ui.core.BusyIndicator.hide();
-						console.log("Del Count Data", oCountData.d.results);
 						_that.oGlobalJSONModel.getData().DeliveryResults = oCountData.d.results;
 						_that.oGlobalJSONModel.updateBindings();
 					},
@@ -863,7 +763,6 @@ sap.ui.define([
 		onModelSelectionChange: function (oModel) {
 			_that.temp = [];
 			_that.temp1 = [];
-			// _that.getView().byId("ID_modelDesc").getItems()[0].setEnabled(false);
 			_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
@@ -871,7 +770,6 @@ sap.ui.define([
 			_that.Modelyear = _that.modelYearPicker.getSelectedKey();
 			_that.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
 			_that.oGlobalJSONModel.getData().suffixData = [];
-			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '"+ _that.Model +"' and Modelyear eq '"+ _that.Modelyear +"'
 			$.ajax({
 				dataType: "json",
 				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _that.Model + "' and Modelyear eq '" +
@@ -879,7 +777,6 @@ sap.ui.define([
 				type: "GET",
 				success: function (oData) {
 					if (oData.d.results.length > 0) {
-						// _that.oGlobalJSONModel.getData().suffixData = oData.d.results;
 						$.each(oData.d.results, function (i, item) {
 							_that.oGlobalJSONModel.getData().suffixData.push({
 								"Model": item.Model,
@@ -893,7 +790,6 @@ sap.ui.define([
 								"localLang": URILang
 							});
 						});
-						console.log("_that.oGlobalJSONModel.getData().suffixData", _that.oGlobalJSONModel.getData().suffixData);
 						sap.ui.core.BusyIndicator.hide();
 						_that.oGlobalJSONModel.getData().suffixData.unshift({
 							"Model": "",
@@ -929,13 +825,10 @@ sap.ui.define([
 				url: url,
 				type: "GET",
 				success: function (oDataInner) {
-					console.log("oDataInner.results", oDataInner.d.results);
-					console.log("suffixes", _that.temp1);
 					_that.temp1 = oDataInner.d.results;
 					if (_that.temp1.length > 0) {
 						for (var n = 0; n < _that.temp.length; n++) {
 							for (var m = 0; m < _that.temp1.length; m++) {
-								console.log("mapping", _that.temp1[m].Suffix);
 								_that.oGlobalJSONModel.getData().suffixData.push({
 									"Suffix": _that.temp[n].Suffix,
 									"SuffixDescriptionEN": _that.temp[n].SuffixDescriptionEN,
@@ -949,8 +842,6 @@ sap.ui.define([
 								_that.oGlobalJSONModel.updateBindings(true);
 							}
 						}
-						console.log("_that.oGlobalJSONModel.getData().suffixData2", _that.oGlobalJSONModel.getData().suffixData);
-						// var b = 0;
 						_that.oGlobalJSONModel.getData().suffixData.unshift({
 							"Suffix": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"SuffixDescriptionEN": "",
@@ -998,7 +889,6 @@ sap.ui.define([
 								"localLang": URILang
 							});
 						});
-						console.log("_that.oGlobalJSONModel.getData().colorData", _that.oGlobalJSONModel.getData().colorData);
 						_that.oGlobalJSONModel.getData().colorData.unshift({
 							"ExteriorColorCode": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"MarketingDescriptionEXTColorEN": "",
@@ -1032,10 +922,8 @@ sap.ui.define([
 			} else {
 				oSeriesVal = oSeriesVal2;
 			}
-			console.log("oSeriesVal2", oSeriesVal2);
 			if (oSeriesVal !== _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				_that.oGlobalJSONModel.getData().modelData = [];
-				//?$filter=Modelyear%20eq%20%272020%27%20and%20TCISeries%20eq%20%27RXH%27
 				$.ajax({
 					dataType: "json",
 					url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + Modelyear +
@@ -1044,7 +932,6 @@ sap.ui.define([
 					success: function (oData) {
 						if (oData.d.results.length > 0) {
 							var b = 0;
-							console.log("Model Data", oData.d.results);
 							for (var i = 0; i < oData.d.results.length; i++) {
 								var oModel = oData.d.results[i].Model;
 								for (var j = 0; j < _that.oGlobalJSONModel.getData().modelData.length; j++) {
@@ -1090,7 +977,6 @@ sap.ui.define([
 			}
 		},
 
-		//zzmoyr eq '2018' and zzmodel eq 'LB71JZ' and zzsuffix eq '03'
 		onColorCodeChange: function (oModVal) {
 			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			sap.ui.core.BusyIndicator.show();
@@ -1098,8 +984,6 @@ sap.ui.define([
 			var Suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
 			var Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
 			var ExteriorColorCode = oModVal.getParameters("ID_ExteriorColorCode").selectedItem.getKey();
-
-			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?filter=zzmoyr eq '2018' and zzmodel eq 'YZ3DCT' and zzsuffix eq 'BB' and zzextcol eq '0070'
 
 			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + Modelyear + "' and zzmodel eq '" +
 				Model + "' and zzsuffix eq '" + Suffix + "' and zzextcol eq '" + ExteriorColorCode + "'";
@@ -1131,7 +1015,6 @@ sap.ui.define([
 							"APX": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
-						console.log(_that.oGlobalJSONModel.getData().APXCollection);
 					} else {
 						sap.ui.core.BusyIndicator.hide();
 					}
@@ -1150,16 +1033,12 @@ sap.ui.define([
 			_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			// debugger;
-
+			
 			sap.ui.core.BusyIndicator.show();
 			var ModelYear = oModVal.getParameters("selectedItem").selectedItem.getKey();
 			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
 				"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
-			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_mmfields?$filter=Division eq '" + DivUser + "' &$orderby=ProductHierarchy asc";
-			console.log("Series:" + url);
-			//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq 'TOY' and zzzadddata2 eq 'X'&$orderby=SeriesSequenceNumber asc
-			//var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + ModelYear + "'";
+			
 			$.ajax({
 				dataType: "json",
 				url: url,
@@ -1176,7 +1055,6 @@ sap.ui.define([
 								}
 							}
 						}
-						console.log("SelectedDealer:" + SelectedDealer);
 						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
@@ -1190,7 +1068,6 @@ sap.ui.define([
 								}
 							});
 						}
-						console.log("Series data", oModelData.d.results);
 						for (var i = 0; i < oModelData.d.results.length; i++) {
 							if (oModelData.d.results[i] != undefined) {
 								_that.oGlobalJSONModel.getData().seriesData.push({
@@ -1209,7 +1086,6 @@ sap.ui.define([
 							"TCISeriesDescriptionFR": ""
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
-						//_that.oGlobalJSONModel.getData().seriesData.push(oModelData.d.results);
 					} else {
 						sap.ui.core.BusyIndicator.hide();
 					}
@@ -1222,7 +1098,6 @@ sap.ui.define([
 		},
 
 		fetchSeries: function (arrResults) {
-			// debugger;
 			var series = seriesdata;
 			for (var n = 0; n < arrResults.length; n++) {
 				var TCiSeries = arrResults[n].TCISeries;
@@ -1240,7 +1115,6 @@ sap.ui.define([
 								"ModelSeriesNo": series[s].ModelSeriesNo,
 								"TCISeriesDescriptionEN": series[s].TCISeriesDescriptionEN
 							});
-
 							_that.oGlobalJSONModel.updateBindings(true);
 						}
 					}
@@ -1252,11 +1126,6 @@ sap.ui.define([
 				"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 			});
 			_that.oGlobalJSONModel.updateBindings(true);
-		},
-
-		/*Funtion to get the changed year*/
-		handleYearChange: function (oYearEvent) {
-			//code goes here
 		},
 
 		/*Function for Routing/Navigating from menu option as per selection */
@@ -1390,8 +1259,6 @@ sap.ui.define([
 		},
 
 		_oMasterRoute: function (oEvent) {
-			console.log("Event", oEvent);
-			console.log("filteredData", filteredData);
 			_that.fetchCountsforTables(filteredData);
 			_that.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();

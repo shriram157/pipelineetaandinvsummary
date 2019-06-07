@@ -1,11 +1,11 @@
 sap.ui.define([
-	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
 	'sap/ui/core/routing/History',
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/resource/ResourceModel',
 ], function (BaseController, History, JSONModel, ResourceModel) {
 	"use strict";
+	
 	var _thatOC, sSelectedLocale, Division, localLang;
 	return BaseController.extend("pipelineInventory.controller.orderChange", {
 
@@ -89,7 +89,6 @@ sap.ui.define([
 				url: url,
 				type: "GET",
 				success: function (oRowData) {
-					// debugger;
 					_thatOC.Order_ChangeFlag = oRowData.d.Order_ChangeFlag;
 					if (_thatOC.Order_ChangeFlag == "X") {
 						_thatOC.getView().getModel("LocalOCModel").setProperty("/dropdownEnabled", true);
@@ -168,7 +167,6 @@ sap.ui.define([
 
 			if (oEvent.getParameters().name == "orderChange2") {
 				if (oEvent.getParameter("arguments").Data2 != undefined) {
-					// debugger;
 					var Data = JSON.parse(oEvent.getParameter("arguments").Data2);
 					_thatOC.Data = JSON.parse(oEvent.getParameter("arguments").Data2);
 
@@ -177,7 +175,7 @@ sap.ui.define([
 
 					_thatOC.oVehicleDetailsJSON = new sap.ui.model.json.JSONModel();
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData = [];
-					console.log("Data", Data);
+					
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData.push(Data);
 					_thatOC.getOrderFlag(Data.VHCLE);
 					if (_thatOC.Data.Status == "Accepted") {
@@ -213,9 +211,6 @@ sap.ui.define([
 					}
 
 					_thatOC.oVehicleDetailsJSON.updateBindings(true);
-
-					// _thatOC.onModelSelectionChange(_thatOC.byId("ID_modelSelect"), Data);
-
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Status = "";
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewColour = "";
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Guidelines = "";
@@ -231,10 +226,8 @@ sap.ui.define([
 				}
 			} else if (oEvent.getParameters().name !== "orderChange2") {
 				if (oEvent.getParameter("arguments").Data != undefined) {
-					// debugger;
 					var Data = JSON.parse(oEvent.getParameter("arguments").Data);
 					_thatOC.Data2 = JSON.parse(oEvent.getParameter("arguments").Data);
-					console.log("pre formatted data", _thatOC.Data2);
 					if (Data.NewSuffix != undefined) {
 						Data.NewSuffix = Data.NewSuffix.replace("%2F", "/");
 					}
@@ -257,11 +250,9 @@ sap.ui.define([
 					Data.MODEL_DESC_FR = Data.MODEL_DESC_FR.replace("%2F", "/");
 					Data.EXTCOL_DESC_EN = Data.EXTCOL_DESC_EN.replace("%2F", "/");
 					Data.EXTCOL_DESC_FR = Data.EXTCOL_DESC_FR.replace("%2F", "/");
-					console.log("% formatted data", Data);
 					_thatOC.oVehicleDetailsJSON = new sap.ui.model.json.JSONModel();
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData = [];
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData.push(Data);
-					console.log("Data", Data);
 					_thatOC.getOrderFlag(Data.VHCLE);
 
 					_thatOC.byId("ID_modelSelect").setSelectedKey(_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Model);
@@ -272,10 +263,6 @@ sap.ui.define([
 					_thatOC.ColorCode = _thatOC.Data2.ExteriorColorCode;
 					_thatOC.APX = _thatOC.Data2.APX;
 
-					// _thatOC.byId("ID_modelSelect").setSelectedKey(_thatOC.byId("readOnlyModel").getValue());
-					// _thatOC.byId("ID_suffixSelect").setSelectedKey(_thatOC.byId("readOnlySuffix").getValue());
-					// _thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(_thatOC.byId("readOnlyColour").getValue()); //readOnlyAPX
-					// _thatOC.byId("APXrequired").setSelectedKey(_thatOC.byId("readOnlyAPX").getValue());
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewModel = "";
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewSuffix = "";
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].NewAPX = "";
@@ -287,12 +274,10 @@ sap.ui.define([
 					_thatOC.oVehicleDetailsJSON.refresh(true);
 					_thatOC.getView().setModel(_thatOC.oVehicleDetailsJSON, "VehicleDetailsJSON");
 
-					console.log("APX", _thatOC.APX);
 					_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].newAPXValues.push({
 						"zzapx": _thatOC.APX
 					});
 					_thatOC.getView().getModel("VehicleDetailsJSON").updateBindings(true);
-
 					_thatOC.getModelData(_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].TCISeries, _thatOC.oVehicleDetailsJSON.getData()
 						.selectedVehicleData[0].Modelyear);
 					_thatOC.onModelSelectionChange(_thatOC.byId("ID_modelSelect"), Data.Suffix);
@@ -313,7 +298,6 @@ sap.ui.define([
 					_thatOC.oVehicleDetailsJSON.getData().modelData = [];
 					if (oData.d.results.length > 0) {
 						var b = 0;
-						console.log("Model Data", oData.d.results);
 						for (var i = 0; i < oData.d.results.length; i++) {
 							var oModel = oData.d.results[i].Model;
 							for (var j = 0; j < _thatOC.oVehicleDetailsJSON.getData().modelData.length; j++) {
@@ -376,7 +360,6 @@ sap.ui.define([
 					_thatOC.oVehicleDetailsJSON.getData().suffixData = [];
 					_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					if (oData.d.results.length > 0) {
-						console.log("suffixData", oData.d.results);
 						var selectedKey;
 						if (_thatOC.Data) {
 							if (_thatOC.Data.Status !== "Accepted") {
@@ -390,27 +373,6 @@ sap.ui.define([
 								_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
 							}
 						}
-						// else {
-						// 	selectedKey = oData.d.results.filter(function (val) {
-						// 		if (localLang === "F" && val.suffix == oSuffixValue) {
-						// 			return val.suffix + " " + val.SuffixDescriptionFR + " " + val.mrktg_int_desc_fr;
-						// 		} else if (localLang === "E" && val.suffix == oSuffixValue) {
-						// 			return val.suffix + " " + val.SuffixDescriptionEN + " " + val.mrktg_int_desc_en;
-						// 		}
-						// 	});
-						// 	_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
-						// }
-						// if (_thatOC.Data2.ZMMSTA == "Rejected") {
-						// 	var selectedKey = _thatOC.oVehicleDetailsJSON.getData().suffixData.filter(function (val) {
-						// 		if (localLang === "F" && val.suffix == oSuffixValue) {
-						// 			return val.suffix + " " + val.SuffixDescriptionFR +" "+ val.mrktg_int_desc_fr;
-						// 		} else if (localLang === "E" && val.suffix == oSuffixValue) {
-						// 			return val.suffix + " " + val.SuffixDescriptionEN +" "+ val.mrktg_int_desc_en;
-						// 		}
-						// 	});
-						// 	_thatOC.byId("ID_suffixSelect").setSelectedKey(selectedKey);
-						// }
-						// _thatOC.oVehicleDetailsJSON.getData().suffixData = oData.d.results;
 
 						$.each(oData.d.results, function (i, item) {
 							_thatOC.oVehicleDetailsJSON.getData().suffixData.push({
@@ -439,7 +401,6 @@ sap.ui.define([
 						if (_thatOC.Data) {
 							if (_thatOC.Data.Status == "Rejected") {
 								_thatOC.oSuffixValue = oSuffixValue;
-								console.log("oSuffixValue", oSuffixValue);
 								if (oSuffixValue != undefined) {
 									if (!oSuffixValue.OldSuffix) {
 										if (oSuffixValue.Suffix != undefined) {
@@ -486,7 +447,6 @@ sap.ui.define([
 			var Model = _thatOC.getView().byId("ID_modelSelect").getSelectedKey();
 			var series = _thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].TCISeries;
 
-			// _thatOC.oVehicleDetailsJSON.getData().colorData = [];
 			if (Suffix != undefined) {
 				if (!Suffix.split("-")[0]) {
 					Suffix = Suffix;
@@ -509,7 +469,6 @@ sap.ui.define([
 				success: function (oData) {
 					_thatOC.oVehicleDetailsJSON.getData().colorData = [];
 					_thatOC.oVehicleDetailsJSON.updateBindings(true);
-					console.log("suffix data", oData.d.results);
 
 					var selectedKey;
 					if (oData.d.results.length > 0) {
@@ -527,38 +486,6 @@ sap.ui.define([
 								}
 							}
 						} else {
-							// if (_thatOC.Data) {
-							// 	if (_thatOC.Data.Status == "Accepted") {
-							// 		if (ColorVal != undefined) {
-							// 			if (localLang == "F") {
-							// 				if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
-							// 					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
-							// 				} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
-							// 					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
-							// 				}
-							// 			} else if (localLang == "E") {
-							// 				if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
-							// 					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
-							// 				} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
-							// 					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
-							// 				}
-							// 			}
-							// 		}
-							// 	}
-							// } else {
-							// if (localLang == "F") {
-							// 	if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
-							// 		_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
-							// 	} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
-							// 		_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorFR);
-							// 	}
-							// } else if (localLang == "E") {
-							// 	if (!ColorVal.split("-")[0] && ColorVal == item.ExteriorColorCode) {
-							// 		_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
-							// 	} else if (ColorVal.split("-")[0] && ColorVal.split("-")[0] == item.ExteriorColorCode) {
-							// 		_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(item.ExteriorColorCode + "-" + item.MarketingDescriptionEXTColorEN);
-							// 	}
-							// }
 							if (ColorVal != undefined) {
 								selectedKey = oData.d.results.filter(function (val) {
 									if (localLang === "F" && val.ExteriorColorCode == ColorVal) {
@@ -579,9 +506,6 @@ sap.ui.define([
 								"localLang": localLang
 							});
 						});
-
-						// _thatOC.byId("APXrequired").setSelectedKey(_thatOC.APX);
-
 						_thatOC.oVehicleDetailsJSON.updateBindings(true);
 						sap.ui.core.BusyIndicator.hide();
 					} else {
@@ -593,7 +517,6 @@ sap.ui.define([
 				},
 				complete: function () {
 					jQuery.sap.delayedCall(1000, _thatOC, function () {
-						console.log("ColorVal", ColorVal);
 						if (_thatOC.Data) {
 							if (_thatOC.Data.Status == "Rejected") {
 								if (ColorVal != undefined) {
@@ -608,7 +531,6 @@ sap.ui.define([
 											} else {
 												_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal.split("-")[0]);
 											}
-											// _thatOC.byId("ID_ExteriorColorSelect").setValue(ColorVal);
 										}
 									}
 								}
@@ -630,7 +552,6 @@ sap.ui.define([
 		},
 
 		NavigateBack: function () {
-			// this.getRouter().navTo("details", {});
 			var oHistory = History.getInstance();
 			var sPreviousHash = oHistory.getPreviousHash();
 
@@ -655,7 +576,6 @@ sap.ui.define([
 						SelectedDealer: _thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer
 					});
 				} else {
-					// sap.m.MessageBox.information(_thatOC.oI18nModel.getResourceBundle().getText("PleaseSelectDealer"));
 					_thatOC.getRouter().navTo("changeHistory2");
 				}
 			}
@@ -665,23 +585,19 @@ sap.ui.define([
 			var sUserInput = _thatOC.getView().byId("ID_modelSelect").getSelectedKey();
 			var sUserInput2 = _thatOC.getView().byId("ID_suffixSelect").getSelectedKey();
 			var sUserInput3 = _thatOC.getView().byId("ID_ExteriorColorSelect").getSelectedKey();
-			// var sUserInput4 = _thatOC.getView().byId("APXrequired").getValue();
 			var oInputControl = _thatOC.getView().byId("ID_modelSelect");
 			var oInputControl2 = _thatOC.getView().byId("ID_suffixSelect");
 			var oInputControl3 = _thatOC.getView().byId("ID_ExteriorColorSelect");
-			// var oInputControl4 = _thatOC.getView().byId("APXrequired");
 
 			if (sUserInput && sUserInput2 && sUserInput3) {
 				oInputControl.setValueState(sap.ui.core.ValueState.Success);
 				oInputControl2.setValueState(sap.ui.core.ValueState.Success);
 				oInputControl3.setValueState(sap.ui.core.ValueState.Success);
-				// oInputControl4.setValueState(sap.ui.core.ValueState.Success);
 				_thatOC.onRequestChange(oPost);
 			} else {
 				oInputControl.setValueState(sap.ui.core.ValueState.Error);
 				oInputControl2.setValueState(sap.ui.core.ValueState.Error);
 				oInputControl3.setValueState(sap.ui.core.ValueState.Error);
-				// oInputControl4.setValueState(sap.ui.core.ValueState.Error);
 			}
 		},
 
@@ -700,12 +616,9 @@ sap.ui.define([
 				Obj.NewColor = _thatOC.getView().byId("ID_ExteriorColorSelect").getSelectedKey();
 			}
 			var OrderChangeModel = _thatOC.getOwnerComponent().getModel("DataModel");
-			//new sap.ui.model.odata.v2.ODataModel(_thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
 			OrderChangeModel.setUseBatch(false);
 			OrderChangeModel.create("/OrderChangeSet", Obj, {
 				success: $.proxy(function (oResponse) {
-					// debugger;
-					console.log(oResponse);
 					if (oResponse.Error != "") {
 						sap.m.MessageBox.show(oResponse.Error, {
 							icon: sap.m.MessageBox.Icon.ERROR,
@@ -713,7 +626,6 @@ sap.ui.define([
 							actions: [sap.m.MessageBox.Action.OK],
 							onClose: function (oAction) {}
 						});
-						// sap.m.MessageBox.error(oResponse.Error);
 					} else {
 						_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Status = "Requested";
 						_thatOC.getView().getModel("VehicleDetailsJSON").updateBindings(true);
@@ -723,7 +635,6 @@ sap.ui.define([
 							actions: [sap.m.MessageBox.Action.OK],
 							onClose: function (oAction) {}
 						});
-						// sap.m.MessageBox.success("Succesfully posted");
 					}
 				}, _thatOC),
 				error: function (oError) {

@@ -1,5 +1,4 @@
 sap.ui.define([
-	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
 	'sap/ui/model/resource/ResourceModel',
 	'sap/ui/model/json/JSONModel',
@@ -156,9 +155,7 @@ sap.ui.define([
 			_thatDT.oTable.removeSelections();
 
 			var dealerData = sap.ui.getCore().getModel("BusinessDataModel").getData();
-			console.log("dealerData", dealerData);
 			if (dealerData._TCIZoneAdmin == "AdminUser") {
-				console.log("dealerData._TCIZoneAdmin", dealerData._TCIZoneAdmin);
 				_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
 				_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
 			} else if (dealerData._TCIZoneAdmin == "ZoneONLY") {
@@ -171,12 +168,11 @@ sap.ui.define([
 
 			if (oDetailsRoute.getParameters().arguments.tableFirst != undefined) {
 				_thatDT.routedData = JSON.parse(oDetailsRoute.getParameters().arguments.tableFirst);
-				console.log("routedData", _thatDT.routedData);
 
 				_thatDT.SelectedDealer = _thatDT.routedData.Dealer;
 				_thatDT.UserType = _thatDT.routedData.userType;
 				_thatDT.salesOffice = _thatDT.routedData.salesOffice;
-				//intcolor
+				
 				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
 					"' and VKBUR eq '" + _thatDT.salesOffice +
 					"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
@@ -186,20 +182,18 @@ sap.ui.define([
 					"'and APX eq '" + _thatDT.routedData.APXValue + "'and ETA eq '" + _thatDT.routedData.ETADate + "'and Dealer eq '" + _thatDT.routedData
 					.Dealer +
 					"'and UserType eq '" + _thatDT.UserType + "' and LANGUAGE eq '" + localLang + "' &$format=json";
-				console.log("page2 url", url);
 				$.ajax({
 					dataType: "json",
 					url: url,
 					type: "GET",
 					success: function (oRowData) {
-						console.log("oRowData", oRowData);
 						sap.ui.core.BusyIndicator.hide();
+						console.log("oRowData",oRowData);
 						_thatDT.oVehicleDetailsJSON.setData(oRowData.d);
 						_thatDT.getView().setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						sap.ui.getCore().setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						_thatDT.oTable.setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						_thatDT.oVehicleDetailsJSON.updateBindings(true);
-
 					},
 					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
@@ -225,7 +219,6 @@ sap.ui.define([
 		},
 
 		handleSettingsConfirm: function (oEvent) {
-			//debugger;
 			var oTable = _thatDT.getView().byId("Tab_vehicleDetails");
 
 			var mParams = oEvent.getParameters();
@@ -250,11 +243,9 @@ sap.ui.define([
 
 			// apply filters to binding
 			var aFilters = [];
-			//debugger;
 			var sOperator;
 			jQuery.each(mParams.filterItems, function (i, oItem) {
 				sOperator = "StartsWith";
-				//console.log(that.oTable.getBinding().oList);
 				var sPath2 = oItem.getKey();
 				var sValue1 = oItem.getText();
 				var sValue2 = oItem.getText();
@@ -269,15 +260,7 @@ sap.ui.define([
 
 			});
 			oBinding.filter(aFilters);
-			// oView.byId("invFilterBar").setVisible(aFilters.length > 0);
-			// oView.byId("invFilterLabel").setText(mParams.filterString);
 		},
-		// closeNotifBar: function () {
-		// 	var oTable = _thatDT.getView().byId("Tab_vehicleDetails");
-		// 	_thatDT.getView().byId("invFilterBar").setVisible(false);
-		// 	var oBinding = oTable.getBinding("items");
-		// 	oBinding.filter([]);
-		// },
 		handleFiltersDialog: function (oDialogEvent) {
 			if (!_thatDT._oSettingsDialog) {
 				_thatDT._oSettingsDialog = sap.ui.xmlfragment("pipelineInventory.view.fragments.filterSettings", _thatDT);
@@ -321,25 +304,16 @@ sap.ui.define([
 
 		/*Show Filtered data as per user input*/
 		onApplyFilterBtn: function () {
-			// debugger;
 			var sQuery = {};
 			sQuery.VTN = _thatDT.getView().byId("ID_VTNVal").getValue();
 			sQuery.VIN = _thatDT.getView().byId("ID_VINVal").getValue();
 			sQuery.tempFilter = (_thatDT.getView().byId("ID_OrderNoVal").getValue()).split("*");
-			// if (tempFilter[0] == "*") {
-			// 	sQuery.OrderNumberEW = tempFilter[1];
-			// } else if (tempFilter[1] == "*") {
-			// 	sQuery.OrderNumberSW = tempFilter[0];
-			// } else {
-			// 	sQuery.OrderNumber = _thatDT.getView().byId("ID_OrderNoVal").getValue();
-			// }
 
 			_thatDT.oTable = _thatDT.getView().byId("Tab_vehicleDetails");
 			_thatDT.oBinding = _thatDT.oTable.getBinding("items");
 			var aFilters = [];
 			var newQuery = sQuery.tempFilter;
 
-			// debugger;
 			if (sQuery) {
 				aFilters.push(new Filter("ZZVTN", sap.ui.model.FilterOperator.Contains, sQuery.VTN));
 				aFilters.push(new Filter("VHVIN", sap.ui.model.FilterOperator.Contains, sQuery.VIN));
@@ -355,15 +329,6 @@ sap.ui.define([
 					Query = _thatDT.getView().byId("ID_OrderNoVal").getValue();
 					aFilters.push(new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.Contains, Query));
 				}
-				// aFilters = new Filter([
-				// 	new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.Contains, sQuery.OrderNumber)
-				// ], false);
-				// aFilters = new Filter([
-				// 	new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EndsWith, sQuery.OrderNumberEW)
-				// ], false);
-				// aFilters = new Filter([
-				// 	new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.StartsWith, sQuery.OrderNumberSW)
-				// ], false);
 
 				var oFilter = new sap.ui.model.Filter({
 					aFilters: aFilters,
@@ -375,24 +340,12 @@ sap.ui.define([
 			} else {
 				_thatDT.oBinding.filter([]);
 			}
-			// var sQuery = sQuery.length;
-			// if (sQuery && sQuery.length > 0) {
-			// 	aFilters = new Filter([
-			// 		new Filter("ZZVTN", sap.ui.model.FilterOperator.Contains, sQuery)
-			// 	], false);
-			// 	_thatDT.oBinding.filter(aFilters);
-			// } else {
-			// 	_thatDT.oBinding.filter([]);
-			// }
-			// _thatDT.getView().setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
-			// _thatDT.getView().setModel((sap.ui.getCore().getModel("VehicleDetailsJSON")), "VehicleDetailsJSON");
 		},
 
 		/*Navigate to Vehicle Details page*/
 		onNavigateToVL: function (oNavEvent) {
 			var Data = oNavEvent.getSource().getModel("VehicleDetailsJSON").getProperty(oNavEvent.getSource().getBindingContext(
 				"VehicleDetailsJSON").sPath);
-			console.log("routed data",Data);
 			Data.Suffix = Data.Suffix.replace("/", "%2F");
 			Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("/", "%2F");
 			Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("/", "%2F");
@@ -407,7 +360,6 @@ sap.ui.define([
 			Data.EXTCOL_DESC_FR = Data.EXTCOL_DESC_FR.replace("/", "%2F");
 			Data.__metadata = "";
 			
-			console.log("routed formatted data",Data);
 			_thatDT.getRouter().navTo("vehicleDetails", {
 				VCData: JSON.stringify(Data)
 
@@ -446,49 +398,26 @@ sap.ui.define([
 		vehicleSelect: function (oVUID) {
 			var checkedItem;
 			if (oVUID.getParameters().selected && oVUID.getParameter("selectAll")) {
-				console.log(oVUID.getParameters().listItems);
 				_thatDT.checkedData = [];
 				for (var l = 0; l < oVUID.getParameters().listItems.length; l++) {
 					oVUID.getParameters().listItems[l].getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItems[
 						l].getBindingContext("VehicleDetailsJSON").getPath()).__metadata = "";
 					checkedItem = oVUID.getParameters().listItems[l].getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItems[
 						l].getBindingContext("VehicleDetailsJSON").getPath());
-					// if (checkedItem.DropShip == true) {
-					// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
-					// } else {
-					// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
-					// }
-					// if (checkedItem.AssignVehicle == true) {
-					// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
-					// } else {
-					// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
-					// }
+				
 					_thatDT.checkedData.push(oVUID.getParameters().listItems[l].getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters()
 						.listItems[l].getBindingContext("VehicleDetailsJSON").getPath()));
 				}
-			} else if (oVUID.getParameters().selected == true) {
+			} else if (oVUID.getParameters().selected === true) {
 				oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem.getBindingContext(
 					"VehicleDetailsJSON").getPath()).__metadata = "";
 
 				checkedItem = oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
 					.getBindingContext("VehicleDetailsJSON").getPath());
-				// if (checkedItem.DropShip == true) {
-				// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", true);
-				// } else {
-				// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
-				// }
-				// if (checkedItem.AssignVehicle == true) {
-				// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", true);
-				// } else {
-				// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
-				// }
+			
 				_thatDT.checkedData.push(oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
 					.getBindingContext("VehicleDetailsJSON").getPath()));
 			}
-			// else {
-			// 	_thatDT._oViewModel.setProperty("/enableDropShipBtn", false);
-			// 	_thatDT._oViewModel.setProperty("/enableAssignVehicleBtn", false);
-			// }
 		},
 
 		navToDropShipVehicles: function () {
@@ -512,11 +441,6 @@ sap.ui.define([
 		},
 		navToAssignVehicles: function () {
 			for (var i = 0; i < _thatDT.checkedData.length; i++) {
-				// _thatDT.checkedData[i].SUFFIX_DESC_FR = _thatDT.checkedData[i].SUFFIX_DESC_FR.replace("/","%2F");
-				// _thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/","%2F");
-				// _thatDT.checkedData[i].SERIES_DESC_EN = _thatDT.checkedData[i].SERIES_DESC_EN.replace("/","%2F");
-				// _thatDT.checkedData[i].SUFFIX_DESC_EN = _thatDT.checkedData[i].SUFFIX_DESC_EN.replace("/","%2F");
-				// _thatDT.checkedData[i].SERIES_DESC_FR = _thatDT.checkedData[i].SERIES_DESC_FR.replace("/","%2F");
 				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_EN = _thatDT.checkedData[i].MODEL_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_FR = _thatDT.checkedData[i].MODEL_DESC_FR.replace("/", "%2F");
@@ -560,7 +484,6 @@ sap.ui.define([
 				clicks += 1;
 			}
 			num = clicks * 5;
-			// count1;		
 			if (num === _thatDT.count) {
 				var Btn = _thatDT.getView().byId("btnNext");
 				Btn.setEnabled(false);
@@ -583,7 +506,6 @@ sap.ui.define([
 				url: url,
 				type: "GET",
 				success: function (oRowData) {
-					console.log("oRowData", oRowData);
 					_thatDT.oVehicleDetailsJSON.setData(oRowData.d);
 					_thatDT.oVehicleDetailsJSON.updateBindings(true);
 				},
@@ -610,7 +532,6 @@ sap.ui.define([
 		},
 		onVINChange: function (oVINVal) {
 			// add filter for search
-			// debugger;
 			_thatDT.oTable = _thatDT.getView().byId("Tab_vehicleDetails");
 			_thatDT.oBinding = _thatDT.oTable.getBinding("items");
 			var aFilters = [];

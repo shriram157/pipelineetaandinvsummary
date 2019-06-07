@@ -65,7 +65,7 @@
 							<ColumnListItem>
 								<cells>
 									<Link text="{DropResponseModel>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{DropResponseModel>ZZDLR_REF_NO}"/>
-									<Text text="{DropResponseModel>ORDERTYPE_DESC_EN}"/> <!--{DropResponseModel>ZZORDERTYPE} order type  commented -->
+									<Text text="{DropResponseModel>ORDERTYPE_DESC_EN}"/> 
 									<Text text="{DropResponseModel>ZMMSTA}"/>
 									<Link text="{DropResponseModel>ZZVTN}" tooltip="{DropResponseModel>ZZVTN}"/>
 									<Link text="{DropResponseModel>VHVIN}" tooltip="{DropResponseModel>VHVIN}"/>
@@ -82,7 +82,6 @@
 				</content>
 				<footer>
 					<Toolbar>
-						<!--<ToolbarSpacer/>-->
 					</Toolbar>
 				</footer>
 			</Page>

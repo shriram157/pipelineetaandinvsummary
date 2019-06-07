@@ -47,9 +47,7 @@
 										items="{ path: 'VehicleDetailsJSON>/APXData'}">
 										<core:Item key="{VehicleDetailsJSON>zzapx}" text="{VehicleDetailsJSON>zzapx}"/>
 									</Select>
-									<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>-->
 									<Label text="{i18n>OrderType}"/>
-									<!--{VehicleDetailsJSON>/selectedVehicleData/0/ZZORDERTYPE} removed from order type (defect number 10426)-->
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ORDERTYPE_DESC_EN}"/>
 									<Label text="{i18n>Status}"/>
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZMMSTA}"/>
@@ -76,13 +74,11 @@
 										visible="{VehicleDetailsJSON>/AccessInstl_flag}">
 										<core:Item key="{VehicleDetailsJSON>AccessoryInstalled}" text="{VehicleDetailsJSON>AccessoryInstalled}"/>
 									</Select>
-									<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/AccessoriesInstalled}"/>-->
 									<Label text="{i18n>DNCVehicle}"/>
 									<Select forceSelection="false" selectedKey="" id="DNCVal" items="{ path: 'VehicleDetailsJSON>/DNCData'}" change="onDNCOptionSlection"
 										enabled="{LocalVDModel>/DNCEnabled}">
 										<core:Item key="{VehicleDetailsJSON>DNCVehicle}" text="{VehicleDetailsJSON>DNCVehicle}"/>
 									</Select>
-									<!--<Input value="{VehicleDetailsJSON>/selectedVehicleData/0/DNCVehicle}"/>-->
 									<Label text="{i18n>Comments}"/>
 									<TextArea value="{VehicleDetailsJSON>/selectedVehicleData/0/Comments}" rows="4"/>
 								</f:content>
@@ -111,8 +107,6 @@
 									<Text text=""/>
 									<core:Title text="{i18n>AccessoryInformation}"/>
 									<Label text="{i18n>AccessoryName}"/>
-									<!--<Text text="{VehicleDetailsJSON>/selectedCustomerData/MAKTX}"/>-->
-									<!--<Text text="{VehicleDetailsJSON>/selectedCustomerData/MAKTX}"/>-->
 									<List class="noBkgrnd" items="{ path: 'VehicleDetailsJSON>/AccessoryInfoData', sorter: { path: 'MAKTX' } }">
 										<items>
 											<StandardListItem title="{VehicleDetailsJSON>MAKTX}"/>
@@ -126,13 +120,11 @@
 							<Button text="{i18n>Save}" type="Default" press="_DataValidate"/>
 							<Button text="{i18n>SoldOrder}" type="Default" press="navToSoldOrer" enabled="{LocalVDModel>/soldOrderEnabled}"/>
 							<Button text="{i18n>OrderChange}" type="Default" press="NavToOrderChange"/>
-							<!--<Button text="{i18n>Back}" type="Default" press="NavigateBack"/>-->
 						</OverflowToolbar>
 					</content>
 				</ScrollContainer>
 				<footer>
 					<Toolbar>
-						<!--<ToolbarSpacer/>-->
 					</Toolbar>
 				</footer>
 			</Page>

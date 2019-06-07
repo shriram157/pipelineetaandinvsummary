@@ -20,7 +20,6 @@
 				</tnt:ToolHeader>
 				<ScrollContainer height='90%' width="100%" vertical='true'>
 					<content>
-						<!--<Label text="{i18n>PageTitle}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>-->
 						<f:SimpleForm id="dealerformContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="1" adjustLabelSpan="true" emptySpanL="0"
 							emptySpanM="3" columnsL="3" columnsM="3" class="styleForms">
 							<f:content>
@@ -68,7 +67,6 @@
 									<Select id="ID_marktgIntDesc" forceSelection="true" items="{GlobalJSONModel>/suffixData}" change="onSuffixChange">
 										<core:Item key="{GlobalJSONModel>Suffix}"
 											text="{GlobalJSONModel>Suffix} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>SuffixDescriptionEN}:${GlobalJSONModel>SuffixDescriptionFR}} / {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>mrktg_int_desc_en}:${GlobalJSONModel>mrktg_int_desc_fr}}"/>
-										<!--value="{=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>MarketingDescriptionEXTColorEN}:${GlobalJSONModel>MarketingDescriptionEXTColorFR}}"-->
 									</Select>
 									<core:Title text=""/>
 									<Label text="{i18n>Colour}"/>
@@ -112,9 +110,7 @@
 								<t:Column>
 									<t:multiLabels id="multiheaderColumn">
 										<Label text=""/>
-										<!--<Label text="{i18n>Stock}" textAlign="Center" width="100%"/>-->
 										<Label text=""/>
-										<!--<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>-->
 										<Label text="{i18n>TTLUnits}" tooltip="{i18n>TTLUnits}" textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -125,7 +121,6 @@
 									<t:multiLabels>
 										<Label text="{i18n>Stock}" textAlign="Center" width="100%"/>
 										<Label text=""/>
-										<!--<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>-->
 										<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -295,7 +290,6 @@
 								<t:Column>
 									<t:multiLabels id="multiheaderColumn">
 										<Label text="" /><Label text="" />
-										<!--<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>-->
 										<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -475,8 +469,6 @@
 									<t:multiLabels id="multiheaderColumn">
 										<Label text="" />
 										<Label text="" />
-										<!--<Label text="{i18n>Stock}" textAlign="Center" width="100%"/>-->
-										<!--<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>-->
 										<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -486,7 +478,6 @@
 								<t:Column>
 									<t:multiLabels>
 										<Label text="{i18n>Stock}" textAlign="Center" width="100%"/><Label text="" />
-										<!--<Label text="{i18n>UsageType}" textAlign="Center" width="100%"/>-->
 										<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>

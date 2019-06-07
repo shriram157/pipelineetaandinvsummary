@@ -1,5 +1,4 @@
 sap.ui.define([
-	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/resource/ResourceModel',
@@ -65,9 +64,7 @@ sap.ui.define([
 				}
 			}
 
-			// _thatSD.oDealerDataModel = new JSONModel();
 			_thatSD.getView().setModel(sap.ui.getCore().getModel("BusinessDataModel"), "BusinessDataModel");
-
 			_thatSD.oDropShipDataModel = new JSONModel();
 			_thatSD.getView().setModel(_thatSD.oDropShipDataModel, "DropShipDataModel");
 			sap.ui.getCore().getModel(_thatSD.oDropShipDataModel, "DropShipDataModel");
@@ -153,7 +150,6 @@ sap.ui.define([
 
 			if (oEvent.getParameters().arguments.vehicleData != undefined) {
 				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
-				console.log("preformatted data",VUIdata);
 				_thatSD.oDropShipDataModel.getData().results = [];
 				for (var n = 0; n < VUIdata.length; n++) {
 					VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F", "/");
@@ -167,13 +163,7 @@ sap.ui.define([
 					VUIdata[n].MODEL_DESC_FR = VUIdata[n].MODEL_DESC_FR.replace("%2F", "/");
 					VUIdata[n].EXTCOL_DESC_EN = VUIdata[n].EXTCOL_DESC_EN.replace("%2F", "/");
 					VUIdata[n].EXTCOL_DESC_FR = VUIdata[n].EXTCOL_DESC_FR.replace("%2F", "/");
-
-					// VUIdata[n].SUFFIX_DESC_FR = VUIdata[n].SUFFIX_DESC_FR.replace("%2F", "/");
-					// VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F", "/");
-					// VUIdata[n].SERIES_DESC_EN = VUIdata[n].SERIES_DESC_EN.replace("%2F", "/");
-					// VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F", "/");
-					// VUIdata[n].SERIES_DESC_FR = VUIdata[n].SERIES_DESC_FR.replace("%2F", "/");
-					console.log("% formatted data",VUIdata);
+					
 					if (VUIdata[n].DropShip !== false) {
 						_thatSD.oDropShipDataModel.getData().results.push(VUIdata[n]);
 						_thatSD.oDropShipDataModel.updateBindings(true);
@@ -208,11 +198,9 @@ sap.ui.define([
 		},
 
 		getResonseForSubmit: function () {
-			console.log("SelectedDealerS", SelectedDealerS);
 			_thatSD.oJSON = _thatSD.getView().getModel("DropShipDataModel").getData().results;
 			_thatSD.responseData = [];
 			var DataModel = _thatSD.getOwnerComponent().getModel("DataModel");
-			// var oModel = new sap.ui.model.odata.v2.ODataModel(_thatSD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV");
 			DataModel.setUseBatch(false);
 
 			if (_thatSD.oJSON.length > 0) {
@@ -242,7 +230,6 @@ sap.ui.define([
 
 			model.create("/DropShipSet", Obj, {
 				success: $.proxy(function (oResponse) {
-					console.log("Drop Ship Response", oResponse);
 					oResponse.__metadata = "";
 					_thatSD.responseData.push(oResponse);
 					if (_thatSD.responseData.length > 0) {
@@ -262,9 +249,7 @@ sap.ui.define([
 						});
 					}
 				}, _thatSD),
-				error: function (oError) {
-					console.log("orderChangeError", oError);
-				}
+				error: function (oError) {}
 			});
 		},
 
@@ -288,11 +273,6 @@ sap.ui.define([
 					_thatSD.getRouter().navTo("changeHistory2");
 				}
 			}
-			// else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-			// 	_thatSD.getRouter().navTo("changeHistory", {
-			// 		SelectedDealer: SelectedDealerS
-			// 	});
-			// } 
 			else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();
 				var sPreviousHash = oHistory.getPreviousHash();
@@ -305,7 +285,7 @@ sap.ui.define([
 			}
 		},
 		formatDate: function (oDate) {
-			if (oDate != "" && oDate != undefined) {
+			if (oDate !== "" && oDate != undefined) {
 				var Year = oDate.substring(0, 4);
 				var Month = oDate.substring(4, 6);
 				var Day = oDate.substring(6, 8);

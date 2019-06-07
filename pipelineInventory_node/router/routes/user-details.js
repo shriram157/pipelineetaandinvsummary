@@ -99,9 +99,6 @@ module.exports = function (appContext) {
 				return res.type("plain/text").status(400).send("Unknown zone ID.");
 			}
 
-			// bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
-			// 	"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
-			// 	"and zstatus ne 'X' &$orderby=BusinessPartner asc";
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
 				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
 				"and zstatus ne 'X' &$orderby=BusinessPartner asc &$select=BusinessPartner,BusinessPartnerName,BusinessPartnerType,OrganizationBPName1,SearchTerm2,to_Customer/Attribute1,to_Customer/to_CustomerSalesArea/SalesOffice,to_Customer/to_CustomerSalesArea/Customer,to_Customer/to_CustomerSalesArea/SalesOrganization,to_Customer/to_CustomerSalesArea/DistributionChannel,to_Customer/to_CustomerSalesArea/Division,to_Customer/to_CustomerSalesArea/SalesGroup";
@@ -225,7 +222,7 @@ module.exports = function (appContext) {
 							resBody.legacyDealer = bpAttributes.BusinessPartner;
 							resBody.legacyDealerName = bpAttributes.BusinessPartnerName;
 							resBody.attributes.push(bpAttributes);
-
+							
 							// Dealer should only return one BP result anyway, but break here just in case
 							break;
 						}

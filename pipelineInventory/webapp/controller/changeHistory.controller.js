@@ -1,5 +1,4 @@
 sap.ui.define([
-	// "sap/ui/core/mvc/Controller",
 	'pipelineInventory/controller/BaseController',
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/resource/ResourceModel',
@@ -79,12 +78,10 @@ sap.ui.define([
 			_thatCH.getView().setModel(_thatCH._oViewModel, "LocalModel");
 
 			_thatCH.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatCH._oChangeHistoryRoute, _thatCH);
-			// var err = JSON.parse(oError.response.body);
-			// sap.m.MessageBox.error(err.error.message.value);
+
 		},
 
 		afterConfigLoad: function () {
-			console.log("afterConfigLoad  ", localLang);
 			if (localLang === "F") {
 				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "Plus";
 			} else {
@@ -99,7 +96,6 @@ sap.ui.define([
 			_thatCH.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.show();
 			_thatCH.getView().setModel(_thatCH.oChangeHistoryModel, "ChangeHistoryModel");
-			// _thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
 
 			_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
@@ -159,17 +155,14 @@ sap.ui.define([
 			if (oEvent.getParameters().arguments.SelectedDealer != undefined) {
 				_thatCH.Dealer = oEvent.getParameters().arguments.SelectedDealer;
 				_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
-				//ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Dealer eq '2400042193'&$format=json
 				var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq ' " + DivUser +
 					" ' and Dealer eq '" + _thatCH.Dealer + "'and LANGUAGE eq '" + localLang + "' &$format=json";
-				//'and LANGUAGE eq '"+localLang+"'
 				$.ajax({
 					dataType: "json",
 					url: url,
 					type: "GET",
 					success: function (oChangeData) {
 						sap.ui.core.BusyIndicator.hide();
-						console.log("ChangeHistory Data", oChangeData);
 						if (oChangeData.d.results.length > 0) {
 							_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
 							_thatCH.oChangeHistoryModel.setData(oChangeData.d);
@@ -206,7 +199,6 @@ sap.ui.define([
 					type: "GET",
 					success: function (oChangeData) {
 						sap.ui.core.BusyIndicator.hide();
-						console.log("ChangeHistory Data", oChangeData);
 						if (oChangeData.d.results.length > 0) {
 							_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
 							_thatCH.oChangeHistoryModel.setData(oChangeData.d);
@@ -236,7 +228,7 @@ sap.ui.define([
 		onDealerChange: function (oDealer) {
 			sap.ui.core.BusyIndicator.show();
 			var BPDataMo = _thatCH.getView().getModel("BusinessDataModel");
-			var SelectedDealer = oDealer.getParameters().selectedItem.getAdditionalText(); //oDealer.getParameters().selectedItem.getProperty("key");
+			var SelectedDealer = oDealer.getParameters().selectedItem.getAdditionalText(); 
 			_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
 
 			var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq '" + DivUser +
@@ -248,18 +240,11 @@ sap.ui.define([
 				type: "GET",
 				success: function (oChangeData) {
 					sap.ui.core.BusyIndicator.hide();
-					console.log("ChangeHistory Data", oChangeData);
 					if (oChangeData.d.results.length > 0) {
 						_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
 						_thatCH.oChangeHistoryModel.setData(oChangeData.d);
 						_thatCH.oChangeHistoryModel.updateBindings(true);
-						// $.each(_thatCH.oChangeHistoryModel.getData().results, function (i, item) {
-						// 	if (item.Status !== "Rejected") {
-						// 		_thatCH.btnResubmit.setVisible(false);
-						// 	} else {
-						// 		_thatCH.btnResubmit.setVisible(true);
-						// 	}
-						// });
+						
 						for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
 							if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
 								_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
@@ -288,7 +273,6 @@ sap.ui.define([
 
 			var obj = oNavEvent.getSource().getModel("ChangeHistoryModel").getProperty(oNavEvent.getSource().getBindingContext(
 				"ChangeHistoryModel").sPath);
-			console.log("pre formatted data", obj);
 			obj.NewSuffix = obj.NewSuffix.replace("/", "%2F");
 			obj.OldSuffix = obj.OldSuffix.replace("/", "%2F");
 			obj.__metadata = "";
@@ -299,7 +283,6 @@ sap.ui.define([
 		onNavigateToOC: function (oResubmit) {
 			var data = oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
 				"ChangeHistoryModel").sPath);
-			console.log("pre formatted data", data);
 			data.NewSuffix = data.NewSuffix.replace("/", "%2F");
 			data.OldSuffix = data.OldSuffix.replace("/", "%2F");
 			data.__metadata = "";
@@ -320,11 +303,6 @@ sap.ui.define([
 				var Time = Hours + ":" + Minute + ":" + Seconds;
 				var dateTime = date + "\n/" + Time;
 				return dateTime;
-				// jQuery.sap.require("sap.ui.core.format.DateFormat");
-				// _thatDT.oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
-				// 	pattern: "yyyy-MM-dd"
-				// });
-				// return _thatDT.oDateFormat.format(new Date(date));
 			}
 		},
 

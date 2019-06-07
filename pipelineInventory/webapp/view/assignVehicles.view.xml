@@ -81,7 +81,7 @@
 							<ColumnListItem>
 								<cells>
 									<Link text="{AssignVehiclesModel>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{AssignVehiclesModel>ZZDLR_REF_NO}"/>
-									<!--{AssignVehiclesModel>ZZORDERTYPE} removed from order type (defect number 10426)-->
+									
 									<Text text="{AssignVehiclesModel>ORDERTYPE_DESC_EN}"/>
 									<Text text="{AssignVehiclesModel>ZMMSTA}"/>
 									<Link text="{AssignVehiclesModel>ZZVTN}" tooltip="{AssignVehiclesModel>ZZVTN}"/>

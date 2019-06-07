@@ -69,42 +69,11 @@ sap.ui.define([
 				url: "/app-config",
 				type: "GET",
 				success: function (configData) {
-					console.log("configData",configData);
 					configDataModel.setData(configData);
 					configDataModel.updateBindings(true);
 				},
-				error: function (oError) {
-					console.log("oError",oError);
-				}
+				error: function (oError) {}
 			});
-			
-			// this.loadConfiguration(function(configurationData){
-			// 	var appLinkes = {};
-			// 	appLinkes.loaded = true;
-			// 	if (!!configurationData && !!configurationData.api.APPLINKS ){
-			// 		console.log("appLinkes",appLinkes);
-			// 		// appLinkes.PARTS_AVAILIBILITY = configurationData.api.APPLINKS.PARTS_AVAILIBILITY;
-			// 		// appMode.setProperty("/appLinkes", appLinkes);
-			// 	}
-			// 	if (that.isAppModelLoaded() ){
-			// 		sap.ui.core.BusyIndicator.hide();
-			// 	}				
-			// });
 		}
-		// ,
-		// loadConfiguration: function (callbackFunc) {
-		// 	var that = this;
-		// 	$.ajax({
-		// 		url: "/node/userDetails/configuration",
-		// 		type: "GET",
-		// 		dataType: "json",
-		// 		success: function (oData, a, b) {
-		// 			callbackFunc(oData);
-		// 		},
-		// 		error: function (response) {
-		// 			callbackFunc(response);
-		// 		}
-		// 	});
-		// },
 	});
 });
