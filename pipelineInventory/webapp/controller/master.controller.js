@@ -171,18 +171,6 @@ sap.ui.define([
 				error: function (oError) {}
 			});
 
-			// $.ajax({
-			// 	dataType: "json",
-			// 	url: _that.nodeJsUrl + "/API_BUSINESS_PARTNER/A_BusinessPartner?$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004') and zstatus ne 'X'",
-			// 	type: "GET",
-			// 	success: function (testData) {
-			// 		console.log("testData",testData);
-			// 	},
-			// 	error: function (oError) {
-			// 		sap.ui.core.BusyIndicator.hide();
-			// 	}
-			// });
-
 			$.ajax({
 				dataType: "json",
 				url: "/userDetails/attributes",
@@ -218,81 +206,73 @@ sap.ui.define([
 
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 						_that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "-",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "Zone Total",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
 						// _that.BusinessPartnerData.getData().DealerList.unshift({
 						// 	BusinessPartner: "-",
 						// 	BusinessPartnerKey: "",
-						// 	BusinessPartnerName: "Zone Stock",
+						// 	BusinessPartnerName: "Zone Total",
 						// 	BusinessPartnerType: "",
 						// 	SearchTerm2: ""
 						// });
-
 					} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
-						if (DivAttribute == "20") {
-							_that.BusinessPartnerData.getData().DealerList.unshift({
-								BusinessPartner: "-",
-								BusinessPartnerKey: "",
-								BusinessPartnerName: "Lexus",
-								BusinessPartnerType: "",
-								SearchTerm2: ""
-							});
-						} else if (DivAttribute == "10") {
-							_that.BusinessPartnerData.getData().DealerList.unshift({
-								BusinessPartner: "-",
-								BusinessPartnerKey: "",
-								BusinessPartnerName: "Atlantic Zone",
-								BusinessPartnerType: "",
-								SearchTerm2: ""
-							});
-							_that.BusinessPartnerData.getData().DealerList.unshift({
-								BusinessPartner: "-",
-								BusinessPartnerKey: "",
-								BusinessPartnerName: "Quebec Zone",
-								BusinessPartnerType: "",
-								SearchTerm2: ""
-							});
-							_that.BusinessPartnerData.getData().DealerList.unshift({
-								BusinessPartner: "-",
-								BusinessPartnerKey: "",
-								BusinessPartnerName: "Central Zone",
-								BusinessPartnerType: "",
-								SearchTerm2: ""
-							});
-							_that.BusinessPartnerData.getData().DealerList.unshift({
-								BusinessPartner: "-",
-								BusinessPartnerKey: "",
-								BusinessPartnerName: "Pacific Zone",
-								BusinessPartnerType: "",
-								SearchTerm2: ""
-							});
-							_that.BusinessPartnerData.getData().DealerList.unshift({
-								BusinessPartner: "-",
-								BusinessPartnerKey: "",
-								BusinessPartnerName: "Prairie Zone",
-								BusinessPartnerType: "",
-								SearchTerm2: ""
-							});
-							_that.BusinessPartnerData.getData().DealerList.unshift({
-								BusinessPartner: "-",
-								BusinessPartnerKey: "",
-								BusinessPartnerName: "National/Zone Stock",
-								BusinessPartnerType: "",
-								SearchTerm2: ""
-							});
-						}
-						_that.BusinessPartnerData.getData().DealerList.unshift({
-							BusinessPartner: "-",
-							BusinessPartnerKey: "",
-							BusinessPartnerName: "TCI Total",
-							BusinessPartnerType: "",
-							SearchTerm2: ""
-						});
+						// if (DivAttribute == "20") {
+						// 	_that.BusinessPartnerData.getData().DealerList.unshift({
+						// 		BusinessPartner: "-",
+						// 		BusinessPartnerKey: "",
+						// 		BusinessPartnerName: "Lexus",
+						// 		BusinessPartnerType: "",
+						// 		SearchTerm2: ""
+						// 	});
+						// } else if (DivAttribute == "10") {
+						// 	_that.BusinessPartnerData.getData().DealerList.unshift({
+						// 		BusinessPartner: "-",
+						// 		BusinessPartnerKey: "",
+						// 		BusinessPartnerName: "Atlantic Zone",
+						// 		BusinessPartnerType: "",
+						// 		SearchTerm2: ""
+						// 	});
+						// 	_that.BusinessPartnerData.getData().DealerList.unshift({
+						// 		BusinessPartner: "-",
+						// 		BusinessPartnerKey: "",
+						// 		BusinessPartnerName: "Quebec Zone",
+						// 		BusinessPartnerType: "",
+						// 		SearchTerm2: ""
+						// 	});
+						// 	_that.BusinessPartnerData.getData().DealerList.unshift({
+						// 		BusinessPartner: "-",
+						// 		BusinessPartnerKey: "",
+						// 		BusinessPartnerName: "Central Zone",
+						// 		BusinessPartnerType: "",
+						// 		SearchTerm2: ""
+						// 	});
+						// 	_that.BusinessPartnerData.getData().DealerList.unshift({
+						// 		BusinessPartner: "-",
+						// 		BusinessPartnerKey: "",
+						// 		BusinessPartnerName: "Pacific Zone",
+						// 		BusinessPartnerType: "",
+						// 		SearchTerm2: ""
+						// 	});
+						// 	_that.BusinessPartnerData.getData().DealerList.unshift({
+						// 		BusinessPartner: "-",
+						// 		BusinessPartnerKey: "",
+						// 		BusinessPartnerName: "Prairie Zone",
+						// 		BusinessPartnerType: "",
+						// 		SearchTerm2: ""
+						// 	});
+						// 	_that.BusinessPartnerData.getData().DealerList.unshift({
+						// 		BusinessPartner: "-",
+						// 		BusinessPartnerKey: "",
+						// 		BusinessPartnerName: "National/Zone Stock",
+						// 		BusinessPartnerType: "",
+						// 		SearchTerm2: ""
+						// 	});
+						// }
+						// _that.BusinessPartnerData.getData().DealerList.unshift({
+						// 	BusinessPartner: "-",
+						// 	BusinessPartnerKey: "",
+						// 	BusinessPartnerName: "TCI Total",
+						// 	BusinessPartnerType: "",
+						// 	SearchTerm2: ""
+						// });
 					} else {
 						_that.salesOffice = "";
 					}
