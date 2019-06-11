@@ -507,6 +507,7 @@ sap.ui.define([
 
 		},
 		onAfterRendering: function () {
+			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oMasterRoute, _that);
 			/*Defect number 9293 code start*/
 			if (selectedDDValues.length != 0) {
 				_that.oGlobalJSONModel.setData(seriesModel);
@@ -1254,11 +1255,12 @@ sap.ui.define([
 
 		},
 
-		onBeforeRendering: function () {
-			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oMasterRoute, _that);
-		},
+		// onBeforeRendering: function () {
+		// 	_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oMasterRoute, _that);
+		// },
 
 		_oMasterRoute: function (oEvent) {
+			// debugger;
 			_that.fetchCountsforTables(filteredData);
 			_that.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
