@@ -15,7 +15,7 @@
 				</customHeader>
 				<tnt:ToolHeader>
 					<Link text="{i18n>PageTitle}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
-					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
+					<Link text="{i18n>VehicleDetails}" class="clCustomFont sapUiSmallMargin" enabled="false"/>
 					<Link text="{i18n>ChangeHistory}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 					<ToolbarSpacer>
 						<layoutData>
