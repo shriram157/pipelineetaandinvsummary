@@ -606,6 +606,7 @@ sap.ui.define([
 			_thatOC.oOrderChangeJSON = _thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
 			Obj.VHCLE = _thatOC.oOrderChangeJSON.VHCLE;
 			Obj.Dealer = _thatOC.oOrderChangeJSON.Dealer;
+			Obj.LANGUAGE = localLang;
 			if (_thatOC.getView().byId("ID_modelSelect").getSelectedKey() != undefined) {
 				Obj.NewModel = _thatOC.getView().byId("ID_modelSelect").getSelectedKey();
 			}
