@@ -248,12 +248,18 @@ sap.ui.define([
 					Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
 					Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
 					Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
-					Data.INTCOL_DESC_EN = Data.INTCOL_DESC_EN.replace("%2F", "/");
-					Data.INTCOL_DESC_FR = Data.INTCOL_DESC_FR.replace("%2F", "/");
-					Data.MODEL_DESC_EN = Data.MODEL_DESC_EN.replace("%2F", "/");
-					Data.MODEL_DESC_FR = Data.MODEL_DESC_FR.replace("%2F", "/");
-					Data.EXTCOL_DESC_EN = Data.EXTCOL_DESC_EN.replace("%2F", "/");
-					Data.EXTCOL_DESC_FR = Data.EXTCOL_DESC_FR.replace("%2F", "/");
+					if (Data.INTCOL_DESC_FR != undefined && Data.INTCOL_DESC_EN != undefined) {
+						Data.INTCOL_DESC_EN = Data.INTCOL_DESC_EN.replace("%2F", "/");
+						Data.INTCOL_DESC_FR = Data.INTCOL_DESC_FR.replace("%2F", "/");
+					}
+					if (Data.MODEL_DESC_EN != undefined && Data.MODEL_DESC_FR != undefined) {
+						Data.MODEL_DESC_EN = Data.MODEL_DESC_EN.replace("%2F", "/");
+						Data.MODEL_DESC_FR = Data.MODEL_DESC_FR.replace("%2F", "/");
+					}
+					if (Data.EXTCOL_DESC_EN != undefined && Data.EXTCOL_DESC_FR != undefined) {
+						Data.EXTCOL_DESC_EN = Data.EXTCOL_DESC_EN.replace("%2F", "/");
+						Data.EXTCOL_DESC_FR = Data.EXTCOL_DESC_FR.replace("%2F", "/");
+					}
 					_thatOC.oVehicleDetailsJSON = new sap.ui.model.json.JSONModel();
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData = [];
 					_thatOC.oVehicleDetailsJSON.getData().selectedVehicleData.push(Data);
