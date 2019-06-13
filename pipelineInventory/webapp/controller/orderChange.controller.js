@@ -501,28 +501,30 @@ sap.ui.define([
 								if (ColorVal != undefined) {
 									selectedKey = _thatOC.oVehicleDetailsJSON.getData().colorData.filter(function (val) {
 										if (localLang === "F" && val.ExteriorColorCode == ColorVal) {
-											return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorFR + " " + val.mrktg_int_desc_fr;
+											return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorFR;
 										} else if (localLang === "E" && val.ExteriorColorCode == ColorVal) {
-											return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorEN + " " + val.mrktg_int_desc_en;
+											return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorEN;
 										}
 									});
 									_thatOC.oVehicleDetailsJSON.getData().colorData.unshift(selectedKey);
 									// _thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(selectedKey);
 								}
 							}
-						} else {
-							if (ColorVal != undefined) {
-								selectedKey = _thatOC.oVehicleDetailsJSON.getData().colorData.filter(function (val) {
-									if (localLang === "F" && val.ExteriorColorCode == ColorVal) {
-										return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorFR + " " + val.mrktg_int_desc_fr;
-									} else if (localLang === "E" && val.ExteriorColorCode == ColorVal) {
-										return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorEN + " " + val.mrktg_int_desc_en;
-									}
-								});
-								_thatOC.oVehicleDetailsJSON.getData().colorData.unshift(selectedKey);
-								// _thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(selectedKey);
-							}
-						}
+						} 
+						
+						// else {
+						// 	if (ColorVal != undefined) {
+						// 		selectedKey = _thatOC.oVehicleDetailsJSON.getData().colorData.filter(function (val) {
+						// 			if (localLang === "F" && val.ExteriorColorCode == ColorVal) {
+						// 				return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorFR;
+						// 			} else if (localLang === "E" && val.ExteriorColorCode == ColorVal) {
+						// 				return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorEN;
+						// 			}
+						// 		});
+						// 		_thatOC.oVehicleDetailsJSON.getData().colorData.unshift(selectedKey);
+						// 		// _thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(selectedKey);
+						// 	}
+						// }
 
 						_thatOC.oVehicleDetailsJSON.updateBindings(true);
 						sap.ui.core.BusyIndicator.hide();
