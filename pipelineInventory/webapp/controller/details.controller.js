@@ -80,7 +80,7 @@ sap.ui.define([
 			_thatDT.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatDT._oDetailsRoute, _thatDT);
 
 		},
-		
+
 		afterConfigLoad: function () {
 			if (localLang === "F") {
 				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "Plus";
@@ -172,7 +172,7 @@ sap.ui.define([
 				_thatDT.SelectedDealer = _thatDT.routedData.Dealer;
 				_thatDT.UserType = _thatDT.routedData.userType;
 				_thatDT.salesOffice = _thatDT.routedData.salesOffice;
-				
+
 				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
 					"' and VKBUR eq '" + _thatDT.salesOffice +
 					"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
@@ -188,7 +188,7 @@ sap.ui.define([
 					type: "GET",
 					success: function (oRowData) {
 						sap.ui.core.BusyIndicator.hide();
-						console.log("oRowData",oRowData);
+						console.log("oRowData", oRowData);
 						_thatDT.oVehicleDetailsJSON.setData(oRowData.d);
 						_thatDT.getView().setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						sap.ui.getCore().setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
@@ -359,7 +359,7 @@ sap.ui.define([
 			Data.EXTCOL_DESC_EN = Data.EXTCOL_DESC_EN.replace("/", "%2F");
 			Data.EXTCOL_DESC_FR = Data.EXTCOL_DESC_FR.replace("/", "%2F");
 			Data.__metadata = "";
-			
+
 			_thatDT.getRouter().navTo("vehicleDetails", {
 				VCData: JSON.stringify(Data)
 
@@ -404,7 +404,7 @@ sap.ui.define([
 						l].getBindingContext("VehicleDetailsJSON").getPath()).__metadata = "";
 					checkedItem = oVUID.getParameters().listItems[l].getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItems[
 						l].getBindingContext("VehicleDetailsJSON").getPath());
-				
+
 					_thatDT.checkedData.push(oVUID.getParameters().listItems[l].getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters()
 						.listItems[l].getBindingContext("VehicleDetailsJSON").getPath()));
 				}
@@ -414,7 +414,7 @@ sap.ui.define([
 
 				checkedItem = oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
 					.getBindingContext("VehicleDetailsJSON").getPath());
-			
+
 				_thatDT.checkedData.push(oVUID.getParameters().listItem.getBindingContext("VehicleDetailsJSON").getProperty(oVUID.getParameters().listItem
 					.getBindingContext("VehicleDetailsJSON").getPath()));
 			}
@@ -551,29 +551,32 @@ sap.ui.define([
 			_thatDT.oBinding = _thatDT.oTable.getBinding("items");
 			var aFilters = [];
 			var tempFilter = oWildCardVal.getSource().getValue();
-
-			var sQuery = tempFilter.split("*");
-			var Query;
-			if (sQuery.length > 0) {
-				if (sQuery[0] == "") {
-					Query = sQuery[1];
-					aFilters = new Filter([
-						new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.StartsWith, Query)
-					], false);
-				} else if (sQuery[1] == "") {
-					Query = sQuery[0];
-					aFilters = new Filter([
-						new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EndsWith, Query)
-					], false);
-				} else {
-					Query = _thatDT.getView().byId("ID_OrderNoVal").getValue();
-					aFilters = new Filter([
-						new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.Contains, Query)
-					], false);
-				}
-				_thatDT.oBinding.filter(aFilters);
-			} else {
+			if (oWildCardVal.getParameters().newValue === "") {
 				_thatDT.oBinding.filter([]);
+			} else {
+				var sQuery = tempFilter.split("*");
+				var Query;
+				if (sQuery.length > 0) {
+					if (sQuery[0] == "") {
+						Query = sQuery[1];
+						aFilters = new Filter([
+							new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.StartsWith, Query)
+						], false);
+					} else if (sQuery[1] == "") {
+						Query = sQuery[0];
+						aFilters = new Filter([
+							new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EndsWith, Query)
+						], false);
+					} else {
+						Query = _thatDT.getView().byId("ID_OrderNoVal").getValue();
+						aFilters = new Filter([
+							new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.Contains, Query)
+						], false);
+					}
+					_thatDT.oBinding.filter(aFilters);
+				} else {
+					_thatDT.oBinding.filter([]);
+				}
 			}
 		},
 
