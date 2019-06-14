@@ -643,7 +643,10 @@ sap.ui.define([
 
 		/*Fetch data on apply filter click for all three tables*/
 		applyFiltersBtn: function () {
-			if (_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "TCI Total" && _that.getView().byId(
+			if ((_that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "TCI Total" || _that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "Zone Total" ||
+			 _that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "Pacific Zone" ||  _that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "Central Zone" ||
+			  _that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "Prairie Zone" || _that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "Atlantic Zone" || 
+			  _that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "Quebec Zone" || _that.getView().byId("ID_DealearPicker").getSelectedItem().getAdditionalText() == "Lexus" ) && _that.getView().byId(
 					"ID_seriesDesc").getSelectedKey() == _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				MessageBox.show(_that.oI18nModel.getResourceBundle().getText("MandatorySeriesForNationalUser"), MessageBox.Icon.ERROR, "Error",
 					MessageBox.Action.OK, null, null);
