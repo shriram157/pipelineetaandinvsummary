@@ -582,8 +582,8 @@ sap.ui.define([
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Prairie Zone") {
 					SelectedDealerKey = "Prairie Zone";
 				}
-				var zone = _that.BusinessPartnerData.getData().SamlList.Zone[0];
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
+					var zone = _that.BusinessPartnerData.getData().SamlList.Zone[0];
 					if (zone === "1") {
 						_that.salesOffice = "1000";
 					} else if (zone === "2") {
