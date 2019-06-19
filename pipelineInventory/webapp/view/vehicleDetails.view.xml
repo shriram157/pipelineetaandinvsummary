@@ -80,7 +80,7 @@
 										<core:Item key="{VehicleDetailsJSON>DNCVehicle}" text="{VehicleDetailsJSON>DNCVehicle}"/>
 									</Select>
 									<Label text="{i18n>Comments}"/>
-									<TextArea value="{VehicleDetailsJSON>/selectedVehicleData/0/Comments}" rows="4"/>
+									<TextArea value="{VehicleDetailsJSON>/selectedVehicleData/0/Comments}" rows="3" maxLength="150" showExceededText="false"/>
 								</f:content>
 							</f:SimpleForm>
 						</VBox>
