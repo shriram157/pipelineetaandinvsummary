@@ -200,7 +200,23 @@ sap.ui.define([
 					}
 
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
-						_that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
+						var zone = _that.BusinessPartnerData.getData().SamlList.Zone[0];
+					if (zone === "1") {
+						_that.salesOffice = "1000";
+					} else if (zone === "2") {
+						_that.salesOffice = "2000";
+					} else if (zone === "3") {
+						_that.salesOffice = "3000";
+					} else if (zone === "4") {
+						_that.salesOffice = "5000";
+					} else if (zone === "5") {
+						_that.salesOffice = "4000";
+					} else if (zone === "7") {
+						_that.salesOffice = "9000";
+					} else if (zone === "8") {
+						_that.salesOffice = "8000";
+					}
+						// _that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
 							BusinessPartnerKey: "",
