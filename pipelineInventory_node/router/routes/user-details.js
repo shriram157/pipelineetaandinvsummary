@@ -92,8 +92,6 @@ module.exports = function (appContext) {
 				bpZone = "4000";
 			} else if (zone === "7") {
 				bpZone = "9000";
-			} else if (zone === "8") {
-				bpZone = "8000";
 			} else {
 				logger.warning("Unrecognized zone ID: %s", zone);
 				return res.type("plain/text").status(400).send("Unknown zone ID.");
@@ -166,7 +164,7 @@ module.exports = function (appContext) {
 							if ((customerSalesArea.results[i].SalesOffice === "1000" || customerSalesArea.results[i].SalesOffice === "2000" ||
 									customerSalesArea.results[i].SalesOffice === "3000" || customerSalesArea.results[i].SalesOffice === "4000" ||
 									customerSalesArea.results[i].SalesOffice === "5000" || customerSalesArea.results[i].SalesOffice === "7000" ||
-									customerSalesArea.results[i].SalesOffice === "9000") && ((
+									customerSalesArea.results[i].SalesOffice === "9000" || customerSalesArea.results[i].SalesOffice === "8000") && ((
 									customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10" &&
 									customerSalesArea.results[i].SalesGroup != "T99"))) {
 								filtered = true;

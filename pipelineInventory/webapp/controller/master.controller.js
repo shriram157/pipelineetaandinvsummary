@@ -213,9 +213,7 @@ sap.ui.define([
 						_that.salesOffice = "4000";
 					} else if (zone === "7") {
 						_that.salesOffice = "9000";
-					} else if (zone === "8") {
-						_that.salesOffice = "8000";
-					}
+					} 
 						// _that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
