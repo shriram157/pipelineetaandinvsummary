@@ -370,7 +370,7 @@ sap.ui.define([
 								}
 							}
 						}
-						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
+						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
 									delete oModelData.d.results[key];
