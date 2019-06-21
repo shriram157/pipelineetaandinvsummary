@@ -379,14 +379,15 @@ sap.ui.define([
 								}
 							}
 						}
-						if(SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total") {
+						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
+							"TCI Total") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo === "L/C") {
 									delete oModelData.d.results[key];
 								}
 							});
-						}
-						else if(SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total"){
+						} else if (SelectedDealer === "2400029000" && SelectedDealer === "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
+							"TCI Total"){
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo !== "L/C") {
 									delete oModelData.d.results[key];
@@ -500,14 +501,15 @@ sap.ui.define([
 						// 		return oModelData.d.results[key];
 						// 	});
 						// } 
-						if(SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total") {
+						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
+							"TCI Total") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo === "L/C") {
 									delete oModelData.d.results[key];
 								}
 							});
-						}
-						else if(SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total"){
+						} else if (SelectedDealer === "2400029000" && SelectedDealer === "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
+							"TCI Total"){
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo !== "L/C") {
 									delete oModelData.d.results[key];
@@ -585,7 +587,6 @@ sap.ui.define([
 			/*Defect number 9293 code end*/
 		},
 		onDealerChange: function (oDealer) {
-			_that.oGlobalJSONModel.getData().seriesData = [];
 			_that.userType = "";
 			if (oDealer.getParameters().selectedItem != undefined) {
 				_that.getView().byId("ID_marktgIntDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
@@ -689,6 +690,8 @@ sap.ui.define([
 						SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
 					}
 				}
+
+				_that.oGlobalJSONModel.getData().seriesData = [];
 				_that.getUpdatedSeries(SelectedDealer);
 			} else {
 				_that.getView().byId("id_BusinessPartnerName").setValue(oDealer.getParameters().selectedItem.getAdditionalText());
@@ -1284,7 +1287,7 @@ sap.ui.define([
 
 			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				obj_first.series = _that.getView().byId("ID_seriesDesc").getSelectedKey();
-				if (obj_first.match(/\\$/)) { 
+				if (obj_first.match(/\\$/)) {
 					obj_first.series = obj_first.series.replace("/", "%2F");
 				}
 			} else obj_first.series = "";
