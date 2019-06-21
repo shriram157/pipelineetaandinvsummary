@@ -386,7 +386,7 @@ sap.ui.define([
 								}
 							});
 						}
-						else {
+						else if(SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total"){
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo !== "L/C") {
 									delete oModelData.d.results[key];
@@ -507,7 +507,7 @@ sap.ui.define([
 								}
 							});
 						}
-						else {
+						else if(SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total"){
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo !== "L/C") {
 									delete oModelData.d.results[key];
@@ -585,6 +585,7 @@ sap.ui.define([
 			/*Defect number 9293 code end*/
 		},
 		onDealerChange: function (oDealer) {
+			_that.oGlobalJSONModel.getData().seriesData = [];
 			_that.userType = "";
 			if (oDealer.getParameters().selectedItem != undefined) {
 				_that.getView().byId("ID_marktgIntDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
