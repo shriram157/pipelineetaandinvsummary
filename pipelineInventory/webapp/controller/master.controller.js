@@ -499,6 +499,12 @@ sap.ui.define([
 									delete oModelData.d.results[key];
 								}
 							});
+						} else if (SelectedDealer === "2400500000" || SelectedDealer === "TCI Total") {
+							$.each(oModelData.d.results, function (key, value) {
+								// if (value.ModelSeriesNo !== "L/C") {
+								// 	delete oModelData.d.results[key];
+								// }
+							});
 						} else {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo !== "L/C") {
