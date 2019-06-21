@@ -170,6 +170,7 @@ sap.ui.define([
 				_thatDT.routedData = JSON.parse(oDetailsRoute.getParameters().arguments.tableFirst);
 
 				_thatDT.SelectedDealer = _thatDT.routedData.Dealer;
+				_thatDT.routedData.series = _thatDT.routedData.series.replace("%2F", "/");
 				_thatDT.UserType = _thatDT.routedData.userType;
 				_thatDT.salesOffice = _thatDT.routedData.salesOffice;
 
@@ -347,6 +348,7 @@ sap.ui.define([
 			var Data = oNavEvent.getSource().getModel("VehicleDetailsJSON").getProperty(oNavEvent.getSource().getBindingContext(
 				"VehicleDetailsJSON").sPath);
 			Data.Suffix = Data.Suffix.replace("/", "%2F");
+			Data.TCISeries = Data.TCISeries.replace("/", "%2F");
 			Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("/", "%2F");
 			Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("/", "%2F");
 			Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("/", "%2F");

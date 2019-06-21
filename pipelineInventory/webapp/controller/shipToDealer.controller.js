@@ -28,7 +28,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatSD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
-				localLang="F";
+				localLang = "F";
 			} else {
 				_thatSD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
@@ -36,7 +36,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatSD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
-				localLang="E";
+				localLang = "E";
 			}
 
 			var sLocation = window.location.host;
@@ -78,7 +78,7 @@ sap.ui.define([
 
 			_thatSD.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatSD._oShipToDealerRoute, _thatSD);
 		},
-		
+
 		afterConfigLoad: function () {
 			if (localLang === "F") {
 				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "Plus";
@@ -153,6 +153,7 @@ sap.ui.define([
 				_thatSD.oDropShipDataModel.getData().results = [];
 				for (var n = 0; n < VUIdata.length; n++) {
 					VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F", "/");
+					VUIdata[n].TCISeries = VUIdata[n].TCISeries.replace("%2F", "/");
 					VUIdata[n].SERIES_DESC_EN = VUIdata[n].SERIES_DESC_EN.replace("%2F", "/");
 					VUIdata[n].SERIES_DESC_FR = VUIdata[n].SERIES_DESC_FR.replace("%2F", "/");
 					VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F", "/");
@@ -163,7 +164,7 @@ sap.ui.define([
 					VUIdata[n].MODEL_DESC_FR = VUIdata[n].MODEL_DESC_FR.replace("%2F", "/");
 					VUIdata[n].EXTCOL_DESC_EN = VUIdata[n].EXTCOL_DESC_EN.replace("%2F", "/");
 					VUIdata[n].EXTCOL_DESC_FR = VUIdata[n].EXTCOL_DESC_FR.replace("%2F", "/");
-					
+
 					if (VUIdata[n].DropShip !== false) {
 						_thatSD.oDropShipDataModel.getData().results.push(VUIdata[n]);
 						_thatSD.oDropShipDataModel.updateBindings(true);
@@ -272,8 +273,7 @@ sap.ui.define([
 				} else {
 					_thatSD.getRouter().navTo("changeHistory2");
 				}
-			}
-			else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("Back")) {
+			} else if (_oSelectedScreen == _thatSD.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();
 				var sPreviousHash = oHistory.getPreviousHash();
 				if (sPreviousHash !== undefined) {
@@ -294,7 +294,7 @@ sap.ui.define([
 			}
 		},
 		onExit: function () {
-			SelectedDealerS="";
+			SelectedDealerS = "";
 			_thatSD.oDropShipDataModel.setData();
 			_thatSD.oDropShipDataModel.updateBindings(true);
 			_thatSD.oDropShipDataModel.refresh(true);

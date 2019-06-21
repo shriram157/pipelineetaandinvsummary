@@ -151,6 +151,7 @@ sap.ui.define([
 				var VUIdata = JSON.parse(oEvent.getParameters().arguments.vehicleData);
 				for (var n = 0; n < VUIdata.length; n++) {
 					VUIdata[n].ORDERTYPE_DESC_EN = VUIdata[n].ORDERTYPE_DESC_EN.replace("%2F", "/");
+					VUIdata[n].TCISeries = VUIdata[n].TCISeries.replace("%2F", "/");
 					VUIdata[n].SERIES_DESC_EN = VUIdata[n].SERIES_DESC_EN.replace("%2F", "/");
 					VUIdata[n].SERIES_DESC_FR = VUIdata[n].SERIES_DESC_FR.replace("%2F", "/");
 					VUIdata[n].SUFFIX_DESC_EN = VUIdata[n].SUFFIX_DESC_EN.replace("%2F", "/");

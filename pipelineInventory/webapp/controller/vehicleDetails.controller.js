@@ -168,7 +168,7 @@ sap.ui.define([
 					if (oEvent.getParameter("arguments").VCData2 != undefined) {
 						sap.ui.core.BusyIndicator.hide();
 						var Data = JSON.parse(oEvent.getParameter("arguments").VCData2);
-						
+						Data.TCISeries = Data.TCISeries.replace("%2F","/");
 						Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
 						Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
 						Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
@@ -291,6 +291,7 @@ sap.ui.define([
 							sap.ui.core.BusyIndicator.hide();
 							for (var i = 0; i < _thatVD.oVehicleDetailsJSON.getData().results.length; i++) {
 								if (_thatVD.oVehicleDetailsJSON.getData().results[i].VHCLE == Data.VHCLE) {
+									_thatVD.oVehicleDetailsJSON.getData().results[i].TCISeries = Data.TCISeries.replace("%2F","/");
 									_thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN.replace("%2F", "/");
 									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN.replace("%2F", "/");
 									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR.replace("%2F", "/");
@@ -509,6 +510,9 @@ sap.ui.define([
 			}
 			if (obj.Suffix != undefined) {
 				obj.Suffix = obj.Suffix.replace("/", "%2F");
+			}
+			if (obj.TCISeries != undefined) {
+				obj.TCISeries = obj.TCISeries.replace("/", "%2F");
 			}
 			if (obj.SUFFIX_DESC_FR != undefined) {
 				obj.SUFFIX_DESC_FR = obj.SUFFIX_DESC_FR.replace("/", "%2F");

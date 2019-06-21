@@ -241,6 +241,9 @@ sap.ui.define([
 					if (Data.Suffix != undefined) {
 						Data.Suffix = Data.Suffix.replace("%2F", "/");
 					}
+					if (Data.TCISeries != undefined) {
+						Data.TCISeries = Data.TCISeries.replace("%2F","/");
+					}
 					if (Data.SUFFIX_DESC_FR != undefined && Data.SUFFIX_DESC_EN != undefined) {
 						Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
 						Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("%2F", "/");
@@ -510,8 +513,8 @@ sap.ui.define([
 									// _thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(selectedKey);
 								}
 							}
-						} 
-						
+						}
+
 						// else {
 						// 	if (ColorVal != undefined) {
 						// 		selectedKey = _thatOC.oVehicleDetailsJSON.getData().colorData.filter(function (val) {
