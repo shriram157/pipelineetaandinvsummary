@@ -293,6 +293,7 @@ sap.ui.define([
 			}
 		},
 		onExit: function () {
+			SelectedDealerA="";
 			_thatAV.oAssignVehiclesModel.setData();
 			_thatAV.oAssignVehiclesModel.updateBindings(true);
 			_thatAV.oAssignVehiclesModel.refresh(true);

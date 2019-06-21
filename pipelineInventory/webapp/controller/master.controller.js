@@ -110,12 +110,20 @@ sap.ui.define([
 					"SearchTerm2": "42193"
 				}, {
 					"Attribute": "01",
-					"BusinessPartner": "01002",
-					"BusinessPartnerKey": "2400501002",
+					"BusinessPartner": "00000",
+					"BusinessPartnerKey": "2400500000",
 					"BusinessPartnerName": "",
 					"BusinessPartnerType": "Z004",
 					"BPDivision": "10",
-					"SearchTerm2": "01002"
+					"SearchTerm2": "00000"
+				}, {
+					"Attribute": "01",
+					"BusinessPartner": "TCI Total",
+					"BusinessPartnerKey": "",
+					"BusinessPartnerName": "TCI Total",
+					"BusinessPartnerType": "Z004",
+					"BPDivision": "10",
+					"SearchTerm2": ""
 				}, {
 					"Attribute": "01",
 					"BPDivision": "10",
@@ -136,8 +144,9 @@ sap.ui.define([
 
 				var samlAttributes = {
 					"Language": ["English"],
-					"UserType": ["Zone"],
-					"Zone": ["4"]
+					"UserType": ["Mational"]
+					// ,
+					// "Zone": ["4"]
 				};
 				_that.salesOffice = "1000";
 				_that.BusinessPartnerData.getData().DealerList = attributes;
@@ -201,19 +210,19 @@ sap.ui.define([
 
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 						var zone = _that.BusinessPartnerData.getData().SamlList.Zone[0];
-					if (zone === "1") {
-						_that.salesOffice = "1000";
-					} else if (zone === "2") {
-						_that.salesOffice = "2000";
-					} else if (zone === "3") {
-						_that.salesOffice = "3000";
-					} else if (zone === "4") {
-						_that.salesOffice = "5000";
-					} else if (zone === "5") {
-						_that.salesOffice = "4000";
-					} else if (zone === "7") {
-						_that.salesOffice = "9000";
-					} 
+						if (zone === "1") {
+							_that.salesOffice = "1000";
+						} else if (zone === "2") {
+							_that.salesOffice = "2000";
+						} else if (zone === "3") {
+							_that.salesOffice = "3000";
+						} else if (zone === "4") {
+							_that.salesOffice = "5000";
+						} else if (zone === "5") {
+							_that.salesOffice = "4000";
+						} else if (zone === "7") {
+							_that.salesOffice = "9000";
+						}
 						// _that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
@@ -256,14 +265,14 @@ sap.ui.define([
 							_that.BusinessPartnerData.getData().DealerList.unshift({
 								BusinessPartner: "-",
 								BusinessPartnerKey: "",
-								BusinessPartnerName: "Pacific Zone",
+								BusinessPartnerName: "Prairie Zone",
 								BusinessPartnerType: "",
 								SearchTerm2: ""
 							});
 							_that.BusinessPartnerData.getData().DealerList.unshift({
 								BusinessPartner: "-",
 								BusinessPartnerKey: "",
-								BusinessPartnerName: "Prairie Zone",
+								BusinessPartnerName: "Pacific Zone",
 								BusinessPartnerType: "",
 								SearchTerm2: ""
 							});
@@ -370,11 +379,17 @@ sap.ui.define([
 								}
 							}
 						}
-						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000") {
+						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo == "L/C") {
 									delete oModelData.d.results[key];
 								}
+							});
+						} else if (SelectedDealer === "2400500000" || SelectedDealer === "TCI Total") {
+							$.each(oModelData.d.results, function (key, value) {
+								// if (value.ModelSeriesNo !== "L/C") {
+								// 	delete oModelData.d.results[key];
+								// }
 							});
 						} else {
 							$.each(oModelData.d.results, function (key, value) {

@@ -294,6 +294,7 @@ sap.ui.define([
 			}
 		},
 		onExit: function () {
+			SelectedDealerS="";
 			_thatSD.oDropShipDataModel.setData();
 			_thatSD.oDropShipDataModel.updateBindings(true);
 			_thatSD.oDropShipDataModel.refresh(true);

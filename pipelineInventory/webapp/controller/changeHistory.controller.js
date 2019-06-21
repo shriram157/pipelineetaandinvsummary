@@ -324,6 +324,7 @@ sap.ui.define([
 			}
 		},
 		onExit: function () {
+			SelectedDealerCH="";
 			this.getView().byId("configTable").destroy();
 			this.getView().destroy();
 		}
