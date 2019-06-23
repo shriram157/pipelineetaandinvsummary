@@ -379,17 +379,16 @@ sap.ui.define([
 								}
 							}
 						}
-						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
+					if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
 							"TCI Total") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo === "L/C") {
 									delete oModelData.d.results[key];
 								}
 							});
-						} else if (SelectedDealer === "2400029000" && SelectedDealer === "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
-							"TCI Total"){
+						} else{
 							$.each(oModelData.d.results, function (key, value) {
-								if (value.ModelSeriesNo !== "L/C") {
+								if (value.ModelSeriesNo !== "L/C" && SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total") {
 									delete oModelData.d.results[key];
 								}
 							});
@@ -508,10 +507,9 @@ sap.ui.define([
 									delete oModelData.d.results[key];
 								}
 							});
-						} else if (SelectedDealer === "2400029000" && SelectedDealer === "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
-							"TCI Total"){
+						} else{
 							$.each(oModelData.d.results, function (key, value) {
-								if (value.ModelSeriesNo !== "L/C") {
+								if (value.ModelSeriesNo !== "L/C" && SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total") {
 									delete oModelData.d.results[key];
 								}
 							});
@@ -588,6 +586,7 @@ sap.ui.define([
 		},
 		onDealerChange: function (oDealer) {
 			_that.userType = "";
+			_that.additionalText =oDealer.getParameters().selectedItem.getAdditionalText();
 			if (oDealer.getParameters().selectedItem != undefined) {
 				_that.getView().byId("ID_marktgIntDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 				_that.getView().byId("ID_modelDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
@@ -692,6 +691,9 @@ sap.ui.define([
 				}
 
 				_that.oGlobalJSONModel.getData().seriesData = [];
+				if(_that.additionalText == "TCI Total"){
+					SelectedDealer = "TCI Total";
+				}
 				_that.getUpdatedSeries(SelectedDealer);
 			} else {
 				_that.getView().byId("id_BusinessPartnerName").setValue(oDealer.getParameters().selectedItem.getAdditionalText());
