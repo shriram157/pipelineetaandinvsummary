@@ -601,24 +601,34 @@ sap.ui.define([
 				var SelectedDealerType = oDealer.getParameters().selectedItem.getProperty("key");
 				if (oDealer.getParameters().selectedItem.getAdditionalText() == "TCI Total") {
 					SelectedDealerKey = "TCI Total";
+					SelectedDealer = "TCI Total";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "National/Zone Stock") {
 					SelectedDealerKey = "National/Zone Stock";
+					SelectedDealer = "National/Zone Stock";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone Stock") {
 					SelectedDealerKey = "Zone Stock";
+					SelectedDealer = "Zone Stock";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone Total") {
 					SelectedDealerKey = "Zone Total";
+					SelectedDealer = "Zone Total";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Lexus") {
 					SelectedDealerKey = "Lexus";
+					SelectedDealer = "Lexus";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Atlantic Zone") {
 					SelectedDealerKey = "Atlantic Zone";
+					SelectedDealer = "Atlantic Zone";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Quebec Zone") {
 					SelectedDealerKey = "Quebec Zone";
+					SelectedDealer = "Quebec Zone";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Central Zone") {
 					SelectedDealerKey = "Central Zone";
+					SelectedDealer = "Central Zone";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Pacific Zone") {
 					SelectedDealerKey = "Pacific Zone";
+					SelectedDealer = "Pacific Zone";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Prairie Zone") {
 					SelectedDealerKey = "Prairie Zone";
+					SelectedDealer = "Prairie Zone";
 				}
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 					var zone = _that.BusinessPartnerData.getData().SamlList.Zone[0];
@@ -691,9 +701,6 @@ sap.ui.define([
 				}
 
 				_that.oGlobalJSONModel.getData().seriesData = [];
-				if (_that.additionalText == "TCI Total") {
-					SelectedDealer = "TCI Total";
-				}
 				_that.getUpdatedSeries(SelectedDealer);
 			} else {
 				_that.getView().byId("id_BusinessPartnerName").setValue(oDealer.getParameters().selectedItem.getAdditionalText());
