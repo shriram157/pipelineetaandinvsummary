@@ -379,14 +379,14 @@ sap.ui.define([
 								}
 							}
 						}
-					if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
+						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
 							"TCI Total") {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo === "L/C") {
 									delete oModelData.d.results[key];
 								}
 							});
-						} else{
+						} else {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo !== "L/C" && SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total") {
 									delete oModelData.d.results[key];
@@ -507,7 +507,7 @@ sap.ui.define([
 									delete oModelData.d.results[key];
 								}
 							});
-						} else{
+						} else {
 							$.each(oModelData.d.results, function (key, value) {
 								if (value.ModelSeriesNo !== "L/C" && SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total") {
 									delete oModelData.d.results[key];
@@ -543,7 +543,7 @@ sap.ui.define([
 			});
 
 		},
-		onAfterRendering: function () {
+		onAfterRendering: function (evt) {
 			_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oMasterRoute, _that);
 			/*Defect number 9293 code start*/
 			if (selectedDDValues.length != 0) {
@@ -586,7 +586,7 @@ sap.ui.define([
 		},
 		onDealerChange: function (oDealer) {
 			_that.userType = "";
-			_that.additionalText =oDealer.getParameters().selectedItem.getAdditionalText();
+			_that.additionalText = oDealer.getParameters().selectedItem.getAdditionalText();
 			if (oDealer.getParameters().selectedItem != undefined) {
 				_that.getView().byId("ID_marktgIntDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 				_that.getView().byId("ID_modelDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
@@ -691,7 +691,7 @@ sap.ui.define([
 				}
 
 				_that.oGlobalJSONModel.getData().seriesData = [];
-				if(_that.additionalText == "TCI Total"){
+				if (_that.additionalText == "TCI Total") {
 					SelectedDealer = "TCI Total";
 				}
 				_that.getUpdatedSeries(SelectedDealer);
@@ -1330,7 +1330,9 @@ sap.ui.define([
 
 		_oMasterRoute: function (oEvent) {
 			// debugger;
-			_that.fetchCountsforTables(filteredData);
+			if (oEvent.getParameters().name === "Routemaster") {
+				_that.fetchCountsforTables(filteredData);
+			}
 			_that.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
 		},
