@@ -1296,9 +1296,9 @@ sap.ui.define([
 
 			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				obj_first.series = _that.getView().byId("ID_seriesDesc").getSelectedKey();
-				if (obj_first.match(/\\$/)) {
-					obj_first.series = obj_first.series.replace("/", "%2F");
-				}
+				// if (obj_first.match(/\\$/)) {
+				obj_first.series = obj_first.series.replace("/", "%2F");
+				// }
 			} else obj_first.series = "";
 
 			if (_that.getView().byId("ID_modelDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
