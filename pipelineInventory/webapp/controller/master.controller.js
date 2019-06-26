@@ -604,31 +604,31 @@ sap.ui.define([
 					SelectedDealer = "TCI Total";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "National/Zone Stock") {
 					SelectedDealerKey = "National/Zone Stock";
-					SelectedDealer = "National/Zone Stock";
+					SelectedDealer = "";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone Stock") {
 					SelectedDealerKey = "Zone Stock";
-					SelectedDealer = "Zone Stock";
+					SelectedDealer = "";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Zone Total") {
 					SelectedDealerKey = "Zone Total";
-					SelectedDealer = "Zone Total";
+					SelectedDealer = "";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Lexus") {
 					SelectedDealerKey = "Lexus";
-					SelectedDealer = "Lexus";
+					SelectedDealer = "";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Atlantic Zone") {
 					SelectedDealerKey = "Atlantic Zone";
-					SelectedDealer = "Atlantic Zone";
+					SelectedDealer = "";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Quebec Zone") {
 					SelectedDealerKey = "Quebec Zone";
-					SelectedDealer = "Quebec Zone";
+					SelectedDealer = "";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Central Zone") {
 					SelectedDealerKey = "Central Zone";
-					SelectedDealer = "Central Zone";
+					SelectedDealer = "";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Pacific Zone") {
 					SelectedDealerKey = "Pacific Zone";
-					SelectedDealer = "Pacific Zone";
+					SelectedDealer = "";
 				} else if (oDealer.getParameters().selectedItem.getAdditionalText() == "Prairie Zone") {
 					SelectedDealerKey = "Prairie Zone";
-					SelectedDealer = "Prairie Zone";
+					SelectedDealer = "";
 				}
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 					var zone = _that.BusinessPartnerData.getData().SamlList.Zone[0];
