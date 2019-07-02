@@ -50,7 +50,7 @@
 									<core:Title text=""/>
 									<Label text="{i18n>ModelYear}"/>
 									<ComboBox id="ID_modelYearPicker" selectionChange="onModelYearChange" change="onModelYearInput" showSecondaryValues="true"
-										filterSecondaryValues="true" value="" selectedKey="" items="{ path: 'ModelYearModel>/ModelYearList', sorter: { path: 'ModelYearList' } }">
+										filterSecondaryValues="true" value="" selectedKey="" items="{ path: 'ModelYearModel>/ModelYearList', sorter: { path: 'ModelYear', descending: true} }">
 										<core:ListItem key="{ModelYearModel>ModelYear}" text="{ModelYearModel>ModelYear}"/>
 									</ComboBox>
 									<Label text="{i18n>Series}"/>
