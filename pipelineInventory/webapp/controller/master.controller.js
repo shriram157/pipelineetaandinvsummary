@@ -1,5 +1,6 @@
 var selectedDDValues = [],
-	seriesModel = "";
+	seriesModel = "",
+	salesOffice;
 sap.ui.define([
 	'sap/ui/core/mvc/Controller',
 	'sap/ui/model/json/JSONModel',
@@ -144,11 +145,11 @@ sap.ui.define([
 
 				var samlAttributes = {
 					"Language": ["English"],
-					"UserType": ["Mational"]
+					"UserType": ["National"]
 						// ,
 						// "Zone": ["4"]
 				};
-				_that.salesOffice = "1000";
+				salesOffice = "1000";
 				_that.BusinessPartnerData.getData().DealerList = attributes;
 				_that.BusinessPartnerData.getData().SamlList = samlAttributes;
 				_that.BusinessPartnerData.updateBindings(true);
@@ -211,19 +212,19 @@ sap.ui.define([
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 						var zone = _that.BusinessPartnerData.getData().SamlList.Zone[0];
 						if (zone === "1") {
-							_that.salesOffice = "1000";
+							salesOffice = "1000";
 						} else if (zone === "2") {
-							_that.salesOffice = "2000";
+							salesOffice = "2000";
 						} else if (zone === "3") {
-							_that.salesOffice = "3000";
+							salesOffice = "3000";
 						} else if (zone === "4") {
-							_that.salesOffice = "5000";
+							salesOffice = "5000";
 						} else if (zone === "5") {
-							_that.salesOffice = "4000";
+							salesOffice = "4000";
 						} else if (zone === "7") {
-							_that.salesOffice = "9000";
+							salesOffice = "9000";
 						}
-						// _that.salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
+						// salesOffice = _that.BusinessPartnerData.getData().SamlList.Zone[0] + "000";
 						_that.BusinessPartnerData.getData().DealerList.unshift({
 							BusinessPartner: "-",
 							BusinessPartnerKey: "",
@@ -292,7 +293,7 @@ sap.ui.define([
 							SearchTerm2: ""
 						});
 					} else {
-						_that.salesOffice = "";
+						salesOffice = "";
 					}
 					sap.ui.core.BusyIndicator.hide();
 					_that.BusinessPartnerData.updateBindings(true);
@@ -633,19 +634,19 @@ sap.ui.define([
 				if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Zone") {
 					var zone = _that.BusinessPartnerData.getData().SamlList.Zone[0];
 					if (zone === "1") {
-						_that.salesOffice = "1000";
+						salesOffice = "1000";
 					} else if (zone === "2") {
-						_that.salesOffice = "2000";
+						salesOffice = "2000";
 					} else if (zone === "3") {
-						_that.salesOffice = "3000";
+						salesOffice = "3000";
 					} else if (zone === "4") {
-						_that.salesOffice = "5000";
+						salesOffice = "5000";
 					} else if (zone === "5") {
-						_that.salesOffice = "4000";
+						salesOffice = "4000";
 					} else if (zone === "7") {
-						_that.salesOffice = "9000";
+						salesOffice = "9000";
 					} else if (zone === "8") {
-						_that.salesOffice = "8000";
+						salesOffice = "8000";
 					}
 					if (SelectedDealerKey == "Zone Total") {
 						_that.userType = "ZZA";
@@ -658,31 +659,31 @@ sap.ui.define([
 					}
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
 					_that.userType = "DDU";
-					_that.salesOffice = "";
+					salesOffice = "";
 				} else if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "National") {
 					if (SelectedDealerKey == "TCI Total") {
-						_that.salesOffice = "";
+						salesOffice = "";
 						_that.userType = "NNA";
 					} else if (SelectedDealerKey == "National/Zone Stock") {
-						_that.salesOffice = "";
+						salesOffice = "";
 						_that.userType = "NZZ";
 					} else if (SelectedDealerKey == "Pacific Zone") {
-						_that.salesOffice = "1000";
+						salesOffice = "1000";
 						_that.userType = "NZA";
 					} else if (SelectedDealerKey == "Prairie Zone") {
-						_that.salesOffice = "2000";
+						salesOffice = "2000";
 						_that.userType = "NZA";
 					} else if (SelectedDealerKey == "Central Zone") {
-						_that.salesOffice = "3000";
+						salesOffice = "3000";
 						_that.userType = "NZA";
 					} else if (SelectedDealerKey == "Atlantic Zone") {
-						_that.salesOffice = "5000";
+						salesOffice = "5000";
 						_that.userType = "NZA";
 					} else if (SelectedDealerKey == "Quebec Zone") {
-						_that.salesOffice = "4000";
+						salesOffice = "4000";
 						_that.userType = "NZA";
 					} else if (SelectedDealerKey == "Lexus") {
-						_that.salesOffice = "9000";
+						salesOffice = "9000";
 						_that.userType = "NZA";
 					} else if (SelectedDealerType == "Z004") {
 						_that.userType = "NZU";
@@ -759,16 +760,16 @@ sap.ui.define([
 				} else _that.ETADate = "";
 				/*adding logic to store selected values from dropdown*/
 				selectedDDValues = [_that.getView().byId("ID_DealearPicker").getSelectedKey(), _that.ID_modelYearPicker, _that.ID_seriesDesc,
-					_that
-					.ID_model, _that.getView().byId("ID_marktgIntDesc").getSelectedKey(), _that.ID_ExteriorColorCode,
+					_that.ID_model, _that.getView().byId("ID_marktgIntDesc").getSelectedKey(), _that.ID_ExteriorColorCode,
 					_that.ID_APXValue, _that.getView().byId("id_ETADate").getValue(), _that.getView().byId("ID_DealearPicker").getSelectedItem(),
 					_that.userType, _that.intcolor
 				];
 				seriesModel = _that.oGlobalJSONModel.getData();
-				if (_that.salesOffice == undefined) {
-					_that.salesOffice = "";
-				}
-				filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + _that.salesOffice + "' and UserType eq '" + _that.userType +
+				// if (salesOffice == undefined) {
+				// 	salesOffice = "";
+				// }
+				console.log(salesOffice);
+				filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + salesOffice + "' and UserType eq '" + _that.userType +
 					"' and Dealer eq '" +
 					SelectedDealer + "' and Model eq '" + _that.ID_model +
 					"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
@@ -1157,7 +1158,7 @@ sap.ui.define([
 							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"localLang": "",
-							"TCISeriesDescriptionFR": ""
+							"TCISeriesDescriptionFR": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
 					} else {
@@ -1288,10 +1289,10 @@ sap.ui.define([
 		getObjectData: function (obj_first) {
 			obj_first.Dealer = SelectedDealer;
 			obj_first.userType = _that.userType;
-			if (_that.salesOffice == undefined) {
-				_that.salesOffice = "";
-			}
-			obj_first.salesOffice = _that.salesOffice;
+			// if (salesOffice == undefined) {
+			// 	salesOffice = "";
+			// }
+			obj_first.salesOffice = salesOffice;
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 
 			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
@@ -1337,6 +1338,7 @@ sap.ui.define([
 
 		_oMasterRoute: function (oEvent) {
 			// debugger;
+			console.log("salesoffice", salesOffice);
 			if (oEvent.getParameters().name === "Routemaster") {
 				_that.fetchCountsforTables(filteredData);
 			}
