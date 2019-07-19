@@ -330,11 +330,11 @@ sap.ui.define([
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[2] = {
 										"DNCVehicle": this.oBundle.getText("RemoveSelection")
 									};
-									
-									if(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNC_flag == true){
+									var UserType =sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0];
+									if(UserType=="National"){
 										this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", true);
 									}
-									else if(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNC_flag == false){
+									else {
 										this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", false);
 									}
 									_thatVD.oVehicleDetailsJSON.updateBindings();
