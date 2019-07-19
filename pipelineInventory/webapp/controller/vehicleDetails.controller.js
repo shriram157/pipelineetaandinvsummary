@@ -331,11 +331,11 @@ sap.ui.define([
 										"DNCVehicle": this.oBundle.getText("RemoveSelection")
 									};
 									
-									if(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNC_Hide == true){
-										this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", false);
-									}
-									else if(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNC_Hide == false){
+									if(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNC_flag == true){
 										this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", true);
+									}
+									else if(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNC_flag == false){
+										this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", false);
 									}
 									_thatVD.oVehicleDetailsJSON.updateBindings();
 
