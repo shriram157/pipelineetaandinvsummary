@@ -37,7 +37,7 @@ sap.ui.define([
 				});
 				this.getView().setModel(_thatVD.oI18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
-				localLang= "E";
+				localLang = "E";
 			}
 
 			var sLocation = window.location.host;
@@ -56,7 +56,7 @@ sap.ui.define([
 				APXEnabled: false
 			});
 			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
-			
+
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -107,7 +107,7 @@ sap.ui.define([
 				bundleUrl: "i18n/i18n.properties"
 			});
 			_thatVD.getView().setModel(_thatVD.oI18nModel, "i18n");
-			
+
 			_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
@@ -146,7 +146,7 @@ sap.ui.define([
 				this.sPrefix = "";
 			}
 			_thatVD.nodeJsUrl = this.sPrefix + "/node";
-			
+
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -168,7 +168,7 @@ sap.ui.define([
 					if (oEvent.getParameter("arguments").VCData2 != undefined) {
 						sap.ui.core.BusyIndicator.hide();
 						var Data = JSON.parse(oEvent.getParameter("arguments").VCData2);
-						Data.TCISeries = Data.TCISeries.replace("%2F","/");
+						Data.TCISeries = Data.TCISeries.replace("%2F", "/");
 						Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("%2F", "/");
 						Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("%2F", "/");
 						Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("%2F", "/");
@@ -205,7 +205,7 @@ sap.ui.define([
 								_thatVD.errorFlag = true;
 							}
 						});
-						
+
 						var url = _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/VehicleDetailsSet(VHCLE='" + _OrderNumber + "',MATRIX='0000')";
 						$.ajax({
 							dataType: "json",
@@ -228,7 +228,7 @@ sap.ui.define([
 								oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
 								_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 								_thatVD.oVehicleDetailsJSON.updateBindings(true);
-								
+
 								_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Comments = oRowData.d.Comments;
 								_thatVD.getView().byId("apxVal").setSelectedKey(oRowData.d.NewAPX);
 								_thatVD.getView().byId("accessoryVal").setSelectedKey(oRowData.d.AccessoriesInstalled);
@@ -252,7 +252,7 @@ sap.ui.define([
 						_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[1] = {
 							"AccessoryInstalled": this.oBundle.getText("No")
 						};
-						
+
 						_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
 							"DNCVehicle": this.oBundle.getText("DNCStock")
 						};
@@ -266,7 +266,7 @@ sap.ui.define([
 						_thatVD.oVehicleDetailsJSON.refresh(true);
 						_thatVD.getView().setModel(_thatVD.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
-						
+
 						$.ajax({
 							dataType: "json",
 							url: _thatVD.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + data.Modelyear +
@@ -291,20 +291,32 @@ sap.ui.define([
 							sap.ui.core.BusyIndicator.hide();
 							for (var i = 0; i < _thatVD.oVehicleDetailsJSON.getData().results.length; i++) {
 								if (_thatVD.oVehicleDetailsJSON.getData().results[i].VHCLE == Data.VHCLE) {
-									_thatVD.oVehicleDetailsJSON.getData().results[i].TCISeries = Data.TCISeries.replace("%2F","/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].INTCOL_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].INTCOL_DESC_EN.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].INTCOL_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].INTCOL_DESC_FR.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].MODEL_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].MODEL_DESC_EN.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].MODEL_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].MODEL_DESC_FR.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_EN.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_FR.replace("%2F", "/");
-									_thatVD.oVehicleDetailsJSON.getData().results[i].Suffix = _thatVD.oVehicleDetailsJSON.getData().results[i].Suffix.replace("%2F", "/");
-									
+									_thatVD.oVehicleDetailsJSON.getData().results[i].TCISeries = Data.TCISeries.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].ORDERTYPE_DESC_EN
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_EN
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SERIES_DESC_FR
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_EN
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].SUFFIX_DESC_FR
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].INTCOL_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].INTCOL_DESC_EN
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].INTCOL_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].INTCOL_DESC_FR
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].MODEL_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].MODEL_DESC_EN
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].MODEL_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].MODEL_DESC_FR
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_EN = _thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_EN
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_FR = _thatVD.oVehicleDetailsJSON.getData().results[i].EXTCOL_DESC_FR
+										.replace("%2F", "/");
+									_thatVD.oVehicleDetailsJSON.getData().results[i].Suffix = _thatVD.oVehicleDetailsJSON.getData().results[i].Suffix.replace(
+										"%2F", "/");
+
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData = [];
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData = [];
 									_thatVD.oVehicleDetailsJSON.getData().DNCData = [];
@@ -314,7 +326,16 @@ sap.ui.define([
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].AccessoriesInstalled = "";
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNCVehicle = "";
 									_thatVD.oVehicleDetailsJSON.getData().AccessInstl_flag = Data.AccessInstl_flag;
-									
+									_thatVD.DNCFlag = Data.DNC_flag;
+
+									if (!_thatVD.DNCFlag) {
+										console.log("DNCFlag", _thatVD.DNCFlag);
+										_thatVD.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", false);
+									} else {
+										console.log("DNCFlag", _thatVD.DNCFlag);
+										_thatVD.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", true);
+									}
+
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[0] = {
 										"AccessoryInstalled": this.oBundle.getText("Yes")
 									};
@@ -330,13 +351,12 @@ sap.ui.define([
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[2] = {
 										"DNCVehicle": this.oBundle.getText("RemoveSelection")
 									};
-									var UserType =sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0];
-									if(UserType=="National"){
-										this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", true);
-									}
-									else {
-										this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", false);
-									}
+									var UserType = sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0];
+									// if (UserType == "National") {
+									// 	this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", true);
+									// } else {
+									// 	this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", false);
+									// }
 									_thatVD.oVehicleDetailsJSON.updateBindings();
 
 									var _OrderNumber = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].VHCLE;
@@ -381,12 +401,12 @@ sap.ui.define([
 											}
 											oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
 											_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
-											
+
 											_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Comments = oRowData.d.Comments;
 											_thatVD.getView().byId("apxVal").setSelectedKey(oRowData.d.NewAPX);
 											_thatVD.getView().byId("accessoryVal").setSelectedKey(oRowData.d.AccessoriesInstalled);
 											_thatVD.getView().byId("DNCVal").setSelectedKey(oRowData.d.DNC);
-											
+
 											_thatVD.oVehicleDetailsJSON.updateBindings(true);
 										},
 										error: function (oError) {
@@ -595,10 +615,10 @@ sap.ui.define([
 			} else if (_thatVD.getView().byId("accessoryVal").getSelectedKey() == this.oBundle.getText("No")) {
 				Obj.AccessoriesInstalled = "No";
 			}
-			Obj.DNC = SelectedDNCVal; 
+			Obj.DNC = SelectedDNCVal;
 			Obj.Comments = _thatVD.oVehicleDetailsJSON.Comments;
 			var oModel = _thatVD.getOwnerComponent().getModel("DataModel");
-			
+
 			oModel.setUseBatch(false);
 			oModel.create("/VehicleDetailsSet", Obj, {
 				success: $.proxy(function (oResponse) {
