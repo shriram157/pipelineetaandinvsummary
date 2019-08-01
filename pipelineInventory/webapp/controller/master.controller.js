@@ -154,6 +154,7 @@ sap.ui.define([
 				_that.BusinessPartnerData.getData().SamlList = samlAttributes;
 				_that.BusinessPartnerData.updateBindings(true);
 				_that.BusinessPartnerData.refresh(true);
+				// sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "ZoneONLY"; //local testing
 			} else {
 				//Cloud Deployment
 				this.sPrefix = "";
@@ -171,6 +172,9 @@ sap.ui.define([
 						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "AdminUser";
 					} else if (scopesData == "TCI_Zone_User") {
 						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "ZoneONLY";
+					}
+					else if(scopesData == "Dealer_User") {
+						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser = "DealerONLY";
 					}
 					sap.ui.getCore().getModel("BusinessDataModel").updateBindings(true);
 				},

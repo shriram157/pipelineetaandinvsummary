@@ -71,6 +71,9 @@
 						<Table items="{VehicleDetailsJSON>/results}" width="97%" class="sapUiResponsiveMargin headerFixClass" mode="MultiSelect" id="Tab_vehicleDetails"
 							selectionChange="vehicleSelect" growing="true" growingThreshold="25" growingScrollToLoad="false" updateFinished="afterConfigLoad">
 							<columns>
+								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" visible="{DetailsLocalModel>/visibleForZoneOnly}">
+									<Text text="{i18n>Dealer}"/>
+								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 									<Text text="{i18n>OrderNumber}"/>
 								</Column>
@@ -79,6 +82,9 @@
 								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 									<Text text="{i18n>Status}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true">
+									<Text text="{i18n>Accessory}"/>
 								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>VTN}"/>
@@ -105,9 +111,11 @@
 							<items>
 								<ColumnListItem>
 									<cells>
+										<Text text="{path:'VehicleDetailsJSON>Dealer', formatter:'.formatDealer'}"/>
 										<Link text="{VehicleDetailsJSON>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZDLR_REF_NO}"/>
 										<Text text="{VehicleDetailsJSON>ORDERTYPE_DESC_EN}"/>
 										<Text text="{VehicleDetailsJSON>ZMMSTA}"/>
+										<Text text="{VehicleDetailsJSON>AccessInstl_flag2}"/>
 										<Link text="{VehicleDetailsJSON>ZZVTN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZVTN}"/>
 										<Link text="{VehicleDetailsJSON>VHVIN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>VHVIN}"/>
 										<Text text="{VehicleDetailsJSON>Model} {VehicleDetailsJSON>MODEL_DESC_EN}"/>
