@@ -50,7 +50,8 @@
 									<core:Title text=""/>
 									<Label text="{i18n>ModelYear}"/>
 									<ComboBox id="ID_modelYearPicker" selectionChange="onModelYearChange" change="onModelYearInput" showSecondaryValues="true"
-										filterSecondaryValues="true" value="" selectedKey="" items="{ path: 'ModelYearModel>/ModelYearList', sorter: { path: 'ModelYear', descending: true} }">
+										filterSecondaryValues="true" value="" selectedKey=""
+										items="{ path: 'ModelYearModel>/ModelYearList', sorter: { path: 'ModelYear', descending: true} }">
 										<core:ListItem key="{ModelYearModel>ModelYear}" text="{ModelYearModel>ModelYear}"/>
 									</ComboBox>
 									<Label text="{i18n>Series}"/>
@@ -90,6 +91,11 @@
 							</f:SimpleForm>
 							<Button text="{i18n>ApplyFilters}" type="Default" class="styleBtnPositioned" press="applyFiltersBtn"/>
 						</VBox>
+						<OverflowToolbar>
+							<ToolbarSpacer/>
+							<Button text="{i18n>ExportToExcel}" type="Default" press="exportAllDealerData" visible="false"/> 
+							<!--{LocalOCModel>/ForDealerOnly}-->
+						</OverflowToolbar>
 						<t:Table id="tableMultiHeader" selectionMode="None" rows="{GlobalJSONModel>/ETAResults}" visibleRowCount="6" class="styleMultiHeaderTable"
 							cellClick="onTable1Press">
 							<t:extension>
@@ -289,7 +295,7 @@
 								</t:Column>
 								<t:Column>
 									<t:multiLabels id="multiheaderColumn">
-										<Label text="" /><Label text="" />
+										<Label text=""/><Label text=""/>
 										<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -299,7 +305,7 @@
 								<t:Column>
 									<t:multiLabels>
 										<Label text="{i18n>Stock}" textAlign="Center" width="100%"/>
-										<Label text="" />
+										<Label text=""/>
 										<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -467,8 +473,8 @@
 								</t:Column>
 								<t:Column>
 									<t:multiLabels id="multiheaderColumn">
-										<Label text="" />
-										<Label text="" />
+										<Label text=""/>
+										<Label text=""/>
 										<Label text="{i18n>TTLUnits} " tooltip="{i18n>TTLUnits} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>
@@ -477,7 +483,7 @@
 								</t:Column>
 								<t:Column>
 									<t:multiLabels>
-										<Label text="{i18n>Stock}" textAlign="Center" width="100%"/><Label text="" />
+										<Label text="{i18n>Stock}" textAlign="Center" width="100%"/><Label text=""/>
 										<Label text="{i18n>TTLStock} " tooltip="{i18n>TTLStock} " textAlign="Center" wrapping="true" width="100%"/>
 									</t:multiLabels>
 									<t:template>

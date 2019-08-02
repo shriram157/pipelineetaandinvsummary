@@ -18,9 +18,10 @@ sap.ui.define([
 			_that = this;
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
-				delay: 0
+				delay: 0,
+				ForDealerOnly: false
 			});
-			_that.getView().setModel(_oViewModel, "LocalOCModel");
+			_that.getView().setModel(_oViewModel, "LocalOCModel"); //ForDealerOnly
 			var fleetMatrix = new sap.ui.model.json.JSONModel({
 				"FleetColnIndex": ""
 			});
@@ -35,6 +36,10 @@ sap.ui.define([
 				bundleUrl: "i18n/i18n.properties"
 			});
 			_that.getView().setModel(_that.oI18nModel, "i18n");
+
+			_that.dialog = new sap.m.BusyDialog({
+				text: _that.oI18nModel.getResourceBundle().getText("loadingData")
+			});
 
 			var isLocaleSent = window.location.search.match(/language=([^&]*)/i);
 			if (isLocaleSent) {
@@ -145,7 +150,7 @@ sap.ui.define([
 
 				var samlAttributes = {
 					"Language": ["English"],
-					"UserType": ["National"]
+					"UserType": ["Dealer_User"]
 						// ,
 						// "Zone": ["4"]
 				};
@@ -154,7 +159,9 @@ sap.ui.define([
 				_that.BusinessPartnerData.getData().SamlList = samlAttributes;
 				_that.BusinessPartnerData.updateBindings(true);
 				_that.BusinessPartnerData.refresh(true);
-				// sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "ZoneONLY"; //local testing
+				sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser = "DealerONLY"; //local testing
+				_that.getView().getModel("LocalOCModel").setProperty("/ForDealerOnly", true); //local testing
+
 			} else {
 				//Cloud Deployment
 				this.sPrefix = "";
@@ -170,11 +177,13 @@ sap.ui.define([
 					scopesData = scopesData.loggedUserType[0];
 					if (scopesData == "TCI_Zone_Admin" || scopesData == "TCI_User") {
 						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "AdminUser";
+						_that.getView().getModel("LocalOCModel").setProperty("/ForDealerOnly", false);
 					} else if (scopesData == "TCI_Zone_User") {
 						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "ZoneONLY";
-					}
-					else if(scopesData == "Dealer_User") {
+						_that.getView().getModel("LocalOCModel").setProperty("/ForDealerOnly", false);
+					} else if (scopesData == "Dealer_User") {
 						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser = "DealerONLY";
+						_that.getView().getModel("LocalOCModel").setProperty("/ForDealerOnly", true);
 					}
 					sap.ui.getCore().getModel("BusinessDataModel").updateBindings(true);
 				},
@@ -1339,6 +1348,147 @@ sap.ui.define([
 		// onBeforeRendering: function () {
 		// 	_that.getOwnerComponent().getRouter().attachRoutePatternMatched(_that._oMasterRoute, _that);
 		// },
+
+		exportAllDealerData: function () {
+			// return new Promise(function (resolve, reject) {
+			_that.callFinsihed = false;
+			var count = 0;
+			_that.dialog.open();
+			var objMatrix = [{
+				"MatrixVal": "A401",
+				"Modelyear": "2019"
+			}, {
+				"MatrixVal": "A401",
+				"Modelyear": "2018"
+			}, {
+				"MatrixVal": "A401",
+				"Modelyear": "2020"
+			}, {
+				"MatrixVal": "B501",
+				"Modelyear": "2019"
+			}, {
+				"MatrixVal": "B501",
+				"Modelyear": "2018"
+			}, {
+				"MatrixVal": "B501",
+				"Modelyear": "2020"
+			}];
+			_that.tempArr = [];
+			console.log("count", count);
+			if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY") {
+				if (count == 0) {
+					for (var n = 0; n < objMatrix.length; n++) {
+						//_that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/
+						var exportDataURL = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
+							"' and VKBUR eq '' and MATRIX eq '" + objMatrix[n].MatrixVal + "' and Model eq '' and INTCOL eq '' and Modelyear eq '" +
+							objMatrix[n].Modelyear +
+							"' and TCISeries eq '' and Suffix eq '' and ExteriorColorCode eq '' and APX eq '' and ETA eq '' and Dealer eq '" +
+							SelectedDealer + "'and UserType eq '" + _that.userType + "' and LANGUAGE eq '" + _that.localLang + "' &$format=json";
+
+						count = 1;
+						this.callData(exportDataURL, count);
+					}
+				}
+			}
+			// });
+		},
+
+		callData: function (exportDataURL, count) {
+			console.log("exportDataURL", exportDataURL);
+			if (count == 1) {
+				$.ajax({
+					dataType: "json",
+					url: exportDataURL,
+					type: "GET",
+					success: function (oRowData) {
+						console.log("oRowData.d.results", oRowData.d.results);
+						count = 0;
+						console.log("count", count);
+						$.each(oRowData.d.results, function (key, value) {
+							if (value.AccessInstl_flag === true) {
+								value.AccessInstl_flag2 = "Y";
+							} else if (value.AccessInstl_flag === true) {
+								value.AccessInstl_flag2 = "N";
+							}
+							_that.tempArr.push(oRowData.d.results[key]);
+						});
+					},
+					error: function (oError) {
+						_that.dialog.close();
+					},
+					complete: function () {
+						_that.dialog.close();
+						_that.callFinsihed = true;
+						console.log("_that.tempArr", _that.tempArr);
+					}
+				});
+			}
+		},
+
+		// _that.exportAllDealerData.then(function({
+		// 	_that.JSONToExcelConvertor(_that.tempArr, "Report", true);
+		// }));
+		JSONToExcelConvertor: function (JSONData, ReportTitle, ShowLabel) {
+			var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+			var CSV = "";
+			if (ShowLabel) {
+				var row = "";
+				row = row.slice(0, -1);
+			}
+
+			row += _that.oI18nModel.getResourceBundle().getText("Dealer") + ",";
+			row += _that.oI18nModel.getResourceBundle().getText("OrderNumber") + ",";
+			row += _that.oI18nModel.getResourceBundle().getText("OrderType") + ",";
+			row += _that.oI18nModel.getResourceBundle().getText("Status") + ",";
+			row += _that.oI18nModel.getResourceBundle().getText("Accessory") + ",";
+			row += _that.oI18nModel.getResourceBundle().getText("VTN") + ",";
+			row += _that.oI18nModel.getResourceBundle().getText("VIN") + ",";
+			row += _that.oI18nModel.getResourceBundle().getText("Model") + ",";
+			row += _that.oI18nModel.getResourceBundle().getText("Suffix") + ",";
+			row += _that.oI18nModel.getResourceBundle().getText("Colour") + ",";
+			row += _that.oI18nModel.getResourceBundle().getText("ETAFrom") + ",";
+			row += _that.oI18nModel.getResourceBundle().getText("ETATo") + ",";
+
+			CSV += row + '\r\n';
+
+			//loop is to extract each row
+			for (var i = 0; i < arrData.length; i++) {
+				var row = "";
+				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
+					'","' + arrData[i].ZMMSTA + '","' + arrData[i].AccessInstl_flag2 + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
+					arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN +
+					'","' + arrData[i].Suffix +
+					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].ETAFrom +
+					'","' + arrData[i].ETATo + '",';
+				//}
+				row.slice(1, row.length);
+				CSV += row + '\r\n';
+			}
+			if (CSV == "") {
+				alert("Invalid data");
+				return;
+			}
+			var fileName = _that.oI18nModel.getResourceBundle().getText("VehicleDetailsReport");
+			fileName += ReportTitle.replace(/ /g, "_");
+			// Initialize file format you want csv or xls
+
+			var blob = new Blob(["\ufeff" + CSV], {
+				type: "text/csv;charset=utf-8,"
+			});
+			if (sap.ui.Device.browser.name === "ie" || sap.ui.Device.browser.name === "ed") { // IE 10+ , Edge (IE 12+)
+				navigator.msSaveBlob(blob, _that.oI18nModel.getResourceBundle().getText("VehicleDetailsReport") + ".csv");
+			} else {
+				var uri = 'data:text/csv;charset=utf-8,' + "\ufeff" + encodeURIComponent(CSV); //'data:application/vnd.ms-excel,' + escape(CSV);
+				var link = document.createElement("a");
+
+				link.href = uri;
+				link.style = "visibility:hidden";
+				link.download = fileName + ".csv";
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+			}
+		},
 
 		_oMasterRoute: function (oEvent) {
 			// debugger;

@@ -215,11 +215,20 @@ sap.ui.define([
 						console.log("rowdata", oRowData.d);
 						_thatDT.oVehicleDetailsJSON.setData(oRowData.d);
 						_thatDT.oVehicleDetailsJSON.getData().accessoryFilter = oRowData.d.results;
-						removeDuplicates(_thatDT.oVehicleDetailsJSON.getData().accessoryFilter);
+						// removeDuplicates(_thatDT.oVehicleDetailsJSON.getData().accessoryFilter);
 						console.log("_thatDT.oVehicleDetailsJSON", _thatDT.oVehicleDetailsJSON);
 						_thatDT.getView().setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						sap.ui.getCore().setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						_thatDT.oTable.setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
+
+						var obj = {};
+
+						for (var i = 0, len = _thatDT.oVehicleDetailsJSON.getData().accessoryFilter.length; i < len; i++)
+							obj[_thatDT.oVehicleDetailsJSON.getData().accessoryFilter[i]['AccessInstl_flag2']] = _thatDT.oVehicleDetailsJSON.getData().accessoryFilter[
+								i];
+						_thatDT.oVehicleDetailsJSON.getData().accessoryFilter = new Array();
+						for (var key in obj)
+							_thatDT.oVehicleDetailsJSON.getData().accessoryFilter.push(obj[key]);
 						_thatDT.oVehicleDetailsJSON.updateBindings(true);
 					},
 					error: function (oError) {
@@ -631,22 +640,22 @@ sap.ui.define([
 			sap.ui.core.BusyIndicator.show();
 			var exportDataURL = "";
 			var data;
-			if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY") {
-				exportDataURL = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
-					"' and VKBUR eq '" + _thatDT.salesOffice + "' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
-					"' and Model eq '' and INTCOL eq '' and Modelyear eq '' and TCISeries eq '' and Suffix eq '' and ExteriorColorCode eq '' and APX eq '' and ETA eq '' and Dealer eq '" +
-					_thatDT.routedData.Dealer + "'and UserType eq '" + _thatDT.UserType + "' and LANGUAGE eq '" + localLang + "' &$format=json";
-			} else {
-				exportDataURL = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
-					"' and VKBUR eq '" + _thatDT.salesOffice +
-					"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
-					"' and Model eq '" + _thatDT.routedData.Model + "' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and Modelyear eq '" +
-					_thatDT.routedData.ModelYear + "'and TCISeries eq '" +
-					_thatDT.routedData.series + "'and Suffix eq '" + _thatDT.routedData.suffix + "'and ExteriorColorCode eq '" + _thatDT.routedData
-					.ExteriorColorCode +
-					"'and APX eq '" + _thatDT.routedData.APXValue + "'and ETA eq '" + _thatDT.routedData.ETADate + "'and Dealer eq '" + _thatDT.routedData
-					.Dealer + "'and UserType eq '" + _thatDT.UserType + "' and LANGUAGE eq '" + localLang + "' &$format=json";
-			}
+			// if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY") {
+			// 	exportDataURL = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
+			// 		"' and VKBUR eq '" + _thatDT.salesOffice + "' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
+			// 		"' and Model eq '' and INTCOL eq '' and Modelyear eq '' and TCISeries eq '' and Suffix eq '' and ExteriorColorCode eq '' and APX eq '' and ETA eq '' and Dealer eq '" +
+			// 		_thatDT.routedData.Dealer + "'and UserType eq '" + _thatDT.UserType + "' and LANGUAGE eq '" + localLang + "' &$format=json";
+			// } else {
+			exportDataURL = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
+				"' and VKBUR eq '" + _thatDT.salesOffice +
+				"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
+				"' and Model eq '" + _thatDT.routedData.Model + "' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and Modelyear eq '" +
+				_thatDT.routedData.ModelYear + "'and TCISeries eq '" +
+				_thatDT.routedData.series + "'and Suffix eq '" + _thatDT.routedData.suffix + "'and ExteriorColorCode eq '" + _thatDT.routedData
+				.ExteriorColorCode +
+				"'and APX eq '" + _thatDT.routedData.APXValue + "'and ETA eq '" + _thatDT.routedData.ETADate + "'and Dealer eq '" + _thatDT.routedData
+				.Dealer + "'and UserType eq '" + _thatDT.UserType + "' and LANGUAGE eq '" + localLang + "' &$format=json";
+			// }
 			$.ajax({
 				dataType: "json",
 				url: exportDataURL,
