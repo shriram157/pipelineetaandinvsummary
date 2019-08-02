@@ -179,6 +179,17 @@ sap.ui.define([
 				_thatDT.UserType = _thatDT.routedData.userType;
 				_thatDT.salesOffice = _thatDT.routedData.salesOffice;
 
+				function removeDuplicates(array) {
+					var obj = {};
+					for (var i = 0, len = array.values.length; i < len; i++)
+						obj[array.values[i]['AccessInstl_flag2']] = array.values[i];
+
+					array.values = new Array();
+					for (var key in obj)
+						array.values.push(obj[key]);
+					return array;
+				}
+
 				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
 					"' and VKBUR eq '" + _thatDT.salesOffice +
 					"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
@@ -203,11 +214,12 @@ sap.ui.define([
 						});
 						console.log("rowdata", oRowData.d);
 						_thatDT.oVehicleDetailsJSON.setData(oRowData.d);
-						_thatDT.getView().setModel(_thatDT.oVehicleDetailsJSON,
-							"VehicleDetailsJSON");
+						_thatDT.oVehicleDetailsJSON.getData().accessoryFilter = oRowData.d.results;
+						removeDuplicates(_thatDT.oVehicleDetailsJSON.getData().accessoryFilter);
+						console.log("_thatDT.oVehicleDetailsJSON", _thatDT.oVehicleDetailsJSON);
+						_thatDT.getView().setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						sap.ui.getCore().setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
-						_thatDT.oTable.setModel(
-							_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
+						_thatDT.oTable.setModel(_thatDT.oVehicleDetailsJSON, "VehicleDetailsJSON");
 						_thatDT.oVehicleDetailsJSON.updateBindings(true);
 					},
 					error: function (oError) {
@@ -234,17 +246,21 @@ sap.ui.define([
 		},
 
 		formatDealer: function (dealerCode) {
-			dealerCode = dealerCode.substring(5, dealerCode.length);
-			return dealerCode;
+			if (dealerCode !== null && dealerCode != undefined && dealerCode != "") {
+				dealerCode = dealerCode.substring(5, dealerCode.length);
+				return dealerCode;
+			}
 		},
 
 		formatAccessoryFlag: function (accessoryFlag) {
-			if (accessoryFlag == true) {
-				accessoryFlag = "Y";
-			} else if (accessoryFlag == false) {
-				accessoryFlag = "N";
+			if (accessoryFlag !== null && accessoryFlag != undefined && accessoryFlag != "") {
+				if (accessoryFlag == true) {
+					accessoryFlag = "Y";
+				} else if (accessoryFlag == false) {
+					accessoryFlag = "N";
+				}
+				return accessoryFlag;
 			}
-			return accessoryFlag;
 		},
 
 		handleSettingsConfirm: function (oEvent) {

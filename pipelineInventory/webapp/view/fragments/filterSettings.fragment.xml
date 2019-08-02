@@ -63,7 +63,7 @@
 					<ViewSettingsItem text="{FilterETAToJSON>ETAToText}" key="ETATo-{FilterETAToJSON>ETATo}"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="{i18n>Accessory}" key="AccessInstl_flag2" multiSelect="true" items="{VehicleDetailsJSON>/results}">
+			<ViewSettingsFilterItem text="{i18n>Accessory}" key="AccessInstl_flag2" multiSelect="false" items="{VehicleDetailsJSON>/accessoryFilter}">
 				<items>
 					<ViewSettingsItem text="{VehicleDetailsJSON>AccessInstl_flag2}" key="AccessInstl_flag2"/>
 				</items>
