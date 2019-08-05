@@ -159,8 +159,8 @@ sap.ui.define([
 				_that.BusinessPartnerData.getData().SamlList = samlAttributes;
 				_that.BusinessPartnerData.updateBindings(true);
 				_that.BusinessPartnerData.refresh(true);
-				sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser = "DealerONLY"; //local testing
-				_that.getView().getModel("LocalOCModel").setProperty("/ForDealerOnly", true); //local testing
+				// sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser = "DealerONLY"; //local testing
+				// _that.getView().getModel("LocalOCModel").setProperty("/ForDealerOnly", true); //local testing
 
 			} else {
 				//Cloud Deployment
@@ -1353,6 +1353,7 @@ sap.ui.define([
 			// return new Promise(function (resolve, reject) {
 			_that.callFinsihed = false;
 			var count = 0;
+			_that.operationsCompleted = 0;
 			_that.dialog.open();
 			var objMatrix = [{
 				"MatrixVal": "A401",
@@ -1374,11 +1375,9 @@ sap.ui.define([
 				"Modelyear": "2020"
 			}];
 			_that.tempArr = [];
-			console.log("count", count);
 			if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY") {
 				if (count == 0) {
 					for (var n = 0; n < objMatrix.length; n++) {
-						//_that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/
 						var exportDataURL = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
 							"' and VKBUR eq '' and MATRIX eq '" + objMatrix[n].MatrixVal + "' and Model eq '' and INTCOL eq '' and Modelyear eq '" +
 							objMatrix[n].Modelyear +
@@ -1394,16 +1393,13 @@ sap.ui.define([
 		},
 
 		callData: function (exportDataURL, count) {
-			console.log("exportDataURL", exportDataURL);
 			if (count == 1) {
 				$.ajax({
 					dataType: "json",
 					url: exportDataURL,
 					type: "GET",
 					success: function (oRowData) {
-						console.log("oRowData.d.results", oRowData.d.results);
 						count = 0;
-						console.log("count", count);
 						$.each(oRowData.d.results, function (key, value) {
 							if (value.AccessInstl_flag === true) {
 								value.AccessInstl_flag2 = "Y";
@@ -1418,8 +1414,8 @@ sap.ui.define([
 					},
 					complete: function () {
 						_that.dialog.close();
-						_that.callFinsihed = true;
-						console.log("_that.tempArr", _that.tempArr);
+						++_that.operationsCompleted;
+						if (_that.operationsCompleted === 6) _that.JSONToExcelConvertor(_that.tempArr, "Report", true);
 					}
 				});
 			}

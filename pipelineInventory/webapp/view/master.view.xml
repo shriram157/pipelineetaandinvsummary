@@ -93,7 +93,7 @@
 						</VBox>
 						<OverflowToolbar>
 							<ToolbarSpacer/>
-							<Button text="{i18n>ExportToExcel}" type="Default" press="exportAllDealerData" visible="false"/> 
+							<Button text="{i18n>ExportToExcel}" type="Default" press="exportAllDealerData" visible="{LocalOCModel>/ForDealerOnly}"/> 
 							<!--{LocalOCModel>/ForDealerOnly}-->
 						</OverflowToolbar>
 						<t:Table id="tableMultiHeader" selectionMode="None" rows="{GlobalJSONModel>/ETAResults}" visibleRowCount="6" class="styleMultiHeaderTable"
