@@ -1394,7 +1394,8 @@ sap.ui.define([
 						$.each(oRowData.d.results, function (key, value) {
 							if (value.AccessInstl_flag === true) {
 								value.AccessInstl_flag2 = "Y";
-							} else if (value.AccessInstl_flag === false) {
+							} else {
+							//if (value.AccessInstl_flag === false) {
 								value.AccessInstl_flag2 = "N";
 							}
 							_that.tempArr.push(oRowData.d.results[key]);
