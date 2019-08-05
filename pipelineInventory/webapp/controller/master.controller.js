@@ -421,7 +421,7 @@ sap.ui.define([
 							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"localLang": "",
-							"TCISeriesDescriptionFR": ""
+							"TCISeriesDescriptionFR": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
 
@@ -502,18 +502,6 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
-						// if (SelectedDealer == "2400029000" && SelectedDealer == "2400049000") {
-						// 	$.each(oModelData.d.results, function (key, value) {
-						// 		if (value.ModelSeriesNo !== "L/C") {
-						// 			delete oModelData.d.results[key];
-						// 		}
-						// 	});
-						// } 
-						// else if (SelectedDealer === "2400500000" && SelectedDealer === "TCI Total") {
-						// 	$.each(oModelData.d.results, function (key, value) {
-						// 		return oModelData.d.results[key];
-						// 	});
-						// } 
 						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
 							"TCI Total") {
 							$.each(oModelData.d.results, function (key, value) {
@@ -542,7 +530,7 @@ sap.ui.define([
 							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"localLang": "",
-							"TCISeriesDescriptionFR": ""
+							"TCISeriesDescriptionFR": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
 
@@ -1165,7 +1153,6 @@ sap.ui.define([
 									"TCISeriesDescriptionFR": oModelData.d.results[i].TCISeriesDescriptionFR
 								});
 							}
-
 						}
 						_that.oGlobalJSONModel.getData().seriesData.unshift({
 							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
