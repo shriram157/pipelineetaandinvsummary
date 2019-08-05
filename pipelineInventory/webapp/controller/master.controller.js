@@ -32,6 +32,10 @@ sap.ui.define([
 				pattern: "yyyyMMdd"
 			});
 
+			_that.oDateFormatExcel = sap.ui.core.format.DateFormat.getDateTimeInstance({
+				pattern: "YYYY-MM-DD"
+			});
+
 			_that.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
@@ -159,8 +163,8 @@ sap.ui.define([
 				_that.BusinessPartnerData.getData().SamlList = samlAttributes;
 				_that.BusinessPartnerData.updateBindings(true);
 				_that.BusinessPartnerData.refresh(true);
-				// sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser = "DealerONLY"; //local testing
-				// _that.getView().getModel("LocalOCModel").setProperty("/ForDealerOnly", true); //local testing
+				sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser = "DealerONLY"; //local testing
+				_that.getView().getModel("LocalOCModel").setProperty("/ForDealerOnly", true); //local testing
 
 			} else {
 				//Cloud Deployment
@@ -1439,10 +1443,9 @@ sap.ui.define([
 				var row = "";
 				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
 					'","' + arrData[i].ZMMSTA + '","' + arrData[i].AccessInstl_flag2 + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
-					arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN +
-					'","' + arrData[i].Suffix +
-					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].ETAFrom +
-					'","' + arrData[i].ETATo + '",';
+					arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i].Suffix + "-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[
+						i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + _that.oDateFormatExcel.format(new Date(arrData[i].ETAFrom)) +
+					'","' + _that.oDateFormatExcel.format(new Date(arrData[i].ETATo)) + '",';
 				//}
 				row.slice(1, row.length);
 				CSV += row + '\r\n';

@@ -86,10 +86,10 @@
 								<Column minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>Accessory}"/>
 								</Column>
-								<Column minScreenWidth="Desktop" demandPopin="true">
+								<Column width="5rem" minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>VTN}"/>
 								</Column>
-								<Column minScreenWidth="Desktop" demandPopin="true">
+								<Column width="10rem" minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>VIN}"/>
 								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true">
