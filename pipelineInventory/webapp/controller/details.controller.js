@@ -680,6 +680,16 @@ sap.ui.define([
 				}
 			});
 		},
+		dateConverter: function (_dVal) {
+			if (_dVal !== null && _dVal !== undefined && _dVal != "") {
+				var year = _dVal.substring(0, 4);
+				var month = _dVal.substring(6, 4);
+				var day = _dVal.substring(8, 6);
+				return year +"-"+ month +"-"+ day;
+			}
+			else return "";
+		},
+
 		JSONToExcelConvertor: function (JSONData, ReportTitle, ShowLabel) {
 			var arrData = typeof JSONData.results != 'object' ? JSON.parse(JSONData.results) : JSONData.results;
 			var CSV = "";
@@ -710,8 +720,8 @@ sap.ui.define([
 					'","' + arrData[i].ZMMSTA + '","' + arrData[i].AccessInstl_flag2 + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
 					arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN +
 					'","' + arrData[i].Suffix +
-					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].ETAFrom +
-					'","' + arrData[i].ETATo + '",';
+					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '",="' + _thatDT.dateConverter(arrData[i].ETAFrom) +
+					'",="' + _thatDT.dateConverter(arrData[i].ETATo) + '",';
 				//}
 				row.slice(1, row.length);
 				CSV += row + '\r\n';

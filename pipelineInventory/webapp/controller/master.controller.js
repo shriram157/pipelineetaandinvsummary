@@ -1395,7 +1395,7 @@ sap.ui.define([
 							if (value.AccessInstl_flag === true) {
 								value.AccessInstl_flag2 = "Y";
 							} else {
-							//if (value.AccessInstl_flag === false) {
+								//if (value.AccessInstl_flag === false) {
 								value.AccessInstl_flag2 = "N";
 							}
 							_that.tempArr.push(oRowData.d.results[key]);
@@ -1407,10 +1407,21 @@ sap.ui.define([
 					complete: function () {
 						_that.dialog.close();
 						++_that.operationsCompleted;
+						console.log("_that.tempArr", _that.tempArr);
 						if (_that.operationsCompleted === 6) _that.JSONToExcelConvertor(_that.tempArr, "Report", true);
 					}
 				});
 			}
+		},
+
+		dateConverter: function (_dVal) {
+			if (_dVal !== null && _dVal !== undefined && _dVal != "") {
+				var year = _dVal.substring(0, 4);
+				var month = _dVal.substring(6, 4);
+				var day = _dVal.substring(8, 6);
+				return year +"-"+ month +"-"+ day;
+			}
+			else return "";
 		},
 
 		// _that.exportAllDealerData.then(function({
@@ -1445,8 +1456,8 @@ sap.ui.define([
 				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
 					'","' + arrData[i].ZMMSTA + '","' + arrData[i].AccessInstl_flag2 + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
 					arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i].Suffix + "-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[
-						i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + _that.oDateFormatExcel.format(new Date(arrData[i].ETAFrom)) +
-					'","' + _that.oDateFormatExcel.format(new Date(arrData[i].ETATo)) + '",';
+						i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '",="' + _that.dateConverter(arrData[i].ETAFrom) +
+					'",="' + _that.dateConverter(arrData[i].ETATo) + '",';
 				//}
 				row.slice(1, row.length);
 				CSV += row + '\r\n';
