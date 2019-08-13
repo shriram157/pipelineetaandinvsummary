@@ -559,7 +559,7 @@ sap.ui.define([
 			console.log("_that.oGlobalJSONModel.getData()", _that.oGlobalJSONModel.getData());
 		},
 
-		fetchCountsforTablesDealerONLY: function (query, count) {
+		fetchCountsforTablesDealerONLY: function (query) {
 			// if (count == 1) {
 				var ETACounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Pipeline_CountSet" + query;
 				var InventCounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Inventory_CountSet" + query;

@@ -320,6 +320,7 @@ sap.ui.define([
 			if (!_thatDT._oSettingsDialog) {
 				_thatDT._oSettingsDialog = sap.ui.xmlfragment("pipelineInventory.view.fragments.filterSettings", _thatDT);
 				_thatDT.getView().addDependent(_thatDT._oSettingsDialog);
+				_thatDT._oSettingsDialog.open("filter");
 
 				function removeDuplicateValues(PropertyName, JSONModel, JSONModelName) {
 					var lookup = {};
