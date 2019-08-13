@@ -165,7 +165,6 @@ sap.ui.define([
 				_that.BusinessPartnerData.refresh(true);
 				sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser = "DealerONLY"; //local testing
 				_that.getView().getModel("LocalOCModel").setProperty("/ForDealerOnly", true); //local testing
-				
 
 			} else {
 				//Cloud Deployment
@@ -539,6 +538,9 @@ sap.ui.define([
 				_that.userType, _that.intcolor
 			];
 			seriesModel = _that.oGlobalJSONModel.getData();
+			_that.oGlobalJSONModel.getData().ETAResults = [];
+			_that.oGlobalJSONModel.getData().InventSumResults = [];
+			_that.oGlobalJSONModel.getData().DeliveryResults = [];
 			for (var n = 0; n < _that._ObjModelYear.ModelYearList.length; n++) {
 				_that.ID_modelYearPicker = _that._ObjModelYear.ModelYearList[n];
 				filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + salesOffice + "' and UserType eq '" + _that.userType +
@@ -550,7 +552,7 @@ sap.ui.define([
 					"' &$format=json";
 				_that.fetchCountsforTablesDealerONLY(filteredData);
 			}
-			console.log("_that.oGlobalJSONModel.getData()",	_that.oGlobalJSONModel.getData());
+			console.log("_that.oGlobalJSONModel.getData()", _that.oGlobalJSONModel.getData());
 		},
 
 		fetchCountsforTablesDealerONLY: function (query) {
