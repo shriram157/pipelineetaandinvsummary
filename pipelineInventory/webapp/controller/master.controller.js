@@ -542,7 +542,7 @@ sap.ui.define([
 			_that.oGlobalJSONModel.getData().InventSumResults = [];
 			_that.oGlobalJSONModel.getData().DeliveryResults = [];
 			for (var n = 0; n < _that._ObjModelYear.ModelYearList.length; n++) {
-				_that.ID_modelYearPicker = _that._ObjModelYear.ModelYearList[n];
+				_that.ID_modelYearPicker = _that._ObjModelYear.ModelYearList[n].ModelYear;
 				filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + salesOffice + "' and UserType eq '" + _that.userType +
 					"' and Dealer eq '" +
 					SelectedDealer + "' and Model eq '" + _that.ID_model +
