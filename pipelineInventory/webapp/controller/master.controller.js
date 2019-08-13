@@ -541,23 +541,30 @@ sap.ui.define([
 			_that.oGlobalJSONModel.getData().ETAResults = [];
 			_that.oGlobalJSONModel.getData().InventSumResults = [];
 			_that.oGlobalJSONModel.getData().DeliveryResults = [];
-			for (var n = 0; n < _that._ObjModelYear.ModelYearList.length; n++) {
-				_that.ID_modelYearPicker = _that._ObjModelYear.ModelYearList[n].ModelYear;
-				filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + salesOffice + "' and UserType eq '" + _that.userType +
-					"' and Dealer eq '" +
-					SelectedDealer + "' and Model eq '" + _that.ID_model +
-					"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
-					"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
-					_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' and LANGUAGE eq '" + this.localLang +
-					"' &$format=json";
-				_that.fetchCountsforTablesDealerONLY(filteredData);
-			}
+			var count = 0;
+			// if (count = 0) {
+				for (var n = 0; n < _that._ObjModelYear.ModelYearList.length; n++) {
+					_that.ID_modelYearPicker = _that._ObjModelYear.ModelYearList[n].ModelYear;
+					filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + salesOffice + "' and UserType eq '" + _that.userType +
+						"' and Dealer eq '" +
+						SelectedDealer + "' and Model eq '" + _that.ID_model +
+						"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
+						"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
+						_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' and LANGUAGE eq '" + this.localLang +
+						"' &$format=json";
+					// count = 1;
+					_that.fetchCountsforTablesDealerONLY(filteredData, count);
+				}
+			// }
 			console.log("_that.oGlobalJSONModel.getData()", _that.oGlobalJSONModel.getData());
 		},
 
-		fetchCountsforTablesDealerONLY: function (query) {
-			var ETACounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Pipeline_CountSet" + filteredData;
-			if (_that.oGlobalJSONModel != undefined) {
+		fetchCountsforTablesDealerONLY: function (query, count) {
+			// if (count == 1) {
+				var ETACounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Pipeline_CountSet" + query;
+				var InventCounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Inventory_CountSet" + query;
+				var DelCounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Delivery_CountSet" + query;
+				// if (_that.oGlobalJSONModel != undefined) {
 				$.ajax({
 					dataType: "json",
 					url: ETACounturl,
@@ -576,9 +583,8 @@ sap.ui.define([
 						_that.errorFlag = true;
 					}
 				});
-			}
-			var InventCounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Inventory_CountSet" + filteredData;
-			if (_that.oGlobalJSONModel != undefined) {
+				// }
+				// if (_that.oGlobalJSONModel != undefined) {
 				$.ajax({
 					dataType: "json",
 					url: InventCounturl,
@@ -596,10 +602,9 @@ sap.ui.define([
 						_that.errorFlag = true;
 					}
 				});
-			}
+				// }
 
-			var DelCounturl = this.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/Delivery_CountSet" + filteredData;
-			if (_that.oGlobalJSONModel != undefined) {
+				// if (_that.oGlobalJSONModel != undefined) {
 				$.ajax({
 					dataType: "json",
 					url: DelCounturl,
@@ -617,8 +622,7 @@ sap.ui.define([
 						_that.errorFlag = true;
 					}
 				});
-			}
-
+			// }
 		},
 
 		getUpdatedSeries: function (SelectedDealer) {
