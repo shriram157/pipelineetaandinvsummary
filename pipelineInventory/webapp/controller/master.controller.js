@@ -545,7 +545,7 @@ sap.ui.define([
 			// if (count = 0) {
 				// for (var n = 0; n < _that._ObjModelYear.ModelYearList.length; n++) {
 					// _that.ID_modelYearPicker = ""; //_that._ObjModelYear.ModelYearList[n].ModelYear;
-					var modelyear= ("Modelyear eq '"+_that._ObjModelYear.ModelYearList[0].ModelYear+"' or Modelyear eq '"+_that._ObjModelYear.ModelYearList[1].ModelYear+"' or Modelyear eq '"+_that._ObjModelYear.ModelYearList[2].ModelYear+"'");
+					var modelyear= "(Modelyear eq '"+_that._ObjModelYear.ModelYearList[0].ModelYear+"' or Modelyear eq '"+_that._ObjModelYear.ModelYearList[1].ModelYear+"' or Modelyear eq '"+_that._ObjModelYear.ModelYearList[2].ModelYear+"')";
 					console.log("modelyear",modelyear);
 					filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + salesOffice + "' and UserType eq '" + _that.userType +
 						"' and Dealer eq '" +
