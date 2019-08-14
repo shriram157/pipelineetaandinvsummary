@@ -543,8 +543,8 @@ sap.ui.define([
 			_that.oGlobalJSONModel.getData().DeliveryResults = [];
 			var count = 0;
 			// if (count = 0) {
-				for (var n = 0; n < _that._ObjModelYear.ModelYearList.length; n++) {
-					_that.ID_modelYearPicker = _that._ObjModelYear.ModelYearList[n].ModelYear;
+				// for (var n = 0; n < _that._ObjModelYear.ModelYearList.length; n++) {
+					_that.ID_modelYearPicker = ""; //_that._ObjModelYear.ModelYearList[n].ModelYear;
 					filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + salesOffice + "' and UserType eq '" + _that.userType +
 						"' and Dealer eq '" +
 						SelectedDealer + "' and Model eq '" + _that.ID_model +
@@ -554,7 +554,7 @@ sap.ui.define([
 						"' &$format=json";
 					// count = 1;
 					_that.fetchCountsforTablesDealerONLY(filteredData, count);
-				}
+				// }
 			// }
 			console.log("_that.oGlobalJSONModel.getData()", _that.oGlobalJSONModel.getData());
 		},
