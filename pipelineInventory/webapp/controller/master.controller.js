@@ -544,11 +544,13 @@ sap.ui.define([
 			var count = 0;
 			// if (count = 0) {
 				// for (var n = 0; n < _that._ObjModelYear.ModelYearList.length; n++) {
-					_that.ID_modelYearPicker = ""; //_that._ObjModelYear.ModelYearList[n].ModelYear;
+					// _that.ID_modelYearPicker = ""; //_that._ObjModelYear.ModelYearList[n].ModelYear;
+					var modelyear= ("Modelyear eq '"+_that._ObjModelYear.ModelYearList[0].ModelYear+"' or Modelyear eq '"+_that._ObjModelYear.ModelYearList[1].ModelYear+"' or Modelyear eq '"+_that._ObjModelYear.ModelYearList[2].ModelYear+"'");
+					console.log("modelyear",modelyear);
 					filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + salesOffice + "' and UserType eq '" + _that.userType +
 						"' and Dealer eq '" +
 						SelectedDealer + "' and Model eq '" + _that.ID_model +
-						"' and Modelyear eq '" + _that.ID_modelYearPicker + "' and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
+						"' and "+modelyear+" and TCISeries eq '" + _that.ID_seriesDesc + "' and Suffix eq '" + _that.ID_marktgIntDesc +
 						"' and ExteriorColorCode eq '" + _that.ID_ExteriorColorCode + "' and APX eq '" +
 						_that.ID_APXValue + "' and INTCOL eq '" + _that.intcolor + "' and ETA eq '" + _that.ETADate + "' and LANGUAGE eq '" + this.localLang +
 						"' &$format=json";
