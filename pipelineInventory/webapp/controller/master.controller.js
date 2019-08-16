@@ -1434,7 +1434,12 @@ sap.ui.define([
 			// 	salesOffice = "";
 			// }
 			obj_first.salesOffice = salesOffice;
+			if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY" && _that.getView().byId("ID_modelYearPicker").getSelectedKey() =="") {
+				obj_first.ModelYear =  _that._ObjModelYear.ModelYearList[0].ModelYear + "+" + _that._ObjModelYear.ModelYearList[2].ModelYear ;
+			}
+			else{
 			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
+			}
 
 			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				obj_first.series = _that.getView().byId("ID_seriesDesc").getSelectedKey();
