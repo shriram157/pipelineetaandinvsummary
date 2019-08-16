@@ -1435,6 +1435,8 @@ sap.ui.define([
 			// }
 			obj_first.salesOffice = salesOffice;
 			if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY" && _that.getView().byId("ID_modelYearPicker").getSelectedKey() =="") {
+				// _that.getView().byId("ID_modelYearPicker").setValue("");
+				_that.getView().byId("ID_modelYearPicker").setSelectedKey("");
 				obj_first.ModelYear =  _that._ObjModelYear.ModelYearList[0].ModelYear + "+" + _that._ObjModelYear.ModelYearList[2].ModelYear ;
 			}
 			else{
