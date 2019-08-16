@@ -371,11 +371,6 @@ sap.ui.define([
 			};
 			_that.oModelYearModel.setData(_that._ObjModelYear);
 			_that.oModelYearModel.updateBindings();
-			if(sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] == 'Dealer'){
-				_that.modelYearPicker.setSelectedKey(_that.currentYear);
-			} else {
-				_that.modelYearPicker.setSelectedKey("");
-			}
 
 			if (_that.errorFlag == true) {
 				sap.m.MessageBox.error(
@@ -498,6 +493,12 @@ sap.ui.define([
 				_that.getView().byId("tableMultiHeader3").getRows()[5].getCells()[n].removeStyleClass("TabFontStyle");
 			}
 			/*Defect Number 10427 Code Start*/
+			
+			if(sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList && sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] !== 'Dealer'){
+				_that.modelYearPicker.setSelectedKey(_that.currentYear);
+			} else {
+				_that.modelYearPicker.setSelectedKey("");
+			}
 			_that.getView().byId("id_ETADate").setMinDate(new Date());
 			/*Defect Number 10427 Code End*/
 		},
