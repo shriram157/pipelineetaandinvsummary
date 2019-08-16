@@ -371,7 +371,7 @@ sap.ui.define([
 			};
 			_that.oModelYearModel.setData(_that._ObjModelYear);
 			_that.oModelYearModel.updateBindings();
-			if (_that.BusinessPartnerData.oData.SamlList.UserType[0] !== "Dealer") {
+			if(sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] == 'Dealer'){
 				_that.modelYearPicker.setSelectedKey(_that.currentYear);
 			} else {
 				_that.modelYearPicker.setSelectedKey("");
