@@ -189,12 +189,12 @@ sap.ui.define([
 						array.values.push(obj[key]);
 					return array;
 				}
-
-				if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY") {
-					var modelyear = _thatDT.routedData.ModelYear.split("+");
-					var modelYear = "(Modelyear ge '" + modelyear[0] + "' and Modelyear le '" + modelyear[1] + "')";
+				var modelYear ="";
+				if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY" && _thatDT.routedData.ModelYear.indexOf("+")<=-1) {
+					var modelyearString = _thatDT.routedData.ModelYear.split("+");
+					modelYear = "(Modelyear ge '" + modelyearString[0] + "' and Modelyear le '" + modelyearString[1] + "')";
 				} else {
-					var modelyear = "Modelyear eq '" +_thatDT.routedData.ModelYear + "'";
+					modelYear = "Modelyear eq '" +_thatDT.routedData.ModelYear + "'";
 				}
 
 				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
