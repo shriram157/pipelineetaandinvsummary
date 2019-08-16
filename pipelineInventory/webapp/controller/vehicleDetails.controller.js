@@ -225,7 +225,7 @@ sap.ui.define([
 								} else if (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] == "Dealer") {
 									_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", true);
 								}
-								oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
+								oRowData.d.KUNNR =  oRowData.d.KUNNR.substring(5); //oRowData.d.KUNNR.split("-")[0].slice(5) + "-" + oRowData.d.KUNNR.split("-")[1];
 								_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 								_thatVD.oVehicleDetailsJSON.updateBindings(true);
 
@@ -399,7 +399,7 @@ sap.ui.define([
 													"Dealer")) {
 												_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", true);
 											}
-											oRowData.d.KUNNR = oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
+											oRowData.d.KUNNR =  oRowData.d.KUNNR.substring(5); // oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
 											_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 
 											_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Comments = oRowData.d.Comments;
