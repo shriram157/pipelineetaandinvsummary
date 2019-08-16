@@ -371,7 +371,11 @@ sap.ui.define([
 			};
 			_that.oModelYearModel.setData(_that._ObjModelYear);
 			_that.oModelYearModel.updateBindings();
-			_that.modelYearPicker.setSelectedKey(_that.currentYear);
+			if (_that.BusinessPartnerData.oData.SamlList.UserType[0] !== "Dealer") {
+				_that.modelYearPicker.setSelectedKey(_that.currentYear);
+			} else {
+				_that.modelYearPicker.setSelectedKey("");
+			}
 
 			if (_that.errorFlag == true) {
 				sap.m.MessageBox.error(
@@ -1434,13 +1438,13 @@ sap.ui.define([
 			// 	salesOffice = "";
 			// }
 			obj_first.salesOffice = salesOffice;
-			if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY") {
+			if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY" && _that.getView().byId(
+					"ID_modelYearPicker").getSelectedKey() == "") {
 				// _that.getView().byId("ID_modelYearPicker").setValue("");
-				_that.getView().byId("ID_modelYearPicker").setSelectedKey("");
-				obj_first.ModelYear =  _that._ObjModelYear.ModelYearList[0].ModelYear + "+" + _that._ObjModelYear.ModelYearList[2].ModelYear ;
-			}
-			else{
-			obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
+				// _that.getView().byId("ID_modelYearPicker").setSelectedKey("");
+				obj_first.ModelYear = _that._ObjModelYear.ModelYearList[0].ModelYear + "+" + _that._ObjModelYear.ModelYearList[2].ModelYear;
+			} else {
+				obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 			}
 
 			if (_that.getView().byId("ID_seriesDesc").getSelectedKey() != _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
