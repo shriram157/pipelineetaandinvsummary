@@ -190,7 +190,7 @@ sap.ui.define([
 					return array;
 				}
 				var modelYear ="";
-				if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY" && _thatDT.routedData.ModelYear.indexOf("+")<=-1) {
+				if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY" && _thatDT.routedData.ModelYear.indexOf("+")>-1) {
 					var modelyearString = _thatDT.routedData.ModelYear.split("+");
 					modelYear = "(Modelyear ge '" + modelyearString[0] + "' and Modelyear le '" + modelyearString[1] + "')";
 				} else {
