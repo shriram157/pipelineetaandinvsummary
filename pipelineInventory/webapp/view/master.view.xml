@@ -55,33 +55,33 @@
 										<core:ListItem key="{ModelYearModel>ModelYear}" text="{ModelYearModel>ModelYear}"/>
 									</ComboBox>
 									<Label text="{i18n>Series}"/>
-									<Select id="ID_seriesDesc" forceSelection="true" change="onSeriesSelectionChange" items="{GlobalJSONModel>/seriesData}">
+									<Select id="ID_seriesDesc" forceSelection="true" change="onSeriesSelectionChange" items="{GlobalJSONModel>/seriesData}" enabled="{LocalOCModel>/noMYSelection}">
 										<core:Item key="{GlobalJSONModel>ModelSeriesNo}"
 											text="{=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>TCISeriesDescriptionEN}:${GlobalJSONModel>TCISeriesDescriptionFR}}"/>
 									</Select>
 									<Label text="{i18n>Model}"/>
-									<Select id="ID_modelDesc" forceSelection="true" items="{GlobalJSONModel>/modelData}" change="onModelSelectionChange">
+									<Select id="ID_modelDesc" forceSelection="true" items="{GlobalJSONModel>/modelData}" change="onModelSelectionChange" enabled="{LocalOCModel>/noMYSelection}">
 										<core:Item key="{GlobalJSONModel>Model}"
 											text="{GlobalJSONModel>Model} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>ENModelDesc}:${GlobalJSONModel>FRModelDesc}}"/>
 									</Select>
 									<Label text="{i18n>Suffix}"/>
-									<Select id="ID_marktgIntDesc" forceSelection="true" items="{GlobalJSONModel>/suffixData}" change="onSuffixChange">
+									<Select id="ID_marktgIntDesc" forceSelection="true" items="{GlobalJSONModel>/suffixData}" change="onSuffixChange" enabled="{LocalOCModel>/noMYSelection}">
 										<core:Item key="{GlobalJSONModel>Suffix}"
 											text="{GlobalJSONModel>Suffix} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>SuffixDescriptionEN}:${GlobalJSONModel>SuffixDescriptionFR}} / {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>mrktg_int_desc_en}:${GlobalJSONModel>mrktg_int_desc_fr}}"/>
 									</Select>
 									<core:Title text=""/>
 									<Label text="{i18n>Colour}"/>
-									<Select id="ID_ExteriorColorCode" forceSelection="true" items="{GlobalJSONModel>/colorData}" change="onColorCodeChange">
+									<Select id="ID_ExteriorColorCode" forceSelection="true" items="{GlobalJSONModel>/colorData}" change="onColorCodeChange" enabled="{LocalOCModel>/noMYSelection}">
 										<core:Item key="{GlobalJSONModel>ExteriorColorCode}"
 											text="{GlobalJSONModel>ExteriorColorCode} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>MarketingDescriptionEXTColorEN}:${GlobalJSONModel>MarketingDescriptionEXTColorFR}}"/>
 									</Select>
 									<Label text="{i18n>APX}"/>
-									<Select id="ID_APXValue" forceSelection="true" items="{GlobalJSONModel>/APXCollection}">
+									<Select id="ID_APXValue" forceSelection="true" items="{GlobalJSONModel>/APXCollection}" enabled="{LocalOCModel>/noMYSelection}">
 										<core:Item key="{GlobalJSONModel>APX}" text="{GlobalJSONModel>APX}"/>
 									</Select>
 									<Label text="{i18n>ETA}"/>
 									<DatePicker id="id_ETADate" value="" valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd" placeholder="YYYY-MM-DD" change="handleETAChange"
-										class="sapUiSmallMarginBottom">
+										class="sapUiSmallMarginBottom" enabled="{LocalOCModel>/noMYSelection}">
 										<layoutData>
 											<l:GridData span="XL8 L8 M10 S10"/>
 										</layoutData>
@@ -89,7 +89,7 @@
 									<Label text=""/>
 								</f:content>
 							</f:SimpleForm>
-							<Button text="{i18n>ApplyFilters}" type="Default" class="styleBtnPositioned" press="applyFiltersBtn"/>
+							<Button text="{i18n>ApplyFilters}" type="Default" class="styleBtnPositioned" press="applyFiltersBtn" enabled="{LocalOCModel>/noMYSelection}"/>
 						</VBox>
 						<OverflowToolbar>
 							<ToolbarSpacer/>

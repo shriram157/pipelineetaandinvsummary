@@ -19,7 +19,8 @@ sap.ui.define([
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
 				delay: 0,
-				ForDealerOnly: false
+				ForDealerOnly: false,
+				noMYSelection: true
 			});
 			_that.getView().setModel(_oViewModel, "LocalOCModel"); //ForDealerOnly
 			var fleetMatrix = new sap.ui.model.json.JSONModel({
@@ -208,8 +209,10 @@ sap.ui.define([
 					_that.BusinessPartnerData.setSizeLimit(350);
 					_that.BusinessPartnerData.getData().SamlList = userAttributes.samlAttributes;
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
+						_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", false);
 						_that.BusinessPartnerData.getData().DealerList = userAttributes.attributes;
 					} else {
+						_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
 						var salesArr = userAttributes.sales;
 						var SalesData = salesArr.filter(function (val) {
 							return val.Division === DivAttribute;
@@ -316,6 +319,7 @@ sap.ui.define([
 					_that.BusinessPartnerData.updateBindings(true);
 					_that.BusinessPartnerData.refresh(true);
 					if (_that.BusinessPartnerData.oData.SamlList.UserType[0] == "Dealer") {
+						_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", false);
 						_that.getView().byId("ID_DealearPicker").setSelectedItem(_that.getView().byId("ID_DealearPicker").getItems()[0]);
 						_that.getView().byId("id_BusinessPartnerName").setValue(_that.getView().byId("ID_DealearPicker").getItems()[0].getAdditionalText());
 						_that.userType = "DDU";
@@ -323,6 +327,9 @@ sap.ui.define([
 						_that.intcolor = "";
 						_that.getView().byId("ID_modelYearPicker").setValue("");
 						_that.applyFiltersForDealerOnly();
+					}
+					else{
+						_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
 					}
 				},
 				error: function (oError) {
@@ -1259,7 +1266,9 @@ sap.ui.define([
 			sap.ui.core.BusyIndicator.show();
 			if (!oModVal.getParameters("selectedItem").selectedItem) {
 				_that.applyFiltersForDealerOnly();
+				_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", false);
 			} else {
+				_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
 				var ModelYear = oModVal.getParameters("selectedItem").selectedItem.getKey();
 				var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
 					"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
