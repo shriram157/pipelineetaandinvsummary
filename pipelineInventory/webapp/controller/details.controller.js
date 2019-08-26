@@ -189,19 +189,21 @@ sap.ui.define([
 						array.values.push(obj[key]);
 					return array;
 				}
-				var modelYear ="";
-				
-				if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY" && _thatDT.routedData.ModelYear.indexOf("+")>-1) {
+				var modelYear = "";
+
+				if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY" && _thatDT.routedData.ModelYear.indexOf(
+						"+") > -1) {
 					var modelyearString = _thatDT.routedData.ModelYear.split("+");
 					modelYear = "(Modelyear ge '" + modelyearString[0] + "' and Modelyear le '" + modelyearString[1] + "')";
 				} else {
-					modelYear = "Modelyear eq '" +_thatDT.routedData.ModelYear + "'";
+					modelYear = "Modelyear eq '" + _thatDT.routedData.ModelYear + "'";
 				}
 
 				var url = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
 					"' and VKBUR eq '" + _thatDT.salesOffice +
 					"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
-					"' and Model eq '" + _thatDT.routedData.Model + "' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and "+ modelYear +" and TCISeries eq '" +
+					"' and Model eq '" + _thatDT.routedData.Model + "' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and " + modelYear +
+					" and TCISeries eq '" +
 					_thatDT.routedData.series + "'and Suffix eq '" + _thatDT.routedData.suffix + "'and ExteriorColorCode eq '" + _thatDT.routedData.ExteriorColorCode +
 					"'and APX eq '" + _thatDT.routedData.APXValue + "'and ETA eq '" + _thatDT.routedData.ETADate + "'and Dealer eq '" + _thatDT.routedData
 					.Dealer +
@@ -658,44 +660,44 @@ sap.ui.define([
 		// 	sap.ui.core.BusyIndicator.show();
 		// 	var exportDataURL = "";
 		// 	var data;
-			// if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY") {
-			// 	exportDataURL = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
-			// 		"' and VKBUR eq '" + _thatDT.salesOffice + "' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
-			// 		"' and Model eq '' and INTCOL eq '' and Modelyear eq '' and TCISeries eq '' and Suffix eq '' and ExteriorColorCode eq '' and APX eq '' and ETA eq '' and Dealer eq '" +
-			// 		_thatDT.routedData.Dealer + "'and UserType eq '" + _thatDT.UserType + "' and LANGUAGE eq '" + localLang + "' &$format=json";
-			// } else {
-			// exportDataURL = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
-			// 	"' and VKBUR eq '" + _thatDT.salesOffice +
-			// 	"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
-			// 	"' and Model eq '" + _thatDT.routedData.Model + "' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and Modelyear eq '" +
-			// 	_thatDT.routedData.ModelYear + "'and TCISeries eq '" +
-			// 	_thatDT.routedData.series + "'and Suffix eq '" + _thatDT.routedData.suffix + "'and ExteriorColorCode eq '" + _thatDT.routedData
-			// 	.ExteriorColorCode +
-			// 	"'and APX eq '" + _thatDT.routedData.APXValue + "'and ETA eq '" + _thatDT.routedData.ETADate + "'and Dealer eq '" + _thatDT.routedData
-			// 	.Dealer + "'and UserType eq '" + _thatDT.UserType + "' and LANGUAGE eq '" + localLang + "' &$format=json";
-			// // }
-			// $.ajax({
-			// 	dataType: "json",
-			// 	url: exportDataURL,
-			// 	type: "GET",
-			// 	success: function (oRowData) {
-			// 		sap.ui.core.BusyIndicator.hide();
-			// 		$.each(oRowData.d.results, function (key, value) {
-			// 			if (value.AccessInstl_flag === true) {
-			// 				value.AccessInstl_flag2 = "Y";
-			// 			} else {
-			// 				//if (value.AccessInstl_flag == false) {
-			// 				value.AccessInstl_flag2 = "N";
-			// 			}
-			// 		});
-			// 		_thatDT.excelData = oRowData.d;
-			// 		_thatDT.JSONToExcelConvertor(_thatDT.excelData, "Report", true);
-			// 	},
-			// 	error: function (oError) {
-			// 		sap.ui.core.BusyIndicator.hide();
-			// 		_thatDT.errorFlag = true;
-			// 	}
-			// });
+		// if (sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIDealerUser == "DealerONLY") {
+		// 	exportDataURL = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
+		// 		"' and VKBUR eq '" + _thatDT.salesOffice + "' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
+		// 		"' and Model eq '' and INTCOL eq '' and Modelyear eq '' and TCISeries eq '' and Suffix eq '' and ExteriorColorCode eq '' and APX eq '' and ETA eq '' and Dealer eq '" +
+		// 		_thatDT.routedData.Dealer + "'and UserType eq '" + _thatDT.UserType + "' and LANGUAGE eq '" + localLang + "' &$format=json";
+		// } else {
+		// exportDataURL = _thatDT.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/InventoryDetailsSet?$filter=Division eq '" + DivUser +
+		// 	"' and VKBUR eq '" + _thatDT.salesOffice +
+		// 	"' and MATRIX eq '" + _thatDT.routedData.MatrixVal +
+		// 	"' and Model eq '" + _thatDT.routedData.Model + "' and INTCOL eq '" + _thatDT.routedData.intcolor + "' and Modelyear eq '" +
+		// 	_thatDT.routedData.ModelYear + "'and TCISeries eq '" +
+		// 	_thatDT.routedData.series + "'and Suffix eq '" + _thatDT.routedData.suffix + "'and ExteriorColorCode eq '" + _thatDT.routedData
+		// 	.ExteriorColorCode +
+		// 	"'and APX eq '" + _thatDT.routedData.APXValue + "'and ETA eq '" + _thatDT.routedData.ETADate + "'and Dealer eq '" + _thatDT.routedData
+		// 	.Dealer + "'and UserType eq '" + _thatDT.UserType + "' and LANGUAGE eq '" + localLang + "' &$format=json";
+		// // }
+		// $.ajax({
+		// 	dataType: "json",
+		// 	url: exportDataURL,
+		// 	type: "GET",
+		// 	success: function (oRowData) {
+		// 		sap.ui.core.BusyIndicator.hide();
+		// 		$.each(oRowData.d.results, function (key, value) {
+		// 			if (value.AccessInstl_flag === true) {
+		// 				value.AccessInstl_flag2 = "Y";
+		// 			} else {
+		// 				//if (value.AccessInstl_flag == false) {
+		// 				value.AccessInstl_flag2 = "N";
+		// 			}
+		// 		});
+		// 		_thatDT.excelData = oRowData.d;
+		// 		_thatDT.JSONToExcelConvertor(_thatDT.excelData, "Report", true);
+		// 	},
+		// 	error: function (oError) {
+		// 		sap.ui.core.BusyIndicator.hide();
+		// 		_thatDT.errorFlag = true;
+		// 	}
+		// });
 		// },
 		dateConverter: function (_dVal) {
 			if (_dVal !== null && _dVal !== undefined && _dVal != "") {
@@ -721,6 +723,7 @@ sap.ui.define([
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Accessory") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("VTN") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("VIN") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("ModelYear") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Model") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Suffix") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Colour") + ",";
@@ -734,11 +737,10 @@ sap.ui.define([
 				var row = "";
 				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
 					'","' + arrData[i].ZMMSTA + '","' + arrData[i].AccessInstl_flag2 + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
-					arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN +
-					'","' + arrData[i].Suffix +
+					arrData[i].Modelyear +  '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i]
+					.Suffix +
 					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '",="' + _thatDT.dateConverter(
-						arrData[i].ETAFrom) +
-					'",="' + _thatDT.dateConverter(arrData[i].ETATo) + '",';
+						arrData[i].ETAFrom) + '",="' + _thatDT.dateConverter(arrData[i].ETATo) + '",';
 				//}
 				row.slice(1, row.length);
 				CSV += row + '\r\n';
