@@ -386,6 +386,7 @@ sap.ui.define([
 										success: function (oRowData) {
 											sap.ui.core.BusyIndicator.hide();
 											_thatVD.APX_ChangeFlag = oRowData.d.APX_ChangeFlag;
+											SelectedDNCVal = oRowData.d.DNC;
 											if (_thatVD.APX_ChangeFlag == "X") {
 												_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", true);
 											} else {
@@ -512,6 +513,12 @@ sap.ui.define([
 				SelectedDNCVal = "DNC Stock";
 			}
 		},
+		
+		onAddComment:function(oVal){
+			// console.log("val", oVal);
+			_thatVD.getView().getModel("VehicleDetailsJSON").updateBindings(true);
+			// debugger;
+		},
 
 		/*Navigate to Order Change screen*/
 		NavToOrderChange: function () {
@@ -592,16 +599,16 @@ sap.ui.define([
 			if (oInputControl.getVisible()) {
 				if (sUserInput) {
 					oInputControl.setValueState(sap.ui.core.ValueState.Success);
-					_thatVD.postVehicleUpdates(oPost);
+					_thatVD.postVehicleUpdates(oPost,SelectedDNCVal);
 				} else {
 					oInputControl.setValueState(sap.ui.core.ValueState.Error);
 				}
 			} else if (!oInputControl.getVisible()) {
-				_thatVD.postVehicleUpdates(oPost);
+				_thatVD.postVehicleUpdates(oPost,SelectedDNCVal);
 			}
 		},
 
-		postVehicleUpdates: function (oPost) {
+		postVehicleUpdates: function (oPost,DNCVal) {
 			var Obj = {};
 			_thatVD.oVehicleDetailsJSON = _thatVD.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
 			Obj.VHCLE = _thatVD.oVehicleDetailsJSON.VHCLE;
@@ -615,7 +622,7 @@ sap.ui.define([
 			} else if (_thatVD.getView().byId("accessoryVal").getSelectedKey() == this.oBundle.getText("No")) {
 				Obj.AccessoriesInstalled = "No";
 			}
-			Obj.DNC = SelectedDNCVal;
+			Obj.DNC = DNCVal;
 			Obj.Comments = _thatVD.oVehicleDetailsJSON.Comments;
 			var oModel = _thatVD.getOwnerComponent().getModel("DataModel");
 
