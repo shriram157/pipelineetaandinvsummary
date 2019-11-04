@@ -327,8 +327,7 @@ sap.ui.define([
 						_that.intcolor = "";
 						_that.getView().byId("ID_modelYearPicker").setValue("");
 						_that.applyFiltersForDealerOnly();
-					}
-					else{
+					} else {
 						_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
 					}
 				},
@@ -427,6 +426,8 @@ sap.ui.define([
 								}
 							});
 						}
+
+					
 						for (var i = 0; i < oModelData.d.results.length; i++) {
 							if (oModelData.d.results[i] != undefined) {
 								_that.oGlobalJSONModel.getData().seriesData.push({
@@ -437,6 +438,17 @@ sap.ui.define([
 								});
 							}
 						}
+
+						_that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
+							var nameA = a.ModelSeriesNo.toLowerCase(),
+								nameB = b.ModelSeriesNo.toLowerCase();
+							if (nameA < nameB) //sort string ascending
+								return -1;
+							if (nameA > nameB)
+								return 1;
+							return 0; //default return value (no sorting)
+						});
+						
 						_that.oGlobalJSONModel.getData().seriesData.unshift({
 							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
@@ -1006,6 +1018,7 @@ sap.ui.define([
 				type: "GET",
 				success: function (oData) {
 					if (oData.d.results.length > 0) {
+					
 						$.each(oData.d.results, function (i, item) {
 							_that.oGlobalJSONModel.getData().suffixData.push({
 								"Model": item.Model,
@@ -1019,6 +1032,16 @@ sap.ui.define([
 								"localLang": URILang
 							});
 						});
+						_that.oGlobalJSONModel.getData().suffixData.sort(function (a, b) {
+							var nameA = a.Suffix.toLowerCase(),
+								nameB = b.Suffix.toLowerCase();
+							if (nameA < nameB) //sort string ascending
+								return -1;
+							if (nameA > nameB)
+								return 1;
+							return 0; //default return value (no sorting)
+						})
+						
 						sap.ui.core.BusyIndicator.hide();
 						_that.oGlobalJSONModel.getData().suffixData.unshift({
 							"Model": "",
@@ -1110,6 +1133,7 @@ sap.ui.define([
 				type: "GET",
 				success: function (oData) {
 					if (oData.d.results.length > 0) {
+						
 						$.each(oData.d.results, function (i, item) {
 							_that.oGlobalJSONModel.getData().colorData.push({
 								"ExteriorColorCode": item.ExteriorColorCode,
@@ -1118,6 +1142,16 @@ sap.ui.define([
 								"localLang": URILang
 							});
 						});
+						_that.oGlobalJSONModel.getData().colorData.sort(function (a, b) {
+							var nameA = a.ExteriorColorCode.toLowerCase(),
+								nameB = b.ExteriorColorCode.toLowerCase();
+							if (nameA < nameB) //sort string ascending
+								return -1;
+							if (nameA > nameB)
+								return 1;
+							return 0; //default return value (no sorting)
+						});
+						
 						_that.oGlobalJSONModel.getData().colorData.unshift({
 							"ExteriorColorCode": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"MarketingDescriptionEXTColorEN": "",
@@ -1161,6 +1195,7 @@ sap.ui.define([
 					success: function (oData) {
 						if (oData.d.results.length > 0) {
 							var b = 0;
+						
 							for (var i = 0; i < oData.d.results.length; i++) {
 								var oModel = oData.d.results[i].Model;
 								for (var j = 0; j < _that.oGlobalJSONModel.getData().modelData.length; j++) {
@@ -1175,10 +1210,20 @@ sap.ui.define([
 										"FRModelDesc": oData.d.results[i].FRModelDesc,
 										"localLang": URILang
 									});
-									_that.oGlobalJSONModel.updateBindings(true);
 								}
 								b = 0;
 							}
+							_that.oGlobalJSONModel.getData().modelData.sort(function (a, b) {
+								var nameA = a.Model.toLowerCase(),
+									nameB = b.Model.toLowerCase();
+								if (nameA < nameB) //sort string ascending
+									return -1;
+								if (nameA > nameB)
+									return 1;
+								return 0; //default return value (no sorting)
+							});
+							_that.oGlobalJSONModel.updateBindings(true);
+
 							sap.ui.core.BusyIndicator.hide();
 							_that.oGlobalJSONModel.getData().modelData.unshift({
 								"Model": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
@@ -1223,6 +1268,7 @@ sap.ui.define([
 				success: function (oAPXData) {
 					if (oAPXData.d.results.length > 0) {
 						var b = 0;
+					
 						_that.oGlobalJSONModel.getData().APXCollection = [];
 						for (var i = 0; i < oAPXData.d.results.length; i++) {
 							var zzapx = oAPXData.d.results[i].zzapx;
@@ -1240,6 +1286,16 @@ sap.ui.define([
 							}
 							b = 0;
 						}
+
+						_that.oGlobalJSONModel.getData().APXCollection.sort(function (a, b) {
+							var nameA = a.APX.toLowerCase(),
+								nameB = b.APX.toLowerCase();
+							if (nameA < nameB) //sort string ascending
+								return -1;
+							if (nameA > nameB)
+								return 1;
+							return 0; //default return value (no sorting)
+						});
 						_that.oGlobalJSONModel.getData().APXCollection.unshift({
 							"APX": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 						});
@@ -1302,6 +1358,7 @@ sap.ui.define([
 									}
 								});
 							}
+							
 							for (var i = 0; i < oModelData.d.results.length; i++) {
 								if (oModelData.d.results[i] != undefined) {
 									_that.oGlobalJSONModel.getData().seriesData.push({
@@ -1312,6 +1369,17 @@ sap.ui.define([
 									});
 								}
 							}
+
+							_that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
+								var nameA = a.ModelSeriesNo.toLowerCase(),
+									nameB = b.ModelSeriesNo.toLowerCase();
+								if (nameA < nameB) //sort string ascending
+									return -1;
+								if (nameA > nameB)
+									return 1;
+								return 0; //default return value (no sorting)
+							});
+							
 							_that.oGlobalJSONModel.getData().seriesData.unshift({
 								"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 								"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
@@ -1355,6 +1423,16 @@ sap.ui.define([
 					b = 0;
 				}
 			}
+			_that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
+								var nameA = a.ModelSeriesNo.toLowerCase(),
+									nameB = b.ModelSeriesNo.toLowerCase();
+								if (nameA < nameB) //sort string ascending
+									return -1;
+								if (nameA > nameB)
+									return 1;
+								return 0; //default return value (no sorting)
+							});
+							
 			_that.oGlobalJSONModel.getData().seriesData.unshift({
 				"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 				"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
@@ -1617,7 +1695,7 @@ sap.ui.define([
 				var row = "";
 				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
 					'","' + arrData[i].ZMMSTA + '","' + arrData[i].AccessInstl_flag2 + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
-					arrData[i].Modelyear + '","'+
+					arrData[i].Modelyear + '","' +
 					arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i].Suffix + "-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[
 						i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '",="' + _that.dateConverter(arrData[i].ETAFrom) +
 					'",="' + _that.dateConverter(arrData[i].ETATo) + '",';

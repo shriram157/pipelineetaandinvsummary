@@ -71,7 +71,7 @@
 									</Select>
 									<core:Title text=""/>
 									<Label text="{i18n>Colour}"/>
-									<Select id="ID_ExteriorColorCode" forceSelection="true" items="{path:'GlobalJSONModel>/colorData', 	sorter: { path: 'ExteriorColorCode' }}" change="onColorCodeChange" enabled="{LocalOCModel>/noMYSelection}">
+									<Select id="ID_ExteriorColorCode" forceSelection="true" items="{GlobalJSONModel>/colorData}" change="onColorCodeChange" enabled="{LocalOCModel>/noMYSelection}">
 										<core:Item key="{GlobalJSONModel>ExteriorColorCode}"
 											text="{GlobalJSONModel>ExteriorColorCode} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>MarketingDescriptionEXTColorEN}:${GlobalJSONModel>MarketingDescriptionEXTColorFR}}"/>
 									</Select>
