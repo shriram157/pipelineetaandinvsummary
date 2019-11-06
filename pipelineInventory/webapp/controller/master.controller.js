@@ -1139,6 +1139,7 @@ sap.ui.define([
 
 		//ON Series change
 		onSeriesSelectionChange: function (oSeriesVal2) {
+			_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
 			sap.ui.core.BusyIndicator.show();
 			_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			_that.getView().byId("ID_modelDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
