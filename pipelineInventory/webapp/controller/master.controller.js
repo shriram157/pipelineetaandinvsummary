@@ -20,7 +20,11 @@ sap.ui.define([
 				busy: false,
 				delay: 0,
 				ForDealerOnly: false,
-				noMYSelection: true
+				noMYSelection: false,
+				noModelSelection: false,
+				noSuffixSelection: false,
+				noColorSelection: false,
+				noAPXSelection: false
 			});
 			_that.getView().setModel(_oViewModel, "LocalOCModel"); //ForDealerOnly
 			var fleetMatrix = new sap.ui.model.json.JSONModel({
@@ -427,7 +431,6 @@ sap.ui.define([
 							});
 						}
 
-					
 						for (var i = 0; i < oModelData.d.results.length; i++) {
 							if (oModelData.d.results[i] != undefined) {
 								_that.oGlobalJSONModel.getData().seriesData.push({
@@ -448,7 +451,7 @@ sap.ui.define([
 								return 1;
 							return 0; //default return value (no sorting)
 						});
-						
+
 						_that.oGlobalJSONModel.getData().seriesData.unshift({
 							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
@@ -1005,12 +1008,19 @@ sap.ui.define([
 			_that.temp = [];
 			_that.temp1 = [];
 			_that.getView().byId("ID_marktgIntDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_marktgIntDesc").setEnabled(true);
+			//	_that.getView().byId("ID_marktgIntDesc").setEnabled(true);
 			_that.getView().byId("ID_ExteriorColorCode").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_ExteriorColorCode").setEnabled(false);
-			_that.getView().byId("ID_APXValue").setEnabled(false);
+			//	_that.getView().byId("ID_ExteriorColorCode").setEnabled(false);
+			//	_that.getView().byId("ID_APXValue").setEnabled(false);
 			sap.ui.core.BusyIndicator.show();
+			_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
+			_that.getView().getModel("LocalOCModel").setProperty("/noModelSelection", true);
+			_that.getView().getModel("LocalOCModel").setProperty("/noSuffixSelection", true);
+			_that.getView().getModel("LocalOCModel").setProperty("/noColorSelection", false);
+
+			_that.getView().getModel("LocalOCModel").setProperty("/noAPXSelection", false);
+
 			_that.Modelyear = _that.modelYearPicker.getSelectedKey();
 			_that.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
 			_that.oGlobalJSONModel.getData().suffixData = [];
@@ -1021,7 +1031,7 @@ sap.ui.define([
 				type: "GET",
 				success: function (oData) {
 					if (oData.d.results.length > 0) {
-					
+
 						$.each(oData.d.results, function (i, item) {
 							_that.oGlobalJSONModel.getData().suffixData.push({
 								"Model": item.Model,
@@ -1044,7 +1054,7 @@ sap.ui.define([
 								return 1;
 							return 0; //default return value (no sorting)
 						})
-						
+
 						sap.ui.core.BusyIndicator.hide();
 						_that.oGlobalJSONModel.getData().suffixData.unshift({
 							"Model": "",
@@ -1122,9 +1132,15 @@ sap.ui.define([
 		onSuffixChange: function (oSuffixVal) {
 			_that.getView().byId("ID_ExteriorColorCode").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_ExteriorColorCode").setEnabled(true);
-			_that.getView().byId("ID_APXValue").setEnabled(false);
+			//_that.getView().byId("ID_ExteriorColorCode").setEnabled(true);
+			//_that.getView().byId("ID_APXValue").setEnabled(false);
 			sap.ui.core.BusyIndicator.show();
+			_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
+			_that.getView().getModel("LocalOCModel").setProperty("/noModelSelection", true);
+			_that.getView().getModel("LocalOCModel").setProperty("/noSuffixSelection", true);
+			_that.getView().getModel("LocalOCModel").setProperty("/noColorSelection", true);
+
+			_that.getView().getModel("LocalOCModel").setProperty("/noAPXSelection", false);
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
 			var Suffix = oSuffixVal.getParameters("selectedItem").selectedItem.getKey();
 			var Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
@@ -1138,7 +1154,7 @@ sap.ui.define([
 				type: "GET",
 				success: function (oData) {
 					if (oData.d.results.length > 0) {
-						
+
 						$.each(oData.d.results, function (i, item) {
 							_that.oGlobalJSONModel.getData().colorData.push({
 								"ExteriorColorCode": item.ExteriorColorCode,
@@ -1156,7 +1172,7 @@ sap.ui.define([
 								return 1;
 							return 0; //default return value (no sorting)
 						});
-						
+
 						_that.oGlobalJSONModel.getData().colorData.unshift({
 							"ExteriorColorCode": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"MarketingDescriptionEXTColorEN": "",
@@ -1180,14 +1196,21 @@ sap.ui.define([
 		onSeriesSelectionChange: function (oSeriesVal2) {
 			sap.ui.core.BusyIndicator.show();
 			_that.getView().byId("ID_marktgIntDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_marktgIntDesc").setEnabled(true);
+			//_that.getView().byId("ID_marktgIntDesc").setEnabled(true);
 			_that.getView().byId("ID_modelDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_modelDesc").setEnabled(false);
+			//_that.getView().byId("ID_modelDesc").setEnabled(false);
 			_that.getView().byId("ID_ExteriorColorCode").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_ExteriorColorCode").setEnabled(false);
+			//_that.getView().byId("ID_ExteriorColorCode").setEnabled(false);
 			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_APXValue").setEnabled(false);
+			//_that.getView().byId("ID_APXValue").setEnabled(false);
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
+
+			_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
+			_that.getView().getModel("LocalOCModel").setProperty("/noModelSelection", true);
+			_that.getView().getModel("LocalOCModel").setProperty("/noSuffixSelection", false);
+			_that.getView().getModel("LocalOCModel").setProperty("/noColorSelection", false);
+
+			_that.getView().getModel("LocalOCModel").setProperty("/noAPXSelection", false);
 			if (oSeriesVal2.getParameters("selectedItem").selectedItem.getKey() !== undefined) {
 				var oSeriesVal = oSeriesVal2.getParameters("selectedItem").selectedItem.getKey();
 			} else {
@@ -1203,7 +1226,7 @@ sap.ui.define([
 					success: function (oData) {
 						if (oData.d.results.length > 0) {
 							var b = 0;
-						
+
 							for (var i = 0; i < oData.d.results.length; i++) {
 								var oModel = oData.d.results[i].Model;
 								for (var j = 0; j < _that.oGlobalJSONModel.getData().modelData.length; j++) {
@@ -1261,6 +1284,13 @@ sap.ui.define([
 
 		onColorCodeChange: function (oModVal) {
 			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
+			_that.getView().getModel("LocalOCModel").setProperty("/noModelSelection", true);
+			_that.getView().getModel("LocalOCModel").setProperty("/noSuffixSelection", true);
+			_that.getView().getModel("LocalOCModel").setProperty("/noColorSelection", true);
+
+			_that.getView().getModel("LocalOCModel").setProperty("/noAPXSelection", true);
+
 			sap.ui.core.BusyIndicator.show();
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
 			var Suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
@@ -1276,7 +1306,7 @@ sap.ui.define([
 				success: function (oAPXData) {
 					if (oAPXData.d.results.length > 0) {
 						var b = 0;
-					
+
 						_that.oGlobalJSONModel.getData().APXCollection = [];
 						for (var i = 0; i < oAPXData.d.results.length; i++) {
 							var zzapx = oAPXData.d.results[i].zzapx;
@@ -1322,21 +1352,28 @@ sap.ui.define([
 		/*On Model Year Selection*/
 		onModelYearChange: function (oModVal) {
 			_that.getView().byId("ID_seriesDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_seriesDesc").setEnabled(true);
+			//_that.getView().byId("ID_seriesDesc").setEnabled(true);
 			_that.getView().byId("ID_modelDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_modelDesc").setEnabled(false);
+			//_that.getView().byId("ID_modelDesc").setEnabled(false);
 			_that.getView().byId("ID_marktgIntDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_marktgIntDesc").setEnabled(false);
+			//_that.getView().byId("ID_marktgIntDesc").setEnabled(false);
 			_that.getView().byId("ID_ExteriorColorCode").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_ExteriorColorCode").setEnabled(false);
+			//_that.getView().byId("ID_ExteriorColorCode").setEnabled(false);
 			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_APXValue").setEnabled(false);
+			//_that.getView().byId("ID_APXValue").setEnabled(false);
 			sap.ui.core.BusyIndicator.show();
 			if (!oModVal.getParameters("selectedItem").selectedItem) {
 				_that.applyFiltersForDealerOnly();
 				_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", false);
 			} else {
+
 				_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
+
+				_that.getView().getModel("LocalOCModel").setProperty("/noModelSelection", false);
+				_that.getView().getModel("LocalOCModel").setProperty("/noSuffixSelection", false);
+				_that.getView().getModel("LocalOCModel").setProperty("/noColorSelection", false);
+
+				_that.getView().getModel("LocalOCModel").setProperty("/noAPXSelection", false);
 				var ModelYear = oModVal.getParameters("selectedItem").selectedItem.getKey();
 				var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
 					"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
@@ -1370,7 +1407,7 @@ sap.ui.define([
 									}
 								});
 							}
-							
+
 							for (var i = 0; i < oModelData.d.results.length; i++) {
 								if (oModelData.d.results[i] != undefined) {
 									_that.oGlobalJSONModel.getData().seriesData.push({
@@ -1391,7 +1428,7 @@ sap.ui.define([
 									return 1;
 								return 0; //default return value (no sorting)
 							});
-							
+
 							_that.oGlobalJSONModel.getData().seriesData.unshift({
 								"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 								"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
@@ -1436,15 +1473,15 @@ sap.ui.define([
 				}
 			}
 			_that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
-								var nameA = a.ModelSeriesNo.toLowerCase(),
-									nameB = b.ModelSeriesNo.toLowerCase();
-								if (nameA < nameB) //sort string ascending
-									return -1;
-								if (nameA > nameB)
-									return 1;
-								return 0; //default return value (no sorting)
-							});
-							
+				var nameA = a.ModelSeriesNo.toLowerCase(),
+					nameB = b.ModelSeriesNo.toLowerCase();
+				if (nameA < nameB) //sort string ascending
+					return -1;
+				if (nameA > nameB)
+					return 1;
+				return 0; //default return value (no sorting)
+			});
+
 			_that.oGlobalJSONModel.getData().seriesData.unshift({
 				"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 				"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
