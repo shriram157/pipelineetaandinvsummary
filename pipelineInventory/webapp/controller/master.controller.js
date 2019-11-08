@@ -1004,9 +1004,12 @@ sap.ui.define([
 		onModelSelectionChange: function (oModel) {
 			_that.temp = [];
 			_that.temp1 = [];
-			_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_marktgIntDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_marktgIntDesc").setEnabled(true);
+			_that.getView().byId("ID_ExteriorColorCode").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_ExteriorColorCode").setEnabled(false);
+			_that.getView().byId("ID_APXValue").setEnabled(false);
 			sap.ui.core.BusyIndicator.show();
 			_that.Modelyear = _that.modelYearPicker.getSelectedKey();
 			_that.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
@@ -1117,8 +1120,10 @@ sap.ui.define([
 		},
 
 		onSuffixChange: function (oSuffixVal) {
-			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_ExteriorColorCode").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_ExteriorColorCode").setEnabled(true);
+			_that.getView().byId("ID_APXValue").setEnabled(false);
 			sap.ui.core.BusyIndicator.show();
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
 			var Suffix = oSuffixVal.getParameters("selectedItem").selectedItem.getKey();
@@ -1174,11 +1179,14 @@ sap.ui.define([
 		//ON Series change
 		onSeriesSelectionChange: function (oSeriesVal2) {
 			sap.ui.core.BusyIndicator.show();
-			_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_modelDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-
+			_that.getView().byId("ID_marktgIntDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_marktgIntDesc").setEnabled(true);
+			_that.getView().byId("ID_modelDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_modelDesc").setEnabled(false);
+			_that.getView().byId("ID_ExteriorColorCode").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_ExteriorColorCode").setEnabled(false);
+			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_APXValue").setEnabled(false);
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
 			if (oSeriesVal2.getParameters("selectedItem").selectedItem.getKey() !== undefined) {
 				var oSeriesVal = oSeriesVal2.getParameters("selectedItem").selectedItem.getKey();
@@ -1252,7 +1260,7 @@ sap.ui.define([
 		},
 
 		onColorCodeChange: function (oModVal) {
-			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			sap.ui.core.BusyIndicator.show();
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
 			var Suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
@@ -1313,12 +1321,16 @@ sap.ui.define([
 
 		/*On Model Year Selection*/
 		onModelYearChange: function (oModVal) {
-			_that.getView().byId("ID_seriesDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_modelDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_ExteriorColorCode").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-
+			_that.getView().byId("ID_seriesDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_seriesDesc").setEnabled(true);
+			_that.getView().byId("ID_modelDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_modelDesc").setEnabled(false);
+			_that.getView().byId("ID_marktgIntDesc").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_marktgIntDesc").setEnabled(false);
+			_that.getView().byId("ID_ExteriorColorCode").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_ExteriorColorCode").setEnabled(false);
+			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			_that.getView().byId("ID_APXValue").setEnabled(false);
 			sap.ui.core.BusyIndicator.show();
 			if (!oModVal.getParameters("selectedItem").selectedItem) {
 				_that.applyFiltersForDealerOnly();
