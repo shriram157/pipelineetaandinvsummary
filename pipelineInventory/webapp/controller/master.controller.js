@@ -1139,7 +1139,6 @@ sap.ui.define([
 
 		//ON Series change
 		onSeriesSelectionChange: function (oSeriesVal2) {
-			_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
 			sap.ui.core.BusyIndicator.show();
 			_that.getView().byId("ID_marktgIntDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			_that.getView().byId("ID_modelDesc").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
@@ -1147,6 +1146,12 @@ sap.ui.define([
 			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
+			if (oSeriesVal2.getParameters("selectedItem").selectedItem.getKey() !== _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
+				_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
+			}
+			else{
+				_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", false);
+			}
 			if (oSeriesVal2.getParameters("selectedItem").selectedItem.getKey() !== undefined) {
 				var oSeriesVal = oSeriesVal2.getParameters("selectedItem").selectedItem.getKey();
 			} else {
