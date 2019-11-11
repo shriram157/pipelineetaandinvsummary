@@ -26,6 +26,7 @@ sap.ui.define([
 				noColorSelection: false,
 				noAPXSelection: false
 			});
+			
 			_that.getView().setModel(_oViewModel, "LocalOCModel"); //ForDealerOnly
 			var fleetMatrix = new sap.ui.model.json.JSONModel({
 				"FleetColnIndex": ""
