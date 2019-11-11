@@ -55,7 +55,7 @@
 										<core:ListItem key="{ModelYearModel>ModelYear}" text="{ModelYearModel>ModelYear}"/>
 									</ComboBox>
 									<Label text="{i18n>Series}"/>
-									<Select id="ID_seriesDesc" forceSelection="true" change="onSeriesSelectionChange" items="{GlobalJSONModel>/seriesData}" enabled="{LocalOCModel>/noMYSelection}">
+									<Select id="ID_seriesDesc" forceSelection="true" change="onSeriesSelectionChange" items="{GlobalJSONModel>/seriesData}" enabled="true">
 										<core:Item key="{GlobalJSONModel>ModelSeriesNo}"
 											text="{=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>TCISeriesDescriptionEN}:${GlobalJSONModel>TCISeriesDescriptionFR}}"/>
 									</Select>
