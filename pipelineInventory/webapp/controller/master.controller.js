@@ -26,7 +26,7 @@ sap.ui.define([
 				noColorSelection: false,
 				noAPXSelection: false
 			});
-			
+
 			_that.getView().setModel(_oViewModel, "LocalOCModel"); //ForDealerOnly
 			var fleetMatrix = new sap.ui.model.json.JSONModel({
 				"FleetColnIndex": ""
@@ -1205,9 +1205,13 @@ sap.ui.define([
 			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			//_that.getView().byId("ID_APXValue").setEnabled(false);
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
-
-			_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
-			_that.getView().getModel("LocalOCModel").setProperty("/noModelSelection", true);
+			if (oSeriesVal2.getParameters("selectedItem").selectedItem.getKey() !== _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
+				_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
+				_that.getView().getModel("LocalOCModel").setProperty("/noModelSelection", true);
+			} else {
+				_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", false);
+				_that.getView().getModel("LocalOCModel").setProperty("/noModelSelection", false);
+			}
 			_that.getView().getModel("LocalOCModel").setProperty("/noSuffixSelection", false);
 			_that.getView().getModel("LocalOCModel").setProperty("/noColorSelection", false);
 
@@ -1746,7 +1750,8 @@ sap.ui.define([
 				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
 					'","' + arrData[i].ZMMSTA + '","' + arrData[i].AccessInstl_flag2 + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
 					arrData[i].Modelyear + '","' +
-					arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i].Suffix + "-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[
+					arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i].Suffix + "-" + arrData[i].SUFFIX_DESC_EN + '","' +
+					arrData[
 						i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '",="' + _that.dateConverter(arrData[i].ETAFrom) +
 					'",="' + _that.dateConverter(arrData[i].ETATo) + '",';
 				//}
