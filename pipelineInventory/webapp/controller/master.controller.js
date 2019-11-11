@@ -1146,6 +1146,12 @@ sap.ui.define([
 			_that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 
 			var Modelyear = _that.modelYearPicker.getSelectedKey();
+			if (oSeriesVal2.getParameters("selectedItem").selectedItem.getKey() !== _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
+				_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
+			}
+			else{
+				_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", false);
+			}
 			if (oSeriesVal2.getParameters("selectedItem").selectedItem.getKey() !== undefined) {
 				var oSeriesVal = oSeriesVal2.getParameters("selectedItem").selectedItem.getKey();
 			} else {

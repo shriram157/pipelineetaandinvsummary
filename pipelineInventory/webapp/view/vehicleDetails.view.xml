@@ -92,7 +92,7 @@
 									<Label text="{i18n>CustomerName}"/>
 									<Text text="{VehicleDetailsJSON>/selectedCustomerData/ENDCU}"/>
 									<Label text="{i18n>Address}"/>
-									<Text text="{VehicleDetailsJSON>/selectedCustomerData/STREET} {VehicleDetailsJSON>/selectedCustomerData/POST_CODE}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/STREET}"/>
 									<Label text="{i18n>City}"/>
 									<Text text="{VehicleDetailsJSON>/selectedCustomerData/CITY}"/>
 									<Label text="{i18n>Province}"/>
@@ -104,7 +104,7 @@
 									<Label text="{i18n>Email}"/>
 									<Text text="{VehicleDetailsJSON>/selectedCustomerData/EMAIL}"/>
 									<Label text="{i18n>DriversLicense}"/>
-									<Text text=""/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/DriversLicense}"/>
 									<core:Title text="{i18n>AccessoryInformation}"/>
 									<Label text="{i18n>AccessoryName}"/>
 									<List class="noBkgrnd" items="{ path: 'VehicleDetailsJSON>/AccessoryInfoData', sorter: { path: 'MAKTX' } }">
