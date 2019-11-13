@@ -219,13 +219,13 @@ sap.ui.define([
 					} else {
 						_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
 						var salesArr = userAttributes.sales;
-						var SalesDataX = salesArr.filter(function (val) {
-							return val.Division === DivAttribute && val.ProductAttribute1 === "X";
+						var SalesData = salesArr.filter(function (val) {
+							return val.Division === DivAttribute || val.ProductAttribute1 === "X";
 						});
-						console.log("SalesDataX", SalesDataX);
-						var SalesData = SalesDataX.filter(function (val) {
-							return val.SalesGroup !== "T99";
-						});
+						// console.log("SalesDataX", SalesDataX);
+						// var SalesData = SalesDataX.filter(function (val) {
+						// 	return val.SalesGroup !== "T99";
+						// });
 						console.log("SalesDataT99", SalesData);
 						var aBusinessPartnerKey = SalesData.reduce(function (obj, hash) {
 							obj[hash.Customer] = true;
