@@ -141,8 +141,8 @@ module.exports = function (appContext) {
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
 							if (customerSalesArea.results[i].SalesOffice === bpZone) {
 								filtered = true;
-								if (customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10" &&
-									(customerSalesArea.results[i].SalesGroup !== "T99"||customerSalesArea.results[i].ProductAttribute1 == "X") && customerSalesArea.results[i].Customer !== "2400500000") {
+								if ((customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10" && customerSalesArea.results[i].Customer !== "2400500000") &&
+									(customerSalesArea.results[i].SalesGroup !== "T99"||customerSalesArea.results[i].ProductAttribute1 == "X")) {
 									resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
 								}
 							}
@@ -165,8 +165,8 @@ module.exports = function (appContext) {
 									customerSalesArea.results[i].SalesOffice === "3000" || customerSalesArea.results[i].SalesOffice === "4000" ||
 									customerSalesArea.results[i].SalesOffice === "5000" || customerSalesArea.results[i].SalesOffice === "7000" ||
 									customerSalesArea.results[i].SalesOffice === "9000" || customerSalesArea.results[i].SalesOffice === "8000") && ((
-									customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10" &&
-									(customerSalesArea.results[i].SalesGroup !== "T99"||customerSalesArea.results[i].ProductAttribute1 == "X")))) {
+									customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10"
+									)) && (customerSalesArea.results[i].SalesGroup !== "T99"||customerSalesArea.results[i].ProductAttribute1 == "X")) {
 								filtered = true;
 								resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
 							}
