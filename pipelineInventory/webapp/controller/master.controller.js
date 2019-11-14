@@ -222,10 +222,12 @@ sap.ui.define([
 						var SalesData = salesArr.filter(function (val) {
 							return val.Division === DivAttribute || val.ProductAttribute1 === "X";
 						});
-						// console.log("SalesDataX", SalesDataX);
-						// var SalesData = SalesDataX.filter(function (val) {
-						// 	return val.SalesGroup !== "T99";
-						// });
+						console.log("SalesDataX", SalesDataX);
+						$.each(SalesData, function (key, value) {
+							if (value.SalesGroup == "T99" && value.ProductAttribute1 !== "X") {
+								delete SalesData[key];
+							}
+						});
 						console.log("SalesDataT99", SalesData);
 						var aBusinessPartnerKey = SalesData.reduce(function (obj, hash) {
 							obj[hash.Customer] = true;
