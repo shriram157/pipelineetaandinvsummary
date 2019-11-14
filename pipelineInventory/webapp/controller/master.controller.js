@@ -222,7 +222,7 @@ sap.ui.define([
 						var SalesData = salesArr.filter(function (val) {
 							return val.Division === DivAttribute || val.ProductAttribute1 === "X";
 						});
-						console.log("SalesDataX", SalesDataX);
+						console.log("SalesData", SalesData);
 						$.each(SalesData, function (key, value) {
 							if (value.SalesGroup == "T99" && value.ProductAttribute1 !== "X") {
 								delete SalesData[key];
