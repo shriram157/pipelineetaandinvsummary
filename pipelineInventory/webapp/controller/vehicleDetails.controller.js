@@ -219,13 +219,19 @@ sap.ui.define([
 								} else {
 									_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", false);
 								}
+								console.log("HOLD", oRowData.d.HOLD);
+								if (oRowData.d.HOLD !== "No") {
+									_thatVD.getView().byId("id_holdVehicle").addStyleClass("HighlightRed");
+								} else {
+									_thatVD.getView().byId("id_holdVehicle").removeStyleClass("HighlightRed");
+								}
 								_thatVD.SoldOrderBlock = oRowData.d.SoldOrderBlock;
 								if (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] !== "Dealer") {
 									_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
 								} else if (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] == "Dealer") {
 									_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", true);
 								}
-								oRowData.d.KUNNR =  oRowData.d.KUNNR.substring(5); //oRowData.d.KUNNR.split("-")[0].slice(5) + "-" + oRowData.d.KUNNR.split("-")[1];
+								oRowData.d.KUNNR = oRowData.d.KUNNR.substring(5); //oRowData.d.KUNNR.split("-")[0].slice(5) + "-" + oRowData.d.KUNNR.split("-")[1];
 								_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 								_thatVD.oVehicleDetailsJSON.updateBindings(true);
 
@@ -387,6 +393,13 @@ sap.ui.define([
 											sap.ui.core.BusyIndicator.hide();
 											_thatVD.APX_ChangeFlag = oRowData.d.APX_ChangeFlag;
 											SelectedDNCVal = oRowData.d.DNC;
+
+											console.log("HOLD", oRowData.d.HOLD);
+											if (oRowData.d.HOLD !== "No") {
+												_thatVD.getView().byId("id_holdVehicle").addStyleClass("HighlightRed");
+											} else {
+												_thatVD.getView().byId("id_holdVehicle").removeStyleClass("HighlightRed");
+											}
 											if (_thatVD.APX_ChangeFlag == "X") {
 												_thatVD.getView().getModel("LocalVDModel").setProperty("/APXEnabled", true);
 											} else {
@@ -397,10 +410,10 @@ sap.ui.define([
 													"Dealer") && _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "RS") {
 												_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
 											} else if (_thatVD.SoldOrderBlock == "" && (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] ==
-													"Dealer") &&  _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE !== "RS") {
+													"Dealer") && _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE !== "RS") {
 												_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", true);
 											}
-											oRowData.d.KUNNR =  oRowData.d.KUNNR.substring(5); // oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
+											oRowData.d.KUNNR = oRowData.d.KUNNR.substring(5); // oRowData.d.KUNNR.split("-")[0].slice(5, 10) + "-" + oRowData.d.KUNNR.split("-")[1];
 											_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
 
 											_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Comments = oRowData.d.Comments;
@@ -465,10 +478,10 @@ sap.ui.define([
 				success: function (oRowData) {
 					_thatVD.SoldOrderBlock = oRowData.d.SoldOrderBlock;
 					if (_thatVD.SoldOrderBlock == "X" && (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] !==
-							"Dealer") &&  _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "RS") {
+							"Dealer") && _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "RS") {
 						_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", false);
 					} else if (_thatVD.SoldOrderBlock == "" && (sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0] ==
-							"Dealer") &&  _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE !== "RS") {
+							"Dealer") && _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE !== "RS") {
 						_thatVD.getView().getModel("LocalVDModel").setProperty("/soldOrderEnabled", true);
 					}
 					_thatVD.APX_ChangeFlag = oRowData.d.APX_ChangeFlag;
@@ -513,8 +526,8 @@ sap.ui.define([
 				SelectedDNCVal = "DNC Stock";
 			}
 		},
-		
-		onAddComment:function(oVal){
+
+		onAddComment: function (oVal) {
 			// console.log("val", oVal);
 			_thatVD.getView().getModel("VehicleDetailsJSON").updateBindings(true);
 			// debugger;
@@ -599,16 +612,16 @@ sap.ui.define([
 			if (oInputControl.getVisible()) {
 				if (sUserInput) {
 					oInputControl.setValueState(sap.ui.core.ValueState.Success);
-					_thatVD.postVehicleUpdates(oPost,SelectedDNCVal);
+					_thatVD.postVehicleUpdates(oPost, SelectedDNCVal);
 				} else {
 					oInputControl.setValueState(sap.ui.core.ValueState.Error);
 				}
 			} else if (!oInputControl.getVisible()) {
-				_thatVD.postVehicleUpdates(oPost,SelectedDNCVal);
+				_thatVD.postVehicleUpdates(oPost, SelectedDNCVal);
 			}
 		},
 
-		postVehicleUpdates: function (oPost,DNCVal) {
+		postVehicleUpdates: function (oPost, DNCVal) {
 			var Obj = {};
 			_thatVD.oVehicleDetailsJSON = _thatVD.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0];
 			Obj.VHCLE = _thatVD.oVehicleDetailsJSON.VHCLE;

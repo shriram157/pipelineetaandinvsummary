@@ -68,7 +68,7 @@
 									<Label text="{i18n>Plant}"/>
 									<Text text="{VehicleDetailsJSON>/selectedCustomerData/PLANTDESC}"/>
 									<Label text="{i18n>HoldVehicle}"/>
-									<Text text="{VehicleDetailsJSON>/selectedCustomerData/HOLD}"/>
+									<Text text="{VehicleDetailsJSON>/selectedCustomerData/HOLD}" id="id_holdVehicle" />
 									<Label text="{i18n>AccessoriesInstalled}" required="false" visible="{VehicleDetailsJSON>/AccessInstl_flag}"/>
 									<Select forceSelection="false" selectedKey="" id="accessoryVal" items="{ path: 'VehicleDetailsJSON>/AcceessoryData'}"
 										visible="{VehicleDetailsJSON>/AccessInstl_flag}">
