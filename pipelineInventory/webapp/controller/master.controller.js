@@ -97,7 +97,7 @@ sap.ui.define([
 			}
 
 			_that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
-			_that.BusinessPartnerData.setSizeLimit(750);
+			_that.BusinessPartnerData.setSizeLimit(1000);
 			_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 			sap.ui.getCore().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 
@@ -211,7 +211,7 @@ sap.ui.define([
 					_that.BusinessPartnerData.getData().DealerList = [];
 					_that.BusinessPartnerData.getData().SamlList = [];
 					_that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
-					_that.BusinessPartnerData.setSizeLimit(350);
+					_that.BusinessPartnerData.setSizeLimit(1000);
 					_that.BusinessPartnerData.getData().SamlList = userAttributes.samlAttributes;
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
 						_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", false);

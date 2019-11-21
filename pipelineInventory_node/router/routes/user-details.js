@@ -207,29 +207,29 @@ module.exports = function (appContext) {
 						logger.error("The Data is sent without Attribute value for the BP: %s", bpResults[i].BusinessPartner);
 					}
 
-					if (toCustomerAttr1 === "01") {
-						// Toyota dealer
-						bpAttributes.BPDivision = "10";
-						bpAttributes.Attribute = "01";
-					} else if (toCustomerAttr1 === "02") {
-						// Lexus dealer
-						bpAttributes.BPDivision = "20";
-						bpAttributes.Attribute = "02";
-					} else if (toCustomerAttr1 === "03") {
-						// Dual (Toyota + Lexus) dealer
-						bpAttributes.BPDivision = "Dual";
-						bpAttributes.Attribute = "03";
-					} else if (toCustomerAttr1 === "04") {
-						bpAttributes.BPDivision = "10";
-						bpAttributes.Attribute = "04";
-					} else if (toCustomerAttr1 === "05") {
-						bpAttributes.BPDivision = "Dual";
-						bpAttributes.Attribute = "05";
-					} else {
-						// Set as Toyota dealer as fallback
-						bpAttributes.BPDivision = "10";
-						bpAttributes.Attribute = "01";
-					}
+					// if (toCustomerAttr1 === "01") {
+					// 	// Toyota dealer
+					// 	bpAttributes.BPDivision = "10";
+					// 	bpAttributes.Attribute = "01";
+					// } else if (toCustomerAttr1 === "02") {
+					// 	// Lexus dealer
+					// 	bpAttributes.BPDivision = "20";
+					// 	bpAttributes.Attribute = "02";
+					// } else if (toCustomerAttr1 === "03") {
+					// 	// Dual (Toyota + Lexus) dealer
+					// 	bpAttributes.BPDivision = "Dual";
+					// 	bpAttributes.Attribute = "03";
+					// } else if (toCustomerAttr1 === "04") {
+					// 	bpAttributes.BPDivision = "10";
+					// 	bpAttributes.Attribute = "04";
+					// } else if (toCustomerAttr1 === "05") {
+					// 	bpAttributes.BPDivision = "Dual";
+					// 	bpAttributes.Attribute = "05";
+					// } else {
+					// 	// Set as Toyota dealer as fallback
+					// 	bpAttributes.BPDivision = "10";
+					// 	bpAttributes.Attribute = "01";
+					// }
 
 					if (userType === "Dealer") {
 						if (bpAttributes.BusinessPartner === dealerCode || bpAttributes.SearchTerm2 === dealerCode) {
