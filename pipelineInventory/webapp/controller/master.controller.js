@@ -213,6 +213,7 @@ sap.ui.define([
 					_that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
 					_that.BusinessPartnerData.setSizeLimit(1000);
 					_that.BusinessPartnerData.getData().SamlList = userAttributes.samlAttributes;
+					console.log("userAttributes.sales", userAttributes.sales);
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
 						_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", false);
 						_that.BusinessPartnerData.getData().DealerList = userAttributes.attributes;
