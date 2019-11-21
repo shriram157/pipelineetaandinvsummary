@@ -141,13 +141,8 @@ module.exports = function (appContext) {
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
 							if (customerSalesArea.results[i].SalesOffice === bpZone) {
 								filtered = true;
-								if (((customerSalesArea.results[i].SalesOrganization == "6000" &&
-											customerSalesArea.results[i].DistributionChannel == "10" && customerSalesArea.results[i].Customer !== "2400500000")) 
-									// 	&&
-									// 	(customerSalesArea.results[i].SalesGroup == "T99" && customerSalesArea.results[i].ProductAttribute1 == "X")||
-									// ((customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10" &&
-									// 	customerSalesArea.results[i].Customer !== "2400500000") && (customerSalesArea.results[i].SalesGroup !== "T99"))
-								) {
+								if (customerSalesArea.results[i].SalesOrganization == "6000" && customerSalesArea.results[i].DistributionChannel == "10" &&
+									customerSalesArea.results[i].Customer !== "2400500000") {
 									resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
 								}
 							}
@@ -166,25 +161,14 @@ module.exports = function (appContext) {
 						}
 						var filtered = false;
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
-							if (
-								((customerSalesArea.results[i].SalesOffice === "1000" || customerSalesArea.results[i].SalesOffice === "2000" ||
-										customerSalesArea.results[i].SalesOffice === "3000" || customerSalesArea.results[i].SalesOffice === "4000" ||
-										customerSalesArea.results[i].SalesOffice === "5000" || customerSalesArea.results[i].SalesOffice === "7000" ||
-										customerSalesArea.results[i].SalesOffice === "9000" || customerSalesArea.results[i].SalesOffice === "8000") && ((
-										customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10"))) 
-										
-								// 		&&
-								// 	(customerSalesArea.results[i].SalesGroup == "T99" && customerSalesArea.results[i].ProductAttribute1 == "X")||
-								// ((customerSalesArea.results[i].SalesOffice === "1000" || customerSalesArea.results[i].SalesOffice === "2000" ||
-								// 		customerSalesArea.results[i].SalesOffice === "3000" || customerSalesArea.results[i].SalesOffice === "4000" ||
-								// 		customerSalesArea.results[i].SalesOffice === "5000" || customerSalesArea.results[i].SalesOffice === "7000" ||
-								// 		customerSalesArea.results[i].SalesOffice === "9000" || customerSalesArea.results[i].SalesOffice === "8000") && ((
-								// 		customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10")) &&
-								// 	(customerSalesArea.results[i].SalesGroup !== "T99"))
-
-							) {
+							if (customerSalesArea.results[i].SalesOffice === "1000" || customerSalesArea.results[i].SalesOffice === "2000" ||
+								customerSalesArea.results[i].SalesOffice === "3000" || customerSalesArea.results[i].SalesOffice === "4000" ||
+								customerSalesArea.results[i].SalesOffice === "5000" || customerSalesArea.results[i].SalesOffice === "7000" ||
+								customerSalesArea.results[i].SalesOffice === "9000" || customerSalesArea.results[i].SalesOffice === "8000") {
 								filtered = true;
-								resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
+								if ((customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10")) {
+									resBody.sales.push(customerSalesArea.results[i]); //to fetch sales data
+								}
 							}
 						}
 						return filtered;
@@ -207,29 +191,29 @@ module.exports = function (appContext) {
 						logger.error("The Data is sent without Attribute value for the BP: %s", bpResults[i].BusinessPartner);
 					}
 
-					// if (toCustomerAttr1 === "01") {
-					// 	// Toyota dealer
-					// 	bpAttributes.BPDivision = "10";
-					// 	bpAttributes.Attribute = "01";
-					// } else if (toCustomerAttr1 === "02") {
-					// 	// Lexus dealer
-					// 	bpAttributes.BPDivision = "20";
-					// 	bpAttributes.Attribute = "02";
-					// } else if (toCustomerAttr1 === "03") {
-					// 	// Dual (Toyota + Lexus) dealer
-					// 	bpAttributes.BPDivision = "Dual";
-					// 	bpAttributes.Attribute = "03";
-					// } else if (toCustomerAttr1 === "04") {
-					// 	bpAttributes.BPDivision = "10";
-					// 	bpAttributes.Attribute = "04";
-					// } else if (toCustomerAttr1 === "05") {
-					// 	bpAttributes.BPDivision = "Dual";
-					// 	bpAttributes.Attribute = "05";
-					// } else {
-					// 	// Set as Toyota dealer as fallback
-					// 	bpAttributes.BPDivision = "10";
-					// 	bpAttributes.Attribute = "01";
-					// }
+					if (toCustomerAttr1 === "01") {
+						// Toyota dealer
+						bpAttributes.BPDivision = "10";
+						bpAttributes.Attribute = "01";
+					} else if (toCustomerAttr1 === "02") {
+						// Lexus dealer
+						bpAttributes.BPDivision = "20";
+						bpAttributes.Attribute = "02";
+					} else if (toCustomerAttr1 === "03") {
+						// Dual (Toyota + Lexus) dealer
+						bpAttributes.BPDivision = "Dual";
+						bpAttributes.Attribute = "03";
+					} else if (toCustomerAttr1 === "04") {
+						bpAttributes.BPDivision = "10";
+						bpAttributes.Attribute = "04";
+					} else if (toCustomerAttr1 === "05") {
+						bpAttributes.BPDivision = "Dual";
+						bpAttributes.Attribute = "05";
+					} else {
+						// Set as Toyota dealer as fallback
+						bpAttributes.BPDivision = "10";
+						bpAttributes.Attribute = "01";
+					}
 
 					if (userType === "Dealer") {
 						if (bpAttributes.BusinessPartner === dealerCode || bpAttributes.SearchTerm2 === dealerCode) {
