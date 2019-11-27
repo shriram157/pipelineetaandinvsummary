@@ -21,7 +21,9 @@
     background-color: transparent;
     color: #346187;
 }
-
+.HighlightRed{
+	color:#FF0000;
+}
 
 /*======================= End custom fonts and custom color on header style ==========================*/
 /* Customized CSS by Aarti Dhamat */

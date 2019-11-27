@@ -97,7 +97,7 @@ sap.ui.define([
 			}
 
 			_that.BusinessPartnerData = new sap.ui.model.json.JSONModel();
-			_that.BusinessPartnerData.setSizeLimit(750);
+			_that.BusinessPartnerData.setSizeLimit(1000);
 			_that.getView().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 			sap.ui.getCore().setModel(_that.BusinessPartnerData, "BusinessDataModel");
 
@@ -211,8 +211,9 @@ sap.ui.define([
 					_that.BusinessPartnerData.getData().DealerList = [];
 					_that.BusinessPartnerData.getData().SamlList = [];
 					_that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
-					_that.BusinessPartnerData.setSizeLimit(350);
+					_that.BusinessPartnerData.setSizeLimit(1000);
 					_that.BusinessPartnerData.getData().SamlList = userAttributes.samlAttributes;
+					console.log("userAttributes.sales", userAttributes.sales);
 					if (_that.BusinessPartnerData.getData().SamlList.UserType[0] == "Dealer") {
 						_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", false);
 						_that.BusinessPartnerData.getData().DealerList = userAttributes.attributes;
@@ -220,9 +221,15 @@ sap.ui.define([
 						_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
 						var salesArr = userAttributes.sales;
 						var SalesData = salesArr.filter(function (val) {
-							return val.Division === DivAttribute;
+							return val.Division === DivAttribute || val.ProductAttribute1 === "X";
 						});
 						console.log("SalesData", SalesData);
+						$.each(SalesData, function (key, value) {
+							if (value.SalesGroup == "T99" && value.ProductAttribute1 !== "X") {
+								delete SalesData[key];
+							}
+						});
+						console.log("SalesDataT99", SalesData);
 						var aBusinessPartnerKey = SalesData.reduce(function (obj, hash) {
 							obj[hash.Customer] = true;
 							return obj;
