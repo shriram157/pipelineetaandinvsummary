@@ -207,10 +207,42 @@ sap.ui.define([
 				success: function (userAttributes) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log("User Attributes", userAttributes);
+					
+					var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+					if (isDivisionSent) {
+						this.sDiv = window.location.search.match(/Division=([^&]*)/i)[1];
+					}
+					if (this.sDiv == "10") {
+						this.Div = "01";
+					} else if (this.sDiv == "20") {
+						this.Div = "02";
+					}
+					
 					_that.BusinessPartnerData.getData().Dealers = [];
+					$.each(userAttributes.attributes, function (i, item) {
+						var BpLength = item.BusinessPartner.length;
+						//console.log("Div", that.Div);
+						if(item.BPDivision == "03" && this.sDiv == "10"){
+							item.BPDivision = "10";
+						}
+						else if(item.BPDivision == "03" && this.sDiv == "20"){
+							item.BPDivision = "20";
+						}
+						if (item.BPDivision == this.Div) {
+							_that.BusinessPartnerData.getData().Dealers.push({
+								"BusinessPartnerKey": item.BusinessPartnerKey,
+								"BusinessPartner": item.BusinessPartner, //.substring(5, BpLength),
+								"BusinessPartnerName": item.BusinessPartnerName, //item.OrganizationBPName1 //item.BusinessPartnerFullName
+								"BPDivision": item.BPDivision,
+								"BusinessPartnerType": item.BusinessPartnerType,
+								"searchTermReceivedDealerName": item.SearchTerm2
+							});
+						}
+					});
+					
 					_that.BusinessPartnerData.getData().DealerList = [];
 					_that.BusinessPartnerData.getData().SamlList = [];
-					_that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
+					// _that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
 					_that.BusinessPartnerData.setSizeLimit(1000);
 					_that.BusinessPartnerData.getData().SamlList = userAttributes.samlAttributes;
 					console.log("userAttributes.sales", userAttributes.sales);
