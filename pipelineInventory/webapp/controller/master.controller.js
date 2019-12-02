@@ -252,7 +252,7 @@ sap.ui.define([
 						_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
 						var salesArr = userAttributes.sales;
 						var SalesData = salesArr.filter(function (val) {
-							return val.Division === DivAttribute || val.ProductAttribute1 === "X";
+							return val.Division === DivAttribute && val.ProductAttribute1 === "X";
 						});
 						console.log("SalesData", SalesData);
 						$.each(SalesData, function (key, value) {
@@ -263,7 +263,7 @@ sap.ui.define([
 						console.log("SalesDataT99", SalesData);
 						var aBusinessPartnerKey = SalesData.reduce(function (obj, hash) {
 							obj[hash.Customer] = true; 
-							obj[hash.Division] = true;
+							// obj[hash.Division] = true;
 							return obj;
 						}, {});
 						for (var i = 0; i < _that.BusinessPartnerData.getData().Dealers.length; i++) {
