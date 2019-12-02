@@ -207,10 +207,41 @@ sap.ui.define([
 				success: function (userAttributes) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log("User Attributes", userAttributes);
+
 					_that.BusinessPartnerData.getData().Dealers = [];
+					$.each(userAttributes.attributes, function (i, item) {
+						var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+						if (isDivisionSent) {
+							this.sDiv = window.location.search.match(/Division=([^&]*)/i)[1];
+						}
+						var BpLength = item.BusinessPartner.length;
+						//console.log("Div", that.Div);
+						if (item.Attribute == "01") {
+							item.BPDivision = "10";
+						} else if (item.Attribute == "02") {
+							item.BPDivision = "20";
+						} else if (item.Attribute == "03" && this.sDiv == "10") {
+							item.BPDivision = "10";
+							DivAttribute = "10";
+						} else if (item.Attribute == "03" && this.sDiv == "20") {
+							item.BPDivision = "20";
+							DivAttribute = "20";
+						}
+						if (item.BPDivision == this.sDiv) {
+							_that.BusinessPartnerData.getData().Dealers.push({
+								"BusinessPartnerKey": item.BusinessPartnerKey,
+								"BusinessPartner": item.BusinessPartner, //.substring(5, BpLength),
+								"BusinessPartnerName": item.BusinessPartnerName, //item.OrganizationBPName1 //item.BusinessPartnerFullName
+								"BPDivision": item.BPDivision,
+								"BusinessPartnerType": item.BusinessPartnerType,
+								"searchTermReceivedDealerName": item.SearchTerm2
+							});
+						}
+					});
+
 					_that.BusinessPartnerData.getData().DealerList = [];
 					_that.BusinessPartnerData.getData().SamlList = [];
-					_that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
+					// _that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
 					_that.BusinessPartnerData.setSizeLimit(1000);
 					_that.BusinessPartnerData.getData().SamlList = userAttributes.samlAttributes;
 					console.log("userAttributes.sales", userAttributes.sales);
@@ -221,17 +252,19 @@ sap.ui.define([
 						_that.getView().getModel("LocalOCModel").setProperty("/noMYSelection", true);
 						var salesArr = userAttributes.sales;
 						var SalesData = salesArr.filter(function (val) {
-							return val.Division === DivAttribute || val.ProductAttribute1 === "X";
+							// if (val.SalesGroup == "T99" && val.ProductAttribute1 !== "X") {
+							// 	delete val;
+							// }
+							return val.Division === DivAttribute;
 						});
-						console.log("SalesData", SalesData);
 						$.each(SalesData, function (key, value) {
 							if (value.SalesGroup == "T99" && value.ProductAttribute1 !== "X") {
 								delete SalesData[key];
-							}
+							}	return value.Division === DivAttribute || value.ProductAttribute1 === "X";
 						});
-						console.log("SalesDataT99", SalesData);
 						var aBusinessPartnerKey = SalesData.reduce(function (obj, hash) {
-							obj[hash.Customer] = true;
+							obj[hash.Customer] = true; 
+							// obj[hash.Division] = true;
 							return obj;
 						}, {});
 						for (var i = 0; i < _that.BusinessPartnerData.getData().Dealers.length; i++) {
