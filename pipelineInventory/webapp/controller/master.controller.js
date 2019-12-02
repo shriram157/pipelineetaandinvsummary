@@ -212,23 +212,23 @@ sap.ui.define([
 					if (isDivisionSent) {
 						this.sDiv = window.location.search.match(/Division=([^&]*)/i)[1];
 					}
-					if (this.sDiv == "10") {
-						this.Div = "01";
-					} else if (this.sDiv == "20") {
-						this.Div = "02";
-					}
+					// if (this.sDiv == "10") {
+					// 	this.Div = "10";
+					// } else if (this.sDiv == "20") {
+					// 	this.Div = "20";
+					// }
 					
 					_that.BusinessPartnerData.getData().Dealers = [];
 					$.each(userAttributes.attributes, function (i, item) {
 						var BpLength = item.BusinessPartner.length;
 						//console.log("Div", that.Div);
-						if(item.BPDivision == "03" && this.sDiv == "10"){
+						if(item.Attribute == "03" && this.sDiv == "10"){
 							item.BPDivision = "10";
 						}
-						else if(item.BPDivision == "03" && this.sDiv == "20"){
+						else if(item.Attribute == "03" && this.sDiv == "20"){
 							item.BPDivision = "20";
 						}
-						if (item.BPDivision == this.Div) {
+						if (item.BPDivision == this.sDiv) {
 							_that.BusinessPartnerData.getData().Dealers.push({
 								"BusinessPartnerKey": item.BusinessPartnerKey,
 								"BusinessPartner": item.BusinessPartner, //.substring(5, BpLength),
