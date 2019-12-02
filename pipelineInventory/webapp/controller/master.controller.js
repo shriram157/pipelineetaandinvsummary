@@ -262,7 +262,8 @@ sap.ui.define([
 						});
 						console.log("SalesDataT99", SalesData);
 						var aBusinessPartnerKey = SalesData.reduce(function (obj, hash) {
-							obj[hash.Customer] = true;
+							obj[hash.Customer] = true; 
+							obj[hash.Division] = true;
 							return obj;
 						}, {});
 						for (var i = 0; i < _that.BusinessPartnerData.getData().Dealers.length; i++) {
