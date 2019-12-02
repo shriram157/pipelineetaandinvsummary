@@ -222,8 +222,10 @@ sap.ui.define([
 							item.BPDivision = "20";
 						} else if (item.Attribute == "03" && this.sDiv == "10") {
 							item.BPDivision = "10";
+							DivAttribute = "10";
 						} else if (item.Attribute == "03" && this.sDiv == "20") {
 							item.BPDivision = "20";
+							DivAttribute = "20";
 						}
 						if (item.BPDivision == this.sDiv) {
 							_that.BusinessPartnerData.getData().Dealers.push({
