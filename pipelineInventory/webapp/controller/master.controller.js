@@ -207,25 +207,22 @@ sap.ui.define([
 				success: function (userAttributes) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log("User Attributes", userAttributes);
-					
-					var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
-					if (isDivisionSent) {
-						this.sDiv = window.location.search.match(/Division=([^&]*)/i)[1];
-					}
-					// if (this.sDiv == "10") {
-					// 	this.Div = "10";
-					// } else if (this.sDiv == "20") {
-					// 	this.Div = "20";
-					// }
-					
+
 					_that.BusinessPartnerData.getData().Dealers = [];
 					$.each(userAttributes.attributes, function (i, item) {
+						var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+						if (isDivisionSent) {
+							this.sDiv = window.location.search.match(/Division=([^&]*)/i)[1];
+						}
 						var BpLength = item.BusinessPartner.length;
 						//console.log("Div", that.Div);
-						if(item.Attribute == "03" && this.sDiv == "10"){
+						if (item.Attribute == "01") {
 							item.BPDivision = "10";
-						}
-						else if(item.Attribute == "03" && this.sDiv == "20"){
+						} else if (item.Attribute == "02") {
+							item.BPDivision = "20";
+						} else if (item.Attribute == "03" && this.sDiv == "10") {
+							item.BPDivision = "10";
+						} else if (item.Attribute == "03" && this.sDiv == "20") {
 							item.BPDivision = "20";
 						}
 						if (item.BPDivision == this.sDiv) {
@@ -239,7 +236,7 @@ sap.ui.define([
 							});
 						}
 					});
-					
+
 					_that.BusinessPartnerData.getData().DealerList = [];
 					_that.BusinessPartnerData.getData().SamlList = [];
 					// _that.BusinessPartnerData.getData().Dealers = userAttributes.attributes;
