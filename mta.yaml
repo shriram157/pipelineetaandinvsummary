@@ -1,7 +1,7 @@
 ID: pipelineInventory
 _schema-version: '3.1'
 description: Pipeline ETA and inventory summary consolidated app
-version: 1.0.0
+version: 2.0.0
 
 modules:
  - name: pipelineInventory_node
