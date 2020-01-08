@@ -718,6 +718,7 @@ sap.ui.define([
 
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Dealer") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("OrderNumber") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("CustomerName") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("OrderType") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Status") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Accessory") + ",";
@@ -735,7 +736,7 @@ sap.ui.define([
 			//loop is to extract each row
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
-				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
+				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].CustomerName + '","' + arrData[i].ORDERTYPE_DESC_EN +
 					'","' + arrData[i].ZMMSTA + '","' + arrData[i].AccessInstl_flag2 + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
 					arrData[i].Modelyear +  '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i]
 					.Suffix +
