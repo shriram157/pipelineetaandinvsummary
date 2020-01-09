@@ -78,9 +78,6 @@
 									<Text text="{i18n>OrderNumber}"/>
 								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-									<Text text="{i18n>CustomerName}"/>
-								</Column>
-								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 									<Text text="{i18n>OrderType}"/>
 								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
@@ -110,13 +107,15 @@
 								<Column minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>ETATo}"/>
 								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+									<Text text="{i18n>CustomerName}"/>
+								</Column>
 							</columns>
 							<items>
 								<ColumnListItem>
 									<cells>
 										<Text text="{path:'VehicleDetailsJSON>Dealer', formatter:'.formatDealer'}"/>
 										<Link text="{VehicleDetailsJSON>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZDLR_REF_NO}"/>
-										<Text text="{VehicleDetailsJSON>CustomerName}"/>
 										<Text text="{VehicleDetailsJSON>ORDERTYPE_DESC_EN}"/>
 										<Text text="{VehicleDetailsJSON>ZMMSTA}"/>
 										<Text text="{VehicleDetailsJSON>AccessInstl_flag2}"/>
@@ -127,6 +126,7 @@
 										<Text text="{VehicleDetailsJSON>ExteriorColorCode} {VehicleDetailsJSON>EXTCOL_DESC_EN}"/>
 										<Text text="{path:'VehicleDetailsJSON>ETAFrom', formatter: '.formatDate'}"/>
 										<Text text="{path:'VehicleDetailsJSON>ETATo', formatter: '.formatDate'}"/>
+										<Text text="{VehicleDetailsJSON>CustomerName}"/>
 									</cells>
 								</ColumnListItem>
 							</items>
