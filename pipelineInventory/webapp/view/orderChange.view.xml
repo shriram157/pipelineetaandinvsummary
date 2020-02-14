@@ -41,7 +41,8 @@
 									<Text id="readOnlySuffix"
 										text="{VehicleDetailsJSON>/selectedVehicleData/0/Suffix} {VehicleDetailsJSON>/selectedVehicleData/0/SUFFIX_DESC_EN} / {VehicleDetailsJSON>/selectedVehicleData/0/INTCOL_DESC_EN}"/>
 									<Label text="{i18n>Colour}"/>
-									<Text id="readOnlyColour" text="{VehicleDetailsJSON>/selectedVehicleData/0/ExteriorColorCode} {VehicleDetailsJSON>/selectedVehicleData/0/EXTCOL_DESC_EN}"/>
+									<Text id="readOnlyColour"
+										text="{VehicleDetailsJSON>/selectedVehicleData/0/ExteriorColorCode} {VehicleDetailsJSON>/selectedVehicleData/0/EXTCOL_DESC_EN}"/>
 									<Label text="{i18n>APX}"/>
 									<Text id="readOnlyAPX" text="{VehicleDetailsJSON>/selectedVehicleData/0/APX}"/>
 									<Label text="{i18n>OrderType}"/>
@@ -58,27 +59,29 @@
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Modelyear}"/>
 									<Label text="{i18n>Series}"/>
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries} {VehicleDetailsJSON>/selectedVehicleData/0/SERIES_DESC_EN}"/>
-									
 									<Label text="{i18n>NewModel}" required="true"/>
-									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_modelSelect" forceSelection="true" items="{VehicleDetailsJSON>/modelData}" change="onModelSelectionChange">
-										<core:Item key="{VehicleDetailsJSON>Model}" text="{VehicleDetailsJSON>Model} - {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>ENModelDesc}:${VehicleDetailsJSON>FRModelDesc}}"/>
+									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_modelSelect" forceSelection="true" items="{VehicleDetailsJSON>/modelData}"
+										change="onModelSelectionChange">
+										<core:Item key="{VehicleDetailsJSON>Model}"
+											text="{VehicleDetailsJSON>Model} - {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>ENModelDesc}:${VehicleDetailsJSON>FRModelDesc}}"/>
 									</Select>
 									<Label text="{i18n>NewSuffix}" required="true"/>
-									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_suffixSelect" forceSelection="true" items="{VehicleDetailsJSON>/suffixData}" change="onSuffixChange">
+									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_suffixSelect" forceSelection="true" items="{VehicleDetailsJSON>/suffixData}"
+										change="onSuffixChange">
 										<core:Item key="{VehicleDetailsJSON>Suffix}"
 											text="{VehicleDetailsJSON>Suffix} - {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>SuffixDescriptionEN}:${VehicleDetailsJSON>SuffixDescriptionFR}} / {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>mrktg_int_desc_en}:${VehicleDetailsJSON>mrktg_int_desc_fr}}"/>
-											
 									</Select>
 									<Label text="{i18n>NewColour}" required="true"/>
-									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_ExteriorColorSelect" forceSelection="true" items="{VehicleDetailsJSON>/colorData}">
+									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_ExteriorColorSelect" forceSelection="true"
+										items="{path: 'VehicleDetailsJSON>/colorData',sorter :{path: 'ExteriorColorCode', ascending: true}}">
 										<core:Item key="{VehicleDetailsJSON>ExteriorColorCode}"
 											text="{VehicleDetailsJSON>ExteriorColorCode} - {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>MarketingDescriptionEXTColorEN}:${VehicleDetailsJSON>MarketingDescriptionEXTColorFR}}"/>
 									</Select>
 									<Label text="{i18n>NewAPX}" required="true"/>
-									<Select enabled="{LocalOCModel>/dropdownEnabled}" forceSelection="false" selectedKey="" id="APXrequired" items="{ path: 'VehicleDetailsJSON>/selectedVehicleData/0/newAPXValues'}">
+									<Select enabled="{LocalOCModel>/dropdownEnabled}" forceSelection="false" selectedKey="" id="APXrequired"
+										items="{ path: 'VehicleDetailsJSON>/selectedVehicleData/0/newAPXValues'}">
 										<core:Item key="{VehicleDetailsJSON>zzapx}" text="{VehicleDetailsJSON>zzapx}"/>
 									</Select>
-									
 									<Label text="{i18n>DateTime}"/>
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/CurrentDate}"/>
 									<Label text="{i18n>Status}"/>
