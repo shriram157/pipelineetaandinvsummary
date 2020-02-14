@@ -73,7 +73,7 @@
 									</Select>
 									<Label text="{i18n>NewColour}" required="true"/>
 									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_ExteriorColorSelect" forceSelection="true"
-										items="{VehicleDetailsJSON>/colorData,sorter :{path: 'ExteriorColorCode', ascending: true}}">
+										items="{path: 'VehicleDetailsJSON>/colorData',sorter :{path: 'ExteriorColorCode', ascending: true}}">
 										<core:Item key="{VehicleDetailsJSON>ExteriorColorCode}"
 											text="{VehicleDetailsJSON>ExteriorColorCode} - {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>MarketingDescriptionEXTColorEN}:${VehicleDetailsJSON>MarketingDescriptionEXTColorFR}}"/>
 									</Select>
