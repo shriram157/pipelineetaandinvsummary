@@ -599,7 +599,8 @@ sap.ui.define([
 						SelectedDealer: _thatVD.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Dealer
 					});
 				} else {
-					_thatVD.getRouter().navTo("changeHistory2");
+					sap.m.MessageBox.information(_thatVD.oI18nModel.getResourceBundle().getText("PleaseSelectDealer"));
+					//_thatVD.getRouter().navTo("changeHistory2");
 				}
 			}
 		},

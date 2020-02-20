@@ -1536,6 +1536,9 @@ sap.ui.define([
 
 		/*Function for Routing/Navigating from menu option as per selection */
 		onMenuLinkPress: function (oLink) {
+			// if (SelectedDealer == undefined || SelectedDealer == "") {
+			// 		SelectedDealer ="2400500000";
+			// }
 			var _oLinkPressed = oLink;
 			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
 			if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("PageTitle")) {
@@ -1544,7 +1547,10 @@ sap.ui.define([
 				_that.getRouter().navTo("vehicleDetailsNodata");
 			} else if (_oSelectedScreen == _that.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
 				if (SelectedDealer == undefined || SelectedDealer == "") {
-					_that.getRouter().navTo("changeHistory2");
+					sap.m.MessageBox.information(_that.oI18nModel.getResourceBundle().getText("PleaseSelectDealer"));
+					// SelectedDealer ="2400500000";
+					// _that.getRouter().navTo("changeHistory2");
+					//PleaseSelectDealer
 				} else {
 					_that.getRouter().navTo("changeHistory", {
 						SelectedDealer: SelectedDealer
@@ -1827,7 +1833,7 @@ sap.ui.define([
 		_oMasterRoute: function (oEvent) {
 			// debugger;
 			console.log("salesoffice", salesOffice);
-			if (oEvent.getParameters().name === "Routemaster") {
+			if ((oEvent.getParameters().name === "Routemaster") && (filteredData!==undefined) ){
 				_that.fetchCountsforTables(filteredData);
 			}
 			_that.getView().setBusy(false);
