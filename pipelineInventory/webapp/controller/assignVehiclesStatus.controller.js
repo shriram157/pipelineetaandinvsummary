@@ -154,9 +154,9 @@ sap.ui.define([
 			} else if (_oSelectedScreen == _thatAVS.oI18nModel.getResourceBundle().getText("VehicleDetails")) {
 				_thatAVS.getRouter().navTo("vehicleDetailsNodata");
 			} 
-			else if (_oSelectedScreen == _thatAVS.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
-				_thatAVS.getRouter().navTo("changeHistory2");
-			} 
+			// else if (_oSelectedScreen == _thatAVS.oI18nModel.getResourceBundle().getText("ChangeHistory")) {
+			// 	_thatAVS.getRouter().navTo("changeHistory2");
+			// } 
 			else if (_oSelectedScreen == _thatAVS.oI18nModel.getResourceBundle().getText("Back")) {
 				var oHistory = History.getInstance();
 				var sPreviousHash = oHistory.getPreviousHash();
