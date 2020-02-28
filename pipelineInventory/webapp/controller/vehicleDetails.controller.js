@@ -612,7 +612,7 @@ sap.ui.define([
 			var oInputControl = _thatVD.getView().byId("accessoryVal");
 			if (oInputControl.getVisible()) {
 				if (sUserInput) {
-					oInputControl.setValueState(sap.ui.core.ValueState.Success);
+					oInputControl.setValueState(sap.ui.core.ValueState.None);
 					_thatVD.postVehicleUpdates(oPost, SelectedDNCVal);
 				} else {
 					oInputControl.setValueState(sap.ui.core.ValueState.Error);
