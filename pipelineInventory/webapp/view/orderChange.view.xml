@@ -60,14 +60,14 @@
 									<Label text="{i18n>Series}"/>
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/TCISeries} {VehicleDetailsJSON>/selectedVehicleData/0/SERIES_DESC_EN}"/>
 									<Label text="{i18n>NewModel}" required="true"/>
-									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_modelSelect" forceSelection="true" items="{VehicleDetailsJSON>/modelData}"
-										change="onModelSelectionChange">
+									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_modelSelect" forceSelection="true"
+										items="{path:'VehicleDetailsJSON>/modelData',sorter :{path: 'Model', ascending: true}}" change="onModelSelectionChange">
 										<core:Item key="{VehicleDetailsJSON>Model}"
 											text="{VehicleDetailsJSON>Model} - {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>ENModelDesc}:${VehicleDetailsJSON>FRModelDesc}}"/>
 									</Select>
 									<Label text="{i18n>NewSuffix}" required="true"/>
-									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_suffixSelect" forceSelection="true" items="{VehicleDetailsJSON>/suffixData}"
-										change="onSuffixChange">
+									<Select enabled="{LocalOCModel>/dropdownEnabled}" id="ID_suffixSelect" forceSelection="true"
+										items="{path:'VehicleDetailsJSON>/suffixData',sorter :{path: 'Suffix', ascending: true}}" change="onSuffixChange">
 										<core:Item key="{VehicleDetailsJSON>Suffix}"
 											text="{VehicleDetailsJSON>Suffix} - {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>SuffixDescriptionEN}:${VehicleDetailsJSON>SuffixDescriptionFR}} / {=${VehicleDetailsJSON>localLang}==='E' ? ${VehicleDetailsJSON>mrktg_int_desc_en}:${VehicleDetailsJSON>mrktg_int_desc_fr}}"/>
 									</Select>
