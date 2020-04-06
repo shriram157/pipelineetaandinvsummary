@@ -21,6 +21,14 @@
 					"odataVersion": "2.0",
 					"localUri": "localService/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/metadata.xml"
 				}
+			},
+				"Z_VEHICLE_MASTER_SRV": {
+				"uri": "/node/Z_VEHICLE_MASTER_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+					
+				}
 			}
 		}
 	},
@@ -80,6 +88,21 @@
 					}
 				},
 				"dataSource": "ZPIPELINE_ETA_INVENT_SUMMARY_SRV",
+				"preload": false
+			},
+				"VehicleModel": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request",
+					"json": true,
+					"useBatch": false,
+					"headers": {
+						"X-Requested-With": "XMLHttpRequest"
+					}
+				},
+				"dataSource": "Z_VEHICLE_MASTER_SRV",
 				"preload": false
 			},
 			"DataModel": {
