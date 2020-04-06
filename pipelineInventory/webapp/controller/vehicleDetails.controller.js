@@ -457,21 +457,24 @@ sap.ui.define([
 			var that = this;
 						var sLocation = window.location.host;
 			var sLocation_conf = sLocation.search("webide");
+		this.attributeUrl = "/API_BUSINESS_PARTNER/A_BusinessPartner?$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType%20eq%20%27Z001%27%20or%20BusinessPartnerType%20eq%20%27Z004%27)%20and%20zstatus%20ne%20%27X%27%20&$orderby=BusinessPartner%20asc%20&select=BusinessPartner,BusinessPartnerName,BusinessPartnerType,OrganizationBPName1,SearchTerm2,to_Customer/Attribute1,to_Customer/to_CustomerSalesArea/SalesOffice,to_Customer/to_CustomerSalesArea/Customer,to_Customer/to_CustomerSalesArea/SalesOrganization,to_Customer/to_CustomerSalesArea/DistributionChannel,to_Customer/to_CustomerSalesArea/Division,to_Customer/to_CustomerSalesArea/SalesGroup,to_Customer/to_CustomerSalesArea/ProductAttribute1";
+
+
 			if (sLocation_conf == 0) {
-				// this.sPrefix = "/vehicleLocatorNode"; // the destination
+				this.sPrefix = "/pipelineInventory-dest/node"; // the destination
 				// this.attributeUrl = "/userDetails/attributesforlocaltesting";
 				// this.currentScopeUrl = "/userDetails/currentScopesForUserLocaltesting";
 
 				// this.sPrefix = "";
-				this.attributeUrl = "/userDetails/attributes";
+				// this.attributeUrl = "/userDetails/attributes";
 
-				this.currentScopeUrl = "/userDetails/currentScopesForUser";
+				// this.currentScopeUrl = "/userDetails/currentScopesForUser";
 
 			} else {
-				this.sPrefix = "";
-				this.attributeUrl = "/userDetails/attributes";
+				this.sPrefix = "/node";
+				// this.attributeUrl = "/userDetails/attributes";
 
-				this.currentScopeUrl = "/userDetails/currentScopesForUser";
+				// this.currentScopeUrl = "/userDetails/currentScopesForUser";
 
 			}
 			$.ajax({
@@ -483,8 +486,75 @@ sap.ui.define([
 					var BpDealer = [];
 					var userAttributes = [];
 					// var userLoginDetails = [];
+					var bpResults= oData.d.results;
+						bpResults = bpResults.filter(o => {
+						if (!o.to_Customer) {
+							return false;
+						}
+						var customerSalesArea = o.to_Customer.to_CustomerSalesArea;
+						if (!customerSalesArea) {
+							return false;
+						}
+						var filtered = false;
+						for (var i = 0; i < customerSalesArea.results.length; i++) {
+							if ((customerSalesArea.results[i].SalesOffice === "1000" || customerSalesArea.results[i].SalesOffice === "2000" ||
+									customerSalesArea.results[i].SalesOffice === "3000" || customerSalesArea.results[i].SalesOffice === "4000" ||
+									customerSalesArea.results[i].SalesOffice === "5000" || customerSalesArea.results[i].SalesOffice === "7000" ||
+									customerSalesArea.results[i].SalesOffice === "9000" || customerSalesArea.results[i].SalesOffice === "8000") && ((
+									customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10" &&
+									customerSalesArea.results[i].SalesGroup != "T99"))) {
+								filtered = true;
+							}
+						}
+						return filtered;
+					});
+					var bpAttributes,toCustomerAttr1,attributes=[];
+					for (var i = 0; i < bpResults.length; i++) {
+					var bpLength = bpResults[i].BusinessPartner.length;
+					if (bpResults[i].BusinessPartner === "2400029000" || bpResults[i].BusinessPartner === "2400049000" ||
+					    bpResults[i].BusinessPartner === "2400500078" || bpResults[i].BusinessPartner === "2400542217"    ) {
+					continue;	
+					}
+					bpAttributes = {
+						BusinessPartnerName: bpResults[i].OrganizationBPName1,
+						BusinessPartnerKey: bpResults[i].BusinessPartner,
+						BusinessPartner: bpResults[i].BusinessPartner.substring(5, bpLength),
+						BusinessPartnerType: bpResults[i].BusinessPartnerType,
+						SearchTerm2: bpResults[i].SearchTerm2
+					};
 					
-					
+					try {
+						toCustomerAttr1 = bpResults[i].to_Customer.Attribute1;
+					} catch (e) {
+						console.log("The Data is sent without Attribute value for the BP: %s", bpResults[i].BusinessPartner);
+					}
+
+					if (toCustomerAttr1 === "01") {
+						// Toyota dealer
+						bpAttributes.Division = "10";
+						bpAttributes.Attribute = "01";
+					} else if (toCustomerAttr1 === "02") {
+						// Lexus dealer
+						bpAttributes.Division = "20";
+						bpAttributes.Attribute = "02";
+					} else if (toCustomerAttr1 === "03") {
+						// Dual (Toyota + Lexus) dealer
+						bpAttributes.Division = "Dual";
+						bpAttributes.Attribute = "03";
+					} else if (toCustomerAttr1 === "04") {
+						bpAttributes.Division = "10";
+						bpAttributes.Attribute = "04";
+					} else if (toCustomerAttr1 === "05") {
+						bpAttributes.Division = "Dual";
+						bpAttributes.Attribute = "05";
+					} else {
+						// Set as Toyota dealer as fallback
+						bpAttributes.Division = "10";
+						bpAttributes.Attribute = "01";
+					}
+attributes.push(bpAttributes);
+				
+				}
 	//  lets also get the logged in userid details so we can push the same to SAP. 
 	                	// $.each(oData.userProfile, function (i, item) {
 	                	// userLoginDetails.push({
@@ -495,7 +565,8 @@ sap.ui.define([
 	                	
 					// sap.ui.getCore().setModel(new sap.ui.model.json.JSONModel(userLoginDetails), "userIDDetails");
 
-					$.each(oData.attributes, function (i, item) {
+					$.each(attributes, function (i, item) {
+					// $.each(oData.attributes, function (i, item) {
 
 						//if it is a zone user, then put the first record as Zone User	
 					
