@@ -1,4 +1,4 @@
-var 	TradingInd ;
+var 	TradingInd,LoggedInDealerCode1,Dealer_Name ;
 sap.ui.define([
 	'pipelineInventory/controller/BaseController',
 	'sap/ui/core/routing/History',
@@ -91,7 +91,7 @@ sap.ui.define([
 		_oVehicleDetailsRoute: function (oEvent) {
 			_thatVD.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.hide();
-			this.populateDealer();
+			
 			var _oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
 				delay: 0,
@@ -234,6 +234,8 @@ sap.ui.define([
 								}
 								oRowData.d.KUNNR = oRowData.d.KUNNR.substring(5); //oRowData.d.KUNNR.split("-")[0].slice(5) + "-" + oRowData.d.KUNNR.split("-")[1];
 								_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData = oRowData.d;
+										Dealer_Name = 	_thatVD.oVehicleDetailsJSON.getData().selectedCustomerData.KUNNR;
+
 								_thatVD.oVehicleDetailsJSON.updateBindings(true);
 
 								_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].Comments = oRowData.d.Comments;
@@ -452,6 +454,7 @@ sap.ui.define([
 					}
 				}
 			}
+			this.populateDealer();
 		},
 		populateDealer:function(){
 			var that = this;
@@ -687,12 +690,13 @@ attributes.push(bpAttributes);
 							}
 						}
 
-						that.getView().setModel(new sap.ui.model.json.JSONModel(BpDealer2), "BpDealerModel");
-						sap.ui.getCore().setModel(new sap.ui.model.json.JSONModel(BpDealer2), "LoginBpDealerModel");
+						// that.getView().setModel(new sap.ui.model.json.JSONModel(BpDealer2), "BpDealerModel");
+						// sap.ui.getCore().setModel(new sap.ui.model.json.JSONModel(BpDealer2), "LoginBpDealerModel");
 						// that.getView().setModel(new sap.ui.model.json.JSONModel(BpDealerTemp), "BpDealerModelZone");
-						
-						var LoggedInDealerCode1 = sap.ui.getCore().getModel("LoginBpDealerModel").getData()[0].BusinessPartner;
-						var LoggedInDealer = sap.ui.getCore().getModel("LoginBpDealerModel").getData()[0].BusinessPartnerName.replace(/[^\w\s]/gi, '');
+						var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
+						LoggedInDealerCode1 = data.Dealer;
+						// var LoggedInDealerCode1 = sap.ui.getCore().getModel("LoginBpDealerModel").getData()[0].BusinessPartner;
+						// var LoggedInDealer = sap.ui.getCore().getModel("LoginBpDealerModel").getData()[0].BusinessPartnerName.replace(/[^\w\s]/gi, '');
 					var dealer=	BpDealerTemp.filter(function (x) {
 					return x.BusinessPartner != LoggedInDealerCode1;
 				});
@@ -713,7 +717,7 @@ attributes.push(bpAttributes);
 			
 						// var that = this;
 		
-				var oDealer = sap.ui.getCore().getModel("LoginBpDealerModel").getData()[0].BusinessPartnerKey;
+				// var oDealer = sap.ui.getCore().getModel("LoginBpDealerModel").getData()[0].BusinessPartnerKey;
 
 			// var Series = this.getOwnerComponent().SelectedMSMData[0].SeriesCmbo;
 
@@ -728,6 +732,7 @@ attributes.push(bpAttributes);
 			// }
 
 			// this.nodeJsUrl = this.sPrefix + "/node";
+			var oDealer = LoggedInDealerCode1;
 			this.oDataUrl = _thatVD.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV";
 var vtn = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZVTN;
                        var oDealer1 =sap.ui.getCore().byId("VLRDealer").getSelectedKey();
@@ -851,12 +856,12 @@ sap.ui.getCore().byId("btn_yes").setVisible(true);
 							var Trade_Return = "N";
 							var Trade_Status = "S";
 
-						var Requesting_Dealer = sap.ui.getCore().getModel("LoginBpDealerModel").getData()[0].BusinessPartnerKey;
+						var Requesting_Dealer = LoggedInDealerCode1;
  var Requested_Dealer =sap.ui.getCore().byId("VLRDealer").getSelectedKey();
     //     		 	if(Requested_Dealer.length == 10){
 		 	// Requested_Dealer=Requested_Dealer.slice(-5);
 				// 	 }	
-			var Requesting_Dealer_Name = sap.ui.getCore().getModel("LoginBpDealerModel").getData()[0].BusinessPartnerName;
+			// var Requesting_Dealer_Name = sap.ui.getCore().getModel("LoginBpDealerModel").getData()[0].BusinessPartnerName;
 			var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
 			var Proposed_ETA_To,Proposed_ETA_From;
 				var that = this;
@@ -978,7 +983,8 @@ sap.ui.getCore().byId("btn_yes").setVisible(true);
 }
 });
 	var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
-	
+		var Requesting_Dealer_Name ;//= Dealer_Name;
+
 	var data1 ={};
 	var pd_flag,dnc;
 	if(data.AccessInstl_flag ==false)
@@ -1010,9 +1016,9 @@ sap.ui.getCore().byId("btn_yes").setVisible(true);
 			 data1.kunnr = Requested_Dealer;
 data1.name1 = oDealerName;
 data1.vhvin = data.VHVIN;
-data1.zzseries=TCISeries;
+data1.zzseries=data.TCISeries;
 
-data1.zzintcol=INTCOL;   
+data1.zzintcol=data.INTCOL;   
 data1.zzseries_desc_en = data.SERIES_DESC_EN;
 data1.zzseries_desc_fr=data.SERIES_DESC_FR;
 data1.model_desc_en=data.MODEL_DESC_EN;
