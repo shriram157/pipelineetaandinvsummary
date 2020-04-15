@@ -454,7 +454,16 @@ sap.ui.define([
 					}
 				}
 			}
-			this.populateDealer();
+			if((_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SO")&&(sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer_User"))
+			{
+				this.getView().byId("btn_pushtrade").setVisible(true);
+							this.populateDealer();
+
+			}
+			else{
+								this.getView().byId("btn_pushtrade").setVisible(false);
+
+			}
 		},
 		populateDealer:function(){
 			var that = this;
@@ -576,7 +585,7 @@ attributes.push(bpAttributes);
 
 						// for toyota login show only toyota dealers, for lexus show only lexus. 
 
-						if (item.Division == that.sDivision || item.Division == "Dual") {
+						if (item.Division == Division || item.Division == "Dual") {
 
 							BpDealer.push({
 								"BusinessPartnerKey": item.BusinessPartnerKey,
@@ -1032,7 +1041,7 @@ data1.mrktg_int_desc_fr=data.INTCOL_DESC_FR;
 data1.non_D_flag ="";
 data1.pd_flag = pd_flag;
 data1.zz_trading_ind = TradingInd;
-data1.zzordertype="SO";
+data1.zzordertype=data.ZZORDERTYPE;
 data1.Proposed_ETA_From = Proposed_ETA_From;
 data1.Proposed_ETA_To = Proposed_ETA_To;
 data1.dnc_ind = dnc;
