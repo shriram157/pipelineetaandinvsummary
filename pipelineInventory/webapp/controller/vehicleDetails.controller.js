@@ -454,7 +454,7 @@ sap.ui.define([
 					}
 				}
 			}
-			if((_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SO")&&(sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer_User"))
+			if((_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SO")&&((sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer")||(sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer_User")))
 			{
 				this.getView().byId("btn_pushtrade").setVisible(true);
 							this.populateDealer();
