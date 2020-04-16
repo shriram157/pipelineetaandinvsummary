@@ -4,7 +4,7 @@
 <!--        <core:Item xmlns:core="sap.ui.core" key="item-1-key" text="Item 1 Text" id="item0"/>-->
 <!--        <core:Item xmlns:core="sap.ui.core" key="item-2-key" text="Item 2 Text" id="item1"/>-->
 <!--        </items>-->
-    <Dialog title="Please select a dealer" class="sapUiPopupWithPadding">
+    <Dialog title="Please select a Dealer" class="sapUiPopupWithPadding">
 
 <subHeader>
 

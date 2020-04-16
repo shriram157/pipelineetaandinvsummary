@@ -286,11 +286,32 @@ sap.ui.define([
 								sap.ui.core.BusyIndicator.hide();
 								_thatVD.oVehicleDetailsJSON.getData().APXData = oRowData.d.results;
 								_thatVD.oVehicleDetailsJSON.updateBindings(true);
+									if(((_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SO")||(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SR"))&&((sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer")||(sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer_User")))
+			{
+				_thatVD.getView().byId("btn_pushtrade").setVisible(true);
+							_thatVD.populateDealer();
+
+			}
+			else{
+								_thatVD.getView().byId("btn_pushtrade").setVisible(false);
+
+			}
 							},
 							error: function (oError) {
 								sap.ui.core.BusyIndicator.hide();
 								_thatVD.errorFlag = true;
+									if(((_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SO")||(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SR"))&&((sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer")||(sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer_User")))
+			{
+				_thatVD.getView().byId("btn_pushtrade").setVisible(true);
+							_thatVD.populateDealer();
+
+			}
+			else{
+								_thatVD.getView().byId("btn_pushtrade").setVisible(false);
+
+			}
 							}
+							
 						});
 					}
 				} else {
@@ -442,10 +463,30 @@ sap.ui.define([
 											sap.ui.core.BusyIndicator.hide();
 											_thatVD.oVehicleDetailsJSON.getData().APXData = oRowData.d.results;
 											_thatVD.oVehicleDetailsJSON.updateBindings(true);
+												if(((_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SO")||(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SR"))&&((sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer")||(sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer_User")))
+			{
+				_thatVD.getView().byId("btn_pushtrade").setVisible(true);
+							_thatVD.populateDealer();
+
+			}
+			else{
+								_thatVD.getView().byId("btn_pushtrade").setVisible(false);
+
+			}
 										},
 										error: function (oError) {
 											sap.ui.core.BusyIndicator.hide();
 											_thatVD.errorFlag = true;
+												if(((_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SO")||(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SR"))&&((sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer")||(sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer_User")))
+			{
+				_thatVD.getView().byId("btn_pushtrade").setVisible(true);
+							_thatVD.populateDealer();
+
+			}
+			else{
+								this.getView().byId("btn_pushtrade").setVisible(false);
+
+			}
 										}
 									});
 								}
@@ -454,16 +495,7 @@ sap.ui.define([
 					}
 				}
 			}
-			if(((_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SO")||(_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].ZZORDERTYPE == "SR"))&&((sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer")||(sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0]=="Dealer_User")))
-			{
-				this.getView().byId("btn_pushtrade").setVisible(true);
-							this.populateDealer();
-
-			}
-			else{
-								this.getView().byId("btn_pushtrade").setVisible(false);
-
-			}
+		
 		},
 		populateDealer:function(){
 			var that = this;
@@ -878,7 +910,7 @@ sap.ui.getCore().byId("btn_yes").setVisible(true);
 
 			// that.oSelectedItem = data;
 			// that.oSelectedItem.FromFourth = "FromPush";
-			var VTN = data.zzvtn;
+			var VTN = data.ZZVTN;
 
 			//  the offered vehicle should send the dealer code of login dealer. 	 23rd MAy. 
 			// var dealercode = that.oSelectedItem.kunnr.slice(-5);
@@ -891,6 +923,9 @@ sap.ui.getCore().byId("btn_yes").setVisible(true);
 
 			// }
  var oDealer1 =sap.ui.getCore().byId("VLRDealer").getSelectedKey();
+ 	_thatVD.CurrentETAFrom = data.zzadddata4;
+ 							_thatVD.CurrentETATo = data.pstsp;
+
     //     		 	if(oDealer1.length == 10){
 		 	// oDealer1=oDealer1.slice(-5);
 				// 	 }
@@ -923,22 +958,21 @@ sap.ui.getCore().byId("btn_yes").setVisible(true);
 					/*	Data.MessageType="";
 						Data.Calculate="20181126";*/
 					if (Data.MessageType != "E") {
-						var CurrentETAFrom = Data.zzadddata4;
-						if (CurrentETAFrom != null && CurrentETAFrom != "") {
+					
+						if (_thatVD.CurrentETAFrom != null && _thatVD.CurrentETAFrom != "") {
 
-							CurrentETAFrom = CurrentETAFrom.replace(/(\d{4})(\d{2})(\d{2})/g, '$2/$3/$1');
+							_thatVD.CurrentETAFrom = _thatVD.CurrentETAFrom.replace(/(\d{4})(\d{2})(\d{2})/g, '$2/$3/$1');
 						}
-						var CurrentETATo = Data.pstsp;
 
-						if (CurrentETATo != null && CurrentETATo != "") {
-							var dateTo = CurrentETATo.split("(")[1];
-							if (CurrentETATo.indexOf("+") != -1) {
+						if (_thatVD.CurrentETATo != null && _thatVD.CurrentETATo != "") {
+							var dateTo = _thatVD.CurrentETATo.split("(")[1];
+							if (_thatVD.CurrentETATo.indexOf("+") != -1) {
 								/*dateTo = dateTo.split("+")[0];*/
-								CurrentETATo = new Date(CurrentETATo.split("(")[1].substring(0, 10) * 1000).toDateString().substring(4, 15);
+								_thatVD.CurrentETATo = new Date(_thatVD.CurrentETATo.split("(")[1].substring(0, 10) * 1000).toDateString().substring(4, 15);
 								var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
 									pattern: "MM/dd/yyyy"
 								});
-								CurrentETATo = oDateFormat.format(new Date(CurrentETATo));
+								_thatVD.CurrentETATo = oDateFormat.format(new Date(CurrentETATo));
 
 							} else {
 								dateTo = dateTo;
@@ -948,22 +982,22 @@ sap.ui.getCore().byId("btn_yes").setVisible(true);
 								var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
 									pattern: "MM/dd/yyyy"
 								});
-								CurrentETATo = oDateFormat.format(new Date(ValidTo));
+								_thatVD.CurrentETATo = oDateFormat.format(new Date(ValidTo));
 							}
 
 						}
 
-						if ((CurrentETAFrom == "" || CurrentETAFrom == null) && (CurrentETATo != "" && CurrentETATo != null)) {
+						if ((_thatVD.CurrentETAFrom == "" || _thatVD.CurrentETAFrom == null) && (_thatVD.CurrentETATo != "" && _thatVD.CurrentETATo != null)) {
 							CurrentETAFrom = CurrentETATo;
-						} else if ((CurrentETAFrom != "" && CurrentETAFrom != null) && (CurrentETATo == "" || CurrentETATo == null)) {
-							CurrentETATo = CurrentETAFrom;
-						} else if ((CurrentETAFrom == "" || CurrentETAFrom == null) && (CurrentETATo == "" || CurrentETATo == null)) {
+						} else if ((_thatVD.CurrentETAFrom != "" && _thatVD.CurrentETAFrom != null) && (_thatVD.CurrentETATo == "" || _thatVD.CurrentETATo == null)) {
+							_thatVD.CurrentETATo = _thatVD.CurrentETAFrom;
+						} else if ((_thatVD.CurrentETAFrom == "" || _thatVD.CurrentETAFrom == null) && (_thatVD.CurrentETATo == "" || _thatVD.CurrentETATo == null)) {
 							/*CurrentETATo=Data.Calculate.replace(/(\d{4})(\d{2})(\d{2})/g, '$2/$3/$1')
 							CurrentETAFrom=Data.Calculate.replace(/(\d{4})(\d{2})(\d{2})/g, '$2/$3/$1')*/
 						}
 
-						var date1 = new Date(CurrentETAFrom);
-						var date2 = new Date(CurrentETATo);
+						var date1 = new Date(_thatVD.CurrentETAFrom);
+						var date2 = new Date(_thatVD.CurrentETATo);
 						var timeDiff = Math.abs(date2.getTime() - date1.getTime());
 						var CurrentEtadiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
@@ -982,16 +1016,7 @@ sap.ui.getCore().byId("btn_yes").setVisible(true);
 							Proposed_ETA_To = "";
 						}
 						Proposed_ETA_From = Data.Calculate;
-						
-		// 			 that.oSelectedItem.Requested_Dealer = oDealer1;
-		// 			 that.oSelectedItem.Requested_Dealer_Name = oDealerName;
-		// 				that.oSelectedItem.FromFourth = "FromPush";
-		// 							var TradeModel = new sap.ui.model.json.JSONModel(null);
-		// sap.ui.getCore().setModel(TradeModel,"TradeModel");
-}
-}
-});
-	var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
+							var data = _thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0];
 		var Requesting_Dealer_Name ;//= Dealer_Name;
 
 	var data1 ={};
@@ -1019,8 +1044,8 @@ sap.ui.getCore().byId("btn_yes").setVisible(true);
 			 data1.zzapx = data.APX;
 			 data1.zzextcol = data.ExteriorColorCode;
 			 data1.zzvtn = data.ZZVTN;
-			 data1.pstsp = data.ETATo;
-			 data1.zzadddata4 = data.ETAFrom;
+			 data1.pstsp = _thatVD.CurrentETATo;
+			 data1.zzadddata4 = _thatVD.CurrentETAFrom;
 			 data1.FromFourth ="FromPush";
 			 data1.kunnr = Requested_Dealer;
 data1.name1 = oDealerName;
@@ -1054,6 +1079,15 @@ var str = JSON.stringify(data1);
 	// var vehiclelocatorandtradeAppUrl=  "https://webidetesting0203702-d36z7bqhz1.dispatcher.ca1.hana.ondemand.com/webapp/index.html";
 			var url = vehiclelocatorandtradeAppUrl + "?&Division=" + Division + "&Language=" + sSelectedLocale + "#/VehicleTrade_CreateSingle/"+str;
 			window.location.href = url;
+		// 			 that.oSelectedItem.Requested_Dealer = oDealer1;
+		// 			 that.oSelectedItem.Requested_Dealer_Name = oDealerName;
+		// 				that.oSelectedItem.FromFourth = "FromPush";
+		// 							var TradeModel = new sap.ui.model.json.JSONModel(null);
+		// sap.ui.getCore().setModel(TradeModel,"TradeModel");
+}
+}
+});
+
 						//that.selectedTrade=escape(JSON.stringify(that.selectedTrade));
 						// if (that.SelectedVehicleFrom == "VehileTrade_CreateSingle") {
 						// 	sap.ui.getCore().getModel("TradeModel").setProperty("/VehicleTradeVehicle", that.oSelectedItem);
