@@ -1587,9 +1587,23 @@ var str = JSON.stringify(data1);
 			}
 		},
 			onNoClick: function(){
+				sap.ui.getCore().byId("VLRDealer").setSelectedKey(null);
+				sap.ui.getCore().byId("txt_routable").setVisible(false);
+					sap.ui.getCore().byId("txt_nonroutable").setVisible(false);
+					sap.ui.getCore().byId("txt_nontradeable").setVisible(false);
+					sap.ui.getCore().byId("btn_yes").setVisible(false);
+					sap.ui.getCore().byId("btn_no").setVisible(false);
+					sap.ui.getCore().byId("btn_close").setVisible(true);
 				_thatVD._oSettingsDialog.close();
 		},
 			onCloseClick: function(){
+				sap.ui.getCore().byId("txt_routable").setVisible(false);
+					sap.ui.getCore().byId("txt_nonroutable").setVisible(false);
+					sap.ui.getCore().byId("txt_nontradeable").setVisible(false);
+					sap.ui.getCore().byId("btn_yes").setVisible(false);
+					sap.ui.getCore().byId("btn_no").setVisible(false);
+					sap.ui.getCore().byId("btn_close").setVisible(true);
+				sap.ui.getCore().byId("VLRDealer").setSelectedKey(null);
 				_thatVD._oSettingsDialog.close();
 		},
 		
