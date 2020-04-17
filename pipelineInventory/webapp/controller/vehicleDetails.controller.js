@@ -930,7 +930,7 @@ sap.ui.getCore().byId("btn_yes").setVisible(true);
 		 	// oDealer1=oDealer1.slice(-5);
 				// 	 }
 					 var oDealerName = sap.ui.getCore().byId("VLRDealer").getValue().substr(sap.ui.getCore().byId("VLRDealer").getValue().indexOf(
-							"-") + 1);
+							"-") + 1).trim();
 			var sLocation = window.location.host;
 			var sLocation_conf = sLocation.search("webide");
 
@@ -1029,13 +1029,13 @@ sap.ui.getCore().byId("btn_yes").setVisible(true);
 	{
 		pd_flag = "D";
 	}
-	if(data.DNC_flag ==false)
+	if(data.ZZORDERTYPE =="SR")
 	{
-		dnc = "N";
+		dnc = "Y";
 	}
 	else
 	{
-		dnc = "Y";
+		dnc = "N";
 	}
 			data1.zzmoyr = data.Modelyear;
 			data1.matnr = data.Model;
