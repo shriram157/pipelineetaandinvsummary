@@ -10,7 +10,7 @@
 
 <Toolbar>
 
-<ComboBox id="VLRDealer" selectionChange="onDealerChange" items="{BpDealerModelZone>/}" class="sapUiTinyMarginBegin" width="140%">
+<ComboBox id="VLRDealer" change="onDealerChange" items="{BpDealerModelZone>/}" class="sapUiTinyMarginBegin" width="140%">
 											<core:ListItem text="{BpDealerModelZone>BusinessPartner} - {BpDealerModelZone>BusinessPartnerName}" key="{BpDealerModelZone>BusinessPartnerKey}"/>
 											<layoutData>
 												<l:GridData span="L2 M2 S6"/>
@@ -23,10 +23,9 @@
 
 <content>
 
-<Text id="txt_routable" visible="false" text="This vehicle is routable. Do you want to proceed?" />
-<Text id="txt_nonroutable" visible="false" text="This vehicle is non-routable. Do you want to proceed?" />
-
-<Text id="txt_nontradeable" visible="false" width="300px" text="This vehicle is non-tradeable."/>
+<Text id="txt_routable" visible="false" text="{i18n>Routable_Vehicle}" />
+<Text id="txt_nonroutable" visible="false" text="{i18n>Non_Routable_Vehicle}" />
+<Text id="txt_nontradeable" visible="false" width="300px" text="{i18n>Non_Tradeable_Vehicle}"/>
 </content>
 
 <beginButton>
@@ -37,9 +36,9 @@
 
 <buttons>
 
-    <Button xmlns="sap.m" text="Yes" id="btn_yes" visible="false" press="onYesClick"/>
+    <Button xmlns="sap.m" text="{i18n>Yes}" id="btn_yes" visible="false" press="onYesClick"/>
 
-    <Button xmlns="sap.m" text="No" id="btn_no" visible="false" press="onNoClick"/>
+    <Button xmlns="sap.m" text="{i18n>No}" id="btn_no" visible="false" press="onNoClick"/>
 
     <Button xmlns="sap.m" text="Close" id="btn_close" press="onCloseClick"/>
 
