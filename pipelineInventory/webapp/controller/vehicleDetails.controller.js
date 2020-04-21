@@ -741,8 +741,9 @@ attributes.push(bpAttributes);
 					var dealer=	BpDealerTemp.filter(function (x) {
 					return x.BusinessPartner != LoggedInDealerCode1;
 				});
-					that.getView().setModel(new sap.ui.model.json.JSONModel(dealer), "BpDealerModelZone");
-
+						var Model1  = new sap.ui.model.json.JSONModel(dealer);
+				Model1.setSizeLimit(1000);
+					that.getView().setModel(Model1, "BpDealerModelZone");
 						// that.getView().byId("oDealerCode4").setText(LoggedInDealerCode1);
 						// that.getView().byId("oDealerOwnVehiSele").setText(LoggedInDealer);
 
