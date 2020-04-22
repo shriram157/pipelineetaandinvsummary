@@ -40,7 +40,7 @@
 
     <Button xmlns="sap.m" text="{i18n>No}" id="btn_no" visible="false" press="onNoClick"/>
 
-    <Button xmlns="sap.m" text="Close" id="btn_close" press="onCloseClick"/>
+    <Button xmlns="sap.m" text="{i18n>Close}" id="btn_close" press="onCloseClick"/>
 
 </buttons>
 

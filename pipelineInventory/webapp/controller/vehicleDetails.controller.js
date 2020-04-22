@@ -1079,6 +1079,7 @@ var str = JSON.stringify(data1);
 	var vehiclelocatorandtradeAppUrl = sap.ui.getCore().getModel("configDataModel").getData().vehiclelocatorandtradeAppUrl;
 	// var vehiclelocatorandtradeAppUrl=  "https://webidetesting0203702-d36z7bqhz1.dispatcher.ca1.hana.ondemand.com/webapp/index.html";
 			var url = vehiclelocatorandtradeAppUrl + "?&Division=" + Division + "&Language=" + sSelectedLocale + "#/VehicleTrade_CreateSingle/"+str;
+			url=url.replace("/", "%2F");
 			window.location.href = url;
 		// 			 that.oSelectedItem.Requested_Dealer = oDealer1;
 		// 			 that.oSelectedItem.Requested_Dealer_Name = oDealerName;
