@@ -1074,12 +1074,13 @@ data1.dnc_ind = dnc;
 data1.Requesting_Dealer= Requesting_Dealer;
 data1.Requesting_Dealer_Name = Requesting_Dealer_Name;
 var str = JSON.stringify(data1);
+str= str.replace("/", "%2F");
 			// var keys = "ModelYear:" + modelyear + ",Model:" + modelkey + ",Series:" + serieskey + ",Suffix:" + suffixkey + ",APX:" + apxkey + ",Color:" + colorkey + ",VTN:" + vtnn + ",FromDate:" +
 			// 	fromdate + ",ToDate:" + todate + "/";
 	var vehiclelocatorandtradeAppUrl = sap.ui.getCore().getModel("configDataModel").getData().vehiclelocatorandtradeAppUrl;
 	// var vehiclelocatorandtradeAppUrl=  "https://webidetesting0203702-d36z7bqhz1.dispatcher.ca1.hana.ondemand.com/webapp/index.html";
 			var url = vehiclelocatorandtradeAppUrl + "?&Division=" + Division + "&Language=" + sSelectedLocale + "#/VehicleTrade_CreateSingle/"+str;
-			url=url.replace("/", "%2F");
+			// url=url.replace("/", "%2F");
 			window.location.href = url;
 		// 			 that.oSelectedItem.Requested_Dealer = oDealer1;
 		// 			 that.oSelectedItem.Requested_Dealer_Name = oDealerName;
