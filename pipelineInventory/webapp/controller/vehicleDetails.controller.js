@@ -54,7 +54,7 @@ sap.ui.define([
 				delay: 0,
 				soldOrderEnabled: false,
 				APXEnabled: false,
-				enableAccessory : false
+				enableAccessory : true
 			});
 			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
 
@@ -364,10 +364,14 @@ sap.ui.define([
 									
 									var MatrixStartWith = Data.MATRIX.startsWith("A");
 									
-									if(MatrixStartWith == true && Data.AccessInstl_flag == true){
+									if(MatrixStartWith == true){
+										if(Data.AccessInstl_flag == true){
 										_thatVD.getView().getModel("LocalVDModel").setProperty("/enableAccessory", true);
+										}else{
+											_thatVD.getView().getModel("LocalVDModel").setProperty("/enableAccessory", false);
+										}
 									}else{
-										_thatVD.getView().getModel("LocalVDModel").setProperty("/enableAccessory", false);
+										_thatVD.getView().getModel("LocalVDModel").setProperty("/enableAccessory", true);
 									}
 									
 									var UserType = sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0];
