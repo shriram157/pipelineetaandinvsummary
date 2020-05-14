@@ -53,7 +53,8 @@ sap.ui.define([
 				busy: false,
 				delay: 0,
 				soldOrderEnabled: false,
-				APXEnabled: false
+				APXEnabled: false,
+				enableAccessory : true
 			});
 			_thatVD.getView().setModel(_oViewModel, "LocalVDModel");
 
@@ -333,6 +334,9 @@ sap.ui.define([
 									_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNCVehicle = "";
 									_thatVD.oVehicleDetailsJSON.getData().AccessInstl_flag = Data.AccessInstl_flag;
 									_thatVD.DNCFlag = Data.DNC_flag;
+									
+									
+									
 
 									if (!_thatVD.DNCFlag) {
 										console.log("DNCFlag", _thatVD.DNCFlag);
@@ -357,6 +361,19 @@ sap.ui.define([
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[2] = {
 										"DNCVehicle": this.oBundle.getText("RemoveSelection")
 									};
+									
+									var MatrixStartWith = Data.MATRIX.startsWith("A");
+									
+									if(MatrixStartWith == true){
+										if(Data.AccessInstl_flag == true){
+										_thatVD.getView().getModel("LocalVDModel").setProperty("/enableAccessory", true);
+										}else{
+											_thatVD.getView().getModel("LocalVDModel").setProperty("/enableAccessory", false);
+										}
+									}else{
+										_thatVD.getView().getModel("LocalVDModel").setProperty("/enableAccessory", true);
+									}
+									
 									var UserType = sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0];
 									// if (UserType == "National") {
 									// 	this.getView().getModel("LocalVDModel").setProperty("/DNCEnabled", true);

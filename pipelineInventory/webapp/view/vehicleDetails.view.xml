@@ -70,7 +70,7 @@
 									<Label text="{i18n>HoldVehicle}"/>
 									<Text text="{VehicleDetailsJSON>/selectedCustomerData/HOLD}" id="id_holdVehicle" />
 									<Label text="{i18n>AccessoriesInstalled}" required="false" />
-									<Select forceSelection="false" selectedKey="" id="accessoryVal" items="{ path: 'VehicleDetailsJSON>/AcceessoryData'}">
+									<Select forceSelection="false" selectedKey="" enabled="{LocalVDModel>/enableAccessory}" id="accessoryVal" items="{ path: 'VehicleDetailsJSON>/AcceessoryData'}">
 										<core:Item key="{VehicleDetailsJSON>AccessoryInstalled}" text="{VehicleDetailsJSON>AccessoryInstalled}"/>
 									</Select>
 									<Label text="{i18n>DNCVehicle}"/>
