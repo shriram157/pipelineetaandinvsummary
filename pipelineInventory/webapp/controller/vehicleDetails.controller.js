@@ -1081,7 +1081,9 @@ str= str.replace("/", "%2F");
 	// var vehiclelocatorandtradeAppUrl=  "https://webidetesting0203702-d36z7bqhz1.dispatcher.ca1.hana.ondemand.com/webapp/index.html";
 			var url = vehiclelocatorandtradeAppUrl + "?&Division=" + Division + "&Language=" + sSelectedLocale + "#/VehicleTrade_CreateSingle/"+str;
 			// url=url.replace("/", "%2F");
-			window.location.href = url;
+			// window.location.href = url;
+			window.open(url);
+			
 		// 			 that.oSelectedItem.Requested_Dealer = oDealer1;
 		// 			 that.oSelectedItem.Requested_Dealer_Name = oDealerName;
 		// 				that.oSelectedItem.FromFourth = "FromPush";
