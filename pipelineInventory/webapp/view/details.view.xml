@@ -93,6 +93,9 @@
 									<Text text="{i18n>VIN}"/>
 								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true">
+									<Text text="{i18n>Series}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>Model}"/>
 								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true">
@@ -121,6 +124,7 @@
 										<Text text="{VehicleDetailsJSON>AccessInstl_flag2}"/>
 										<Link text="{VehicleDetailsJSON>ZZVTN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZVTN}"/>
 										<Link text="{VehicleDetailsJSON>VHVIN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>VHVIN}"/>
+										<Text text="{VehicleDetailsJSON>SERIES_DESC_EN}" />
 										<Text text="{VehicleDetailsJSON>Model} {VehicleDetailsJSON>MODEL_DESC_EN}"/>
 										<Text text="{VehicleDetailsJSON>Suffix} {VehicleDetailsJSON>SUFFIX_DESC_EN}/{VehicleDetailsJSON>INTCOL_DESC_EN}"/>
 										<Text text="{VehicleDetailsJSON>ExteriorColorCode} {VehicleDetailsJSON>EXTCOL_DESC_EN}"/>
