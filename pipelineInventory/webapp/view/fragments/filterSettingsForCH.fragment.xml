@@ -1,0 +1,57 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ViewSettingsDialog confirm="handleSettingsConfirm">
+		<sortItems>
+			<ViewSettingsItem text="{i18n>OrderNumber}" key="ZZDLR_REF_NO" selected="true"/>
+			<ViewSettingsItem text="{i18n>Status}" key="Status"/>
+			<ViewSettingsItem text="{i18n>SubmissionDateTime}" key="DateSubmitted"/>
+			<ViewSettingsItem text="{i18n>VTN}" key="ZZVTN"/>
+			<ViewSettingsItem text="{i18n>VIN}" key="VHVIN"/>
+			<ViewSettingsItem text="{i18n>OldModel}" key="OldModel"/>
+			<ViewSettingsItem text="{i18n>NewModel}" key="NewModel"/>
+			<ViewSettingsItem text="{i18n>Series}" key="Series"/>
+			<ViewSettingsItem text="{i18n>ModelYear}" key="Modelyear"/>
+		</sortItems>
+		<filterItems>
+			<ViewSettingsFilterItem text="{i18n>OrderNumber}" key="ZZDLR_REF_NO" multiSelect="true" items="{FilterOrderNumberJSON>/}">
+				<items>
+					<ViewSettingsItem text="{FilterOrderNumberJSON>ZZDLR_REF_NO}" key="ZZDLR_REF_NO"/>
+				</items>
+			</ViewSettingsFilterItem>
+		<ViewSettingsFilterItem text="{i18n>Status}" key="Status" multiSelect="true" items="{FilterStatusJSON>/}">
+				<items>
+					<ViewSettingsItem text="{FilterStatusJSON>Status}" key="Status"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="{i18n>VTN}" key="ZZVTN" multiSelect="true" items="{FilterVTNJSON>/}">
+				<items>
+					<ViewSettingsItem text="{FilterVTNJSON>ZZVTN}" key="ZZVTN"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="{i18n>VIN}" key="VHVIN" multiSelect="true" items="{FilterVINJSON>/}">
+				<items>
+					<ViewSettingsItem text="{FilterVINJSON>VHVIN}" key="VHVIN"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="{i18n>OldModel}" key="OldModel" multiSelect="true" items="{FilterOldModelJSON>/}">
+				<items>
+					<ViewSettingsItem text="{FilterOldModelJSON>OldModel}" key="OldModel"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="{i18n>NewModel}" key="NewModel" multiSelect="true" items="{FilterNewModelJSON>/}">
+				<items>
+					<ViewSettingsItem text="{FilterNewModelJSON>NewModel}" key="NewModel"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="{i18n>Series}" key="TCISeries" multiSelect="true" items="{FilterSeriesJSON>/}">
+				<items>
+					<ViewSettingsItem text="{FilterSeriesJSON>TCISeries}" key="TCISeries"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="{i18n>ModelYear}" key="Modelyear" multiSelect="true" items="{FilterModelyearJSON>/}">
+				<items>
+					<ViewSettingsItem text="{FilterModelyearJSON>Modelyear}" key="Modelyear"/>
+				</items>
+			</ViewSettingsFilterItem>
+			</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

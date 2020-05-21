@@ -689,18 +689,20 @@ sap.ui.define([
 			row += _thatDT.oI18nModel.getResourceBundle().getText("ETAFrom") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("ETATo") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("CustomerName") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("Comments") + ",";
 
 			CSV += row + '\r\n';
 
 			//loop is to extract each row
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
-				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO +'","' + arrData[i].ORDERTYPE_DESC_EN +
+				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
 					'","' + arrData[i].ZMMSTA + '","' + arrData[i].AccessInstl_flag2 + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
-					arrData[i].Modelyear +  '","' + arrData[i].SERIES_DESC_EN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i]
+					arrData[i].Modelyear + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i]
 					.Suffix +
 					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '",="' + _thatDT.dateConverter(
-						arrData[i].ETAFrom) + '",="' + _thatDT.dateConverter(arrData[i].ETATo) + '","' + arrData[i].CustomerName +  '",';
+						arrData[i].ETAFrom) + '",="' + _thatDT.dateConverter(arrData[i].ETATo) + '","' + arrData[i].CustomerName + '","' + arrData[i].DNC_Comment +
+					'",';
 				//}
 				row.slice(1, row.length);
 				CSV += row + '\r\n';

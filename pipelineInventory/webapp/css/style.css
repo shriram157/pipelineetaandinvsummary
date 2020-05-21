@@ -1,65 +1,89 @@
 /* Enter your custom styles here */
+
+
 /*======================= Start custom fonts and custom color on header style ==========================*/
+
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 .clCustomFont {
     font-family: 'Raleway', sans-serif;
 }
+
 .sapContrastPlus.clCustomHeaderBg,
 .clCustomHeaderBg.sapMIBar {
     background-color: #fff!important;
     color: #2f3c48;
     text-shadow: none;
 }
+
 .sapContrastPlus.clCustomHeaderBg .sapMBtnInner {
     color: #2f3c48;
     text-shadow: none;
 }
+
 .sapContrastPlus.clCustomHeaderBg .sapMText {
     color: #2f3c48;
 }
+
 .sapContrastPlus.sapMIBar-CTX.clCustomHeaderBg .sapMBtn:hover>.sapMBtnHoverable:not(.sapMBtnActive) {
     background-color: transparent;
     color: #346187;
 }
-.HighlightRed{
-	color:#FF0000;
+
+.HighlightRed {
+    color: #FF0000;
 }
 
-/*======================= End custom fonts and custom color on header style ==========================*/
-/* Customized CSS by Aarti Dhamat */
 
+/*======================= End custom fonts and custom color on header style ==========================*/
+
+
+/* Customized CSS by Aarti Dhamat */
+.tablecell {
+    font-size: 1.5rem;
+    font-weight: bold !important;
+}
 .stylePageSection {
     background: #fff !important;
 }
+
+
 /*Form Css*/
+
 .stylePosition {
     background: #F1F1F1;
     position: relative;
 }
+
 .styleBtnPositioned {
     position: absolute;
     right: 1rem;
     bottom: 1rem;
     width: auto !important;
 }
+
 .styleForms {
     background: transparent;
     width: 90%;
 }
+
 .styleForms .sapUiFormContainerTitle>.sapUiFormTitle {
     height: 0rem;
     line-height: 0rem;
 }
+
 .styleRightAlign {
     float: right;
     clear: right;
 }
+
 .styleFontSize {
     font-size: 18px;
 }
+
 .styleShortWidth {
     width: 40% !important;
 }
+
 .formDetails .sapUiFormTitleH5 {
     font-size: 1rem;
     text-align: center;
@@ -67,6 +91,7 @@
     background: #bbb;
     font-weight: bold !important;
 }
+
 .styleMultiHeaderTable {
     width: 98% !important;
     margin: 0 auto;
@@ -74,15 +99,18 @@
 
 
 /*For Grid Tables*/
+
 .ETAMaster .sapUiTableColHdrTr td {
     border-right: 1px solid #000 !important;
     border-bottom: 1px solid #000 !important;
 }
+
 .ETAMaster .sapUiTableColHdrTr td:nth-child(1) {
     background: #9BC1E7;
     border-bottom: none !important;
     border-right: 1px solid #000;
 }
+
 .ETAMaster .sapUiTableColHdrTr td:nth-child(2),
 .ETAMaster .sapUiTableColHdrTr td:nth-child(3),
 .ETAMaster .sapUiTableColHdrTr td:nth-child(4),
@@ -91,6 +119,30 @@
 .ETAMaster .sapUiTableColHdrTr td:nth-child(7) {
     background: #BED6EE;
 }
+
+.cellColor .sapMListTblHeaderCell td:nth-child(5){
+	  background: #BED6EE;
+	  background-color: red;
+}
+.cellColor .sapMListTblCell .sapMListTblHeaderCell {
+	  background: #BED6EE;
+	  background-color: red;
+}
+
+.cellColor .sapMListTblHeaderCell tr:nth-child(5){
+	  background: #BED6EE;
+	  background-color: red;
+}
+
+.ETAMaster2 .sapUiTableColHdrTr td:nth-child(2),
+.ETAMaster2 .sapUiTableColHdrTr td:nth-child(3),
+.ETAMaster2 .sapUiTableColHdrTr td:nth-child(4),
+.ETAMaster2 .sapUiTableColHdrTr td:nth-child(5),
+.ETAMaster2 .sapUiTableColHdrTr td:nth-child(6),
+.ETAMaster2 .sapUiTableColHdrTr td:nth-child(7) {
+    background: #BED6EE;
+}
+
 .ETAMaster .sapUiTableColHdrTr td:nth-child(8),
 .ETAMaster .sapUiTableColHdrTr td:nth-child(9),
 .ETAMaster .sapUiTableColHdrTr td:nth-child(10),
@@ -100,15 +152,18 @@
 .ETAMaster .sapUiTableColHdrTr td:nth-child(14) {
     background: #E0EEF9;
 }
+
 .ETAMaster .sapUiTableColHdrTr td:nth-child(15) {
     background: #FFF;
     border-bottom: none !important;
     border-right: 1px solid #000;
 }
+
 .ETAMaster .sapUiTableColHdrTr td:nth-child(16),
 .ETAMaster .sapUiTableColHdrTr td:nth-child(17) {
     background: #FEFEFE;
 }
+
 .ETAMaster .sapUiTableTr>td:nth-child(15) {
     background: #FFF;
     border-bottom: none;
@@ -117,28 +172,35 @@
 .ETAMaster .sapUiTableCtrl tr:nth-child(odd) {
     background: #fff;
 }
+
 .ETAMaster .sapUiTableCtrl tr:nth-child(even) {
     background: #8080807d;
 }
+
 .guideLines {
     width: 100% !important;
 }
+
 .guideLines .sapUiRespGridBreak.sapUiRespGridSpanL6.sapUiRespGridSpanM6.sapUiRespGridSpanS12.sapUiRespGridSpanXL6 {
     width: 100%;
 }
+
 .guideLines .sapUiRGLContainerCont {
     padding: 1rem;
 }
+
 .newLine {
     display: block;
     width: 100% !important;
 }
+
 .TabFontStyle {
     color: blue;
     text-decoration: underline;
     cursor: pointer;
     width: 100%;
 }
+
 
 /* CSS for filter notification */
 
@@ -148,18 +210,22 @@
     margin: 0 0.2rem 0 2rem !important;
     overflow: hidden;
 }
+
 .filterNotification .sapUiVltCell:nth-child(1) {
     width: 95%;
     padding: 0.5rem;
 }
+
 .filterNotification .sapUiVltCell:nth-child(2) {
     width: 2rem;
     height: 2rem;
 }
+
 .filterNotification .sapUiVltCell:nth-child(2) .sapMBtn {
     height: 2rem;
     padding: 0;
 }
+
 .filterNotification .sapUiVltCell:nth-child(2) .sapMBtn>span {
     background: transparent;
     border: transparent;
@@ -167,28 +233,50 @@
     font-weight: 700;
     font-size: large;
 }
+
 .filterNotification .sapUiVltCell {
     float: left;
     overflow: hidden;
     /*padding: 0.5rem;*/
     margin-left: 0;
 }
+
 .noBkgrnd li {
     background: #fafafa;
     border: 1px solid #fafafa;
 }
 
+
 /*Remove all styling from input*/
+
 .noStyleInput .sapMInputBaseReadonlyInner .sapMInputBaseInner {
     border: none;
     background: #fff;
     padding: 0;
 }
+
 .filterNotification .sapMText {
     color: #fff;
 }
+
 .headerFixClass .sapMListTbl th {
     position: sticky;
     z-index: 9;
     top: 0;
+}
+
+.justifyEnd {
+    justify-content: flex-end;
+}
+.justifyspacebetween
+{
+	justify-content: space-between;
+	
+}
+.dealerlabel{
+	padding-top: 1rem;
+    padding-right: 1rem;
+}
+.tablecellcolor{
+	background-color:aliceblue !important
 }

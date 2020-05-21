@@ -2,8 +2,10 @@ sap.ui.define([
 	'pipelineInventory/controller/BaseController',
 	'sap/ui/model/json/JSONModel',
 	'sap/ui/model/resource/ResourceModel',
+	'sap/ui/model/Filter',
+	"sap/m/MessageBox",
 	"sap/ui/core/routing/History"
-], function (BaseController, JSONModel, ResourceModel, History) {
+], function (BaseController, JSONModel, ResourceModel, Filter, MessageBox, History) {
 	"use strict";
 	var _thatCH, SelectedDealerCH, sSelectedLocale, Division, DivUser, localLang;
 	return BaseController.extend("pipelineInventory.controller.changeHistory", {
@@ -27,26 +29,26 @@ sap.ui.define([
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
 				});
-				this.getView().setModel(_thatCH.oI18nModel, "i18n");
-				this.sCurrentLocale = 'FR';
+				_thatCH.getView().setModel(_thatCH.oI18nModel, "i18n");
+				_thatCH.sCurrentLocale = 'FR';
 			} else {
 				localLang = "E";
 				_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
 				});
-				this.getView().setModel(_thatCH.oI18nModel, "i18n");
-				this.sCurrentLocale = 'EN';
+				_thatCH.getView().setModel(_thatCH.oI18nModel, "i18n");
+				_thatCH.sCurrentLocale = 'EN';
 			}
 			var sLocation = window.location.host;
 			var sLocation_conf = sLocation.search("webide");
 
 			if (sLocation_conf == 0) {
-				this.sPrefix = "/pipelineInventory-dest";
+				_thatCH.sPrefix = "/pipelineInventory-dest";
 			} else {
-				this.sPrefix = "";
+				_thatCH.sPrefix = "";
 			}
-			_thatCH.nodeJsUrl = this.sPrefix + "/node";
+			_thatCH.nodeJsUrl = _thatCH.sPrefix + "/node";
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -55,11 +57,11 @@ sap.ui.define([
 				if (Division == '10') // set the toyoto logo
 				{
 					DivUser = "TOY";
-					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource = _thatCH.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
 				} else { // set the lexus logo
 					DivUser = "LEX";
-					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource = _thatCH.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/Lexus.png");
 				}
 			}
@@ -80,7 +82,6 @@ sap.ui.define([
 			_thatCH.getOwnerComponent().getRouter().attachRoutePatternMatched(_thatCH._oChangeHistoryRoute, _thatCH);
 
 		},
-
 		afterConfigLoad: function () {
 			if (localLang === "F") {
 				$(".sapMGrowingListTriggerText>.sapMSLITitle")[0].innerHTML = "Plus";
@@ -91,7 +92,6 @@ sap.ui.define([
 		onAfterRendering: function () {
 			_thatCH.afterConfigLoad();
 		},
-
 		_oChangeHistoryRoute: function (oEvent) {
 			_thatCH.getView().setBusy(false);
 			sap.ui.core.BusyIndicator.show();
@@ -113,16 +113,16 @@ sap.ui.define([
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("fr")
 				});
-				this.getView().setModel(_thatCH.oI18nModel, "i18n");
-				this.sCurrentLocale = 'FR';
+				_thatCH.getView().setModel(_thatCH.oI18nModel, "i18n");
+				_thatCH.sCurrentLocale = 'FR';
 				localLang = "F";
 			} else {
 				_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
 					bundleLocale: ("en")
 				});
-				this.getView().setModel(_thatCH.oI18nModel, "i18n");
-				this.sCurrentLocale = 'EN';
+				_thatCH.getView().setModel(_thatCH.oI18nModel, "i18n");
+				_thatCH.sCurrentLocale = 'EN';
 				localLang = "E";
 			}
 
@@ -130,11 +130,11 @@ sap.ui.define([
 			var sLocation_conf = sLocation.search("webide");
 
 			if (sLocation_conf == 0) {
-				this.sPrefix = "/pipelineInventory-dest";
+				_thatCH.sPrefix = "/pipelineInventory-dest";
 			} else {
-				this.sPrefix = "";
+				_thatCH.sPrefix = "";
 			}
-			_thatCH.nodeJsUrl = this.sPrefix + "/node";
+			_thatCH.nodeJsUrl = _thatCH.sPrefix + "/node";
 			/*Logic for logo change depending upon Toyota and Lexus user*/
 			var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 			if (isDivisionSent) {
@@ -143,11 +143,11 @@ sap.ui.define([
 				if (Division == '10') // set the toyoto logo
 				{
 					DivUser = "TOY";
-					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource = _thatCH.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
 				} else { // set the lexus logo
 					DivUser = "LEX";
-					currentImageSource = this.getView().byId("idLexusLogo");
+					currentImageSource = _thatCH.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/Lexus.png");
 				}
 			}
@@ -162,16 +162,21 @@ sap.ui.define([
 					url: url,
 					type: "GET",
 					success: function (oChangeData) {
+						//	var array = [];
 						sap.ui.core.BusyIndicator.hide();
+						var arrayNewData = [];
 						if (oChangeData.d.results.length > 0) {
+							arrayNewData = _thatCH.newData(oChangeData.d.results);
+							//	console.log(arrayNewData);
 							_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
-							_thatCH.oChangeHistoryModel.setData(oChangeData.d);
+							_thatCH.oChangeHistoryModel.setData(arrayNewData);
+							//	_thatCH.oChangeHistoryModel.setData(oChangeData.d);
 							_thatCH.oChangeHistoryModel.updateBindings(true);
-							for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
-								if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
-									_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
+							for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().length; n++) {
+								if (_thatCH.oChangeHistoryModel.getData()[n].Status !== "Rejected") {
+									_thatCH.oChangeHistoryModel.getData()[n].visible = false;
 								} else {
-									_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
+									_thatCH.oChangeHistoryModel.getData()[n].visible = true;
 								}
 							}
 							_thatCH.afterConfigLoad();
@@ -199,15 +204,19 @@ sap.ui.define([
 					type: "GET",
 					success: function (oChangeData) {
 						sap.ui.core.BusyIndicator.hide();
+						var arrayNewData = [];
 						if (oChangeData.d.results.length > 0) {
+							arrayNewData = _thatCH.newData(oChangeData.d.results);
+							//	console.log(arrayNewData);
 							_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
-							_thatCH.oChangeHistoryModel.setData(oChangeData.d);
+							//_thatCH.oChangeHistoryModel.setData(oChangeData.d);
+							_thatCH.oChangeHistoryModel.setData(arrayNewData);
 							_thatCH.oChangeHistoryModel.updateBindings(true);
-							for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
-								if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
-									_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
+							for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().length; n++) {
+								if (_thatCH.oChangeHistoryModel.getData()[n].Status !== "Rejected") {
+									_thatCH.oChangeHistoryModel.getData()[n].visible = false;
 								} else {
-									_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
+									_thatCH.oChangeHistoryModel.getData()[n].visible = true;
 								}
 							}
 							_thatCH.afterConfigLoad();
@@ -224,11 +233,64 @@ sap.ui.define([
 				});
 			}
 		},
-
+		newData: function (oData) {
+			var modelData = [];
+			//	var jsonModel = new sap.ui.model.json.JSONModel();
+			if (oData != "" && oData != undefined) {
+				//	console.log(oData);
+				for (var i = 0; i < oData.length; i++) {
+					var oDate = oData[i].DateSubmitted;
+					var Year = oDate.substring(0, 4); // 2020; //
+					var Month = oDate.substring(4, 6);
+					var month = Month - 1;
+					var Day = oDate.substring(6, 8);
+					//var date[i] = Year + "-" + Month + "-" + Day;
+					var Hours = oDate.substring(8, 10);
+					var Minute = oDate.substring(10, 12);
+					var Seconds = oDate.substring(12, 14);
+					//var Time = Hours + ":" + Minute + ":" + Seconds;
+					var X = parseInt("0");
+					var d = new Date(Year, month, Day, Hours, Minute, Seconds, X);
+					d.setDate(d.getDate());
+					var submittedDate = d;
+					var allowedDate = new Date();
+					allowedDate.setDate(allowedDate.getDate() - 45);
+					//console.log("submittedDate: " + i + " :" + submittedDate);
+					//console.log("allowedDate:" + i + " :" + allowedDate);
+					if (oData[i].Status == "Rejected" || oData[i].Status == "Accepted") {
+						if (submittedDate < allowedDate) {
+							//	console.log("The record has to be removed");
+						} else {
+							//	console.log("Show record: " + i);
+							modelData.push(oData[i]);
+						}
+					} else {
+						//	console.log("Show record from else : " + i);
+						modelData.push(oData[i]);
+					}
+				}
+			}
+			//jsonModel.setData(modelData);
+			console.log(modelData);
+			return modelData;
+		},
+		/*	addDays: function (date) {
+				var submittedDate = date;
+				var allowedDate = new Date();
+				allowedDate.setDate(allowedDate.getDate() - 45);
+				console.log("submittedDate: " + submittedDate);
+				console.log("allowedDate:" + allowedDate);
+				if (submittedDate < allowedDate) {
+					console.log("The record has to be removed");
+				} else {
+					console.log("Show record ");
+					return submittedDate;
+				}
+			},*/
 		onDealerChange: function (oDealer) {
 			sap.ui.core.BusyIndicator.show();
 			var BPDataMo = _thatCH.getView().getModel("BusinessDataModel");
-			var SelectedDealer = oDealer.getParameters().selectedItem.getAdditionalText(); 
+			var SelectedDealer = oDealer.getParameters().selectedItem.getAdditionalText();
 			_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
 
 			var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq '" + DivUser +
@@ -240,16 +302,20 @@ sap.ui.define([
 				type: "GET",
 				success: function (oChangeData) {
 					sap.ui.core.BusyIndicator.hide();
+					var arrayNewData = [];
 					if (oChangeData.d.results.length > 0) {
+						arrayNewData = _thatCH.newData(oChangeData.d.results);
+						console.log(arrayNewData);
+						_thatCH.oChangeHistoryModel.setData(arrayNewData);
 						_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
-						_thatCH.oChangeHistoryModel.setData(oChangeData.d);
+						//_thatCH.oChangeHistoryModel.setData(oChangeData.d);
 						_thatCH.oChangeHistoryModel.updateBindings(true);
-						
-						for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
-							if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
-								_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
+
+						for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().length; n++) {
+							if (_thatCH.oChangeHistoryModel.getData()[n].Status !== "Rejected") {
+								_thatCH.oChangeHistoryModel.getData()[n].visible = false;
 							} else {
-								_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
+								_thatCH.oChangeHistoryModel.getData()[n].visible = true;
 							}
 						}
 						_thatCH.afterConfigLoad();
@@ -268,7 +334,6 @@ sap.ui.define([
 				}
 			});
 		},
-
 		onNavigateToVL: function (oNavEvent) {
 
 			var obj = oNavEvent.getSource().getModel("ChangeHistoryModel").getProperty(oNavEvent.getSource().getBindingContext(
@@ -276,7 +341,7 @@ sap.ui.define([
 			obj.NewSuffix = obj.NewSuffix.replace("/", "%2F");
 			obj.OldSuffix = obj.OldSuffix.replace("/", "%2F");
 			obj.__metadata = "";
-			this.getRouter().navTo("vehicleDetails2", {
+			_thatCH.getRouter().navTo("vehicleDetails2", {
 				VCData2: JSON.stringify(obj)
 			});
 		},
@@ -286,10 +351,9 @@ sap.ui.define([
 			data.NewSuffix = data.NewSuffix.replace("/", "%2F");
 			data.OldSuffix = data.OldSuffix.replace("/", "%2F");
 			data.__metadata = "";
-			this.getRouter().navTo("orderChange2", {
+			_thatCH.getRouter().navTo("orderChange2", {
 				Data2: JSON.stringify(data)
 			});
-
 		},
 		formatDate: function (oDate) {
 			if (oDate != "" && oDate != undefined) {
@@ -305,7 +369,20 @@ sap.ui.define([
 				return dateTime;
 			}
 		},
-
+		formatDateForExcel: function (oDate) {
+			if (oDate != "" && oDate != undefined) {
+				var Year = oDate.substring(0, 4);
+				var Month = oDate.substring(4, 6);
+				var Day = oDate.substring(6, 8);
+				var date = Year + "-" + Month + "-" + Day;
+				var Hours = oDate.substring(8, 10);
+				var Minute = oDate.substring(10, 12);
+				var Seconds = oDate.substring(12, 14);
+				var Time = Hours + ":" + Minute + ":" + Seconds;
+				var dateTime = date + "/" + Time;
+				return dateTime;
+			}
+		},
 		onMenuLinkPress: function (oLink) {
 			var _oLinkPressed = oLink;
 			var _oSelectedScreen = _oLinkPressed.getSource().getProperty("text");
@@ -323,10 +400,277 @@ sap.ui.define([
 				}
 			}
 		},
+		handleSettingsConfirm: function (oEvent) {
+			var oTable = _thatCH.getView().byId("configTable");
+
+			var mParams = oEvent.getParameters();
+			var oBinding = oTable.getBinding("items");
+			var sPath;
+			var bDescending;
+			var vGroup;
+			var aSorters = [];
+			if (mParams.groupItem) {
+				sPath = mParams.groupItem.getKey();
+				bDescending = mParams.groupDescending;
+				vGroup = _thatCH.mGroupFunctions[sPath];
+				aSorters.push(new sap.ui.model.Sorter(sPath, bDescending, vGroup));
+			}
+
+			if (mParams.sortItem) {
+				sPath = mParams.sortItem.getKey();
+				bDescending = mParams.sortDescending;
+				aSorters.push(new sap.ui.model.Sorter(sPath, bDescending));
+			}
+			oBinding.sort(aSorters);
+
+			// apply filters to binding
+			var aFilters = [];
+			var sOperator;
+			jQuery.each(mParams.filterItems, function (i, oItem) {
+				sOperator = "StartsWith";
+				var sPath2 = oItem.getKey();
+				var sValue1 = oItem.getText();
+				var sValue2 = oItem.getText();
+				if (sPath2.indexOf("-") != -1) {
+					sPath2 = oItem.getKey().split("-")[0];
+					sValue1 = oItem.getKey().split("-")[1];
+					sValue2 = oItem.getKey().split("-")[1];
+				}
+
+				var oFilter = new Filter(sPath2, sOperator, sValue1, sValue2);
+				aFilters.push(oFilter);
+
+			});
+			oBinding.filter(aFilters);
+		},
+		handleFiltersDialog: function (oDialogEvent) {
+			if (!_thatCH._oSettingsDialog) {
+				_thatCH._oSettingsDialog = sap.ui.xmlfragment("pipelineInventory.view.fragments.filterSettingsForCH", _thatCH);
+				_thatCH.getView().addDependent(_thatCH._oSettingsDialog);
+				_thatCH._oSettingsDialog.open("filter");
+
+				function removeDuplicateValues(PropertyName, JSONModel, JSONModelName) {
+					var lookup = {};
+					var items = _thatCH.oChangeHistoryModel.getData();
+					//	console.log(items);
+					var ModelArray = [];
+					for (var item, i = 0; item = items[i++];) {
+						var name = item[PropertyName];
+						if (!(name in lookup)) {
+							lookup[name] = 1;
+							var ModelObj = {};
+							/*if (JSONModelName == "FilterDateSubmittedFromJSON") {
+								ModelObj.ETAFromText = name.slice(0, 4) + "-" + name.slice(4, 6) + "-" + name.slice(6, 8);
+								ModelObj[PropertyName] = name;
+							}*/
+							ModelObj[PropertyName] = name;
+							/*console.log(PropertyName);
+							console.log(name);
+							console.log(ModelObj);*/
+							ModelArray.push(ModelObj);
+						}
+					}
+					//	console.log(ModelArray);
+					JSONModel.setData(ModelArray);
+					_thatCH.setModel(JSONModel, JSONModelName);
+				}
+				removeDuplicateValues("NewModel", new sap.ui.model.json.JSONModel(), "FilterNewModelJSON");
+				removeDuplicateValues("OldModel", new sap.ui.model.json.JSONModel(), "FilterOldModelJSON");
+				removeDuplicateValues("TCISeries", new sap.ui.model.json.JSONModel(), "FilterSeriesJSON");
+				removeDuplicateValues("Status", new sap.ui.model.json.JSONModel(), "FilterStatusJSON");
+				removeDuplicateValues("Modelyear", new sap.ui.model.json.JSONModel(), "FilterModelyearJSON");
+				removeDuplicateValues("ZZDLR_REF_NO", new sap.ui.model.json.JSONModel(), "FilterOrderNumberJSON");
+				removeDuplicateValues("ZZVTN", new sap.ui.model.json.JSONModel(), "FilterVTNJSON");
+				removeDuplicateValues("VHVIN", new sap.ui.model.json.JSONModel(), "FilterVINJSON");
+
+				_thatCH.setModel(_thatCH.oChangeHistoryModel, "ChangeHistoryModel");
+			}
+			_thatCH._oSettingsDialog.open();
+		},
+		/*Show Filtered data as per user input*/
+		onApplyFilterBtn: function () {
+			var sQuery = {};
+			sQuery.VTN = _thatCH.getView().byId("ID_VTNVal").getValue();
+			sQuery.VIN = _thatCH.getView().byId("ID_VINVal").getValue();
+			sQuery.tempFilter = (_thatCH.getView().byId("idWildSearch").getValue()).split("*");
+
+			_thatCH.oTable = _thatCH.getView().byId("configTable");
+			_thatCH.oBinding = _thatCH.oTable.getBinding("items");
+			var aFilters = [];
+			var newQuery = sQuery.tempFilter;
+
+			if (sQuery) {
+				aFilters.push(new Filter("ZZVTN", sap.ui.model.FilterOperator.Contains, sQuery.VTN));
+				aFilters.push(new Filter("VHVIN", sap.ui.model.FilterOperator.Contains, sQuery.VIN));
+				var Query;
+
+				if (newQuery[0] == "") {
+					Query = newQuery[1];
+					aFilters.push(new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.StartsWith, Query));
+				} else if (newQuery[1] == "") {
+					Query = newQuery[0];
+					aFilters.push(new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EndsWith, Query));
+				} else {
+					Query = _thatCH.getView().byId("idWildSearch").getValue();
+					aFilters.push(new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.Contains, Query));
+				}
+
+				var oFilter = new sap.ui.model.Filter({
+					aFilters: aFilters,
+					bAnd: false,
+					_bMultiFilter: true
+				});
+
+				_thatCH.oBinding.filter(oFilter);
+			} else {
+				_thatCH.oBinding.filter([]);
+			}
+		},
+		onDataExport: function (oEvent) {
+			var data;
+			if (_thatCH.getView().getModel("ChangeHistoryModel") != undefined) {
+				data = _thatCH.getView().getModel("ChangeHistoryModel").getData();
+			} else {
+				data = _thatCH.getView().byId("configTable").getModel("ChangeHistoryModel").getData();
+			}
+			_thatCH.JSONToExcelConvertor(data, "Report", true);
+		},
+		JSONToExcelConvertor: function (JSONData, ReportTitle, ShowLabel) {
+			var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+			var CSV = "";
+			if (ShowLabel) {
+				var row = "";
+				row = row.slice(0, -1);
+			}
+
+			row += _thatCH.oI18nModel.getResourceBundle().getText("OrderNumber") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("VTN") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("ModelYear") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("Series") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("OldModel") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("OldSuffix") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("OldColour") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("OldAPX") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("NewModel") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("NewSuffix") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("NewColour") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("NewAPX") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("SubmissionDateTime") + ",";
+			row += _thatCH.oI18nModel.getResourceBundle().getText("Status") + ",";
+
+			CSV += row + '\r\n';
+
+			//loop is to extract each row
+			for (var i = 0; i < arrData.length; i++) {
+				var row = "";
+				row +=   '="' + arrData[i].ZZDLR_REF_NO + '",="' +
+					arrData[i].ZZVTN + '","' + arrData[i].Modelyear + '","' + arrData[i].TCISeries + '","' +
+					arrData[i].OldModel + '","' + arrData[i].OldSuffix + '","' + arrData[i].OldColor + '","' + arrData[i].OldAPX +
+					'","' + arrData[i].NewModel + '","' + arrData[i].NewSuffix + '","' + arrData[i].NewColor + '","' + arrData[i].NewAPX + '","' +
+					_thatCH.formatDateForExcel(arrData[i].DateSubmitted) + '","' + arrData[i].Status + '",';
+				//}
+				row.slice(1, row.length);
+				CSV += row + '\r\n';
+			}
+			if (CSV == "") {
+				alert("Invalid data");
+				return;
+			}
+			var fileName = _thatCH.oI18nModel.getResourceBundle().getText("ChangeHistory");
+			fileName += ReportTitle.replace(/ /g, "_");
+			// Initialize file format you want csv or xls
+
+			var blob = new Blob(["\ufeff" + CSV], {
+				type: "text/csv;charset=utf-8,"
+			});
+			if (sap.ui.Device.browser.name === "ie" || sap.ui.Device.browser.name === "ed") { // IE 10+ , Edge (IE 12+)
+				navigator.msSaveBlob(blob, _thatCH.oI18nModel.getResourceBundle().getText("ChangeHistory") + ".csv");
+			} else {
+				var uri = 'data:text/csv;charset=utf-8,' + "\ufeff" + encodeURIComponent(CSV); //'data:application/vnd.ms-excel,' + escape(CSV);
+				var link = document.createElement("a");
+
+				link.href = uri;
+				link.style = "visibility:hidden";
+				link.download = fileName + ".csv";
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+			}
+		},
+
+		onWildCardSearch: function (oEvent) {
+			_thatCH.sSearchQuery = oEvent.getSource().getValue();
+			_thatCH.fnSuperSearch();
+		},
+		fnSuperSearch: function (oEvent) {
+			var aFilters = [],
+				aSorters = [];
+
+				aSorters.push(new sap.ui.model.Sorter("DateSubmitted", _thatCH.bDescending));
+
+			if (_thatCH.sSearchQuery) {
+				var oFilter = new Filter([
+					new Filter("OldColor", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("Dealer", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("Modelyear", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("NewModel", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("NewSuffix", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("ORDERTYPE_DESC_EN", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("OldSuffix", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("OldModel", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("TCISeries", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("VGUID", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("VHCLE", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("VHVIN", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("Status", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("ZZORDERTYPE", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("ZZVTN", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery)
+				], false);
+
+				aFilters = new sap.ui.model.Filter([oFilter], false);
+			}
+			_thatCH.getView().byId("configTable").getBinding("items").filter(aFilters);
+			//_thatCH.byId("configTable").getBinding().filter(aFilters).sort(aSorters);
+		},
+		onWildCardSearch1: function (oWildCardVal) {
+			// add filter for search
+			_thatCH.oTable = _thatCH.getView().byId("configTable");
+			_thatCH.oBinding = _thatCH.oTable.getBinding("items");
+			var aFilters = [];
+			var tempFilter = oWildCardVal.getSource().getValue();
+			if (oWildCardVal.getParameters().newValue === "") {
+				_thatCH.oBinding.filter([]);
+			} else {
+				var sQuery = tempFilter.split("*");
+				var Query;
+				if (sQuery.length > 0) {
+					if (sQuery[0] == "") {
+						Query = sQuery[1];
+						aFilters = new Filter([
+							new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.StartsWith, Query)
+						], false);
+					} else if (sQuery[1] == "") {
+						Query = sQuery[0];
+						aFilters = new Filter([
+							new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.EndsWith, Query)
+						], false);
+					} else {
+						Query = _thatCH.getView().byId("idWildSearch").getValue();
+						aFilters = new Filter([
+							new Filter("ZZDLR_REF_NO", sap.ui.model.FilterOperator.Contains, Query)
+						], false);
+					}
+					_thatCH.oBinding.filter(aFilters);
+				} else {
+					_thatCH.oBinding.filter([]);
+				}
+			}
+		},
 		onExit: function () {
-			SelectedDealerCH="";
-			this.getView().byId("configTable").destroy();
-			this.getView().destroy();
+			SelectedDealerCH = "";
+			_thatCH.getView().byId("configTable").destroy();
+			_thatCH.getView().destroy();
 		}
 
 	});
