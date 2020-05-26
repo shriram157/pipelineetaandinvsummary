@@ -254,10 +254,10 @@ sap.ui.define([
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].AccessoriesInstalled = "";
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData[0].DNCVehicle = "";
 						_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[0] = {
-							"AccessoryInstalled": this.oBundle.getText("Yes")
+							"AccessoryInstalled": this.oBundle.getText("No")
 						};
 						_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[1] = {
-							"AccessoryInstalled": this.oBundle.getText("No")
+							"AccessoryInstalled": this.oBundle.getText("Yes")
 						};
 
 						_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
@@ -347,10 +347,10 @@ sap.ui.define([
 									}
 
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[0] = {
-										"AccessoryInstalled": this.oBundle.getText("Yes")
+										"AccessoryInstalled": this.oBundle.getText("No")
 									};
 									_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[1] = {
-										"AccessoryInstalled": this.oBundle.getText("No")
+										"AccessoryInstalled": this.oBundle.getText("Yes")
 									};
 									_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
 										"DNCVehicle": this.oBundle.getText("DNCStock")
