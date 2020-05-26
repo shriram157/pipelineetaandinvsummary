@@ -678,7 +678,7 @@ sap.ui.define([
 			row += _thatDT.oI18nModel.getResourceBundle().getText("OrderNumber") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("OrderType") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Status") + ",";
-			row += _thatDT.oI18nModel.getResourceBundle().getText("Accessory") + ",";
+			
 			row += _thatDT.oI18nModel.getResourceBundle().getText("VTN") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("VIN") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("ModelYear") + ",";
@@ -686,6 +686,7 @@ sap.ui.define([
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Model") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Suffix") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Colour") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("Accessory") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("ETAFrom") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("ETATo") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("CustomerName") + ",";
@@ -697,10 +698,10 @@ sap.ui.define([
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
 				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
-					'","' + arrData[i].ZMMSTA + '","' + arrData[i].AccessInstl_flag2 + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
+					'","' + arrData[i].ZMMSTA + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
 					arrData[i].Modelyear +  '","' + arrData[i].SERIES_DESC_EN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i]
 					.Suffix +
-					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '",="' + _thatDT.dateConverter(
+					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].AccessInstl_flag2 + '",="' + _thatDT.dateConverter(
 						arrData[i].ETAFrom) + '",="' + _thatDT.dateConverter(arrData[i].ETATo) + '","' + arrData[i].CustomerName + '","' + arrData[i].DNC_Comment +
 					'",';
 				//}
