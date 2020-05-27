@@ -639,6 +639,7 @@ sap.ui.define([
 			if (_thatCH.sSearchQuery) {
 				var oFilter = new Filter([
 					new Filter("OldColor", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("NewColor", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
 					new Filter("Dealer", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
 					new Filter("Modelyear", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
 					new Filter("NewModel", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
