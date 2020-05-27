@@ -11,7 +11,7 @@ sap.ui.define([
 	return BaseController.extend("pipelineInventory.controller.changeHistory", {
 
 		onInit: function () {
-			_thatCH = this;
+			_thatCH = this; 
 			_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
