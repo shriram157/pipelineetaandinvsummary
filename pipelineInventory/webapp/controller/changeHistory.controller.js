@@ -91,10 +91,11 @@ sap.ui.define([
 		},
 		onAfterRendering: function () {
 			_thatCH.afterConfigLoad();
-			var user = sap.ui.getCore().getModel("BusinessDataModel").getData().SamlList.UserType[0];
-			if (user == "TCI_Zone_Admin") {
+			var user = _thatCH.getView().getModel("BusinessDataModel").getData().SamlList.UserType[0];
+			//sap.ui.getCore().getModel('BusinessDataModel').getData().SamlList.UserType[0]
+			if (user == "Zone") {
 				_thatCH.getView().byId("dealerCH").getItems()[0].setEnabled(false);
-			} else if (user == "TCI_User") {
+			} else if (user == "National") {
 				_thatCH.getView().byId("dealerCH").getItems()[0].setEnabled(false);
 				_thatCH.getView().byId("dealerCH").getItems()[1].setEnabled(false);
 				_thatCH.getView().byId("dealerCH").getItems()[2].setEnabled(false);
@@ -102,10 +103,8 @@ sap.ui.define([
 				_thatCH.getView().byId("dealerCH").getItems()[4].setEnabled(false);
 				_thatCH.getView().byId("dealerCH").getItems()[5].setEnabled(false);
 				_thatCH.getView().byId("dealerCH").getItems()[6].setEnabled(false);
-			} else if (user == "TCI_Zone_User") {
-				_thatCH.getView().byId("dealerCH").getItems()[0].setEnabled(false);
-			} else {
-
+			}  else {
+			//	_thatCH.getView().byId("dealerCH").getItems()[0].setEnabled(false);
 			}
 
 		},
