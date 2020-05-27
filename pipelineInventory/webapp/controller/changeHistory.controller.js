@@ -181,6 +181,12 @@ sap.ui.define([
 							}
 							_thatCH.afterConfigLoad();
 							_thatCH.oChangeHistoryModel.updateBindings(true);
+							var oTable = _thatCH.getView().byId("configTable");
+							var oBinding = oTable.getBinding("items");
+							var aSorters = [];
+							aSorters.push(new sap.ui.model.Sorter('DateSubmitted', true));
+							oBinding.sort(aSorters);
+							oTable.updateBindings(true);
 						} else {
 							_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
 							_thatCH.oChangeHistoryModel.setData();
@@ -226,6 +232,12 @@ sap.ui.define([
 							_thatCH.oChangeHistoryModel.setData();
 							_thatCH.oChangeHistoryModel.updateBindings(true);
 						}
+						var oTable = _thatCH.getView().byId("configTable");
+						var oBinding = oTable.getBinding("items");
+						var aSorters = [];
+						aSorters.push(new sap.ui.model.Sorter('DateSubmitted', true));
+						oBinding.sort(aSorters);
+						oTable.updateBindings(true);
 					},
 					error: function (oError) {
 						_thatCH.errorFlag = true;
@@ -563,7 +575,7 @@ sap.ui.define([
 			//loop is to extract each row
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
-				row +=   '="' + arrData[i].ZZDLR_REF_NO + '",="' +
+				row += '="' + arrData[i].ZZDLR_REF_NO + '",="' +
 					arrData[i].ZZVTN + '","' + arrData[i].Modelyear + '","' + arrData[i].TCISeries + '","' +
 					arrData[i].OldModel + '","' + arrData[i].OldSuffix + '","' + arrData[i].OldColor + '","' + arrData[i].OldAPX +
 					'","' + arrData[i].NewModel + '","' + arrData[i].NewSuffix + '","' + arrData[i].NewColor + '","' + arrData[i].NewAPX + '","' +
@@ -606,7 +618,7 @@ sap.ui.define([
 			var aFilters = [],
 				aSorters = [];
 
-				aSorters.push(new sap.ui.model.Sorter("DateSubmitted", _thatCH.bDescending));
+			aSorters.push(new sap.ui.model.Sorter("DateSubmitted", _thatCH.bDescending));
 
 			if (_thatCH.sSearchQuery) {
 				var oFilter = new Filter([
