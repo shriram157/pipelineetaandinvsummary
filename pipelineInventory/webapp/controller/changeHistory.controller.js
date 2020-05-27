@@ -634,7 +634,7 @@ sap.ui.define([
 			var aFilters = [],
 				aSorters = [];
 
-			aSorters.push(new sap.ui.model.Sorter("DateSubmitted", _thatCH.bDescending));
+			aSorters.push(new sap.ui.model.Sorter("DateSubmitted", true));
 
 			if (_thatCH.sSearchQuery) {
 				var oFilter = new Filter([
@@ -660,7 +660,7 @@ sap.ui.define([
 				aFilters = new sap.ui.model.Filter([oFilter], false);
 			}
 			_thatCH.getView().byId("configTable").getBinding("items").filter(aFilters);
-			//_thatCH.byId("configTable").getBinding().filter(aFilters).sort(aSorters);
+			_thatCH.byId("configTable").getBinding("items").filter(aFilters).sort(aSorters);
 		},
 		onWildCardSearch1: function (oWildCardVal) {
 			// add filter for search
