@@ -83,14 +83,14 @@
 								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
 									<Text text="{i18n>Status}"/>
 								</Column>
-								<Column minScreenWidth="Desktop" demandPopin="true">
-									<Text text="{i18n>Accessory}"/>
-								</Column>
 								<Column width="5rem" minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>VTN}"/>
 								</Column>
 								<Column width="10rem" minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>VIN}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true">
+									<Text text="{i18n>Series}"/>
 								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>Model}"/>
@@ -100,6 +100,9 @@
 								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>Colour}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true">
+									<Text text="{i18n>Accessory}"/>
 								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>ETAFrom}"/>
@@ -118,12 +121,14 @@
 										<Link text="{VehicleDetailsJSON>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZDLR_REF_NO}"/>
 										<Text text="{VehicleDetailsJSON>ORDERTYPE_DESC_EN}"/>
 										<Text text="{VehicleDetailsJSON>ZMMSTA}"/>
-										<Text text="{VehicleDetailsJSON>AccessInstl_flag2}"/>
+										
 										<Link text="{VehicleDetailsJSON>ZZVTN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZVTN}"/>
 										<Link text="{VehicleDetailsJSON>VHVIN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>VHVIN}"/>
+										<Text text="{VehicleDetailsJSON>SERIES_DESC_EN}" />
 										<Text text="{VehicleDetailsJSON>Model} {VehicleDetailsJSON>MODEL_DESC_EN}"/>
 										<Text text="{VehicleDetailsJSON>Suffix} {VehicleDetailsJSON>SUFFIX_DESC_EN}/{VehicleDetailsJSON>INTCOL_DESC_EN}"/>
 										<Text text="{VehicleDetailsJSON>ExteriorColorCode} {VehicleDetailsJSON>EXTCOL_DESC_EN}"/>
+										<Text text="{VehicleDetailsJSON>AccessInstl_flag2}"/>
 										<Text text="{path:'VehicleDetailsJSON>ETAFrom', formatter: '.formatDate'}"/>
 										<Text text="{path:'VehicleDetailsJSON>ETATo', formatter: '.formatDate'}"/>
 										<Text text="{VehicleDetailsJSON>CustomerName}"/>

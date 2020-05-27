@@ -1,9 +1,9 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
 	xmlns:f="sap.ui.layout.form" controllerName="pipelineInventory.controller.changeHistory" xmlns:tnt="sap.tnt"
 	xmlns:html="http://www.w3.org/1999/xhtml">
-	<App>
+	<App >
 		<pages>
-			<Page showNavButton="false">
+			<Page  showNavButton="false" class="ETAMaster2">
 				<customHeader>
 					<Bar class="sapUiSmallPaddingBeginEnd clCustomHeaderBg">
 						<contentLeft>
@@ -25,88 +25,118 @@
 					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
 				<content>
-					<Label text="{i18n>ConfigurationChangeHistory}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
-					<OverflowToolbar>
+						<Toolbar>
+							<Label text="{i18n>ConfigurationChangeHistory}" design="Bold" class="styleFontSize sapUiSmallPadding sapUiSmallMargin"/>
+						</Toolbar>
+
+				<!--	<OverflowToolbar>
 						<f:SimpleForm id="dealerformContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="1" adjustLabelSpan="true" emptySpanL="0"
-						emptySpanM="3" columnsL="3" columnsM="3" class="styleForms">
-						<f:content>
-							<Label text="{i18n>Dealer}" design="Bold" required="required"/>
-							<ComboBox showSecondaryValues="false" filterSecondaryValues="true" width="25em" value="" selectedKey="" selectionChange="onDealerChange"
-								items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
-								<core:ListItem key="{BusinessDataModel>BusinessPartnerType}"
-									text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}" additionalText="{BusinessDataModel>BusinessPartnerKey}"/>
-							</ComboBox>
-								</f:content>
-					</f:SimpleForm>
-					</OverflowToolbar>
+							emptySpanM="3" columnsL="3" columnsM="3" class="styleForms">
+							<f:content>
+								<Label text="{i18n>Dealer}" design="Bold" required="required"/>
+								<ComboBox showSecondaryValues="false" filterSecondaryValues="true" width="25em" value="" selectedKey="" selectionChange="onDealerChange"
+									items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
+									<core:ListItem key="{BusinessDataModel>BusinessPartnerType}"
+										text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}" additionalText="{BusinessDataModel>BusinessPartnerKey}"/>
+								</ComboBox>
+							</f:content>
+						</f:SimpleForm>
+					</OverflowToolbar>-->
+					<!--<OverflowToolbar>
+						<ToolbarSpacer/>
+						
+					-->	
+					<HBox class="justifyspacebetween sapUiMediumMarginBeginEnd">
+						
+					<HBox>
+					<Label text="{i18n>Dealer}" design="Bold" required="required" class="dealerlabel" />
+								<ComboBox id="dealerCH" showSecondaryValues="false" filterSecondaryValues="true" width="25em" value="" selectedKey="" selectionChange="onDealerChange"
+									items="{ path: 'BusinessDataModel>/DealerList', sorter: { path: 'BusinessPartner' } }">
+									<core:ListItem key="{BusinessDataModel>BusinessPartnerType}"
+										text="{BusinessDataModel>BusinessPartner}-{BusinessDataModel>BusinessPartnerName}" additionalText="{BusinessDataModel>BusinessPartnerKey}"/>
+								</ComboBox>
+					</HBox>
+					<HBox class="justifyEnd">
+						<Input type="Text" liveChange="onWildCardSearch" id="idWildSearch" class="sapUiMediumMarginEnd" />
+						<OverflowToolbarButton tooltip="{i18n>ApplyFilters}" icon="sap-icon://filter" text="{i18n>ApplyFilters}" press="handleFiltersDialog" class="sapUiMediumMarginBegin sapUiMediumMarginEnd"/>
+						<Button text="{i18n>ExportToExcel}" type="Default" press="onDataExport"/>
+					<!--</OverflowToolbar>-->
+					</HBox>
+					</HBox>
 					<ScrollContainer height='70%' width="100%" vertical='true'>
-					<Table id="configTable" items="{ChangeHistoryModel>/results}" width="auto" class="sapUiResponsiveMargin headerFixClass" growing="true" growingThreshold="5"
-						growingScrollToLoad="false" updateFinished="afterConfigLoad">
-						<columns>
-							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-								<Text text="{i18n>OrderNumber}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-								<Text text="{i18n>VTN}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-								<Text text="{i18n>Series}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>Model}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>Suffix}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>APX}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>Colour}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>NewModel}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>NewSuffix}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>NewAPX}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>NewColour}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>SubmissionDateTime}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>Status}"/>
-							</Column>
-							<Column minScreenWidth="Desktop" demandPopin="true" width="10rem">
-								<Text text="{i18n>ReSubmit}"/>
-							</Column>
-						</columns>
-						<items>
-							<ColumnListItem>
-								<cells>
-									<Link text="{ChangeHistoryModel>ZZDLR_REF_NO}" press="onNavigateToVL"/>
-									<Link text="{ChangeHistoryModel>ZZVTN}" press="onNavigateToVL"/>
-									<Text text="{ChangeHistoryModel>TCISeries} {ChangeHistoryModel>SERIES_DESC_EN}"/>
-									<Text text="{ChangeHistoryModel>OldModel}"/>
-									<Text text="{ChangeHistoryModel>OldSuffix}"/>
-									<Text text="{ChangeHistoryModel>OldAPX}"/>
-									<Text text="{ChangeHistoryModel>OldColor}"/>
-									<Text text="{ChangeHistoryModel>NewModel}"/>
-									<Text text="{ChangeHistoryModel>NewSuffix}"/>
-									<Text text="{ChangeHistoryModel>NewAPX}"/>
-									<Text text="{ChangeHistoryModel>NewColor}"/>
-									<Text text="{path:'ChangeHistoryModel>DateSubmitted', formatter: '.formatDate'}"/>
-									<Text text="{ChangeHistoryModel>Status}"/>
-									<Button text="{i18n>ReSubmit}" press="onNavigateToOC" id="ResubmitBTN" visible="{ChangeHistoryModel>visible}"/>
-								</cells>
-							</ColumnListItem>
-						</items>
-					</Table>
+						<Table id="configTable" items="{ChangeHistoryModel>/}" width="auto" class="sapUiResponsiveMargin headerFixClass" growing="true"
+							growingThreshold="100" growingScrollToLoad="false" updateFinished="afterConfigLoad">
+							<columns>
+								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+									<Text text="{i18n>OrderNumber}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+									<Text text="{i18n>VTN}"/>
+								</Column> 
+								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+									<Text text="{i18n>ModelYear}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+									<Text text="{i18n>Series}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" class="cellColor">
+									<Text text="{i18n>Model}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true">
+									<Text text="{i18n>Suffix}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true">
+									<Text text="{i18n>Colour}"/>
+								</Column>
+								<Column minScreenWidth="Desktop"  width="4.5%"  demandPopin="true">
+									<Text text="{i18n>APX}"/>
+								</Column>
+								
+								<Column minScreenWidth="Desktop" demandPopin="true" >
+									<Text text="{i18n>NewModel}" class="tablecell" />
+								</Column>
+								<Column id="newSuffix" minScreenWidth="Desktop" demandPopin="true" class="cellcolor">
+									<Text text="{i18n>NewSuffix}" class="tablecell " />
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true">
+									<Text text="{i18n>NewColour}" class="tablecell cellcolor" />
+								</Column>
+								<Column minScreenWidth="Desktop" width="5%" demandPopin="true">
+									<Text text="{i18n>NewAPX}" class="tablecell" />
+								</Column>
+							
+								<Column minScreenWidth="Desktop" demandPopin="true">
+									<Text text="{i18n>SubmissionDateTime}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true">
+									<Text text="{i18n>Status}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" width="8rem">
+									<Text text="{i18n>ReSubmit}"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Link text="{ChangeHistoryModel>ZZDLR_REF_NO}" press="onNavigateToVL"/>
+										<Link text="{ChangeHistoryModel>ZZVTN}" press="onNavigateToVL"/>
+										<Text text="{ChangeHistoryModel>Modelyear}"/>
+										<Text text="{ChangeHistoryModel>TCISeries} {ChangeHistoryModel>SERIES_DESC_EN}"/>
+										<Text text="{ChangeHistoryModel>OldModel}"/>
+										<Text text="{ChangeHistoryModel>OldSuffix}"/>
+										<Text text="{ChangeHistoryModel>OldColor}"/>
+										<Text text="{ChangeHistoryModel>OldAPX}"/>
+										<Text text="{ChangeHistoryModel>NewModel}" class="tablecell " />
+										<Text text="{ChangeHistoryModel>NewSuffix}" class="tablecell" />
+										<Text text="{ChangeHistoryModel>NewColor}" class="tablecell" />
+										<Text text="{ChangeHistoryModel>NewAPX}" class="tablecell"/>
+										<Text text="{path:'ChangeHistoryModel>DateSubmitted', formatter: '.formatDate'}" />
+										<Text text="{ChangeHistoryModel>Status}"/>
+										<Button text="{i18n>ReSubmit}" press="onNavigateToOC" id="ResubmitBTN" visible="{ChangeHistoryModel>visible}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
 					</ScrollContainer>
 				</content>
 				<footer>
