@@ -180,6 +180,7 @@ sap.ui.define([
 						Data.NewColor = Data.NewColor.replace("%2F", "/");
 						Data.NewModel = Data.NewModel.replace("%2F", "/");
 						Data.OldModel = Data.OldModel.replace("%2F", "/");
+						Data.DNC_Comment = Data.DNC_Comment.replace("%2F","/");
 
 						_thatVD.oVehicleDetailsJSON = new sap.ui.model.json.JSONModel();
 						_thatVD.oVehicleDetailsJSON.getData().selectedVehicleData = [];

@@ -413,6 +413,7 @@ sap.ui.define([
 			var Data = oNavEvent.getSource().getModel("VehicleDetailsJSON").getProperty(oNavEvent.getSource().getBindingContext(
 				"VehicleDetailsJSON").sPath);
 			Data.Suffix = Data.Suffix.replace("/", "%2F");
+			Data.DNC_Comment = Data.DNC_Comment.replace("/", "%2F");
 			Data.TCISeries = Data.TCISeries.replace("/", "%2F");
 			Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("/", "%2F");
 			Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("/", "%2F");
