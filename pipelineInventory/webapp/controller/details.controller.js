@@ -493,6 +493,7 @@ sap.ui.define([
 		navToDropShipVehicles: function () {
 			sap.ui.core.BusyIndicator.hide();
 			for (var i = 0; i < _thatDT.checkedData.length; i++) {
+				_thatDT.checkedData[i].DNC_Comment = _thatDT.checkedData[i].DNC_Comment.replace("/", "%2F");
 				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_EN = _thatDT.checkedData[i].MODEL_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_FR = _thatDT.checkedData[i].MODEL_DESC_FR.replace("/", "%2F");
@@ -511,6 +512,7 @@ sap.ui.define([
 		},
 		navToAssignVehicles: function () {
 			for (var i = 0; i < _thatDT.checkedData.length; i++) {
+				_thatDT.checkedData[i].DNC_Comment = _thatDT.checkedData[i].DNC_Comment.replace("/", "%2F");
 				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_EN = _thatDT.checkedData[i].MODEL_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_FR = _thatDT.checkedData[i].MODEL_DESC_FR.replace("/", "%2F");
