@@ -11,7 +11,6 @@ sap.ui.define([
 	return BaseController.extend("pipelineInventory.controller.vehicleDetails", {
 		onInit: function () {
 			_thatVD = this;
-
 			_thatVD.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
