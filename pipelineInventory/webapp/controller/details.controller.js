@@ -413,6 +413,7 @@ sap.ui.define([
 			var Data = oNavEvent.getSource().getModel("VehicleDetailsJSON").getProperty(oNavEvent.getSource().getBindingContext(
 				"VehicleDetailsJSON").sPath);
 			Data.Suffix = Data.Suffix.replace("/", "%2F");
+			Data.DNC_Comment = Data.DNC_Comment.replace(/\//g, "%2F");
 			Data.TCISeries = Data.TCISeries.replace("/", "%2F");
 			Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("/", "%2F");
 			Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("/", "%2F");
@@ -492,6 +493,7 @@ sap.ui.define([
 		navToDropShipVehicles: function () {
 			sap.ui.core.BusyIndicator.hide();
 			for (var i = 0; i < _thatDT.checkedData.length; i++) {
+				_thatDT.checkedData[i].DNC_Comment = _thatDT.checkedData[i].DNC_Comment.replace(/\//g, "%2F");
 				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_EN = _thatDT.checkedData[i].MODEL_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_FR = _thatDT.checkedData[i].MODEL_DESC_FR.replace("/", "%2F");
@@ -510,6 +512,7 @@ sap.ui.define([
 		},
 		navToAssignVehicles: function () {
 			for (var i = 0; i < _thatDT.checkedData.length; i++) {
+				_thatDT.checkedData[i].DNC_Comment = _thatDT.checkedData[i].DNC_Comment.replace(/\//g, "%2F");
 				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_EN = _thatDT.checkedData[i].MODEL_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_FR = _thatDT.checkedData[i].MODEL_DESC_FR.replace("/", "%2F");

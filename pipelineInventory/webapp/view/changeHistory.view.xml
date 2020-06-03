@@ -57,7 +57,7 @@
 								</ComboBox>
 					</HBox>
 					<HBox class="justifyEnd">
-						<Input type="Text" liveChange="onWildCardSearch" id="idWildSearch" class="sapUiMediumMarginEnd" />
+						<Input type="Text" placeholder="{i18n>Search}" liveChange="onWildCardSearch" id="idWildSearch" class="sapUiMediumMarginEnd" />
 						<OverflowToolbarButton tooltip="{i18n>ApplyFilters}" icon="sap-icon://filter" text="{i18n>ApplyFilters}" press="handleFiltersDialog" class="sapUiMediumMarginBegin sapUiMediumMarginEnd"/>
 						<Button text="{i18n>ExportToExcel}" type="Default" press="onDataExport"/>
 					<!--</OverflowToolbar>-->
