@@ -186,43 +186,44 @@ sap.ui.define([
 						_thatCH.errorFlag = true;
 					}
 				});
-			} else {
-				sap.ui.core.BusyIndicator.hide();
-				_thatCH.Dealer = "";
-				_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
-				var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq ' " + DivUser +
-					" ' and Dealer eq '" + _thatCH.Dealer +
-					"'&$format=json";
-				$.ajax({
-					dataType: "json",
-					url: url,
-					type: "GET",
-					success: function (oChangeData) {
-						sap.ui.core.BusyIndicator.hide();
-						if (oChangeData.d.results.length > 0) {
-							_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
-							_thatCH.oChangeHistoryModel.setData(oChangeData.d);
-							_thatCH.oChangeHistoryModel.updateBindings(true);
-							for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
-								if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
-									_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
-								} else {
-									_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
-								}
-							}
-							_thatCH.afterConfigLoad();
-							_thatCH.oChangeHistoryModel.updateBindings(true);
-						} else {
-							_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
-							_thatCH.oChangeHistoryModel.setData();
-							_thatCH.oChangeHistoryModel.updateBindings(true);
-						}
-					},
-					error: function (oError) {
-						_thatCH.errorFlag = true;
-					}
-				});
 			}
+			// else {
+			// 	sap.ui.core.BusyIndicator.hide();
+			// 	_thatCH.Dealer = "";
+			// 	_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
+			// 	var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq ' " + DivUser +
+			// 		" ' and Dealer eq '" + _thatCH.Dealer +
+			// 		"'&$format=json";
+			// 	$.ajax({
+			// 		dataType: "json",
+			// 		url: url,
+			// 		type: "GET",
+			// 		success: function (oChangeData) {
+			// 			sap.ui.core.BusyIndicator.hide();
+			// 			if (oChangeData.d.results.length > 0) {
+			// 				_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
+			// 				_thatCH.oChangeHistoryModel.setData(oChangeData.d);
+			// 				_thatCH.oChangeHistoryModel.updateBindings(true);
+			// 				for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().results.length; n++) {
+			// 					if (_thatCH.oChangeHistoryModel.getData().results[n].Status !== "Rejected") {
+			// 						_thatCH.oChangeHistoryModel.getData().results[n].visible = false;
+			// 					} else {
+			// 						_thatCH.oChangeHistoryModel.getData().results[n].visible = true;
+			// 					}
+			// 				}
+			// 				_thatCH.afterConfigLoad();
+			// 				_thatCH.oChangeHistoryModel.updateBindings(true);
+			// 			} else {
+			// 				_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
+			// 				_thatCH.oChangeHistoryModel.setData();
+			// 				_thatCH.oChangeHistoryModel.updateBindings(true);
+			// 			}
+			// 		},
+			// 		error: function (oError) {
+			// 			_thatCH.errorFlag = true;
+			// 		}
+			// 	});
+			// }
 		},
 
 		onDealerChange: function (oDealer) {
