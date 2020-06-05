@@ -1762,6 +1762,10 @@ str= str.replace("/", "%2F");
 			if (obj.INTCOL_DESC_EN != undefined) {
 				obj.INTCOL_DESC_EN = obj.INTCOL_DESC_EN.replace("/", "%2F");
 			}
+			if (obj.DNC_Comment != undefined) {
+			//obj.DNC_Comment = obj.DNC_Comment.replace(/\//g, "%2F");
+			obj.DNC_Comment = obj.DNC_Comment.replace(/[^\w\s]+/g, "%2F");
+			}
 			if (obj.EXTCOL_DESC_EN != undefined) {
 				obj.EXTCOL_DESC_EN = obj.EXTCOL_DESC_EN.replace("/", "%2F");
 			}

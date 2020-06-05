@@ -235,6 +235,10 @@ sap.ui.define([
 					if (Data.NewSuffix != undefined) {
 						Data.NewSuffix = Data.NewSuffix.replace("%2F", "/");
 					}
+						if (Data.DNC_Comment != undefined) {
+						Data.DNC_Comment = Data.DNC_Comment.replace("%2F"," ");
+					}
+				
 					if (Data.OldSuffix != undefined) {
 						Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
 					}
