@@ -235,10 +235,13 @@ sap.ui.define([
 					if (Data.NewSuffix != undefined) {
 						Data.NewSuffix = Data.NewSuffix.replace("%2F", "/");
 					}
-						if (Data.DNC_Comment != undefined) {
-						Data.DNC_Comment = Data.DNC_Comment.replace("%2F"," ");
+					if (Data.DNC_Comment != undefined) {
+						Data.DNC_Comment = Data.DNC_Comment.replace("%2F", " ");
 					}
-				
+					if (Data.Comments != undefined) {
+						Data.Comments = Data.Comments.replace("%2F", " ");
+					}
+
 					if (Data.OldSuffix != undefined) {
 						Data.OldSuffix = Data.OldSuffix.replace("%2F", "/");
 					}
@@ -246,7 +249,7 @@ sap.ui.define([
 						Data.Suffix = Data.Suffix.replace("%2F", "/");
 					}
 					if (Data.TCISeries != undefined) {
-						Data.TCISeries = Data.TCISeries.replace("%2F","/");
+						Data.TCISeries = Data.TCISeries.replace("%2F", "/");
 					}
 					if (Data.SUFFIX_DESC_FR != undefined && Data.SUFFIX_DESC_EN != undefined) {
 						Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("%2F", "/");
