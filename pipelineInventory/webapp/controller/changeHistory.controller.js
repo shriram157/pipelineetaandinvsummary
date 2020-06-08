@@ -213,7 +213,8 @@ sap.ui.define([
 						_thatCH.errorFlag = true;
 					}
 				});
-			} else {
+			} 
+		/*	else {
 				sap.ui.core.BusyIndicator.hide();
 				_thatCH.Dealer = "";
 				_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
@@ -259,7 +260,7 @@ sap.ui.define([
 						_thatCH.errorFlag = true;
 					}
 				});
-			}
+			}*/
 		},
 		newData: function (oData) {
 			var modelData = [];
