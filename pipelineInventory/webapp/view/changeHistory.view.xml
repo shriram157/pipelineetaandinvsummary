@@ -132,7 +132,7 @@
 										<Text text="{ChangeHistoryModel>NewAPX}" class="tablecell"/>
 										<Text text="{path:'ChangeHistoryModel>DateSubmitted', formatter: '.formatDate'}" />
 										<Text text="{ChangeHistoryModel>Status}"/>
-										<Button text="{i18n>ReSubmit}" press="onNavigateToOC" id="ResubmitBTN" visible="{ChangeHistoryModel>visible}"/>
+										<Button text="{i18n>ReSubmit}" press="onPressResubmit" id="ResubmitBTN" visible="{ChangeHistoryModel>visible}"/>
 									</cells>
 								</ColumnListItem>
 							</items>

@@ -11,7 +11,7 @@ sap.ui.define([
 	return BaseController.extend("pipelineInventory.controller.changeHistory", {
 
 		onInit: function () {
-			_thatCH = this; 
+			_thatCH = this;
 			_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
@@ -103,8 +103,8 @@ sap.ui.define([
 				_thatCH.getView().byId("dealerCH").getItems()[4].setEnabled(false);
 				_thatCH.getView().byId("dealerCH").getItems()[5].setEnabled(false);
 				_thatCH.getView().byId("dealerCH").getItems()[6].setEnabled(false);
-			}  else {
-			//	_thatCH.getView().byId("dealerCH").getItems()[0].setEnabled(false);
+			} else {
+				//	_thatCH.getView().byId("dealerCH").getItems()[0].setEnabled(false);
 			}
 
 		},
@@ -213,54 +213,54 @@ sap.ui.define([
 						_thatCH.errorFlag = true;
 					}
 				});
-			} 
-		/*	else {
-				sap.ui.core.BusyIndicator.hide();
-				_thatCH.Dealer = "";
-				_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
-				var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq ' " + DivUser +
-					" ' and Dealer eq '" + _thatCH.Dealer +
-					"'&$format=json";
-				$.ajax({
-					dataType: "json",
-					url: url,
-					type: "GET",
-					success: function (oChangeData) {
-						sap.ui.core.BusyIndicator.hide();
-						var arrayNewData = [];
-						if (oChangeData.d.results.length > 0) {
-							arrayNewData = _thatCH.newData(oChangeData.d.results);
-							//	console.log(arrayNewData);
-							_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
-							//_thatCH.oChangeHistoryModel.setData(oChangeData.d);
-							_thatCH.oChangeHistoryModel.setData(arrayNewData);
-							_thatCH.oChangeHistoryModel.updateBindings(true);
-							for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().length; n++) {
-								if (_thatCH.oChangeHistoryModel.getData()[n].Status !== "Rejected") {
-									_thatCH.oChangeHistoryModel.getData()[n].visible = false;
-								} else {
-									_thatCH.oChangeHistoryModel.getData()[n].visible = true;
+			}
+			/*	else {
+					sap.ui.core.BusyIndicator.hide();
+					_thatCH.Dealer = "";
+					_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
+					var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq ' " + DivUser +
+						" ' and Dealer eq '" + _thatCH.Dealer +
+						"'&$format=json";
+					$.ajax({
+						dataType: "json",
+						url: url,
+						type: "GET",
+						success: function (oChangeData) {
+							sap.ui.core.BusyIndicator.hide();
+							var arrayNewData = [];
+							if (oChangeData.d.results.length > 0) {
+								arrayNewData = _thatCH.newData(oChangeData.d.results);
+								//	console.log(arrayNewData);
+								_thatCH._oViewModel.setProperty("/enablesubmitBtn", true);
+								//_thatCH.oChangeHistoryModel.setData(oChangeData.d);
+								_thatCH.oChangeHistoryModel.setData(arrayNewData);
+								_thatCH.oChangeHistoryModel.updateBindings(true);
+								for (var n = 0; n < _thatCH.oChangeHistoryModel.getData().length; n++) {
+									if (_thatCH.oChangeHistoryModel.getData()[n].Status !== "Rejected") {
+										_thatCH.oChangeHistoryModel.getData()[n].visible = false;
+									} else {
+										_thatCH.oChangeHistoryModel.getData()[n].visible = true;
+									}
 								}
+								_thatCH.afterConfigLoad();
+								_thatCH.oChangeHistoryModel.updateBindings(true);
+							} else {
+								_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
+								_thatCH.oChangeHistoryModel.setData();
+								_thatCH.oChangeHistoryModel.updateBindings(true);
 							}
-							_thatCH.afterConfigLoad();
-							_thatCH.oChangeHistoryModel.updateBindings(true);
-						} else {
-							_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
-							_thatCH.oChangeHistoryModel.setData();
-							_thatCH.oChangeHistoryModel.updateBindings(true);
+							var oTable = _thatCH.getView().byId("configTable");
+							var oBinding = oTable.getBinding("items");
+							var aSorters = [];
+							aSorters.push(new sap.ui.model.Sorter('DateSubmitted', true));
+							oBinding.sort(aSorters);
+							oTable.updateBindings(true);
+						},
+						error: function (oError) {
+							_thatCH.errorFlag = true;
 						}
-						var oTable = _thatCH.getView().byId("configTable");
-						var oBinding = oTable.getBinding("items");
-						var aSorters = [];
-						aSorters.push(new sap.ui.model.Sorter('DateSubmitted', true));
-						oBinding.sort(aSorters);
-						oTable.updateBindings(true);
-					},
-					error: function (oError) {
-						_thatCH.errorFlag = true;
-					}
-				});
-			}*/
+					});
+				}*/
 		},
 		newData: function (oData) {
 			var modelData = [];
@@ -374,16 +374,18 @@ sap.ui.define([
 				VCData2: JSON.stringify(obj)
 			});
 		},
-		onNavigateToOC: function (oResubmit) {
-			var data = oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
-				"ChangeHistoryModel").sPath);
-			data.NewSuffix = data.NewSuffix.replace("/", "%2F");
-			data.OldSuffix = data.OldSuffix.replace("/", "%2F");
-			data.__metadata = "";
-			_thatCH.getRouter().navTo("orderChange2", {
-				Data2: JSON.stringify(data)
-			});
-		},
+		
+		//this is previous code for resubmit page.
+		// onNavigateToOC: function (oResubmit) {
+		// 	var data = oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
+		// 		"ChangeHistoryModel").sPath);
+		// 	data.NewSuffix = data.NewSuffix.replace("/", "%2F");
+		// 	data.OldSuffix = data.OldSuffix.replace("/", "%2F");
+		// 	data.__metadata = "";
+		// 	_thatCH.getRouter().navTo("orderChange2", {
+		// 		Data2: JSON.stringify(data)
+		// 	});
+		// },
 		formatDate: function (oDate) {
 			if (oDate != "" && oDate != undefined) {
 				var Year = oDate.substring(0, 4);
@@ -697,6 +699,62 @@ sap.ui.define([
 				}
 			}
 		},
+
+		//changes done for CR by Minakshi start
+		onPressResubmit: function (oResubmit) {
+			var data = oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
+				"ChangeHistoryModel").sPath);
+			data.NewSuffix = data.NewSuffix.replace("/", "%2F");
+			data.OldSuffix = data.OldSuffix.replace("/", "%2F");
+			data.__metadata = "";
+			console.log(data);
+
+			var obj = {
+				VHCLE: data.VHCLE,
+				Dealer: data.Dealer,
+				LANGUAGE: data.LANGUAGE,
+				NewModel: data.NewModel,
+				NewSuffix: data.NewSuffix,
+				NewColor: data.NewColor
+			};
+
+			var OrderChangeModel = _thatCH.getOwnerComponent().getModel("DataModel");
+			OrderChangeModel.setUseBatch(false);
+			OrderChangeModel.create("/OrderChangeSet", obj, {
+				success: $.proxy(function (oResponse) {
+					if (oResponse.Error != "") {
+						sap.m.MessageBox.show(oResponse.Error, {
+							icon: sap.m.MessageBox.Icon.ERROR,
+							title: _thatCH.oI18nModel.getResourceBundle().getText("Error"),
+							actions: [sap.m.MessageBox.Action.OK],
+							onClose: function (oAction) {}
+						});
+					} else {
+						// _thatCH.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Status = "Requested";
+						// _thatCH.getView().getModel("VehicleDetailsJSON").updateBindings(true);
+						sap.m.MessageBox.show(_thatCH.oI18nModel.getResourceBundle().getText("VehicleUpdated"), {
+							icon: sap.m.MessageBox.Icon.SUCCESS,
+							title: _thatCH.oI18nModel.getResourceBundle().getText("Success"),
+							actions: [sap.m.MessageBox.Action.OK],
+							onClose: function (oAction) {}
+						});
+					}
+				}, _thatCH),
+				error: function (oError) {
+					sap.m.MessageBox.show(_thatCH.oI18nModel.getResourceBundle().getText("ErrorInData"), {
+						icon: sap.m.MessageBox.Icon.ERROR,
+						title: _thatCH.oI18nModel.getResourceBundle().getText("Error"),
+						actions: [sap.m.MessageBox.Action.OK],
+						onClose: function (oAction) {}
+					});
+					// sap.m.MessageBox.error(
+					// 	"Error in data posting"
+					// );
+				}
+			});
+
+		},
+	//changes done for CR by Minakshi end
 		onExit: function () {
 			SelectedDealerCH = "";
 			_thatCH.getView().byId("configTable").destroy();
