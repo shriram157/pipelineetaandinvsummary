@@ -6,6 +6,7 @@
 			<ViewSettingsItem text="{i18n>Status}" key="ZMMSTA"/>
 			<ViewSettingsItem text="{i18n>VTN}" key="ZZVTN"/>
 			<ViewSettingsItem text="{i18n>VIN}" key="VHVIN"/>
+			<ViewSettingsItem text="{i18n>Series}" key="SERIES_DESC_EN"/>
 			<ViewSettingsItem text="{i18n>Model}" key="Model"/>
 			<ViewSettingsItem text="{i18n>Suffix}" key="Suffix"/>
 			<ViewSettingsItem text="{i18n>Colour}" key="ExteriorColorCode"/>
@@ -36,6 +37,11 @@
 			<ViewSettingsFilterItem text="{i18n>VIN}" key="VHVIN" multiSelect="true" items="{VehicleDetailsJSON>/results}">
 				<items>
 					<ViewSettingsItem text="{VehicleDetailsJSON>VHVIN}" key="VHVIN"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="{i18n>Series}" key="SERIES_DESC_EN" multiSelect="true" items="{FilterSeriesJSON>/}">
+				<items>
+					<ViewSettingsItem text="{FilterSeriesJSON>SERIES_DESC_EN}" key="SERIES_DESC_EN"/>
 				</items>
 			</ViewSettingsFilterItem>
 			<ViewSettingsFilterItem text="{i18n>Model}" key="Model" multiSelect="true" items="{FilterModelJSON>/}">

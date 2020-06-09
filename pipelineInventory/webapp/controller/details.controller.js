@@ -354,6 +354,7 @@ sap.ui.define([
 					JSONModel.setData(ModelArray);
 					_thatDT.setModel(JSONModel, JSONModelName);
 				}
+				removeDuplicateValues("SERIES_DESC_EN", new sap.ui.model.json.JSONModel(), "FilterSeriesJSON");
 				removeDuplicateValues("Model", new sap.ui.model.json.JSONModel(), "FilterModelJSON");
 				removeDuplicateValues("Suffix", new sap.ui.model.json.JSONModel(), "FilterSuffixJSON");
 				removeDuplicateValues("ORDERTYPE_DESC_EN", new sap.ui.model.json.JSONModel(), "FilterOrderTypeJSON");
@@ -400,7 +401,6 @@ sap.ui.define([
 					bAnd: false,
 					_bMultiFilter: true
 				});
-
 				_thatDT.oBinding.filter(oFilter);
 			} else {
 				_thatDT.oBinding.filter([]);
@@ -412,6 +412,8 @@ sap.ui.define([
 			var Data = oNavEvent.getSource().getModel("VehicleDetailsJSON").getProperty(oNavEvent.getSource().getBindingContext(
 				"VehicleDetailsJSON").sPath);
 			Data.Suffix = Data.Suffix.replace("/", "%2F");
+			//Data.DNC_Comment = Data.DNC_Comment.replace(/\//g, "%2F");
+			Data.DNC_Comment = Data.DNC_Comment.replace(/[^\w\s]+/g, "%2F");
 			Data.TCISeries = Data.TCISeries.replace("/", "%2F");
 			Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("/", "%2F");
 			Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("/", "%2F");
@@ -492,6 +494,8 @@ sap.ui.define([
 		navToDropShipVehicles: function () {
 			sap.ui.core.BusyIndicator.hide();
 			for (var i = 0; i < _thatDT.checkedData.length; i++) {
+				//_thatDT.checkedData[i].DNC_Comment = _thatDT.checkedData[i].DNC_Comment.replace(/\//g, "%2F");
+				_thatDT.checkedData[i].DNC_Comment = _thatDT.checkedData[i].DNC_Comment.replace(/[^\w\s]+/g, "%2F");
 				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_EN = _thatDT.checkedData[i].MODEL_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_FR = _thatDT.checkedData[i].MODEL_DESC_FR.replace("/", "%2F");
@@ -510,6 +514,8 @@ sap.ui.define([
 		},
 		navToAssignVehicles: function () {
 			for (var i = 0; i < _thatDT.checkedData.length; i++) {
+				//_thatDT.checkedData[i].DNC_Comment = _thatDT.checkedData[i].DNC_Comment.replace(/\//g, "%2F");
+				_thatDT.checkedData[i].DNC_Comment = _thatDT.checkedData[i].DNC_Comment.replace(/[^\w\s]+/g, "%2F");
 				_thatDT.checkedData[i].ORDERTYPE_DESC_EN = _thatDT.checkedData[i].ORDERTYPE_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_EN = _thatDT.checkedData[i].MODEL_DESC_EN.replace("/", "%2F");
 				_thatDT.checkedData[i].MODEL_DESC_FR = _thatDT.checkedData[i].MODEL_DESC_FR.replace("/", "%2F");
@@ -678,28 +684,34 @@ sap.ui.define([
 			row += _thatDT.oI18nModel.getResourceBundle().getText("OrderNumber") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("OrderType") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Status") + ",";
-			row += _thatDT.oI18nModel.getResourceBundle().getText("Accessory") + ",";
+
 			row += _thatDT.oI18nModel.getResourceBundle().getText("VTN") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("VIN") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("ModelYear") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("Series") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Model") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Suffix") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("Colour") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("Accessory") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("ETAFrom") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("ETATo") + ",";
 			row += _thatDT.oI18nModel.getResourceBundle().getText("CustomerName") + ",";
+			row += _thatDT.oI18nModel.getResourceBundle().getText("Comments") + ",";
 
 			CSV += row + '\r\n';
 
 			//loop is to extract each row
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
-				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO +'","' + arrData[i].ORDERTYPE_DESC_EN +
-					'","' + arrData[i].ZMMSTA + '","' + arrData[i].AccessInstl_flag2 + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
-					arrData[i].Modelyear +  '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' + arrData[i]
+				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
+					'","' + arrData[i].ZMMSTA + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
+					arrData[i].Modelyear + '","' + arrData[i].SERIES_DESC_EN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' +
+					arrData[i]
 					.Suffix +
-					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '",="' + _thatDT.dateConverter(
-						arrData[i].ETAFrom) + '",="' + _thatDT.dateConverter(arrData[i].ETATo) + '","' + arrData[i].CustomerName +  '",';
+					"-" + arrData[i].SUFFIX_DESC_EN + '","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].AccessInstl_flag2 +
+					'",="' + _thatDT.dateConverter(
+						arrData[i].ETAFrom) + '",="' + _thatDT.dateConverter(arrData[i].ETATo) + '","' + arrData[i].CustomerName + '","' + arrData[i].DNC_Comment +
+					'",';
 				//}
 				row.slice(1, row.length);
 				CSV += row + '\r\n';
