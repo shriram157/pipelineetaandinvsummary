@@ -4,14 +4,16 @@ sap.ui.define([
 	'sap/ui/model/resource/ResourceModel',
 	'sap/ui/model/Filter',
 	"sap/m/MessageBox",
-	"sap/ui/core/routing/History"
-], function (BaseController, JSONModel, ResourceModel, Filter, MessageBox, History) {
+	"sap/ui/core/routing/History",
+	"sap/ui/model/Sorter"
+], function (BaseController, JSONModel, ResourceModel, Filter, MessageBox, History, Sorter) {
 	"use strict";
 	var _thatCH, SelectedDealerCH, sSelectedLocale, Division, DivUser, localLang;
 	return BaseController.extend("pipelineInventory.controller.changeHistory", {
 
 		onInit: function () {
 			_thatCH = this;
+			this._mViewSettingsDialogs = {};
 			_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
@@ -374,7 +376,7 @@ sap.ui.define([
 				VCData2: JSON.stringify(obj)
 			});
 		},
-		
+
 		//this is previous code for resubmit page.
 		// onNavigateToOC: function (oResubmit) {
 		// 	var data = oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
@@ -712,7 +714,7 @@ sap.ui.define([
 			var obj = {
 				VHCLE: data.VHCLE,
 				Dealer: data.Dealer,
-				LANGUAGE: data.LANGUAGE,
+				LANGUAGE: localLang,
 				NewModel: data.NewModel,
 				NewSuffix: data.NewSuffix,
 				NewColor: data.NewColor
@@ -754,7 +756,37 @@ sap.ui.define([
 			});
 
 		},
-	//changes done for CR by Minakshi end
+		// createViewSettingsDialog: function (sDialogFragmentName) {
+		// 	var oDialog = this._mViewSettingsDialogs[sDialogFragmentName];
+
+		// 	if (!oDialog) {
+		// 		oDialog = sap.ui.xmlfragment(sDialogFragmentName, this);
+		// 		this._mViewSettingsDialogs[sDialogFragmentName] = oDialog;
+		// 		this.getView().addDependent(oDialog);
+		// 	}
+
+		// 	return oDialog;
+		// },
+
+		// handleSortButtonPressed: function () {
+		// 	this.createViewSettingsDialog("pipelineInventory.view.fragments.sortItem").open();
+		// },
+		// handleSortDialogConfirm: function (oEvent) {
+		// 	var oTable = this.byId("configTable"),
+		// 		mParams = oEvent.getParameters(),
+		// 		oBinding = oTable.getBinding("items"),
+		// 		sPath,
+		// 		bDescending,
+		// 		aSorters = [];
+
+		// 	sPath = mParams.sortItem.getKey();
+		// 	bDescending = mParams.sortDescending;
+		// 	aSorters.push(new Sorter(sPath, bDescending));
+
+		// 	// apply the selected sort and group settings
+		// 	oBinding.sort(aSorters);
+		// },
+		//changes done for CR by Minakshi end
 		onExit: function () {
 			SelectedDealerCH = "";
 			_thatCH.getView().byId("configTable").destroy();
