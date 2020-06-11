@@ -706,8 +706,10 @@ sap.ui.define([
 		onPressResubmit: function (oResubmit) {
 			var data = oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
 				"ChangeHistoryModel").sPath);
-			data.NewSuffix = data.NewSuffix.replace("/", "%2F");
-			data.OldSuffix = data.OldSuffix.replace("/", "%2F");
+			// data.NewSuffix = data.NewSuffix.replace("/", "%2F");
+			// data.NewModel = data.NewModel.replace("/", "%2F");
+			// data.OldSuffix = data.OldSuffix.replace("/", "%2F");
+		
 			data.__metadata = "";
 			console.log(data);
 

@@ -24,13 +24,7 @@
 					</ToolbarSpacer>
 					<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="onMenuLinkPress"/>
 				</tnt:ToolHeader>
-				
-				
-				
-				
-					
 				<content>
-					
 						<f:SimpleForm
 			editable="true"
 			layout="ResponsiveGridLayout">
