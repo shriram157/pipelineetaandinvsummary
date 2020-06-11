@@ -709,24 +709,34 @@ sap.ui.define([
 			// data.NewSuffix = data.NewSuffix.replace("/", "%2F");
 			// data.NewModel = data.NewModel.replace("/", "%2F");
 			// data.OldSuffix = data.OldSuffix.replace("/", "%2F");
-		
+			var obj = {};
 			data.__metadata = "";
-			console.log(data);
+			
+			
+			if(data.NewModel){
+				obj.NewModel = data.NewModel.split("-")[0];
+			}
+			if(data.NewSuffix){
+					obj.NewSuffix = data.NewSuffix.split("-")[0];
+			}
+			if(data.NewColor){
+					obj.NewColor = data.NewColor.split("-")[0];
+			}
+			
+			if(data.VHCLE){
+				obj.VHCLE = data.VHCLE;	
+			}
+			
+			obj.Dealer = data.Dealer;
+			obj.LANGUAGE = localLang;
 
-			var obj = {
-				VHCLE: data.VHCLE,
-				Dealer: data.Dealer,
-				LANGUAGE: localLang,
-				NewModel: data.NewModel,
-				NewSuffix: data.NewSuffix,
-				NewColor: data.NewColor
-			};
+		
 
 			var OrderChangeModel = _thatCH.getOwnerComponent().getModel("DataModel");
 			OrderChangeModel.setUseBatch(false);
 			OrderChangeModel.create("/OrderChangeSet", obj, {
 				success: $.proxy(function (oResponse) {
-					if (oResponse.Error != "") {
+					if (oResponse.Error !== "") {
 						sap.m.MessageBox.show(oResponse.Error, {
 							icon: sap.m.MessageBox.Icon.ERROR,
 							title: _thatCH.oI18nModel.getResourceBundle().getText("Error"),

@@ -27,7 +27,7 @@
 				<content>
 						<f:SimpleForm
 			editable="true"
-			layout="ResponsiveGridLayout">
+			layout="ResponsiveGridLayout" class="idFormHis">
 						<OverflowToolbar id="otbSubheader">
 						<Title text="{i18n>ConfigurationChangeHistory}" level="H2"/>
 						<ToolbarSpacer/>
@@ -41,7 +41,7 @@
 						<SearchField placeholder="{i18n>Search}" liveChange="onWildCardSearch" id="idWildSearch" >
 									<layoutData><OverflowToolbarLayoutData minWidth="200px" maxWidth="300px" shrinkable="true"/></layoutData>
 						</SearchField>
-						<OverflowToolbarButton tooltip="{i18n>ApplySortFilters}" type="Transparent" icon="sap-icon://filter" text="{i18n>ApplyFilters}" press="handleFiltersDialog"/>
+						<OverflowToolbarButton tooltip="{i18n>ApplySortFilters}" type="Transparent" icon="sap-icon://action-settings" text="{i18n>ApplyFilters}" press="handleFiltersDialog"/>
 						<OverflowToolbarButton tooltip="{i18n>ExportToExcel}" icon="sap-icon://excel-attachment" type="Transparent" press="onDataExport"/>
 						
 					</OverflowToolbar>
@@ -86,7 +86,7 @@
 					<!--</OverflowToolbar>-->
 					<!--</HBox>-->
 					<!--</HBox>-->
-					<ScrollContainer  height='70%' width="100%" vertical='true'>
+					<ScrollContainer  height='80%' width="100%" vertical='true'>
 						<Table  id="configTable" items="{ChangeHistoryModel>/}" width="auto" class="headerFixClass" growing="true"
 							growingThreshold="100" growingScrollToLoad="false" updateFinished="afterConfigLoad">
 							<columns>
