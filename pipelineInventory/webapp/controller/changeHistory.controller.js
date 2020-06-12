@@ -11,7 +11,7 @@ sap.ui.define([
 	return BaseController.extend("pipelineInventory.controller.changeHistory", {
 
 		onInit: function () {
-			_thatCH = this;
+			_thatCH = this; 
 			_thatCH.oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
 			});
@@ -91,6 +91,22 @@ sap.ui.define([
 		},
 		onAfterRendering: function () {
 			_thatCH.afterConfigLoad();
+			var user = _thatCH.getView().getModel("BusinessDataModel").getData().SamlList.UserType[0];
+			//sap.ui.getCore().getModel('BusinessDataModel').getData().SamlList.UserType[0]
+			if (user == "Zone") {
+				_thatCH.getView().byId("dealerCH").getItems()[0].setEnabled(false);
+			} else if (user == "National") {
+				_thatCH.getView().byId("dealerCH").getItems()[0].setEnabled(false);
+				_thatCH.getView().byId("dealerCH").getItems()[1].setEnabled(false);
+				_thatCH.getView().byId("dealerCH").getItems()[2].setEnabled(false);
+				_thatCH.getView().byId("dealerCH").getItems()[3].setEnabled(false);
+				_thatCH.getView().byId("dealerCH").getItems()[4].setEnabled(false);
+				_thatCH.getView().byId("dealerCH").getItems()[5].setEnabled(false);
+				_thatCH.getView().byId("dealerCH").getItems()[6].setEnabled(false);
+			}  else {
+			//	_thatCH.getView().byId("dealerCH").getItems()[0].setEnabled(false);
+			}
+
 		},
 		_oChangeHistoryRoute: function (oEvent) {
 			_thatCH.getView().setBusy(false);
@@ -181,6 +197,12 @@ sap.ui.define([
 							}
 							_thatCH.afterConfigLoad();
 							_thatCH.oChangeHistoryModel.updateBindings(true);
+							var oTable = _thatCH.getView().byId("configTable");
+							var oBinding = oTable.getBinding("items");
+							var aSorters = [];
+							aSorters.push(new sap.ui.model.Sorter('DateSubmitted', true));
+							oBinding.sort(aSorters);
+							oTable.updateBindings(true);
 						} else {
 							_thatCH._oViewModel.setProperty("/enablesubmitBtn", false);
 							_thatCH.oChangeHistoryModel.setData();
@@ -191,7 +213,8 @@ sap.ui.define([
 						_thatCH.errorFlag = true;
 					}
 				});
-			} else {
+			} 
+		/*	else {
 				sap.ui.core.BusyIndicator.hide();
 				_thatCH.Dealer = "";
 				_thatCH.btnResubmit = _thatCH.getView().byId("ResubmitBTN");
@@ -226,12 +249,18 @@ sap.ui.define([
 							_thatCH.oChangeHistoryModel.setData();
 							_thatCH.oChangeHistoryModel.updateBindings(true);
 						}
+						var oTable = _thatCH.getView().byId("configTable");
+						var oBinding = oTable.getBinding("items");
+						var aSorters = [];
+						aSorters.push(new sap.ui.model.Sorter('DateSubmitted', true));
+						oBinding.sort(aSorters);
+						oTable.updateBindings(true);
 					},
 					error: function (oError) {
 						_thatCH.errorFlag = true;
 					}
 				});
-			}
+			}*/
 		},
 		newData: function (oData) {
 			var modelData = [];
@@ -563,7 +592,7 @@ sap.ui.define([
 			//loop is to extract each row
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
-				row +=   '="' + arrData[i].ZZDLR_REF_NO + '",="' +
+				row += '="' + arrData[i].ZZDLR_REF_NO + '",="' +
 					arrData[i].ZZVTN + '","' + arrData[i].Modelyear + '","' + arrData[i].TCISeries + '","' +
 					arrData[i].OldModel + '","' + arrData[i].OldSuffix + '","' + arrData[i].OldColor + '","' + arrData[i].OldAPX +
 					'","' + arrData[i].NewModel + '","' + arrData[i].NewSuffix + '","' + arrData[i].NewColor + '","' + arrData[i].NewAPX + '","' +
@@ -606,11 +635,12 @@ sap.ui.define([
 			var aFilters = [],
 				aSorters = [];
 
-				aSorters.push(new sap.ui.model.Sorter("DateSubmitted", _thatCH.bDescending));
+			aSorters.push(new sap.ui.model.Sorter("DateSubmitted", true));
 
 			if (_thatCH.sSearchQuery) {
 				var oFilter = new Filter([
 					new Filter("OldColor", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
+					new Filter("NewColor", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
 					new Filter("Dealer", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
 					new Filter("Modelyear", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
 					new Filter("NewModel", sap.ui.model.FilterOperator.Contains, _thatCH.sSearchQuery),
@@ -631,7 +661,7 @@ sap.ui.define([
 				aFilters = new sap.ui.model.Filter([oFilter], false);
 			}
 			_thatCH.getView().byId("configTable").getBinding("items").filter(aFilters);
-			//_thatCH.byId("configTable").getBinding().filter(aFilters).sort(aSorters);
+			_thatCH.byId("configTable").getBinding("items").filter(aFilters).sort(aSorters);
 		},
 		onWildCardSearch1: function (oWildCardVal) {
 			// add filter for search
