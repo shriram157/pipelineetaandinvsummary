@@ -5,8 +5,10 @@ sap.ui.define([
 	'sap/ui/model/Filter',
 	"sap/m/MessageBox",
 	"sap/ui/core/routing/History",
-	"sap/ui/model/Sorter"
-], function (BaseController, JSONModel, ResourceModel, Filter, MessageBox, History, Sorter) {
+	"sap/ui/model/Sorter",
+	"sap/ui/core/BusyIndicator",
+	"sap/m/Dialog"
+], function (BaseController, JSONModel, ResourceModel, Filter, MessageBox, History, Sorter, BusyIndicator, Dialog) {
 	"use strict";
 	var _thatCH, SelectedDealerCH, sSelectedLocale, Division, DivUser, localLang;
 	return BaseController.extend("pipelineInventory.controller.changeHistory", {
@@ -710,86 +712,123 @@ sap.ui.define([
 
 		//changes done for CR by Minakshi start
 		onPressResubmit: function (oResubmit) {
+			var oBundle = this.getView().getModel("i18n").getResourceBundle();
 			var data = oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
-				"ChangeHistoryModel").sPath);
-			// data.NewSuffix = data.NewSuffix.replace("/", "%2F");
-			// data.NewModel = data.NewModel.replace("/", "%2F");
-			// data.OldSuffix = data.OldSuffix.replace("/", "%2F");
-			var obj = {};
-			data.__metadata = "";
+								"ChangeHistoryModel").sPath);
+			var dialog = new Dialog({
+				title: oBundle.getText("ResubmitChanges"),
+				type: "Message",
+				content: new sap.m.Text({
+					text: oBundle.getText("AreYouSuretoSubmit")
+				}),
 
-			if (data.NewModel) {
-				obj.NewModel = data.NewModel.split("-")[0];
-			}
-			if (data.NewSuffix) {
-				obj.NewSuffix = data.NewSuffix.split("-")[0];
-			}
-			if (data.NewColor) {
-				obj.NewColor = data.NewColor.split("-")[0];
-			}
+				buttons: [
+					new sap.m.Button({
+						text: oBundle.getText("Yes"),
+						press: $.proxy(function () {
+							dialog.close();
+							BusyIndicator.show(500);
+							
 
-			if (data.VHCLE) {
-				obj.VHCLE = data.VHCLE;
-			}
+							var obj = {};
+							data.__metadata = "";
 
-			obj.Dealer = data.Dealer;
-			obj.LANGUAGE = localLang;
-
-			var OrderChangeModel = _thatCH.getOwnerComponent().getModel("DataModel");
-			OrderChangeModel.setUseBatch(false);
-			OrderChangeModel.create("/OrderChangeSet", obj, {
-				success: $.proxy(function (oResponse) {
-					if (oResponse.Error !== "") {
-						sap.m.MessageBox.show(oResponse.Error, {
-							icon: sap.m.MessageBox.Icon.ERROR,
-							title: _thatCH.oI18nModel.getResourceBundle().getText("Error"),
-							actions: [sap.m.MessageBox.Action.OK],
-							onClose: function (oAction) {}
-						});
-					} else {
-
-						var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq ' " + DivUser +
-							" ' and Dealer eq '" + data.Dealer + "'and LANGUAGE eq '" + localLang + "' &$format=json";
-						$.ajax({
-							dataType: "json",
-							url: url,
-							type: "GET",
-							success: function (oChangeData) {
-								//	var array = [];
-								sap.ui.core.BusyIndicator.hide();
-								var arrayNewData = [];
-								var oTable, oBinding, aSorters;
-
-								_thatCH._fnHistoryData(oChangeData, arrayNewData, oTable, oBinding, aSorters);
-
-							},
-							error: function (oError) {
-								_thatCH.errorFlag = true;
+							if (data.NewModel) {
+								obj.NewModel = data.NewModel.split("-")[0];
 							}
-						});
+							if (data.NewSuffix) {
+								obj.NewSuffix = data.NewSuffix.split("-")[0];
+							}
+							if (data.NewColor) {
+								obj.NewColor = data.NewColor.split("-")[0];
+							}
 
-						// _thatCH.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Status = "Requested";
-						// _thatCH.getView().getModel("VehicleDetailsJSON").updateBindings(true);
-						sap.m.MessageBox.show(_thatCH.oI18nModel.getResourceBundle().getText("VehicleUpdated"), {
-							icon: sap.m.MessageBox.Icon.SUCCESS,
-							title: _thatCH.oI18nModel.getResourceBundle().getText("Success"),
-							actions: [sap.m.MessageBox.Action.OK],
-							onClose: function (oAction) {}
-						});
-					}
-				}, _thatCH),
-				error: function (oError) {
-					sap.m.MessageBox.show(_thatCH.oI18nModel.getResourceBundle().getText("ErrorInData"), {
-						icon: sap.m.MessageBox.Icon.ERROR,
-						title: _thatCH.oI18nModel.getResourceBundle().getText("Error"),
-						actions: [sap.m.MessageBox.Action.OK],
-						onClose: function (oAction) {}
-					});
-					// sap.m.MessageBox.error(
-					// 	"Error in data posting"
-					// );
+							if (data.VHCLE) {
+								obj.VHCLE = data.VHCLE;
+							}
+
+							obj.Dealer = data.Dealer;
+							obj.LANGUAGE = localLang;
+
+							var OrderChangeModel = _thatCH.getOwnerComponent().getModel("DataModel");
+							OrderChangeModel.setUseBatch(false);
+							OrderChangeModel.create("/OrderChangeSet", obj, {
+								success: $.proxy(function (oResponse) {
+									BusyIndicator.hide();
+									if (oResponse.Error !== "") {
+										sap.m.MessageBox.show(oResponse.Error, {
+											icon: sap.m.MessageBox.Icon.ERROR,
+											title: _thatCH.oI18nModel.getResourceBundle().getText("Error"),
+											actions: [sap.m.MessageBox.Action.OK],
+											onClose: function (oAction) {}
+										});
+									} else {
+
+										var url = _thatCH.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ChangeHistorySet?$filter=Division eq ' " +
+											DivUser +
+											" ' and Dealer eq '" + data.Dealer + "'and LANGUAGE eq '" + localLang + "' &$format=json";
+										$.ajax({
+											dataType: "json",
+											url: url,
+											type: "GET",
+											success: function (oChangeData) {
+												//	var array = [];
+												BusyIndicator.hide();
+												var arrayNewData = [];
+												var oTable, oBinding, aSorters;
+
+												_thatCH._fnHistoryData(oChangeData, arrayNewData, oTable, oBinding, aSorters);
+
+											},
+											error: function (oError) {
+												_thatCH.errorFlag = true;
+												BusyIndicator.hide();
+											}
+										});
+
+										// _thatCH.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Status = "Requested";
+										// _thatCH.getView().getModel("VehicleDetailsJSON").updateBindings(true);
+										sap.m.MessageBox.show(_thatCH.oI18nModel.getResourceBundle().getText("VehicleUpdated"), {
+											icon: sap.m.MessageBox.Icon.SUCCESS,
+											title: _thatCH.oI18nModel.getResourceBundle().getText("Success"),
+											actions: [sap.m.MessageBox.Action.OK],
+											onClose: function (oAction) {}
+										});
+									}
+								}, _thatCH),
+								error: function (oError) {
+									BusyIndicator.hide();
+									sap.m.MessageBox.show(_thatCH.oI18nModel.getResourceBundle().getText("ErrorInData"), {
+										icon: sap.m.MessageBox.Icon.ERROR,
+										title: _thatCH.oI18nModel.getResourceBundle().getText("Error"),
+										actions: [sap.m.MessageBox.Action.OK],
+										onClose: function (oAction) {}
+									});
+									// sap.m.MessageBox.error(
+									// 	"Error in data posting"
+									// );
+								}
+							});
+
+						}, this)
+					}),
+					new sap.m.Button({
+						text: oBundle.getText("No"),
+						press: $.proxy(function () {
+							BusyIndicator.hide();
+							
+							dialog.close();
+						}, this)
+					})
+
+				],
+
+				afterClose: function () {
+					dialog.destroy();
 				}
 			});
+
+			dialog.open();
 
 		},
 		// createViewSettingsDialog: function (sDialogFragmentName) {
