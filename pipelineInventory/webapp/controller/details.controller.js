@@ -426,6 +426,7 @@ sap.ui.define([
 			Data.MODEL_DESC_FR = Data.MODEL_DESC_FR.replace("/", "%2F");
 			Data.EXTCOL_DESC_EN = Data.EXTCOL_DESC_EN.replace("/", "%2F");
 			Data.EXTCOL_DESC_FR = Data.EXTCOL_DESC_FR.replace("/", "%2F");
+			Data.CustomerName = Data.CustomerName.replace(/\//g, "%2F");
 			Data.__metadata = "";
 
 			_thatDT.getRouter().navTo("vehicleDetails", {
