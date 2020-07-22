@@ -107,8 +107,6 @@ sap.ui.define([
 				_thatCH.getView().byId("dealerCH").getItems()[4].setEnabled(false);
 				_thatCH.getView().byId("dealerCH").getItems()[5].setEnabled(false);
 				_thatCH.getView().byId("dealerCH").getItems()[6].setEnabled(false);
-			} else {
-				//	_thatCH.getView().byId("dealerCH").getItems()[0].setEnabled(false);
 			}
 
 		},
