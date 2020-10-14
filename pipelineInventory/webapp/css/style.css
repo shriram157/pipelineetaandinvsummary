@@ -280,3 +280,8 @@
 .tablecellcolor{
 	background-color:aliceblue !important
 }
+
+.idFormHis .sapUiFormResGrid>div {
+	padding-bottom : 0;
+	border-bottom: 1px solid #e5e5e5;
+}
