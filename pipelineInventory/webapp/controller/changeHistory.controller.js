@@ -404,8 +404,9 @@ sap.ui.define([
 				var Minute = oDate.substring(10, 12);
 				var Seconds = oDate.substring(12, 14);
 				var Time = Hours + ":" + Minute + ":" + Seconds;
-				var dateTime = date + "\n/" + Time;
-				return dateTime;
+				var dateTime = date + " " + Time;
+				var FinalDate = moment.utc(new Date(dateTime)).format("YYYY-MM-DD HH:mm:ss");
+				return FinalDate;
 			}
 		},
 		formatDateForExcel: function (oDate) {

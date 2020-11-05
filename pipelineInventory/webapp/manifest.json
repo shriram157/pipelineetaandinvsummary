@@ -122,9 +122,14 @@
 			}
 		},
 		"resources": {
-			"js": [{
+			"js": [
+				{
 				"uri": "utils/fabIcons.js"
-			}],
+				},
+				{
+				"uri": "libs/moment.js"
+				}
+			],
 			"css": [{
 				"uri": "css/style.css"
 			}]
