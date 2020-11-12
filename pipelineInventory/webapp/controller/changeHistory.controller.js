@@ -383,17 +383,6 @@ sap.ui.define([
 			});
 		},
 
-		//this is previous code for resubmit page.
-		// onNavigateToOC: function (oResubmit) {
-		// 	var data = oResubmit.getSource().getModel("ChangeHistoryModel").getProperty(oResubmit.getSource().getBindingContext(
-		// 		"ChangeHistoryModel").sPath);
-		// 	data.NewSuffix = data.NewSuffix.replace("/", "%2F");
-		// 	data.OldSuffix = data.OldSuffix.replace("/", "%2F");
-		// 	data.__metadata = "";
-		// 	_thatCH.getRouter().navTo("orderChange2", {
-		// 		Data2: JSON.stringify(data)
-		// 	});
-		// },
 		formatDate: function (oDate) {
 			if (oDate != "" && oDate != undefined) {
 				var Year = oDate.substring(0, 4);
@@ -406,8 +395,9 @@ sap.ui.define([
 				var Time = Hours + ":" + Minute + ":" + Seconds;
 				var dateTime = date + " " + Time;
 				var zone1= "Canada/Eastern";
-				var FinalDate = moment.tz(dateTime, zone1).utc().format("YYYY-MM-DD HH:mm:ss");
+				//var FinalDate = moment.tz(dateTime, zone1).utc().format("YYYY-MM-DD HH:mm:ss");
 				//var FinalDate = moment.utc(new Date(dateTime)).format("YYYY-MM-DD HH:mm:ss");
+				var FinalDate = moment(moment.utc(dateTime).toDate()).local().format("YYYY-MM-DD HH:mm:ss")
 				return FinalDate;
 			}
 		},
