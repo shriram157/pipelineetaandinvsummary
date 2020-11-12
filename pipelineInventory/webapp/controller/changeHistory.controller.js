@@ -405,7 +405,7 @@ sap.ui.define([
 				var Seconds = oDate.substring(12, 14);
 				var Time = Hours + ":" + Minute + ":" + Seconds;
 				var dateTime = date + " " + Time;
-				var zone1= 'Canada/Pacific';
+				var zone1= "Canada/Eastern";
 				var FinalDate = moment.tz(dateTime, zone1).utc().format("YYYY-MM-DD HH:mm:ss");
 				//var FinalDate = moment.utc(new Date(dateTime)).format("YYYY-MM-DD HH:mm:ss");
 				return FinalDate;
