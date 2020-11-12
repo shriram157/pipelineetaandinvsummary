@@ -128,6 +128,9 @@
 				},
 				{
 				"uri": "libs/moment.js"
+				},
+				{
+				"uri": "libs/moment-timezone.min.js"
 				}
 			],
 			"css": [{
