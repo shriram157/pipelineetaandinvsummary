@@ -262,7 +262,7 @@ sap.ui.define([
 						_thatVD.oVehicleDetailsJSON.getData().AcceessoryData[1] = {
 							"AccessoryInstalled": this.oBundle.getText("Yes")
 						};
-						
+
 						_thatVD.getView().getModel("LocalVDModel").setProperty("/enableAccessory", false);
 
 						_thatVD.oVehicleDetailsJSON.getData().DNCData[0] = {
@@ -1804,35 +1804,39 @@ sap.ui.define([
 			Obj.DNC = DNCVal;
 			Obj.Comments = _thatVD.oVehicleDetailsJSON.Comments;
 			var oModel = _thatVD.getOwnerComponent().getModel("DataModel");
+			_thatVD.fnGetLoggedInUserId(function (loggedInUser) {
 
-			oModel.setUseBatch(false);
-			oModel.create("/VehicleDetailsSet", Obj, {
-				success: $.proxy(function (oResponse) {
-					if (oResponse.Error != "") {
-						sap.m.MessageBox.show(oResponse.Error, {
+				Obj.UpdatedBy = loggedInUser;
+				oModel.setUseBatch(false);
+				oModel.create("/VehicleDetailsSet", Obj, {
+					success: $.proxy(function (oResponse) {
+						if (oResponse.Error != "") {
+							sap.m.MessageBox.show(oResponse.Error, {
+								icon: sap.m.MessageBox.Icon.ERROR,
+								title: _thatVD.oI18nModel.getResourceBundle().getText("Error"),
+								actions: [sap.m.MessageBox.Action.OK],
+								onClose: function (oAction) {}
+							});
+						} else {
+							sap.m.MessageBox.show(_thatVD.oI18nModel.getResourceBundle().getText("VehicleUpdated"), {
+								icon: sap.m.MessageBox.Icon.SUCCESS,
+								title: _thatVD.oI18nModel.getResourceBundle().getText("Success"),
+								actions: [sap.m.MessageBox.Action.OK],
+								onClose: function (oAction) {}
+							});
+						}
+					}, _thatVD),
+					error: $.proxy(function (oError) {
+						sap.m.MessageBox.show(_thatVD.oI18nModel.getResourceBundle().getText("ErrorInData"), {
 							icon: sap.m.MessageBox.Icon.ERROR,
 							title: _thatVD.oI18nModel.getResourceBundle().getText("Error"),
 							actions: [sap.m.MessageBox.Action.OK],
 							onClose: function (oAction) {}
 						});
-					} else {
-						sap.m.MessageBox.show(_thatVD.oI18nModel.getResourceBundle().getText("VehicleUpdated"), {
-							icon: sap.m.MessageBox.Icon.SUCCESS,
-							title: _thatVD.oI18nModel.getResourceBundle().getText("Success"),
-							actions: [sap.m.MessageBox.Action.OK],
-							onClose: function (oAction) {}
-						});
-					}
-				}, _thatVD),
-				error: function (oError) {
-					sap.m.MessageBox.show(_thatVD.oI18nModel.getResourceBundle().getText("ErrorInData"), {
-						icon: sap.m.MessageBox.Icon.ERROR,
-						title: _thatVD.oI18nModel.getResourceBundle().getText("Error"),
-						actions: [sap.m.MessageBox.Action.OK],
-						onClose: function (oAction) {}
-					});
-				}
+					}, _thatVD)
+				});
 			});
+
 		},
 
 		//cross-navigation to sold order application

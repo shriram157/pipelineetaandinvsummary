@@ -122,9 +122,17 @@
 			}
 		},
 		"resources": {
-			"js": [{
+			"js": [
+				{
 				"uri": "utils/fabIcons.js"
-			}],
+				},
+				{
+				"uri": "libs/moment.js"
+				},
+				{
+				"uri": "libs/moment-timezone.min.js"
+				}
+			],
 			"css": [{
 				"uri": "css/style.css"
 			}]

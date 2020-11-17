@@ -649,7 +649,10 @@ sap.ui.define([
 			}
 			var OrderChangeModel = _thatOC.getOwnerComponent().getModel("DataModel");
 			OrderChangeModel.setUseBatch(false);
-			OrderChangeModel.create("/OrderChangeSet", Obj, {
+			
+			_thatOC.fnGetLoggedInUserId(function (loggedInUser) {
+				Obj.UpdatedBy = loggedInUser;
+				OrderChangeModel.create("/OrderChangeSet", Obj, {
 				success: $.proxy(function (oResponse) {
 					if (oResponse.Error != "") {
 						sap.m.MessageBox.show(oResponse.Error, {
@@ -681,6 +684,8 @@ sap.ui.define([
 					// );
 				}
 			});
+			});
+			
 		},
 
 		onExit: function () {
