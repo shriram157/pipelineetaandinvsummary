@@ -385,24 +385,20 @@ sap.ui.define([
 
 		formatDate: function (oDate) {
 			if (oDate != "" && oDate != undefined) {
-				var Year = oDate.substring(0, 4);
+			var Year = oDate.substring(0, 4);
 				var Month = oDate.substring(4, 6);
 				var Day = oDate.substring(6, 8);
 				var date = Year + "-" + Month + "-" + Day;
 				var Hours = oDate.substring(8, 10);
 				var Minute = oDate.substring(10, 12);
 				var Seconds = oDate.substring(12, 14);
-				// var Time = Hours + ":" + Minute + ":" + Seconds;
-				// var dateTime = date + " " + Time;
+				var Time = Hours + ":" + Minute + ":" + Seconds;
+				var dateTime = date + " " + Time;
 				//var zone1= "Canada/Eastern";
 				//var FinalDate = moment.tz(dateTime, zone1).utc().format("YYYY-MM-DD HH:mm:ss");
 				//var FinalDate = moment.utc(new Date(dateTime)).format("YYYY-MM-DD HH:mm:ss");
-				// var FinalDate = moment(moment.utc(dateTime).toDate()).local().format("YYYY-MM-DD HH:mm:ss")
-				// return FinalDate;
-				
-				var Time = Hours + ":" + Minute + ":" + Seconds;
-				var dateTime = date + "\n/" + Time;
-				return dateTime;
+				var FinalDate = moment(moment.utc(dateTime).toDate()).local().format("YYYY-MM-DD HH:mm:ss")
+				return FinalDate;
 			}
 		},
 		formatDateForExcel: function (oDate) {
