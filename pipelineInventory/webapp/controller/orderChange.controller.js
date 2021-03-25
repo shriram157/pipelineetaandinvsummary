@@ -393,8 +393,9 @@ sap.ui.define([
 					if (oData.d.results.length > 0) {
 						if (sFlag == true) {
 							_thatOC.byId("ID_suffixSelect").setSelectedKey("");
+							_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey("");
 						}
-						
+
 						$.each(oData.d.results, function (i, item) {
 							_thatOC.oVehicleDetailsJSON.getData().suffixData.push({
 								"Model": item.Model,
@@ -499,13 +500,13 @@ sap.ui.define([
 					Model = Model.split("-")[0];
 				}
 			}
-			
+
 			if (oSuffixVal.hasOwnProperty("oSource") == true) {
 				sFlag = true;
 			} else {
 				sFlag = false;
 			}
-			
+
 			$.ajax({
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_exterior_trim?$filter=ModelYear eq '" + Modelyear +
@@ -517,8 +518,8 @@ sap.ui.define([
 
 					var selectedKey;
 					if (oData.d.results.length > 0) {
-						if(sFlag == true){
-						_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey("");
+						if (sFlag == true) {
+							_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey("");
 						}
 						$.each(oData.d.results, function (i, item) {
 							_thatOC.oVehicleDetailsJSON.getData().colorData.push({
