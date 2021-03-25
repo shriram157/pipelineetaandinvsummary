@@ -394,7 +394,7 @@ sap.ui.define([
 						if (sFlag == true) {
 							_thatOC.byId("ID_suffixSelect").setSelectedKey("");
 						}
-						_thatOC.byId("ID_suffixSelect").setSelectedKey("");
+						
 						$.each(oData.d.results, function (i, item) {
 							_thatOC.oVehicleDetailsJSON.getData().suffixData.push({
 								"Model": item.Model,
