@@ -356,8 +356,8 @@ sap.ui.define([
 			_thatOC.temp = [];
 			_thatOC.temp1 = [];
 			_thatOC.Modelyear = _thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Modelyear;
-			if (oSuffixValue == undefined && oModel.getSelectedKey() === "") {
-				_thatOC.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
+			if (oSuffixValue == undefined) {
+				_thatOC.Model = _thatOC.byId("ID_modelSelect").getSelectedKey();
 			} else {
 				_thatOC.Model = oModel.getSelectedKey();
 				if (!oSuffixValue.split("-")[0]) {
