@@ -355,6 +355,7 @@ sap.ui.define([
 		onModelSelectionChange: function (oModel, oSuffixValue) {
 			_thatOC.temp = [];
 			_thatOC.temp1 = [];
+			var sFlag;
 			_thatOC.Modelyear = _thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Modelyear;
 			if (oSuffixValue == undefined) {
 				_thatOC.Model = _thatOC.byId("ID_modelSelect").getSelectedKey();
@@ -374,6 +375,12 @@ sap.ui.define([
 				}
 			}
 
+			if (oModel.hasOwnProperty("oSource") == true) {
+				sFlag = true;
+			} else {
+				sFlag = false;
+			}
+
 			$.ajax({
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _thatOC.Model +
@@ -384,6 +391,10 @@ sap.ui.define([
 					_thatOC.oVehicleDetailsJSON.getData().suffixData = [];
 					_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					if (oData.d.results.length > 0) {
+						if (sFlag == true) {
+							_thatOC.byId("ID_suffixSelect").setSelectedKey("");
+						}
+						_thatOC.byId("ID_suffixSelect").setSelectedKey("");
 						$.each(oData.d.results, function (i, item) {
 							_thatOC.oVehicleDetailsJSON.getData().suffixData.push({
 								"Model": item.Model,
@@ -459,6 +470,7 @@ sap.ui.define([
 			sap.ui.core.BusyIndicator.show();
 			var Modelyear = _thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Modelyear;
 			var Suffix;
+			var sFlag;
 			if (ColorVal == undefined) {
 				Suffix = oSuffixVal.getParameters("selectedItem").selectedItem.getKey();
 			} else {
@@ -487,6 +499,13 @@ sap.ui.define([
 					Model = Model.split("-")[0];
 				}
 			}
+			
+			if (oSuffixVal.hasOwnProperty("oSource") == true) {
+				sFlag = true;
+			} else {
+				sFlag = false;
+			}
+			
 			$.ajax({
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_exterior_trim?$filter=ModelYear eq '" + Modelyear +
@@ -498,6 +517,9 @@ sap.ui.define([
 
 					var selectedKey;
 					if (oData.d.results.length > 0) {
+						if(sFlag == true){
+						_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey("");
+						}
 						$.each(oData.d.results, function (i, item) {
 							_thatOC.oVehicleDetailsJSON.getData().colorData.push({
 								"ExteriorColorCode": item.ExteriorColorCode,
@@ -649,43 +671,43 @@ sap.ui.define([
 			}
 			var OrderChangeModel = _thatOC.getOwnerComponent().getModel("DataModel");
 			OrderChangeModel.setUseBatch(false);
-			
+
 			_thatOC.fnGetLoggedInUserId(function (loggedInUser) {
 				Obj.UpdatedBy = loggedInUser;
 				OrderChangeModel.create("/OrderChangeSet", Obj, {
-				success: $.proxy(function (oResponse) {
-					if (oResponse.Error != "") {
-						sap.m.MessageBox.show(oResponse.Error, {
+					success: $.proxy(function (oResponse) {
+						if (oResponse.Error != "") {
+							sap.m.MessageBox.show(oResponse.Error, {
+								icon: sap.m.MessageBox.Icon.ERROR,
+								title: _thatOC.oI18nModel.getResourceBundle().getText("Error"),
+								actions: [sap.m.MessageBox.Action.OK],
+								onClose: function (oAction) {}
+							});
+						} else {
+							_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Status = "Requested";
+							_thatOC.getView().getModel("VehicleDetailsJSON").updateBindings(true);
+							sap.m.MessageBox.show(_thatOC.oI18nModel.getResourceBundle().getText("VehicleUpdated"), {
+								icon: sap.m.MessageBox.Icon.SUCCESS,
+								title: _thatOC.oI18nModel.getResourceBundle().getText("Success"),
+								actions: [sap.m.MessageBox.Action.OK],
+								onClose: function (oAction) {}
+							});
+						}
+					}, _thatOC),
+					error: function (oError) {
+						sap.m.MessageBox.show(_thatOC.oI18nModel.getResourceBundle().getText("ErrorInData"), {
 							icon: sap.m.MessageBox.Icon.ERROR,
 							title: _thatOC.oI18nModel.getResourceBundle().getText("Error"),
 							actions: [sap.m.MessageBox.Action.OK],
 							onClose: function (oAction) {}
 						});
-					} else {
-						_thatOC.getView().getModel("VehicleDetailsJSON").getData().selectedVehicleData[0].Status = "Requested";
-						_thatOC.getView().getModel("VehicleDetailsJSON").updateBindings(true);
-						sap.m.MessageBox.show(_thatOC.oI18nModel.getResourceBundle().getText("VehicleUpdated"), {
-							icon: sap.m.MessageBox.Icon.SUCCESS,
-							title: _thatOC.oI18nModel.getResourceBundle().getText("Success"),
-							actions: [sap.m.MessageBox.Action.OK],
-							onClose: function (oAction) {}
-						});
+						// sap.m.MessageBox.error(
+						// 	"Error in data posting"
+						// );
 					}
-				}, _thatOC),
-				error: function (oError) {
-					sap.m.MessageBox.show(_thatOC.oI18nModel.getResourceBundle().getText("ErrorInData"), {
-						icon: sap.m.MessageBox.Icon.ERROR,
-						title: _thatOC.oI18nModel.getResourceBundle().getText("Error"),
-						actions: [sap.m.MessageBox.Action.OK],
-						onClose: function (oAction) {}
-					});
-					// sap.m.MessageBox.error(
-					// 	"Error in data posting"
-					// );
-				}
+				});
 			});
-			});
-			
+
 		},
 
 		onExit: function () {
