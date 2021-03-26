@@ -1,0 +1,8 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ViewSettingsDialog confirm="handleSortDialogConfirm">
+		<sortItems>
+			<ViewSettingsItem text="{i18n>SubmissionDateTime}" key="DateSubmitted" selected="true"/>
+			<ViewSettingsItem text="{i18n>Status}" key="Status"/>
+		</sortItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

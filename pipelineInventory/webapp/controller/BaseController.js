@@ -21,6 +21,20 @@ sap.ui.define([
 
 		getResourceBundle: function () {
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
+		},
+		fnGetLoggedInUserId : function(callback){
+			
+				$.ajax({
+				dataType: "json",
+				url: "/userDetails/attributes",
+				type: "GET",
+				success: function (userAttributes) {
+					callback(userAttributes.userProfile.id);
+				},
+				error : function(error){
+					callback(undefined);
+				}
+				});
 		}
 	});
 });
