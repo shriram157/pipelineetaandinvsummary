@@ -355,9 +355,11 @@ sap.ui.define([
 		onModelSelectionChange: function (oModel, oSuffixValue) {
 			_thatOC.temp = [];
 			_thatOC.temp1 = [];
+
 			var sFlag;
 			_thatOC.Modelyear = _thatOC.oVehicleDetailsJSON.getData().selectedVehicleData[0].Modelyear;
 			if (oSuffixValue == undefined) {
+				//Change added by Minakshi for INC0188198
 				_thatOC.Model = _thatOC.byId("ID_modelSelect").getSelectedKey();
 			} else {
 				_thatOC.Model = oModel.getSelectedKey();
@@ -374,13 +376,13 @@ sap.ui.define([
 					_thatOC.Model = _thatOC.Model.split("-")[0];
 				}
 			}
-
+			//Change added by Minakshi for INC0188198 start
 			if (oModel.hasOwnProperty("oSource") == true) {
 				sFlag = true;
 			} else {
 				sFlag = false;
 			}
-
+			//Change added by Minakshi for INC0188198 end
 			$.ajax({
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _thatOC.Model +
@@ -391,10 +393,12 @@ sap.ui.define([
 					_thatOC.oVehicleDetailsJSON.getData().suffixData = [];
 					_thatOC.oVehicleDetailsJSON.updateBindings(true);
 					if (oData.d.results.length > 0) {
+						//Change added by Minakshi for INC0188198 start 
 						if (sFlag == true) {
 							_thatOC.byId("ID_suffixSelect").setSelectedKey("");
 							_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey("");
 						}
+						//Change added by Minakshi for INC0188198 end
 
 						$.each(oData.d.results, function (i, item) {
 							_thatOC.oVehicleDetailsJSON.getData().suffixData.push({
@@ -500,13 +504,13 @@ sap.ui.define([
 					Model = Model.split("-")[0];
 				}
 			}
-
+//Change added by Minakshi for INC0188198 start
 			if (oSuffixVal.hasOwnProperty("oSource") == true) {
 				sFlag = true;
 			} else {
 				sFlag = false;
 			}
-
+//Change added by Minakshi for INC0188198 end
 			$.ajax({
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_exterior_trim?$filter=ModelYear eq '" + Modelyear +
@@ -518,9 +522,11 @@ sap.ui.define([
 
 					var selectedKey;
 					if (oData.d.results.length > 0) {
+						//Change added by Minakshi for INC0188198 start
 						if (sFlag == true) {
 							_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey("");
 						}
+						//Change added by Minakshi for INC0188198 end
 						$.each(oData.d.results, function (i, item) {
 							_thatOC.oVehicleDetailsJSON.getData().colorData.push({
 								"ExteriorColorCode": item.ExteriorColorCode,
@@ -545,19 +551,7 @@ sap.ui.define([
 							}
 						}
 
-						// else {
-						// 	if (ColorVal != undefined) {
-						// 		selectedKey = _thatOC.oVehicleDetailsJSON.getData().colorData.filter(function (val) {
-						// 			if (localLang === "F" && val.ExteriorColorCode == ColorVal) {
-						// 				return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorFR;
-						// 			} else if (localLang === "E" && val.ExteriorColorCode == ColorVal) {
-						// 				return val.ExteriorColorCode + " " + val.MarketingDescriptionEXTColorEN;
-						// 			}
-						// 		});
-						// 		_thatOC.oVehicleDetailsJSON.getData().colorData.unshift(selectedKey);
-						// 		// _thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(selectedKey);
-						// 	}
-						// }
+					
 
 						_thatOC.oVehicleDetailsJSON.updateBindings(true);
 						sap.ui.core.BusyIndicator.hide();
@@ -569,28 +563,9 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 				},
 				complete: function () {
-					// jQuery.sap.delayedCall(1000, _thatOC, function () {
-					// 	if (_thatOC.Data) {
-					// 		if (_thatOC.Data.Status == "Rejected") {
-					// 			if (ColorVal != undefined) {
-					// 				if (ColorVal.OldColor != undefined) {
-					// 					_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal.OldColor.split("-")[0]);
-					// 				} else {
-					// 					if (ColorVal.ExteriorColorCode != undefined) {
-					// 						_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal.ExteriorColorCode);
-					// 					} else {
-					// 						if (!ColorVal.split("-")[0]) {
-					// 							_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal);
-					// 						} else {
-					// 							_thatOC.byId("ID_ExteriorColorSelect").setSelectedKey(ColorVal.split("-")[0]);
-					// 						}
-					// 					}
-					// 				}
-					// 			}
-					// 		}
-					// 	}
+				
 					_thatOC.getView().getModel("VehicleDetailsJSON").updateBindings(true);
-					// });
+				
 				}
 			});
 		},
