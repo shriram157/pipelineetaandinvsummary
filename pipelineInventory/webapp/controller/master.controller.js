@@ -404,13 +404,13 @@ sap.ui.define([
 			_that.modelYearPicker = this.getView().byId("ID_modelYearPicker");
 			_that.currentYear = new Date().getFullYear();
 			_that._pastYear = _that.currentYear - 1;
-			// var _pastYear1 = _that.currentYear - 2;
+			_that._pastYear1 = _that.currentYear - 2;
 			_that._futureYear = _that.currentYear + 1;
 			_that._ObjModelYear = {
 				"ModelYearList": [
-					// 	{
-					// 	ModelYear: _pastYear1
-					// }, 
+					{
+						ModelYear: _that._pastYear1
+					}, 
 					{
 						ModelYear: _that._pastYear
 					}, {
@@ -515,9 +515,9 @@ sap.ui.define([
 			sap.ui.getCore().setModel(_that.oSelectJSONModel, "SelectJSONModel");
 			_that.objList = {
 				"ModelYearList": [
-					// 	{
-					// 	ModelYear: _that._pastYear1
-					// }, 
+						{
+						ModelYear: _that._pastYear1
+					}, 
 					{
 						ModelYear: _that._pastYear
 					}, {
