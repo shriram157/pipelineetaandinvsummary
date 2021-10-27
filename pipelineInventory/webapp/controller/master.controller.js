@@ -1700,13 +1700,20 @@ sap.ui.define([
 				"Modelyear": _that._pastYear
 			}, {
 				"MatrixVal": "A401",
+				"Modelyear": _that._pastYear1
+			},{
+				"MatrixVal": "A401",
 				"Modelyear": _that._futureYear
-			}, {
+			}, 
+			{
 				"MatrixVal": "B501",
 				"Modelyear": _that.currentYear
 			}, {
 				"MatrixVal": "B501",
 				"Modelyear": _that._pastYear
+			},{
+				"MatrixVal": "B501",
+				"Modelyear": _that._pastYear1
 			}, {
 				"MatrixVal": "B501",
 				"Modelyear": _that._futureYear
