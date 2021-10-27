@@ -406,6 +406,7 @@ sap.ui.define([
 			_that._pastYear = _that.currentYear - 1;
 			_that._pastYear1 = _that.currentYear - 2;
 			_that._futureYear = _that.currentYear + 1;
+				//changes done for INC0198954 start by Minakshi on 27/10/2021
 			_that._ObjModelYear = {
 				"ModelYearList": [
 					{
@@ -513,6 +514,7 @@ sap.ui.define([
 			_that.oSelectJSONModel = new JSONModel();
 			_that.getView().setModel(_that.oSelectJSONModel, "SelectJSONModel");
 			sap.ui.getCore().setModel(_that.oSelectJSONModel, "SelectJSONModel");
+			//changes done for INC0198954 start by Minakshi on 27/10/2021
 			_that.objList = {
 				"ModelYearList": [
 						{
@@ -527,6 +529,7 @@ sap.ui.define([
 					}
 				]
 			};
+		
 			/*code change for defect number 9302*/
 			_that.getView().byId("tableMultiHeader").getColumns()[1].setHeaderSpan([1, 1, 1]);
 			_that.getView().byId("tableMultiHeader").getColumns()[2].setHeaderSpan([5, 1, 1]);
@@ -613,9 +616,11 @@ sap.ui.define([
 			// if (count = 0) {
 			// for (var n = 0; n < _that._ObjModelYear.ModelYearList.length; n++) {
 			// _that.ID_modelYearPicker = ""; //_that._ObjModelYear.ModelYearList[n].ModelYear;
+				//changes done for INC0198954 start by Minakshi on 27/10/2021
+				
 			var modelyear = "(Modelyear ge '" + _that._ObjModelYear.ModelYearList[0].ModelYear + "' and Modelyear le '" + _that._ObjModelYear.ModelYearList[
-				2].ModelYear + "')";
-			console.log("modelyear", modelyear);
+				3].ModelYear + "')";
+		
 			filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + salesOffice + "' and UserType eq '" + _that.userType +
 				"' and Dealer eq '" +
 				SelectedDealer + "' and Model eq '" + _that.ID_model +
@@ -1634,7 +1639,8 @@ sap.ui.define([
 					"ID_modelYearPicker").getSelectedKey() == "") {
 				// _that.getView().byId("ID_modelYearPicker").setValue("");
 				// _that.getView().byId("ID_modelYearPicker").setSelectedKey("");
-				obj_first.ModelYear = _that._ObjModelYear.ModelYearList[0].ModelYear + "+" + _that._ObjModelYear.ModelYearList[2].ModelYear;
+					//changes done for INC0198954 start by Minakshi on 27/10/2021
+				obj_first.ModelYear = _that._ObjModelYear.ModelYearList[0].ModelYear + "+" + _that._ObjModelYear.ModelYearList[3].ModelYear;
 			} else {
 				obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 			}
