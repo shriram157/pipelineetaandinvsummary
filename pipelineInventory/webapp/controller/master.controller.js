@@ -1760,8 +1760,7 @@ sap.ui.define([
 					complete: function () {
 						_that.dialog.close();
 						++_that.operationsCompleted;
-						console.log("_that.tempArr", _that.tempArr);
-						if (_that.operationsCompleted === 6) _that.JSONToExcelConvertor(_that.tempArr, "Report", true);
+						if (_that.operationsCompleted === 8) _that.JSONToExcelConvertor(_that.tempArr, "Report", true);
 					}
 				});
 			}
