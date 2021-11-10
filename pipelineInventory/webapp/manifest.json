@@ -29,6 +29,14 @@
 					"odataVersion": "2.0"
 					
 				}
+			},
+			"Z_VEHICLE_CATALOGUE_SRV": {
+				"uri": "/node/Z_VEHICLE_CATALOGUE_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/Z_VEHICLE_CATALOGUE_SRV/metadata.xml"
+				}
 			}
 		}
 	},
@@ -79,7 +87,6 @@
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultOperationMode": "Server",
-					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request",
 					"json": true,
 					"useBatch": false,
@@ -109,7 +116,7 @@
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultOperationMode": "Server",
-					"defaultBindingMode": "OneWay",
+				
 					"defaultCountMode": "Request",
 					"json": true,
 					"useBatch": false,
@@ -119,6 +126,17 @@
 				},
 				"dataSource": "ZPIPELINE_ETA_INVENT_SUMMARY_SRV",
 				"preload": false
+			},
+			"vehicleCatalogSrv" : {
+					"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+				"defaultOperationMode": "Server",
+					"defaultCountMode": "Request",
+					"defaultBindingMode": "TwoWay",
+					"useBatch": false
+				},
+				"dataSource": "Z_VEHICLE_CATALOGUE_SRV",
+				"preload": true
 			}
 		},
 		"resources": {
