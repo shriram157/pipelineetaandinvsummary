@@ -22,12 +22,12 @@
 					"localUri": "localService/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/metadata.xml"
 				}
 			},
-				"Z_VEHICLE_MASTER_SRV": {
+			"Z_VEHICLE_MASTER_SRV": {
 				"uri": "/node/Z_VEHICLE_MASTER_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0"
-					
+
 				}
 			},
 			"Z_VEHICLE_CATALOGUE_SRV": {
@@ -97,7 +97,7 @@
 				"dataSource": "ZPIPELINE_ETA_INVENT_SUMMARY_SRV",
 				"preload": false
 			},
-				"VehicleModel": {
+			"VehicleModel": {
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultOperationMode": "Server",
@@ -116,7 +116,7 @@
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultOperationMode": "Server",
-				
+
 					"defaultCountMode": "Request",
 					"json": true,
 					"useBatch": false,
@@ -127,10 +127,10 @@
 				"dataSource": "ZPIPELINE_ETA_INVENT_SUMMARY_SRV",
 				"preload": false
 			},
-			"vehicleCatalogSrv" : {
-					"type": "sap.ui.model.odata.v2.ODataModel",
+			"vehicleCatalogSrv": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
-				"defaultOperationMode": "Server",
+					"defaultOperationMode": "Server",
 					"defaultCountMode": "Request",
 					"defaultBindingMode": "TwoWay",
 					"useBatch": false
@@ -140,17 +140,13 @@
 			}
 		},
 		"resources": {
-			"js": [
-				{
+			"js": [{
 				"uri": "utils/fabIcons.js"
-				},
-				{
+			}, {
 				"uri": "libs/moment.js"
-				},
-				{
+			}, {
 				"uri": "libs/moment-timezone.min.js"
-				}
-			],
+			}],
 			"css": [{
 				"uri": "css/style.css"
 			}]

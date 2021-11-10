@@ -455,6 +455,8 @@ sap.ui.define([
 						"$filter": "(Brand eq '"+sBrand+"' and Language eq '"+_that.localLang+"')"
 					},
 					success : $.proxy(function(data){
+						sap.ui.core.BusyIndicator.hide();
+						_that.oGlobalJSONModel.getData().seriesData = [];
 						//this.getView().getModel("LocalOCModel").setProperty("/oSeriesData", data.results);
 						for (var i = 0; i < data.results.length; i++) {
 								
@@ -481,7 +483,7 @@ sap.ui.define([
 
 					},this),
 					error :$.proxy(function(){
-						
+							sap.ui.core.BusyIndicator.hide();
 					},this)
 				});
 				
@@ -1490,6 +1492,7 @@ sap.ui.define([
 					},
 					success : $.proxy(function(data){
 						sap.ui.core.BusyIndicator.hide();
+						_that.oGlobalJSONModel.getData().seriesData = [];
 						//this.getView().getModel("LocalOCModel").setProperty("/oSeriesData", data.results);
 						for (var i = 0; i < data.results.length; i++) {
 								
