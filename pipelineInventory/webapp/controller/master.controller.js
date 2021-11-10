@@ -438,80 +438,130 @@ sap.ui.define([
 
 			_that.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 			_that.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
-
-			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
-				"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
-
-			$.ajax({
-				dataType: "json",
-				url: url,
-				type: "GET",
-				success: function (oModelData) {
-					sap.ui.core.BusyIndicator.hide();
-					_that.oGlobalJSONModel.getData().seriesData = [];
-					if (oModelData.d.results.length > 0) {
-						if (SelectedDealer == undefined) {
-							var DealerVal = _that.getView().byId("ID_DealearPicker").getSelectedKey();
-							for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
-								if (DealerVal == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
-									SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
-								}
-							}
-						}
-						// if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
-						// 	"TCI Total") {
-						// 	$.each(oModelData.d.results, function (key, value) {
-						// 		if (value.ModelSeriesNo === "L/C") {
-						// 			delete oModelData.d.results[key];
-						// 		}
-						// 	});
-						// } else {
-						// 	$.each(oModelData.d.results, function (key, value) {
-						// 		if (value.ModelSeriesNo !== "L/C" && SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total") {
-						// 			delete oModelData.d.results[key];
-						// 		}
-						// 	});
-						// }
-
-						for (var i = 0; i < oModelData.d.results.length; i++) {
-							if (oModelData.d.results[i] != undefined) {
+			
+			
+			
+			
+			
+			var VehicleCatalogModel = _that.getOwnerComponent().getModel("vehicleCatalogSrv");
+				var sBrand = "";
+				if(DivAttribute	== 10){
+					sBrand = "TOYOTA";
+				}else{
+					sBrand = "LEXUS";
+				}	
+				VehicleCatalogModel.read("/ZC_BRAND_MODEL_DETAILSSet", {
+					urlParameters: {
+						"$filter": "(Brand eq '"+sBrand+"' and Language eq '"+_that.localLang+"')"
+					},
+					success : $.proxy(function(data){
+						//this.getView().getModel("LocalOCModel").setProperty("/oSeriesData", data.results);
+						for (var i = 0; i < data.results.length; i++) {
 								
-								_that.oGlobalJSONModel.getData().seriesData.push({
-									// "ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
-									"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN,
-									"localLang": URILang,
-									"TCISeriesDescriptionFR": oModelData.d.results[i].TCISeriesDescriptionFR
-								});
+									_that.oGlobalJSONModel.getData().seriesData.push({
+										// "ModelSeriesNo": data.results[i].ModelSeriesNo,
+										
+										"TCISeriesDescriptionEN":data.results[i].TCISeries,
+										"localLang": URILang,
+										"TCISeriesDescriptionFR": data.results[i].TCISeries_fr
+									});
+									
+									
+								
 							}
-						}
+							
+							_that.oGlobalJSONModel.getData().seriesData.unshift({
+								// "ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+								"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+								"localLang": "",
+								"TCISeriesDescriptionFR": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
+							});
+							_that.oGlobalJSONModel.updateBindings(true);
 
-						// _that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
-						// 	var nameA = a.ModelSeriesNo.toLowerCase(),
-						// 		nameB = b.ModelSeriesNo.toLowerCase();
-						// 	if (nameA < nameB) //sort string ascending
-						// 		return -1;
-						// 	if (nameA > nameB)
-						// 		return 1;
-						// 	return 0; //default return value (no sorting)
-						// });
 
-						_that.oGlobalJSONModel.getData().seriesData.unshift({
-							// "ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
-							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
-							"localLang": "",
-							"TCISeriesDescriptionFR": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
-						});
-						_that.oGlobalJSONModel.updateBindings(true);
+					},this),
+					error :$.proxy(function(){
+						
+					},this)
+				});
+				
+			
+			
 
-					} else {
-						sap.ui.core.BusyIndicator.hide();
-					}
-				},
-				error: function (oError) {
-					sap.ui.core.BusyIndicator.hide();
-					_that.errorFlag = true;
-				}
-			});
+			// var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
+			// 	"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
+
+
+			// $.ajax({
+			// 	dataType: "json",
+			// 	url: url,
+			// 	type: "GET",
+			// 	success: function (oModelData) {
+			// 		sap.ui.core.BusyIndicator.hide();
+			// 		_that.oGlobalJSONModel.getData().seriesData = [];
+			// 		if (oModelData.d.results.length > 0) {
+			// 			if (SelectedDealer == undefined) {
+			// 				var DealerVal = _that.getView().byId("ID_DealearPicker").getSelectedKey();
+			// 				for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
+			// 					if (DealerVal == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
+			// 						SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
+			// 					}
+			// 				}
+			// 			}
+			// 			// if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
+			// 			// 	"TCI Total") {
+			// 			// 	$.each(oModelData.d.results, function (key, value) {
+			// 			// 		if (value.ModelSeriesNo === "L/C") {
+			// 			// 			delete oModelData.d.results[key];
+			// 			// 		}
+			// 			// 	});
+			// 			// } else {
+			// 			// 	$.each(oModelData.d.results, function (key, value) {
+			// 			// 		if (value.ModelSeriesNo !== "L/C" && SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total") {
+			// 			// 			delete oModelData.d.results[key];
+			// 			// 		}
+			// 			// 	});
+			// 			// }
+
+			// 			for (var i = 0; i < oModelData.d.results.length; i++) {
+			// 				if (oModelData.d.results[i] != undefined) {
+								
+			// 					_that.oGlobalJSONModel.getData().seriesData.push({
+			// 						// "ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
+			// 						"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN,
+			// 						"localLang": URILang,
+			// 						"TCISeriesDescriptionFR": oModelData.d.results[i].TCISeriesDescriptionFR
+			// 					});
+			// 				}
+			// 			}
+
+			// 			// _that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
+			// 			// 	var nameA = a.ModelSeriesNo.toLowerCase(),
+			// 			// 		nameB = b.ModelSeriesNo.toLowerCase();
+			// 			// 	if (nameA < nameB) //sort string ascending
+			// 			// 		return -1;
+			// 			// 	if (nameA > nameB)
+			// 			// 		return 1;
+			// 			// 	return 0; //default return value (no sorting)
+			// 			// });
+
+			// 			_that.oGlobalJSONModel.getData().seriesData.unshift({
+			// 				// "ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+			// 				"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+			// 				"localLang": "",
+			// 				"TCISeriesDescriptionFR": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
+			// 			});
+			// 			_that.oGlobalJSONModel.updateBindings(true);
+
+			// 		} else {
+			// 			sap.ui.core.BusyIndicator.hide();
+			// 		}
+			// 	},
+			// 	error: function (oError) {
+			// 		sap.ui.core.BusyIndicator.hide();
+			// 		_that.errorFlag = true;
+			// 	}
+			// });
 			_that.oSelectJSONModel = new JSONModel();
 			_that.getView().setModel(_that.oSelectJSONModel, "SelectJSONModel");
 			sap.ui.getCore().setModel(_that.oSelectJSONModel, "SelectJSONModel");
@@ -1439,6 +1489,7 @@ sap.ui.define([
 						"$filter": "(Brand eq '"+sBrand+"' and Language eq '"+_that.localLang+"')"
 					},
 					success : $.proxy(function(data){
+						sap.ui.core.BusyIndicator.hide();
 						//this.getView().getModel("LocalOCModel").setProperty("/oSeriesData", data.results);
 						for (var i = 0; i < data.results.length; i++) {
 								
