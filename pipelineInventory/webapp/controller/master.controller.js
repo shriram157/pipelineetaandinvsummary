@@ -1501,6 +1501,8 @@ sap.ui.define([
 						//this.getView().getModel("LocalOCModel").setProperty("/oSeriesData", data.results);
 						for (var i = 0; i < data.results.length; i++) {
 								
+							var nIndex = _that.oGlobalJSONModel.getData().seriesData.findIndex((item)=> item.TCISeriesDescriptionEN == data.results[i].TCISeries);
+							if(nIndex < 0){
 									_that.oGlobalJSONModel.getData().seriesData.push({
 										// "ModelSeriesNo": data.results[i].ModelSeriesNo,
 										
@@ -1508,6 +1510,7 @@ sap.ui.define([
 										"localLang": URILang,
 										"TCISeriesDescriptionFR": data.results[i].TCISeries_fr
 									});
+							}
 									
 									
 								
