@@ -185,6 +185,7 @@ sap.ui.define([
 				type: "GET",
 				success: function (scopesData) {
 					scopesData = scopesData.loggedUserType[0];
+						_that.getView().getModel("LocalOCModel").setProperty("/UserScope", scopesData);
 					if (scopesData == "TCI_Zone_Admin" || scopesData == "TCI_User") {
 						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "AdminUser";
 						_that.getView().getModel("LocalOCModel").setProperty("/ForDealerOnly", false);
@@ -1463,6 +1464,7 @@ sap.ui.define([
 			_that.getView().byId("ID_ExteriorColorCode").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			//_that.getView().byId("ID_ExteriorColorCode").setEnabled(false);
 			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			var UserScope = _that.getView().getModel("LocalOCModel").getProperty("/UserScope");
 			//_that.getView().byId("ID_APXValue").setEnabled(false);
 			sap.ui.core.BusyIndicator.show();
 			if (!oModVal.getParameters("selectedItem").selectedItem) {
@@ -1486,9 +1488,12 @@ sap.ui.define([
 				}else{
 					sBrand = "LEXUS";
 				}	
+				
+			//	(User%20eq%20%20%27Dealer_User%27%20and%20Brand%20eq%20%27TOYOTA%27%20and%20Modelyear%20eq%20%272020%20%27and%20Language%20eq%20%27EN%27)
+				
 				VehicleCatalogModel.read("/ZC_BRAND_MODEL_DETAILSSet", {
 					urlParameters: {
-						"$filter": "(Brand eq '"+sBrand+"' and Language eq '"+_that.localLang+"')"
+						"$filter": "(User eq '"+UserScope+"' and Brand eq '"+sBrand+"' and Modelyear eq '"+ModelYear+"' and Language eq '"+_that.localLang+"')"
 					},
 					success : $.proxy(function(data){
 						sap.ui.core.BusyIndicator.hide();
