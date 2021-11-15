@@ -1449,7 +1449,7 @@ sap.ui.define([
 									if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
 										$.each(oModelData.results, function (key, value) {
 											if (value.ModelSeriesNo == "L/C") {
-												delete oModelData.d.results[key];
+												delete oModelData.results[key];
 											}
 										});
 									} else {
@@ -1461,10 +1461,9 @@ sap.ui.define([
 									}
 
 									for (var i = 0; i < oModelData.results.length; i++) {
-										//if (oModelData.results[i] != undefined) {
+										if (oModelData.results[i] != undefined) {
 
-										var nIndex = _that.oGlobalJSONModel.getData().seriesData.findIndex((item) =>
-											item.ModelSeriesNo == data.results[i].TCISeries);
+										var nIndex = data.results.findIndex((item) => item.TCISeries == oModelData.results[i].ModelSeriesNo);
 										if (nIndex > -1) {
 											_that.oGlobalJSONModel.getData().seriesData.push({
 												"ModelSeriesNo": oModelData.results[i].ModelSeriesNo,
@@ -1473,7 +1472,7 @@ sap.ui.define([
 												"TCISeriesDescriptionFR": oModelData.results[i].TCISeriesDescriptionFR
 											});
 										}
-										//}
+										}
 									}
 
 									_that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
