@@ -185,7 +185,6 @@ sap.ui.define([
 				type: "GET",
 				success: function (scopesData) {
 					scopesData = scopesData.loggedUserType[0];
-						_that.getView().getModel("LocalOCModel").setProperty("/UserScope", scopesData);
 					if (scopesData == "TCI_Zone_Admin" || scopesData == "TCI_User") {
 						sap.ui.getCore().getModel("BusinessDataModel").getData()._TCIZoneAdmin = "AdminUser";
 						_that.getView().getModel("LocalOCModel").setProperty("/ForDealerOnly", false);
@@ -439,132 +438,79 @@ sap.ui.define([
 
 			_that.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 			_that.Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
-			
-			
-			
-			
-			
-			var VehicleCatalogModel = _that.getOwnerComponent().getModel("vehicleCatalogSrv");
-				var sBrand = "";
-				if(DivAttribute	== 10){
-					sBrand = "TOYOTA";
-				}else{
-					sBrand = "LEXUS";
-				}	
-				VehicleCatalogModel.read("/ZC_BRAND_MODEL_DETAILSSet", {
-					urlParameters: {
-						"$filter": "(Brand eq '"+sBrand+"' and Language eq '"+_that.localLang+"')"
-					},
-					success : $.proxy(function(data){
-						sap.ui.core.BusyIndicator.hide();
-						_that.oGlobalJSONModel.getData().seriesData = [];
-						//this.getView().getModel("LocalOCModel").setProperty("/oSeriesData", data.results);
-						for (var i = 0; i < data.results.length; i++) {
-								
-									_that.oGlobalJSONModel.getData().seriesData.push({
-										// "ModelSeriesNo": data.results[i].ModelSeriesNo,
-										
-										"TCISeriesDescriptionEN":data.results[i].TCISeries,
-										"localLang": URILang,
-										"TCISeriesDescriptionFR": data.results[i].TCISeries_fr
-									});
-									
-									
-								
+
+			var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
+				"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
+
+			$.ajax({
+				dataType: "json",
+				url: url,
+				type: "GET",
+				success: function (oModelData) {
+					sap.ui.core.BusyIndicator.hide();
+					_that.oGlobalJSONModel.getData().seriesData = [];
+					if (oModelData.d.results.length > 0) {
+						if (SelectedDealer == undefined) {
+							var DealerVal = _that.getView().byId("ID_DealearPicker").getSelectedKey();
+							for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
+								if (DealerVal == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
+									SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
+								}
 							}
-							
-							_that.oGlobalJSONModel.getData().seriesData.unshift({
-								// "ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
-								"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
-								"localLang": "",
-								"TCISeriesDescriptionFR": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
+						}
+						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
+							"TCI Total") {
+							$.each(oModelData.d.results, function (key, value) {
+								if (value.ModelSeriesNo === "L/C") {
+									delete oModelData.d.results[key];
+								}
 							});
-							_that.oGlobalJSONModel.updateBindings(true);
+						} else {
+							$.each(oModelData.d.results, function (key, value) {
+								if (value.ModelSeriesNo !== "L/C" && SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total") {
+									delete oModelData.d.results[key];
+								}
+							});
+						}
 
+						for (var i = 0; i < oModelData.d.results.length; i++) {
+							if (oModelData.d.results[i] != undefined) {
+								_that.oGlobalJSONModel.getData().seriesData.push({
+									"ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
+									"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN,
+									"localLang": URILang,
+									"TCISeriesDescriptionFR": oModelData.d.results[i].TCISeriesDescriptionFR
+								});
+							}
+						}
 
-					},this),
-					error :$.proxy(function(){
-							sap.ui.core.BusyIndicator.hide();
-					},this)
-				});
-				
-			
-			
+						_that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
+							var nameA = a.ModelSeriesNo.toLowerCase(),
+								nameB = b.ModelSeriesNo.toLowerCase();
+							if (nameA < nameB) //sort string ascending
+								return -1;
+							if (nameA > nameB)
+								return 1;
+							return 0; //default return value (no sorting)
+						});
 
-			// var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
-			// 	"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
+						_that.oGlobalJSONModel.getData().seriesData.unshift({
+							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+							"localLang": "",
+							"TCISeriesDescriptionFR": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
+						});
+						_that.oGlobalJSONModel.updateBindings(true);
 
-
-			// $.ajax({
-			// 	dataType: "json",
-			// 	url: url,
-			// 	type: "GET",
-			// 	success: function (oModelData) {
-			// 		sap.ui.core.BusyIndicator.hide();
-			// 		_that.oGlobalJSONModel.getData().seriesData = [];
-			// 		if (oModelData.d.results.length > 0) {
-			// 			if (SelectedDealer == undefined) {
-			// 				var DealerVal = _that.getView().byId("ID_DealearPicker").getSelectedKey();
-			// 				for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
-			// 					if (DealerVal == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
-			// 						SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
-			// 					}
-			// 				}
-			// 			}
-			// 			// if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
-			// 			// 	"TCI Total") {
-			// 			// 	$.each(oModelData.d.results, function (key, value) {
-			// 			// 		if (value.ModelSeriesNo === "L/C") {
-			// 			// 			delete oModelData.d.results[key];
-			// 			// 		}
-			// 			// 	});
-			// 			// } else {
-			// 			// 	$.each(oModelData.d.results, function (key, value) {
-			// 			// 		if (value.ModelSeriesNo !== "L/C" && SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total") {
-			// 			// 			delete oModelData.d.results[key];
-			// 			// 		}
-			// 			// 	});
-			// 			// }
-
-			// 			for (var i = 0; i < oModelData.d.results.length; i++) {
-			// 				if (oModelData.d.results[i] != undefined) {
-								
-			// 					_that.oGlobalJSONModel.getData().seriesData.push({
-			// 						// "ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
-			// 						"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN,
-			// 						"localLang": URILang,
-			// 						"TCISeriesDescriptionFR": oModelData.d.results[i].TCISeriesDescriptionFR
-			// 					});
-			// 				}
-			// 			}
-
-			// 			// _that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
-			// 			// 	var nameA = a.ModelSeriesNo.toLowerCase(),
-			// 			// 		nameB = b.ModelSeriesNo.toLowerCase();
-			// 			// 	if (nameA < nameB) //sort string ascending
-			// 			// 		return -1;
-			// 			// 	if (nameA > nameB)
-			// 			// 		return 1;
-			// 			// 	return 0; //default return value (no sorting)
-			// 			// });
-
-			// 			_that.oGlobalJSONModel.getData().seriesData.unshift({
-			// 				// "ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
-			// 				"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
-			// 				"localLang": "",
-			// 				"TCISeriesDescriptionFR": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
-			// 			});
-			// 			_that.oGlobalJSONModel.updateBindings(true);
-
-			// 		} else {
-			// 			sap.ui.core.BusyIndicator.hide();
-			// 		}
-			// 	},
-			// 	error: function (oError) {
-			// 		sap.ui.core.BusyIndicator.hide();
-			// 		_that.errorFlag = true;
-			// 	}
-			// });
+					} else {
+						sap.ui.core.BusyIndicator.hide();
+					}
+				},
+				error: function (oError) {
+					sap.ui.core.BusyIndicator.hide();
+					_that.errorFlag = true;
+				}
+			});
 			_that.oSelectJSONModel = new JSONModel();
 			_that.getView().setModel(_that.oSelectJSONModel, "SelectJSONModel");
 			sap.ui.getCore().setModel(_that.oSelectJSONModel, "SelectJSONModel");
@@ -770,24 +716,24 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					_that.oGlobalJSONModel.getData().seriesData = [];
 					if (oModelData.d.results.length > 0) {
-						// if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
-						// 	"TCI Total") {
-						// 	$.each(oModelData.d.results, function (key, value) {
-						// 		if (value.ModelSeriesNo === "L/C") {
-						// 			delete oModelData.d.results[key];
-						// 		}
-						// 	});
-						// } else {
-						// 	$.each(oModelData.d.results, function (key, value) {
-						// 		if (value.ModelSeriesNo !== "L/C" && SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total") {
-						// 			delete oModelData.d.results[key];
-						// 		}
-						// 	});
-						// }
+						if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000" && SelectedDealer !== "2400500000" && SelectedDealer !==
+							"TCI Total") {
+							$.each(oModelData.d.results, function (key, value) {
+								if (value.ModelSeriesNo === "L/C") {
+									delete oModelData.d.results[key];
+								}
+							});
+						} else {
+							$.each(oModelData.d.results, function (key, value) {
+								if (value.ModelSeriesNo !== "L/C" && SelectedDealer !== "2400500000" && SelectedDealer !== "TCI Total") {
+									delete oModelData.d.results[key];
+								}
+							});
+						}
 						for (var i = 0; i < oModelData.d.results.length; i++) {
 							if (oModelData.d.results[i] != undefined) {
 								_that.oGlobalJSONModel.getData().seriesData.push({
-									// "ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
+									"ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
 									"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN,
 									"localLang": URILang,
 									"TCISeriesDescriptionFR": oModelData.d.results[i].TCISeriesDescriptionFR
@@ -795,7 +741,7 @@ sap.ui.define([
 							}
 						}
 						_that.oGlobalJSONModel.getData().seriesData.unshift({
-							// "ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+							"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 							"localLang": "",
 							"TCISeriesDescriptionFR": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
@@ -1325,7 +1271,7 @@ sap.ui.define([
 				$.ajax({
 					dataType: "json",
 					url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + Modelyear +
-						"' and TCISeries_en eq '" + oSeriesVal + "'and visibility eq 'X'",
+						"' and TCISeries eq '" + oSeriesVal + "'and visibility eq 'X'",
 					type: "GET",
 					success: function (oData) {
 						if (oData.d.results.length > 0) {
@@ -1464,7 +1410,6 @@ sap.ui.define([
 			_that.getView().byId("ID_ExteriorColorCode").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
 			//_that.getView().byId("ID_ExteriorColorCode").setEnabled(false);
 			_that.getView().byId("ID_APXValue").setSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			var UserScope = _that.getView().getModel("LocalOCModel").getProperty("/UserScope");
 			//_that.getView().byId("ID_APXValue").setEnabled(false);
 			sap.ui.core.BusyIndicator.show();
 			if (!oModVal.getParameters("selectedItem").selectedItem) {
@@ -1481,57 +1426,89 @@ sap.ui.define([
 				_that.getView().getModel("LocalOCModel").setProperty("/noAPXSelection", false);
 				var ModelYear = oModVal.getParameters("selectedItem").selectedItem.getKey();
 				
-				var VehicleCatalogModel = _that.getOwnerComponent().getModel("vehicleCatalogSrv");
-				var sBrand = "";
-				if(DivAttribute	== 10){
-					sBrand = "TOYOTA";
-				}else{
-					sBrand = "LEXUS";
-				}	
+				var oPipelineModel = this.getOwnerComponent().getModel("DataModel");
 				
-			//	(User%20eq%20%20%27Dealer_User%27%20and%20Brand%20eq%20%27TOYOTA%27%20and%20Modelyear%20eq%20%272020%20%27and%20Language%20eq%20%27EN%27)
-				
-				VehicleCatalogModel.read("/ZC_BRAND_MODEL_DETAILSSet", {
-					urlParameters: {
-						"$filter": "(User eq '"+UserScope+"' and Brand eq '"+sBrand+"' and Modelyear eq '"+ModelYear+"' and Language eq '"+_that.localLang+"')"
+				oPipelineModel.read("/ZC_MODEL_DETAILS",{
+					urlParameters : {
+						"$filter" : "Modelyear eq '"+ModelYear+"'and visibility eq 'X'"
 					},
 					success : $.proxy(function(data){
-						sap.ui.core.BusyIndicator.hide();
+						
+						oPipelineModel.read("/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
+					"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc", {
+						success : $.proxy(function(oModelData){
+							sap.ui.core.BusyIndicator.hide();
 						_that.oGlobalJSONModel.getData().seriesData = [];
-						//this.getView().getModel("LocalOCModel").setProperty("/oSeriesData", data.results);
-						for (var i = 0; i < data.results.length; i++) {
+						if (oModelData.results.length > 0) {
+							if (SelectedDealer == undefined) {
+								var DealerVal = _that.getView().byId("ID_DealearPicker").getSelectedKey();
+								for (var d = 0; d < _that.BusinessPartnerData.getData().DealerList.length; d++) {
+									if (DealerVal == _that.BusinessPartnerData.getData().DealerList[d].BusinessPartner) {
+										SelectedDealer = _that.BusinessPartnerData.getData().DealerList[d].BusinessPartnerKey;
+									}
+								}
+							}
+							if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
+								$.each(oModelData.results, function (key, value) {
+									if (value.ModelSeriesNo == "L/C") {
+										delete oModelData.d.results[key];
+									}
+								});
+							} else {
+								$.each(oModelData.results, function (key, value) {
+									if (value.ModelSeriesNo !== "L/C") {
+										delete oModelData.results[key];
+									}
+								});
+							}
+
+							for (var i = 0; i < oModelData.results.length; i++) {
+								//if (oModelData.results[i] != undefined) {
 								
-							var nIndex = _that.oGlobalJSONModel.getData().seriesData.findIndex((item)=> item.TCISeriesDescriptionEN == data.results[i].TCISeries);
-							if(nIndex < 0){
+								var nIndex = _that.oGlobalJSONModel.getData().seriesData.findIndex((item)=> 
+								item.ModelSeriesNo == data.results[i].TCISeries);
+								if(nIndex > -1){
 									_that.oGlobalJSONModel.getData().seriesData.push({
-										// "ModelSeriesNo": data.results[i].ModelSeriesNo,
-										
-										"TCISeriesDescriptionEN":data.results[i].TCISeries,
+										"ModelSeriesNo": oModelData.results[i].ModelSeriesNo,
+										"TCISeriesDescriptionEN": oModelData.results[i].TCISeriesDescriptionEN,
 										"localLang": URILang,
-										"TCISeriesDescriptionFR": data.results[i].TCISeries_fr
+										"TCISeriesDescriptionFR": oModelData.results[i].TCISeriesDescriptionFR
 									});
+								}
+								//}
 							}
-									
-									
-								
-							}
-							
+
+							_that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
+								var nameA = a.ModelSeriesNo.toLowerCase(),
+									nameB = b.ModelSeriesNo.toLowerCase();
+								if (nameA < nameB) //sort string ascending
+									return -1;
+								if (nameA > nameB)
+									return 1;
+								return 0; //default return value (no sorting)
+							});
+
 							_that.oGlobalJSONModel.getData().seriesData.unshift({
-								// "ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+								"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 								"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 								"localLang": "",
 								"TCISeriesDescriptionFR": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
 							});
 							_that.oGlobalJSONModel.updateBindings(true);
-
-
-					},this),
-					error :$.proxy(function(){
+						} else {
+							sap.ui.core.BusyIndicator.hide();
+						}
+						},this),
+						error : function(){
+							sap.ui.core.BusyIndicator.hide();
+						}
+					});
 						
-					},this)
+					},this),
+					error : function(){
+						sap.ui.core.BusyIndicator.hide();
+					}
 				});
-				
-				
 				
 				// var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_SERIES?$filter=Division eq '" + DivUser +
 				// 	"' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc";
@@ -1552,33 +1529,43 @@ sap.ui.define([
 				// 					}
 				// 				}
 				// 			}
-				// 			// if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
-				// 			// 	$.each(oModelData.d.results, function (key, value) {
-				// 			// 		if (value.ModelSeriesNo == "L/C") {
-				// 			// 			delete oModelData.d.results[key];
-				// 			// 		}
-				// 			// 	});
-				// 			// } else {
-				// 			// 	$.each(oModelData.d.results, function (key, value) {
-				// 			// 		if (value.ModelSeriesNo !== "L/C") {
-				// 			// 			delete oModelData.d.results[key];
-				// 			// 		}
-				// 			// 	});
-				// 			// }
+				// 			if (SelectedDealer !== "2400029000" && SelectedDealer !== "2400049000") {
+				// 				$.each(oModelData.d.results, function (key, value) {
+				// 					if (value.ModelSeriesNo == "L/C") {
+				// 						delete oModelData.d.results[key];
+				// 					}
+				// 				});
+				// 			} else {
+				// 				$.each(oModelData.d.results, function (key, value) {
+				// 					if (value.ModelSeriesNo !== "L/C") {
+				// 						delete oModelData.d.results[key];
+				// 					}
+				// 				});
+				// 			}
 
-							
-				// 			// _that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
-				// 			// 	var nameA = a.ModelSeriesNo.toLowerCase(),
-				// 			// 		nameB = b.ModelSeriesNo.toLowerCase();
-				// 			// 	if (nameA < nameB) //sort string ascending
-				// 			// 		return -1;
-				// 			// 	if (nameA > nameB)
-				// 			// 		return 1;
-				// 			// 	return 0; //default return value (no sorting)
-				// 			// });
+				// 			for (var i = 0; i < oModelData.d.results.length; i++) {
+				// 				if (oModelData.d.results[i] != undefined) {
+				// 					_that.oGlobalJSONModel.getData().seriesData.push({
+				// 						"ModelSeriesNo": oModelData.d.results[i].ModelSeriesNo,
+				// 						"TCISeriesDescriptionEN": oModelData.d.results[i].TCISeriesDescriptionEN,
+				// 						"localLang": URILang,
+				// 						"TCISeriesDescriptionFR": oModelData.d.results[i].TCISeriesDescriptionFR
+				// 					});
+				// 				}
+				// 			}
+
+				// 			_that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
+				// 				var nameA = a.ModelSeriesNo.toLowerCase(),
+				// 					nameB = b.ModelSeriesNo.toLowerCase();
+				// 				if (nameA < nameB) //sort string ascending
+				// 					return -1;
+				// 				if (nameA > nameB)
+				// 					return 1;
+				// 				return 0; //default return value (no sorting)
+				// 			});
 
 				// 			_that.oGlobalJSONModel.getData().seriesData.unshift({
-				// 				// "ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+				// 				"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 				// 				"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
 				// 				"localLang": "",
 				// 				"TCISeriesDescriptionFR": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
@@ -1596,46 +1583,46 @@ sap.ui.define([
 			}
 		},
 
-		// fetchSeries: function (arrResults) {
-		// 	var series = seriesdata;
-		// 	for (var n = 0; n < arrResults.length; n++) {
-		// 		var TCiSeries = arrResults[n].TCISeries;
-		// 		var b = 0;
-		// 		for (var s = 0; s < series.length; s++) {
-		// 			if (series[s].ModelSeriesNo == TCiSeries) {
-		// 				var ModelSeriesNo = series[s].ModelSeriesNo;
-		// 				for (var j = 0; j < _that.oGlobalJSONModel.getData().seriesData.length; j++) {
-		// 					if (ModelSeriesNo != _that.oGlobalJSONModel.getData().seriesData[j].ModelSeriesNo) {
-		// 						b++;
-		// 					}
-		// 				}
-		// 				if (b == _that.oGlobalJSONModel.getData().seriesData.length) {
-		// 					_that.oGlobalJSONModel.getData().seriesData.push({
-		// 						"ModelSeriesNo": series[s].ModelSeriesNo,
-		// 						"TCISeriesDescriptionEN": series[s].TCISeriesDescriptionEN
-		// 					});
-		// 					_that.oGlobalJSONModel.updateBindings(true);
-		// 				}
-		// 			}
-		// 			b = 0;
-		// 		}
-		// 	}
-		// 	_that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
-		// 		var nameA = a.ModelSeriesNo.toLowerCase(),
-		// 			nameB = b.ModelSeriesNo.toLowerCase();
-		// 		if (nameA < nameB) //sort string ascending
-		// 			return -1;
-		// 		if (nameA > nameB)
-		// 			return 1;
-		// 		return 0; //default return value (no sorting)
-		// 	});
+		fetchSeries: function (arrResults) {
+			var series = seriesdata;
+			for (var n = 0; n < arrResults.length; n++) {
+				var TCiSeries = arrResults[n].TCISeries;
+				var b = 0;
+				for (var s = 0; s < series.length; s++) {
+					if (series[s].ModelSeriesNo == TCiSeries) {
+						var ModelSeriesNo = series[s].ModelSeriesNo;
+						for (var j = 0; j < _that.oGlobalJSONModel.getData().seriesData.length; j++) {
+							if (ModelSeriesNo != _that.oGlobalJSONModel.getData().seriesData[j].ModelSeriesNo) {
+								b++;
+							}
+						}
+						if (b == _that.oGlobalJSONModel.getData().seriesData.length) {
+							_that.oGlobalJSONModel.getData().seriesData.push({
+								"ModelSeriesNo": series[s].ModelSeriesNo,
+								"TCISeriesDescriptionEN": series[s].TCISeriesDescriptionEN
+							});
+							_that.oGlobalJSONModel.updateBindings(true);
+						}
+					}
+					b = 0;
+				}
+			}
+			_that.oGlobalJSONModel.getData().seriesData.sort(function (a, b) {
+				var nameA = a.ModelSeriesNo.toLowerCase(),
+					nameB = b.ModelSeriesNo.toLowerCase();
+				if (nameA < nameB) //sort string ascending
+					return -1;
+				if (nameA > nameB)
+					return 1;
+				return 0; //default return value (no sorting)
+			});
 
-		// 	_that.oGlobalJSONModel.getData().seriesData.unshift({
-		// 		"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
-		// 		"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
-		// 	});
-		// 	_that.oGlobalJSONModel.updateBindings(true);
-		// },
+			_that.oGlobalJSONModel.getData().seriesData.unshift({
+				"ModelSeriesNo": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),
+				"TCISeriesDescriptionEN": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
+			});
+			_that.oGlobalJSONModel.updateBindings(true);
+		},
 
 		/*Function for Routing/Navigating from menu option as per selection */
 		onMenuLinkPress: function (oLink) {
