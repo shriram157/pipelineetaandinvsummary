@@ -912,7 +912,7 @@ sap.ui.define([
 				}
 
 				_that.oGlobalJSONModel.getData().seriesData = [];
-				_that.getUpdatedSeries(SelectedDealer);
+				//_that.getUpdatedSeries(SelectedDealer);
 			} else {
 				_that.getView().byId("id_BusinessPartnerName").setValue(oDealer.getParameters().selectedItem.getAdditionalText());
 			}
@@ -1431,7 +1431,8 @@ sap.ui.define([
 
 						oPipelineModel.read("/ZC_SERIES", {
 							urlParameters: {
-								"$filter": "Division eq '" + DivUser + "' and zzzadddata2 eq 'X'&$orderby=zzzadddata4 asc"
+								"$filter": "Division eq '" + DivUser + "' and zzzadddata2 eq 'X'",
+								"$orderby" : "zzzadddata4 asc"
 							},
 							success: $.proxy(function (oModelData) {
 								sap.ui.core.BusyIndicator.hide();
