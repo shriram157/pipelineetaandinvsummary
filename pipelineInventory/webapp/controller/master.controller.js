@@ -409,9 +409,12 @@ sap.ui.define([
 			_that._futureYear = _that.currentYear + 1;
 			//changes done for INC0198954 start by Minakshi on 27/10/2021
 			_that._ObjModelYear = {
-				"ModelYearList": [{
-					ModelYear: _that._pastYear1
-				}, {
+				"ModelYearList": [
+				// 	{
+				// 	ModelYear: _that._pastYear1
+				// }, 
+				
+				{
 					ModelYear: _that._pastYear
 				}, {
 					ModelYear: _that.currentYear
@@ -514,9 +517,11 @@ sap.ui.define([
 			sap.ui.getCore().setModel(_that.oSelectJSONModel, "SelectJSONModel");
 			//changes done for INC0198954 start by Minakshi on 27/10/2021
 			_that.objList = {
-				"ModelYearList": [{
-					ModelYear: _that._pastYear1
-				}, {
+				"ModelYearList": [
+				// 	{
+				// 	ModelYear: _that._pastYear1
+				// }
+				{
 					ModelYear: _that._pastYear
 				}, {
 					ModelYear: _that.currentYear
@@ -614,7 +619,7 @@ sap.ui.define([
 			//changes done for INC0198954 start by Minakshi on 27/10/2021
 
 			var modelyear = "(Modelyear ge '" + _that._ObjModelYear.ModelYearList[0].ModelYear + "' and Modelyear le '" + _that._ObjModelYear.ModelYearList[
-				3].ModelYear + "')";
+				2].ModelYear + "')";
 
 			filteredData = "?$filter=Division eq '" + DivUser + "' and VKBUR eq '" + salesOffice + "' and UserType eq '" + _that.userType +
 				"' and Dealer eq '" +
@@ -1722,7 +1727,7 @@ sap.ui.define([
 				// _that.getView().byId("ID_modelYearPicker").setValue("");
 				// _that.getView().byId("ID_modelYearPicker").setSelectedKey("");
 				//changes done for INC0198954 start by Minakshi on 27/10/2021
-				obj_first.ModelYear = _that._ObjModelYear.ModelYearList[0].ModelYear + "+" + _that._ObjModelYear.ModelYearList[3].ModelYear;
+				obj_first.ModelYear = _that._ObjModelYear.ModelYearList[0].ModelYear + "+" + _that._ObjModelYear.ModelYearList[2].ModelYear;
 			} else {
 				obj_first.ModelYear = _that.getView().byId("ID_modelYearPicker").getSelectedKey();
 			}
@@ -1841,7 +1846,7 @@ sap.ui.define([
 					complete: function () {
 						_that.dialog.close();
 						++_that.operationsCompleted;
-						if (_that.operationsCompleted === 8) _that.JSONToExcelConvertor(_that.tempArr, "Report", true);
+						if (_that.operationsCompleted === 6) _that.JSONToExcelConvertor(_that.tempArr, "Report", true);
 					}
 				});
 			}
