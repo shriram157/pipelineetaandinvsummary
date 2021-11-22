@@ -9,8 +9,8 @@
 	},
 	"description": "Node.js module for pipeline ETA and inventory summary consolidated app",
 	"devDependencies": {
-		"jest": "^24.1.0",
-		"jest-junit": "^6.3.0"
+		"jest": "^27.3.1",
+		"jest-junit": "^13.0.0"
 	},
 	"files": [],
 	"main": "server.js",
