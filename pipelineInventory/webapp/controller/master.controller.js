@@ -1070,6 +1070,7 @@ sap.ui.define([
 			_that.Modelyear = _that.modelYearPicker.getSelectedKey();
 			_that.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
 			_that.oGlobalJSONModel.getData().suffixData = [];
+			// changes done for demand DMND0003215 by Minakshi
 			$.ajax({
 				dataType: "json",
 				url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _that.Model + "' and Modelyear eq '" +
@@ -1268,6 +1269,7 @@ sap.ui.define([
 			}
 			if (oSeriesVal !== _that.oI18nModel.getResourceBundle().getText("PleaseSelect")) {
 				_that.oGlobalJSONModel.getData().modelData = [];
+				// changes done for demand DMND0003215 by Minakshi
 				$.ajax({
 					dataType: "json",
 					url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + Modelyear +
@@ -1427,7 +1429,7 @@ sap.ui.define([
 				var ModelYear = oModVal.getParameters("selectedItem").selectedItem.getKey();
 
 				var oPipelineModel = this.getOwnerComponent().getModel("DataModel");
-
+// changes done for demand DMND0003215 by Minakshi
 				oPipelineModel.read("/ZC_MODEL_DETAILS", {
 					urlParameters: {
 						"$filter": "Modelyear eq '" + ModelYear + "'and visibility eq 'X'"

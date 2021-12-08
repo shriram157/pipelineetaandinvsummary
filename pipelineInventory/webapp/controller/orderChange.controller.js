@@ -310,6 +310,7 @@ sap.ui.define([
 		getModelData: function (TCISeries, Modelyear) {
 			var Series = TCISeries;
 			var Modelyear = Modelyear;
+			// changes done for demand DMND0003215 by Minakshi
 			$.ajax({
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + Modelyear +
@@ -383,6 +384,7 @@ sap.ui.define([
 				sFlag = false;
 			}
 			//Change added by Minakshi for INC0188198 end
+			// changes done for demand DMND0003215 by Minakshi
 			$.ajax({
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _thatOC.Model +
