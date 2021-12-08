@@ -313,7 +313,7 @@ sap.ui.define([
 			$.ajax({
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + Modelyear +
-					"' and TCISeries eq '" + Series + "'",
+					"' and TCISeries eq '" + Series + "'and visibility eq 'X'",
 				type: "GET",
 				success: function (oData) {
 					_thatOC.oVehicleDetailsJSON.getData().modelData = [];
@@ -387,7 +387,7 @@ sap.ui.define([
 				dataType: "json",
 				url: _thatOC.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _thatOC.Model +
 					"' and Modelyear eq '" +
-					_thatOC.Modelyear + "'",
+					_thatOC.Modelyear + "'and visibility eq 'X'",
 				type: "GET",
 				success: function (oData) {
 					_thatOC.oVehicleDetailsJSON.getData().suffixData = [];
