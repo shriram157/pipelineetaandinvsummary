@@ -557,12 +557,13 @@ sap.ui.define([
 			_that.getView().byId("tableMultiHeader3").getColumns()[8].setHeaderSpan([1, 1, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[9].setHeaderSpan([5, 5, 1]);
 			_that.getView().byId("tableMultiHeader3").getColumns()[15].setHeaderSpan([2, 2, 1]);
-
+			if(_that.getView().byId("tableMultiHeader3").getRows().length > 0){
 			for (var n = 1; n < _that.getView().byId("tableMultiHeader3").getRows()[2].getCells().length; n++) {
 				_that.getView().byId("tableMultiHeader3").getRows()[2].getCells()[n].removeStyleClass("TabFontStyle");
 			}
 			for (var n = 1; n < _that.getView().byId("tableMultiHeader3").getRows()[5].getCells().length; n++) {
 				_that.getView().byId("tableMultiHeader3").getRows()[5].getCells()[n].removeStyleClass("TabFontStyle");
+			}
 			}
 			/*Defect Number 10427 Code Start*/
 			_that.getView().byId("id_ETADate").setMinDate(new Date());
