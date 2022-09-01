@@ -36,7 +36,7 @@
 										<l:GridData span="XL3 L3 M4 S6"/>
 									</layoutData>
 								</ComboBox>
-								<Input value="" id="id_BusinessPartnerName" enabled="false" class="noStyleInput" readonly="readonly">
+								<Input value="" id="id_BusinessPartnerName" enabled="true" class="noStyleInput" readonly="readonly" style="border:none">
 									<layoutData>
 										<l:GridData span="XL4 L3 M3 S6"/>
 									</layoutData>
