@@ -40,7 +40,7 @@
 									<layoutData>
 										<l:GridData span="XL4 L3 M3 S6"/>
 									</layoutData>
-									<style="border:transparent; background-color:white; outline: none;"/>
+									<span style="border:white; background-color:white; outline: none;"/>
 								</Input>
 							</f:content>
 						</f:SimpleForm>
