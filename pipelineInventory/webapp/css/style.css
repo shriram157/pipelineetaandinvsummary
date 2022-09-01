@@ -254,6 +254,10 @@
     padding: 0;
 }
 
+input{
+	border: 0;
+}
+
 .filterNotification .sapMText {
     color: #fff;
 }
