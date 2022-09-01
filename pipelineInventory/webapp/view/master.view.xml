@@ -36,10 +36,10 @@
 										<l:GridData span="XL3 L3 M4 S6"/>
 									</layoutData>
 								</ComboBox>
-								<Input type="text" value="" id="id_BusinessPartnerName" editable="false">
-									<layoutData>
+								<Input value="" id="id_BusinessPartnerName" editable="false">
+									<!--<layoutData>
 										<l:GridData span="XL4 L3 M3 S6"/>
-									</layoutData>
+									</layoutData>-->
 								</Input>
 							</f:content>
 						</f:SimpleForm>
