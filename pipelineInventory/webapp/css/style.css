@@ -253,7 +253,7 @@
     border: none;
     background: #ffffff;
     padding: 0;
-    outline: none;
+    border-width: 0;
 }
 
 .filterNotification .sapMText {
