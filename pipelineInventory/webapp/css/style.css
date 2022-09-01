@@ -248,8 +248,9 @@
 
 
 /*Remove all styling from input*/
-Input .sapMInputBaseReadonlyInner .sapMInputBaseInner  {
+.noStyleInput .sapMInputBaseReadonlyInner .sapMInputBaseInner  {
     border: none;
+    border-color: #fff;
     background: #fff;
     padding: 0;
     outline: 0;
