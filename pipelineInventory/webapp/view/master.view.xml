@@ -37,9 +37,9 @@
 									</layoutData>
 								</ComboBox>
 								<Input value="" id="id_BusinessPartnerName" editable="false" class="noStyleInput">
-									<layoutData>
+									<!--<layoutData>	//changes for demand
 										<l:GridData span="XL4 L3 M3 S6"/>
-									</layoutData>
+									</layoutData>-->
 								</Input>
 							</f:content>
 						</f:SimpleForm>
