@@ -36,7 +36,7 @@
 										<l:GridData span="XL3 L3 M4 S6"/>
 									</layoutData>
 								</ComboBox>
-								<Input value="" id="id_BusinessPartnerName" contenteditable="false" style="border:none; background-color:white">
+								<Input value="" id="id_BusinessPartnerName" editable="false" style="border:0px solid #ffffff; background-color:white; outline: 0px solid #ffffff">
 									<layoutData>
 										<l:GridData span="XL4 L3 M3 S6"/> 
 									</layoutData>
