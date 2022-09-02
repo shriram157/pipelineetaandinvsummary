@@ -248,7 +248,7 @@
 
 
 /*Remove all styling from input*/
-.default Input  .sapMInputBaseReadonlyInner .sapMInputBaseInner {
+.default  .sapMInputBaseReadonlyInner .sapMInputBaseInner {
     border-style: hidden;
     background-color: white;
     cursor: default;
