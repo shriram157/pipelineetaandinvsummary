@@ -255,7 +255,12 @@
     padding: 0;
     outline: none;
 }
-
+.noStyleInput[readonly] {
+	border-style: none;
+	background-color: white;
+	outline: none;
+	padding: 0;
+}
 .filterNotification .sapMText {
     color: #fff;
 }
