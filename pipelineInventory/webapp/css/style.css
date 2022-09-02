@@ -248,13 +248,13 @@
 
 
 /*Remove all styling from input*/
-.noStyleInput  {      /*.sapMInputBaseReadonlyInner .sapMInputBaseInner {*/
+/*.noStyleInput  .sapMInputBaseReadonlyInner .sapMInputBaseInner {
     border-style: hidden;
     background-color: white;
     cursor: not allowed;
     padding: 0;
     outline: none;
-}
+}*/
 
 .filterNotification .sapMText {
     color: #fff;
