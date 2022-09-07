@@ -20,7 +20,7 @@
 				</tnt:ToolHeader>
 				<ScrollContainer height='90%' width="100%" vertical='true'>
 					<content>
-						<f:SimpleForm class="clTransparentBg" id="dealerformContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="1" adjustLabelSpan="true" emptySpanL="0"
+						<f:SimpleForm id="dealerformContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="1" adjustLabelSpan="true" emptySpanL="0"
 							emptySpanM="3" columnsL="3" columnsM="3" class="styleForms">
 							<f:content>
 								<Label text="{i18n>Dealer}" design="Bold" required="required">
