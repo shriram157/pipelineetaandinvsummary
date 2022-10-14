@@ -418,10 +418,10 @@ sap.ui.define([
 			Data.ORDERTYPE_DESC_EN = Data.ORDERTYPE_DESC_EN.replace("/", "%2F");
 			Data.SERIES_DESC_EN = Data.SERIES_DESC_EN.replace("/", "%2F");
 			Data.SERIES_DESC_FR = Data.SERIES_DESC_FR.replace("/", "%2F");
-			Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replace("/", "%2F");
-			Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replace("/", "%2F");
+			Data.SUFFIX_DESC_EN = Data.SUFFIX_DESC_EN.replaceAll("/", "%2F");
+			Data.SUFFIX_DESC_FR = Data.SUFFIX_DESC_FR.replaceAll("/", "%2F");
 			Data.INTCOL_DESC_EN = Data.INTCOL_DESC_EN.replaceAll("/", "%2F");
-			Data.INTCOL_DESC_FR = Data.INTCOL_DESC_FR.replace("/", "%2F");
+			Data.INTCOL_DESC_FR = Data.INTCOL_DESC_FR.replaceAll("/", "%2F");
 			Data.MODEL_DESC_EN = Data.MODEL_DESC_EN.replace("/", "%2F");
 			Data.MODEL_DESC_FR = Data.MODEL_DESC_FR.replace("/", "%2F");
 			Data.EXTCOL_DESC_EN = Data.EXTCOL_DESC_EN.replace("/", "%2F");
