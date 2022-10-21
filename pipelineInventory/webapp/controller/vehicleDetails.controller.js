@@ -1856,7 +1856,7 @@ sap.ui.define([
 				fromdate + "/" + todate + "/";
 
 			var soldOrderAppUrl = sap.ui.getCore().getModel("configDataModel").getData().soldOrderAppUrl;
-			var url = soldOrderAppUrl + "?&Division=" + Division + "&Language=" + sSelectedLocale + "&sap-ui-debug=true"+ "#/page2" + keys;
+			var url = soldOrderAppUrl + "?&Division=" + Division + "&Language=" + sSelectedLocale +"#/page2"+ keys;
 			window.location.href = url;
 		},
 
