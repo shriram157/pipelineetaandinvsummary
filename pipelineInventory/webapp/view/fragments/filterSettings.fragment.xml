@@ -3,7 +3,7 @@
 		<sortItems>
 			<ViewSettingsItem text="{i18n>OrderNumber}" key="ZZDLR_REF_NO" selected="true"/>
 			<ViewSettingsItem text="{i18n>OrderType}" key="ORDERTYPE_DESC_EN"/>
-			<ViewSettingsItem text="{i18n>Status}" key="ZMMSTA"/>
+			<ViewSettingsItem text="{i18n>Status}" key="Status"/>				<!--changes for DMND0003551 by swetha replaced ZMMSTA with Status-->
 			<ViewSettingsItem text="{i18n>VTN}" key="ZZVTN"/>
 			<ViewSettingsItem text="{i18n>VIN}" key="VHVIN"/>
 			<ViewSettingsItem text="{i18n>Series}" key="SERIES_DESC_EN"/>
@@ -24,9 +24,9 @@
 					<ViewSettingsItem text="{FilterOrderTypeJSON>ORDERTYPE_DESC_EN}" key="ORDERTYPE_DESC_EN"/>
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="{i18n>Status}" key="ZMMSTA" multiSelect="true" items="{FilterStatusJSON>/}">
+			<ViewSettingsFilterItem text="{i18n>Status}" key="Status" multiSelect="true" items="{FilterStatusJSON>/}">    <!--changes for DMND0003551 by swetha replaced ZMMSTA with Status-->
 				<items>
-					<ViewSettingsItem text="{FilterStatusJSON>ZMMSTA}" key="ZMMSTA"/>
+					<ViewSettingsItem text="{FilterStatusJSON>Status}" key="Status"/>
 				</items>
 			</ViewSettingsFilterItem>
 			<ViewSettingsFilterItem text="{i18n>VTN}" key="ZZVTN" multiSelect="true" items="{VehicleDetailsJSON>/results}">

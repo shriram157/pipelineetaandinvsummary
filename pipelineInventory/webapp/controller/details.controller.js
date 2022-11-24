@@ -358,7 +358,7 @@ sap.ui.define([
 				removeDuplicateValues("Model", new sap.ui.model.json.JSONModel(), "FilterModelJSON");
 				removeDuplicateValues("Suffix", new sap.ui.model.json.JSONModel(), "FilterSuffixJSON");
 				removeDuplicateValues("ORDERTYPE_DESC_EN", new sap.ui.model.json.JSONModel(), "FilterOrderTypeJSON");
-				removeDuplicateValues("ZMMSTA", new sap.ui.model.json.JSONModel(), "FilterStatusJSON");
+				removeDuplicateValues("Status", new sap.ui.model.json.JSONModel(), "FilterStatusJSON");					//changes for DMND0003551 by swetha replaced ZMMSTA with Status 
 				removeDuplicateValues("ExteriorColorCode", new sap.ui.model.json.JSONModel(), "FilterColourJSON");
 				removeDuplicateValues("ETAFrom", new sap.ui.model.json.JSONModel(), "FilterETAFromJSON");
 				removeDuplicateValues("ETATo", new sap.ui.model.json.JSONModel(), "FilterETAToJSON");
@@ -706,7 +706,7 @@ sap.ui.define([
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
 				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
-					'","' + arrData[i].ZMMSTA + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
+					'","' + arrData[i].Status + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
 					arrData[i].Modelyear + '","' + arrData[i].SERIES_DESC_EN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' +
 					arrData[i].Suffix + "-" + arrData[i].SUFFIX_DESC_EN + "/" + arrData[i].INTCOL_DESC_EN +'","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].AccessInstl_flag2 +
 					'",="' + _thatDT.dateConverter(
