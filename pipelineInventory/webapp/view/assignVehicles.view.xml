@@ -59,7 +59,7 @@
 								<Text text="{i18n>VTN}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>VIN}"/>
+								<Text text="{i18n>VIN}"/>							<!-- changes by swetha for DMND0003618 changed VIN to VHVIN-->
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="{i18n>Model}"/>
@@ -85,7 +85,7 @@
 									<Text text="{AssignVehiclesModel>ORDERTYPE_DESC_EN}"/>
 									<Text text="{AssignVehiclesModel>ZMMSTA}"/>
 									<Link text="{AssignVehiclesModel>ZZVTN}" tooltip="{AssignVehiclesModel>ZZVTN}"/>
-									<Link text="{AssignVehiclesModel>VHVIN}" tooltip="{AssignVehiclesModel>VHVIN}"/>
+									<Link text="{AssignVehiclesModel>VHVIN}" tooltip="{AssignVehiclesModel>VHVIN}"/>    <!--changes by swetha for DMND0003618-->
 									<Text text="{AssignVehiclesModel>Model} {AssignVehiclesModel>MODEL_DESC_EN}"/>
 									<Text text="{AssignVehiclesModel>Suffix} {AssignVehiclesModel>SUFFIX_DESC_EN}/{AssignVehiclesModel>INTCOL_DESC_EN}"/>
 									<Text text="{AssignVehiclesModel>ExteriorColorCode} {AssignVehiclesModel>EXTCOL_DESC_EN}"/>

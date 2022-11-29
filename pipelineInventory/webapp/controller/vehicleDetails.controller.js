@@ -1054,7 +1054,7 @@ sap.ui.define([
 						data1.FromFourth = "FromPush";
 						data1.kunnr = Requested_Dealer;
 						data1.name1 = oDealerName;
-						data1.vhvin = data.VHVIN;
+						data1.VHVIN = data.VHVIN;
 						data1.zzseries = data.TCISeries;
 
 						data1.zzintcol = data.INTCOL;
@@ -1373,7 +1373,7 @@ sap.ui.define([
 			// 	var Series = that.getView().getModel("TradeModel").getData().VehicleTradeVehicle.zzseries;
 			// 	var exterior = that.getView().getModel("TradeModel").getData().VehicleTradeVehicle.zzextcol;
 			// 	var vtn = that.getView().getModel("TradeModel").getData().VehicleTradeVehicle.zzvtn;
-			// 	var vin = that.getView().getModel("TradeModel").getData().VehicleTradeVehicle.vhvin;
+			// 	var vin = that.getView().getModel("TradeModel").getData().VehicleTradeVehicle.VHVIN;
 			// 	var accInstalled = that.getView().byId("accid").getText();
 			// 	if(accInstalled=="Yes")
 			// 	{
