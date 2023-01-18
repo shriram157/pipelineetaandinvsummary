@@ -103,7 +103,7 @@
 					sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="VHVIN" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="VEHICLE ID NUMBER"
 					sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="ZZDLR_REF_NO" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="DEALER ORDER REF NO."
 					sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="ZZORDERTYPE" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Order Type"
-					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="ZMMSTA" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Status" sap:creatable="false"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Status" sap:creatable="false"     
 					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="MODEL_DESC_EN" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false"
 					sap:sortable="false" sap:filterable="false"/><Property Name="MODEL_DESC_FR" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false"
 					sap:sortable="false" sap:filterable="false"/><Property Name="SUFFIX_DESC_EN" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false"
