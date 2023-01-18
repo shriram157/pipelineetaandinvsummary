@@ -15,7 +15,7 @@
 		},
 		"dataSources": {
 			"ZPIPELINE_ETA_INVENT_SUMMARY_SRV": {
-				"uri": "/pipelineInventory-dest/node/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/",
+				"uri": "/node/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
@@ -23,7 +23,7 @@
 				}
 			},
 			"Z_VEHICLE_MASTER_SRV": {
-				"uri": "/pipelineInventory-dest/node/Z_VEHICLE_MASTER_SRV/",
+				"uri": "/node/Z_VEHICLE_MASTER_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0"
@@ -31,7 +31,7 @@
 				}
 			},
 			"Z_VEHICLE_CATALOGUE_SRV": {
-				"uri": "/pipelineInventory-dest/node/Z_VEHICLE_CATALOGUE_SRV/",
+				"uri": "/node/Z_VEHICLE_CATALOGUE_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
