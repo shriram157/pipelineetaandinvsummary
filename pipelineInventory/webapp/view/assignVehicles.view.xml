@@ -59,7 +59,7 @@
 								<Text text="{i18n>VTN}"/>
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
-								<Text text="{i18n>VIN}"/>							<!-- changes by swetha for DMND0003618 changed VIN to VHVIN-->
+								<Text text="{i18n>VIN}"/>							
 							</Column>
 							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="{i18n>Model}"/>
