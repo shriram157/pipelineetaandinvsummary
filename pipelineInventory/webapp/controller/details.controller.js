@@ -358,6 +358,7 @@ sap.ui.define([
 				removeDuplicateValues("Model", new sap.ui.model.json.JSONModel(), "FilterModelJSON");
 				removeDuplicateValues("Suffix", new sap.ui.model.json.JSONModel(), "FilterSuffixJSON");
 				removeDuplicateValues("ORDERTYPE_DESC_EN", new sap.ui.model.json.JSONModel(), "FilterOrderTypeJSON");
+				removeDuplicateValues("Status", new sap.ui.model.json.JSONModel(), "FilterStatusJSON"); //changes for DMND0003551 by swetha replaced ZMMSTA with Status 
 				removeDuplicateValues("ZMMSTA", new sap.ui.model.json.JSONModel(), "FilterStatusJSON");
 				removeDuplicateValues("ExteriorColorCode", new sap.ui.model.json.JSONModel(), "FilterColourJSON");
 				removeDuplicateValues("ETAFrom", new sap.ui.model.json.JSONModel(), "FilterETAFromJSON");
@@ -703,12 +704,14 @@ sap.ui.define([
 			CSV += row + '\r\n';
 
 			//loop is to extract each row
+			//DMND0003551  arrData[i].ZMSTA is replaced with  arrData[i].Status by Swetha
 			for (var i = 0; i < arrData.length; i++) {
 				var row = "";
 				row += '="' + arrData[i].Dealer.substring(5, arrData[i].Dealer.length) + '",="' + arrData[i].ZZDLR_REF_NO + '","' + arrData[i].ORDERTYPE_DESC_EN +
-					'","' + arrData[i].ZMMSTA + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
+					'","' + arrData[i].Status + '","' + arrData[i].ZZVTN + '","' + arrData[i].VHVIN + '","' +
 					arrData[i].Modelyear + '","' + arrData[i].SERIES_DESC_EN + '","' + arrData[i].Model + "-" + arrData[i].MODEL_DESC_EN + '","' +
-					arrData[i].Suffix + "-" + arrData[i].SUFFIX_DESC_EN + "/" + arrData[i].INTCOL_DESC_EN +'","' + arrData[i].ExteriorColorCode + "-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].AccessInstl_flag2 +
+					arrData[i].Suffix + "-" + arrData[i].SUFFIX_DESC_EN + "/" + arrData[i].INTCOL_DESC_EN + '","' + arrData[i].ExteriorColorCode +
+					"-" + arrData[i].EXTCOL_DESC_EN + '","' + arrData[i].AccessInstl_flag2 +
 					'",="' + _thatDT.dateConverter(
 						arrData[i].ETAFrom) + '",="' + _thatDT.dateConverter(arrData[i].ETATo) + '","' + arrData[i].CustomerName + '","' + arrData[i].DNC_Comment +
 					'",';

@@ -2,7 +2,8 @@
 	<ViewSettingsDialog confirm="handleSettingsConfirm">
 		<sortItems>
 			<ViewSettingsItem text="{i18n>OrderNumber}" key="ZZDLR_REF_NO" selected="true"/>
-			<ViewSettingsItem text="{i18n>Status}" key="Status"/>
+			<ViewSettingsItem text="{i18n>Status}" key="Status"/>							<!--changes for DMND0003551 by swetha replaced ZMMSTA with Status-->
+			<!--<ViewSettingsItem text="{i18n>Status}" key="Status"/>-->
 			<ViewSettingsItem text="{i18n>SubmissionDateTime}" key="DateSubmitted"/>
 			<ViewSettingsItem text="{i18n>VTN}" key="ZZVTN"/>
 			<ViewSettingsItem text="{i18n>VIN}" key="VHVIN"/>
@@ -17,7 +18,8 @@
 					<ViewSettingsItem text="{FilterOrderNumberJSON>ZZDLR_REF_NO}" key="ZZDLR_REF_NO"/>
 				</items>
 			</ViewSettingsFilterItem>
-		<ViewSettingsFilterItem text="{i18n>Status}" key="Status" multiSelect="true" items="{FilterStatusJSON>/}">
+		<ViewSettingsFilterItem text="{i18n>Status}" key="Status" multiSelect="true" items="{FilterStatusJSON>/}">   <!--changes for DMND0003551 by swetha replaced ZMMSTA with Status-->	
+		<!--<ViewSettingsFilterItem text="{i18n>Status}" key="Status" multiSelect="true" items="{FilterStatusJSON>/}">-->
 				<items>
 					<ViewSettingsItem text="{FilterStatusJSON>Status}" key="Status"/>
 				</items>

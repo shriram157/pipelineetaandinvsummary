@@ -1054,7 +1054,8 @@ sap.ui.define([
 						data1.FromFourth = "FromPush";
 						data1.kunnr = Requested_Dealer;
 						data1.name1 = oDealerName;
-						data1.vhvin = data.VHVIN;
+					//	data1.vhvin = data.VHVIN;
+						data1.VHVIN = data.VHVIN; //DMND0003618 VIN Visibility by Swetha
 						data1.zzseries = data.TCISeries;
 
 						data1.zzintcol = data.INTCOL;

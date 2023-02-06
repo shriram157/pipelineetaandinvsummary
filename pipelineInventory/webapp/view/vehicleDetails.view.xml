@@ -50,7 +50,9 @@
 									<Label text="{i18n>OrderType}"/>
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ORDERTYPE_DESC_EN}"/>
 									<Label text="{i18n>Status}"/>
-									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZMMSTA}"/>
+									
+									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/Status}"/>
+									<!--<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZMMSTA}"/>-->
 									<Label text="{i18n>VTN}"/>
 									<Text text="{VehicleDetailsJSON>/selectedVehicleData/0/ZZVTN}"/>
 									<Label text="{i18n>VIN}"/>
