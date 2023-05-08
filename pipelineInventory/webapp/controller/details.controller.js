@@ -429,6 +429,9 @@ sap.ui.define([
 			Data.EXTCOL_DESC_EN = Data.EXTCOL_DESC_EN.replace("/", "%2F");
 			Data.EXTCOL_DESC_FR = Data.EXTCOL_DESC_FR.replace("/", "%2F");
 			Data.CustomerName = Data.CustomerName.replace(/\//g, "%2F");
+			Data.ZZDLR_REF_NO = Data.ZZDLR_REF_NO.replaceAll("/", "%2F"); //INC0228962 When dealer clicks on VTN 0800120 they are unable to view any information -goes back to home screen@@forward slash (/)was not handled   Shriram 22-Mar-2023  
+			Data.ZZDLR_REF_NO = Data.ZZDLR_REF_NO.replaceAll("?", "%3F");//INC0228962 ?
+			
 			Data.__metadata = "";
 
 			_thatDT.getRouter().navTo("vehicleDetails", {
