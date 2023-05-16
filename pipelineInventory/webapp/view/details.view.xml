@@ -86,7 +86,7 @@
 								<Column width="5rem" minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>VTN}"/>
 								</Column>
-								<Column width="10rem" minScreenWidth="Desktop" demandPopin="true">
+								<Column width="15rem" minScreenWidth="Desktop" demandPopin="true">
 									<Text text="{i18n>VIN}"/>
 								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true">
@@ -120,7 +120,7 @@
 										<Text text="{path:'VehicleDetailsJSON>Dealer', formatter:'.formatDealer'}"/>
 										<Link text="{VehicleDetailsJSON>ZZDLR_REF_NO}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZDLR_REF_NO}"/>
 										<Text text="{VehicleDetailsJSON>ORDERTYPE_DESC_EN}"/>
-										<Text text="{VehicleDetailsJSON>ZMMSTA}"/>
+										<Text text="{VehicleDetailsJSON>Status}"/>
 										
 										<Link text="{VehicleDetailsJSON>ZZVTN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>ZZVTN}"/>
 										<Link text="{VehicleDetailsJSON>VHVIN}" press="onNavigateToVL" tooltip="{VehicleDetailsJSON>VHVIN}"/>

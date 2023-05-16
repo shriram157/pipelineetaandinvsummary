@@ -359,7 +359,7 @@ sap.ui.define([
 				removeDuplicateValues("Suffix", new sap.ui.model.json.JSONModel(), "FilterSuffixJSON");
 				removeDuplicateValues("ORDERTYPE_DESC_EN", new sap.ui.model.json.JSONModel(), "FilterOrderTypeJSON");
 				removeDuplicateValues("Status", new sap.ui.model.json.JSONModel(), "FilterStatusJSON"); //changes for DMND0003551 by swetha replaced ZMMSTA with Status 
-				removeDuplicateValues("ZMMSTA", new sap.ui.model.json.JSONModel(), "FilterStatusJSON");
+		      //removeDuplicateValues("ZMMSTA", new sap.ui.model.json.JSONModel(), "FilterStatusJSON");
 				removeDuplicateValues("ExteriorColorCode", new sap.ui.model.json.JSONModel(), "FilterColourJSON");
 				removeDuplicateValues("ETAFrom", new sap.ui.model.json.JSONModel(), "FilterETAFromJSON");
 				removeDuplicateValues("ETATo", new sap.ui.model.json.JSONModel(), "FilterETAToJSON");
@@ -430,6 +430,8 @@ sap.ui.define([
 			Data.EXTCOL_DESC_EN = Data.EXTCOL_DESC_EN.replace("/", "%2F");
 			Data.EXTCOL_DESC_FR = Data.EXTCOL_DESC_FR.replace("/", "%2F");
 			Data.CustomerName = Data.CustomerName.replace(/\//g, "%2F");
+			Data.ZZDLR_REF_NO = Data.ZZDLR_REF_NO.replaceAll("/", "%2F"); //INC0228962 When dealer clicks on VTN 0800120 they are unable to view any information -goes back to home screen@@forward slash (/)was not handled   Shriram 22-Mar-2023  
+			Data.ZZDLR_REF_NO = Data.ZZDLR_REF_NO.replaceAll("?", "%3F");//INC0228962 ?
 			Data.__metadata = "";
 
 			_thatDT.getRouter().navTo("vehicleDetails", {
