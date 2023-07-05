@@ -28,7 +28,7 @@ sap.ui.define([
 			if (isLocaleSent) {
 				sSelectedLocale = window.location.search.match(/language=([^&]*)/i)[1];
 			} else {
-				sSelectedLocale = "EN"; //default is english 
+				sSelectedLocale = "EN"; // default is english 
 			}
 			if (sSelectedLocale == "fr") {
 				_thatAV.oI18nModel = new sap.ui.model.resource.ResourceModel({
