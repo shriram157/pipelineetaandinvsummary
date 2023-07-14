@@ -193,6 +193,9 @@ sap.ui.define([
 					}
 				});
 			}
+			else{
+				sap.ui.core.BusyIndicator.hide();// INC0234626  14-July-23  Shriram When Vehicle Detail link is clicked it appears to never end and application restart is needed to proceed
+			}
 			/*	else {
 					sap.ui.core.BusyIndicator.hide();
 					_thatCH.Dealer = "";
